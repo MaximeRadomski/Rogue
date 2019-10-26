@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class ButtonBhv : MonoBehaviour
 {
-    public void BeginAction()
-    {
-    }
+    public delegate void BeginActionDelegate();
+    public BeginActionDelegate BeginAction;
 
-    public void DoAction()
-    {
-    }
+    public delegate void DoActionDelegate();
+    public DoActionDelegate DoAction;
 
-    public void EndAction()
-    {
-    }
+    public delegate void EndActionDelegate();
+    public EndActionDelegate EndAction;
 }

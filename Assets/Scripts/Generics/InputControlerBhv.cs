@@ -20,11 +20,11 @@ public class InputControlerBhv : MonoBehaviour
                     GameObject touchedObject = hitInformation.transform.gameObject;
                     if (touchedObject.tag == "Button")
                     {
-                        if (Input.GetTouch(i).phase == TouchPhase.Began)
+                        if (Input.GetTouch(i).phase == TouchPhase.Began && touchedObject.GetComponent<ButtonBhv>().BeginAction != null)
                             touchedObject.GetComponent<ButtonBhv>().BeginAction();
-                        else if (Input.GetTouch(i).phase == TouchPhase.Ended)
+                        else if (Input.GetTouch(i).phase == TouchPhase.Ended && touchedObject.GetComponent<ButtonBhv>().EndAction != null)
                             touchedObject.GetComponent<ButtonBhv>().EndAction();
-                        else
+                        else if (touchedObject.GetComponent<ButtonBhv>().DoAction != null)
                             touchedObject.GetComponent<ButtonBhv>().DoAction();
                     }
                 }
@@ -38,8 +38,9 @@ public class InputControlerBhv : MonoBehaviour
             if (hitInformation.collider != null)
             {
                 GameObject touchedObject = hitInformation.transform.gameObject;
-                if (touchedObject.tag == "Button")
+                if (touchedObject.tag == "Button" && touchedObject.GetComponent<ButtonBhv>().BeginAction != null)
                 {
+                    Debug.Log("Begin");
                     touchedObject.GetComponent<ButtonBhv>().BeginAction();
                 }
             }
@@ -52,8 +53,9 @@ public class InputControlerBhv : MonoBehaviour
             if (hitInformation.collider != null)
             {
                 GameObject touchedObject = hitInformation.transform.gameObject;
-                if (touchedObject.tag == "Button")
+                if (touchedObject.tag == "Button" && touchedObject.GetComponent<ButtonBhv>().EndAction != null)
                 {
+                    Debug.Log("End");
                     touchedObject.GetComponent<ButtonBhv>().EndAction();
                 }
             }
@@ -66,8 +68,9 @@ public class InputControlerBhv : MonoBehaviour
             if (hitInformation.collider != null)
             {
                 GameObject touchedObject = hitInformation.transform.gameObject;
-                if (touchedObject.tag == "Button")
+                if (touchedObject.tag == "Button" && touchedObject.GetComponent<ButtonBhv>().DoAction != null)
                 {
+                    Debug.Log("Do");
                     touchedObject.GetComponent<ButtonBhv>().DoAction();
                 }
             }
