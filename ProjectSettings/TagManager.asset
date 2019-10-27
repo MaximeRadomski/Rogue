@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Button
+  - GrabbableCard
+  - SoundControler
   layers:
   - Default
   - TransparentFX
@@ -41,6 +43,9 @@ TagManager:
   m_SortingLayers:
   - name: Background
     uniqueID: 3989777477
+    locked: 0
+  - name: Card
+    uniqueID: 834654313
     locked: 0
   - name: Buttons
     uniqueID: 882863771

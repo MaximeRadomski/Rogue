@@ -5,6 +5,7 @@ using UnityEngine;
 public class InputControlerBhv : MonoBehaviour
 {
     private Vector3 _touchPosWorld;
+    private GameObject _currentObject;
 
     void Update()
     {
@@ -17,17 +18,35 @@ public class InputControlerBhv : MonoBehaviour
                 RaycastHit2D hitInformation = Physics2D.Raycast(touchPosWorld2D, Camera.main.transform.forward);
                 if (hitInformation.collider != null)
                 {
-                    GameObject touchedObject = hitInformation.transform.gameObject;
-                    if (touchedObject.tag == "Button")
+                    CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
+                    _currentObject = hitInformation.transform.gameObject;
+                    if (_currentObject.tag == Constants.TagButton)
                     {
-                        if (Input.GetTouch(i).phase == TouchPhase.Began && touchedObject.GetComponent<ButtonBhv>().BeginAction != null)
-                            touchedObject.GetComponent<ButtonBhv>().BeginAction();
-                        else if (Input.GetTouch(i).phase == TouchPhase.Ended && touchedObject.GetComponent<ButtonBhv>().EndAction != null)
-                            touchedObject.GetComponent<ButtonBhv>().EndAction();
-                        else if (touchedObject.GetComponent<ButtonBhv>().DoAction != null)
-                            touchedObject.GetComponent<ButtonBhv>().DoAction();
+                        if (Input.GetTouch(i).phase == TouchPhase.Began)
+                            _currentObject.GetComponent<ButtonBhv>().BeginAction();
+                        else if (Input.GetTouch(i).phase == TouchPhase.Ended)
+                        {
+                            _currentObject.GetComponent<ButtonBhv>().EndAction();
+                            _currentObject = null;
+                        }
+                        else
+                            _currentObject.GetComponent<ButtonBhv>().DoAction();
+                    }
+                    else if (_currentObject.tag == Constants.TagGrabbableCard)
+                    {
+                        if (Input.GetTouch(i).phase == TouchPhase.Began)
+                            _currentObject.GetComponent<GrabbableCardBhv>().BeginAction(touchPosWorld2D);
+                        else if (Input.GetTouch(i).phase == TouchPhase.Ended)
+                        {
+                            _currentObject.GetComponent<GrabbableCardBhv>().EndAction();
+                            _currentObject = null;
+                        }
+                        else
+                            _currentObject.GetComponent<GrabbableCardBhv>().GrabAction(touchPosWorld2D);
                     }
                 }
+                else
+                    CancelCurrentObjectIfNewBeforeEnd();
             }
         }
         else if (Input.GetMouseButtonDown(0))
@@ -37,13 +56,15 @@ public class InputControlerBhv : MonoBehaviour
             RaycastHit2D hitInformation = Physics2D.Raycast(touchPosWorld2D, Camera.main.transform.forward);
             if (hitInformation.collider != null)
             {
-                GameObject touchedObject = hitInformation.transform.gameObject;
-                if (touchedObject.tag == "Button" && touchedObject.GetComponent<ButtonBhv>().BeginAction != null)
-                {
-                    Debug.Log("Begin");
-                    touchedObject.GetComponent<ButtonBhv>().BeginAction();
-                }
+                CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
+                _currentObject = hitInformation.transform.gameObject;
+                if (_currentObject.tag == Constants.TagButton)
+                    _currentObject.GetComponent<ButtonBhv>().BeginAction();
+                else if (_currentObject.tag == Constants.TagGrabbableCard)
+                    _currentObject.GetComponent<GrabbableCardBhv>().BeginAction(touchPosWorld2D);
             }
+            else
+                CancelCurrentObjectIfNewBeforeEnd();
         }
         else if (Input.GetMouseButtonUp(0))
         {
@@ -52,13 +73,21 @@ public class InputControlerBhv : MonoBehaviour
             RaycastHit2D hitInformation = Physics2D.Raycast(touchPosWorld2D, Camera.main.transform.forward);
             if (hitInformation.collider != null)
             {
-                GameObject touchedObject = hitInformation.transform.gameObject;
-                if (touchedObject.tag == "Button" && touchedObject.GetComponent<ButtonBhv>().EndAction != null)
+                CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
+                _currentObject = hitInformation.transform.gameObject;
+                if (_currentObject.tag == Constants.TagButton)
                 {
-                    Debug.Log("End");
-                    touchedObject.GetComponent<ButtonBhv>().EndAction();
+                    _currentObject.GetComponent<ButtonBhv>().EndAction();
+                    _currentObject = null;
+                }
+                else if (_currentObject.tag == Constants.TagGrabbableCard)
+                {
+                    _currentObject.GetComponent<GrabbableCardBhv>().EndAction();
+                    _currentObject = null;
                 }
             }
+            else
+                CancelCurrentObjectIfNewBeforeEnd();
         }
         else if (Input.GetMouseButton(0))
         {
@@ -67,15 +96,33 @@ public class InputControlerBhv : MonoBehaviour
             RaycastHit2D hitInformation = Physics2D.Raycast(touchPosWorld2D, Camera.main.transform.forward);
             if (hitInformation.collider != null)
             {
-                GameObject touchedObject = hitInformation.transform.gameObject;
-                if (touchedObject.tag == "Button" && touchedObject.GetComponent<ButtonBhv>().DoAction != null)
-                {
-                    Debug.Log("Do");
-                    touchedObject.GetComponent<ButtonBhv>().DoAction();
-                }
+                CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
+                _currentObject = hitInformation.transform.gameObject;
+                if (_currentObject.tag == Constants.TagButton)
+                    _currentObject.GetComponent<ButtonBhv>().DoAction();
+                else if (_currentObject.tag == Constants.TagGrabbableCard)
+                    _currentObject.GetComponent<GrabbableCardBhv>().GrabAction(touchPosWorld2D);
             }
+            else
+                CancelCurrentObjectIfNewBeforeEnd();
         }
         else
             _touchPosWorld = new Vector3(-99,-99,-99);
+    }
+
+    private void CancelCurrentObjectIfNewBeforeEnd(GameObject touchedGameObject = null)
+    {
+        if (_currentObject == null || _currentObject == touchedGameObject)
+            return;
+        if (_currentObject.tag == Constants.TagButton)
+        {
+            _currentObject.GetComponent<ButtonBhv>().CancelAction();
+            _currentObject = null;
+        }
+        else if (_currentObject.tag == Constants.TagGrabbableCard)
+        {
+            _currentObject.GetComponent<GrabbableCardBhv>().CancelAction();
+            _currentObject = null;
+        }
     }
 }

@@ -24,15 +24,17 @@ public class SampleSceneBhv : MonoBehaviour
         SetSampleButton("ButtonBotRight");
         SetSampleButton("ButtonTopRight");
         SetSampleButton("ButtonTopMid");
-        SetSampleButton("ButtonFloatingBotLeft");
+        SetSampleButton("ButtonFloatingTopRight");
+        GameObject.Find("ButtonFloatingDislike").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("TemplateCard").GetComponent<GrabbableCardBhv>().Dislike;
+        GameObject.Find("ButtonFloatingLike").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("TemplateCard").GetComponent<GrabbableCardBhv>().Like;
     }
 
     private void SetSampleButton(string name)
     {
         var tmpButtonBhv = GameObject.Find(name).GetComponent<ButtonBhv>();
-        tmpButtonBhv.BeginAction = BeginAction;
-        tmpButtonBhv.DoAction = DoAction;
-        tmpButtonBhv.EndAction = EndAction;
+        tmpButtonBhv.BeginActionDelegate = BeginAction;
+        tmpButtonBhv.DoActionDelegate = DoAction;
+        tmpButtonBhv.EndActionDelegate = EndAction;
     }
 
     public void BeginAction()
