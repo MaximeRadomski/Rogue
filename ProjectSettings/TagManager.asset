@@ -7,6 +7,7 @@ TagManager:
   - Button
   - GrabbableCard
   - SoundControler
+  - Cell
   layers:
   - Default
   - TransparentFX
@@ -44,8 +45,14 @@ TagManager:
   - name: Background
     uniqueID: 3989777477
     locked: 0
+  - name: Grid
+    uniqueID: 2355405363
+    locked: 0
   - name: Card
     uniqueID: 834654313
+    locked: 0
+  - name: Characters
+    uniqueID: 2041080483
     locked: 0
   - name: Buttons
     uniqueID: 882863771

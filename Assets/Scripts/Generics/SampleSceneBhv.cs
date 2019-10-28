@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SampleSceneBhv : MonoBehaviour
 {
@@ -22,9 +23,9 @@ public class SampleSceneBhv : MonoBehaviour
         SetSampleButton("ButtonBotMid");
         SetSampleButton("ButtonBotLeft");
         SetSampleButton("ButtonBotRight");
-        SetSampleButton("ButtonTopRight");
-        SetSampleButton("ButtonTopMid");
         SetSampleButton("ButtonFloatingTopRight");
+        SetSampleButton("ButtonTopMid");
+        GameObject.Find("ButtonTopRight").GetComponent<ButtonBhv>().EndActionDelegate = GoToSampleGridScene;
         GameObject.Find("ButtonFloatingDislike").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("TemplateCard").GetComponent<GrabbableCardBhv>().Dislike;
         GameObject.Find("ButtonFloatingLike").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("TemplateCard").GetComponent<GrabbableCardBhv>().Like;
     }
@@ -50,5 +51,10 @@ public class SampleSceneBhv : MonoBehaviour
     public void EndAction()
     {
         _sampleText.text += "\nEnd";
+    }
+
+    public void GoToSampleGridScene()
+    {
+        SceneManager.LoadScene(Constants.SampleGridScene);
     }
 }
