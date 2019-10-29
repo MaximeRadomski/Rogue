@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class SampleGridSceneBhv : MonoBehaviour
 {
-    private UnityEngine.UI.Text _sampleText;
+    public GameObject[,] Cells;
+
     private Maps.Map _map;
     private Grid _grid;
     private GameObject _player;
@@ -21,40 +22,14 @@ public class SampleGridSceneBhv : MonoBehaviour
 
     private void SetPrivates()
     {
-        _sampleText = GameObject.Find("SampleText").GetComponent<UnityEngine.UI.Text>();
         _grid = GameObject.Find("Grid").GetComponent<Grid>();
+        Cells = new GameObject[Constants.GridMax, Constants.GridMax];
     }
 
     private void SetButtons()
     {
-        SetSampleButton("ButtonBotMid");
-        SetSampleButton("ButtonBotLeft");
-        SetSampleButton("ButtonBotRight");
-        GameObject.Find("ButtonTopMid").GetComponent<ButtonBhv>().EndActionDelegate = ReloadScene;
-        GameObject.Find("ButtonTopLeft").GetComponent<ButtonBhv>().EndActionDelegate = GoToSampleScene;
-    }
-
-    private void SetSampleButton(string name)
-    {
-        var tmpButtonBhv = GameObject.Find(name).GetComponent<ButtonBhv>();
-        tmpButtonBhv.BeginActionDelegate = BeginAction;
-        tmpButtonBhv.DoActionDelegate = DoAction;
-        tmpButtonBhv.EndActionDelegate = EndAction;
-    }
-
-    public void BeginAction()
-    {
-        _sampleText.text = "Start\n";
-    }
-
-    public void DoAction()
-    {
-        _sampleText.text += "|";
-    }
-
-    public void EndAction()
-    {
-        _sampleText.text += "\nEnd";
+        GameObject.Find("ButtonReload").GetComponent<ButtonBhv>().EndActionDelegate = ReloadScene;
+        GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToSampleScene;
     }
 
     public void GoToSampleScene()
@@ -66,11 +41,11 @@ public class SampleGridSceneBhv : MonoBehaviour
     {
         _map = Maps.EasyMaps[Random.Range(0, Maps.EasyMaps.Count)];
         GameObject.Find("MapName").GetComponent<UnityEngine.UI.Text>().text = _map.Name;
-        for (int y = 0; y < 6; ++y)
+        for (int y = 0; y < Constants.GridMax; ++y)
         {
-            for (int x = 0; x < 6; ++x)
+            for (int x = 0; x < Constants.GridMax; ++x)
             {
-                InitCell(x, y, _map.Cells[6 * y + x]);
+                InitCell(x, y, _map.Cells[Constants.GridMax * y + x]);
             }
         }
     }
@@ -78,7 +53,7 @@ public class SampleGridSceneBhv : MonoBehaviour
     private void InitCell(int x, int y, char c)
     {
         var cellGameObject = Resources.Load<GameObject>("Prefabs/TemplateCell");
-        var cellInstance = Instantiate(cellGameObject, cellGameObject.transform);
+        var cellInstance = Instantiate(cellGameObject, cellGameObject.transform.position, cellGameObject.transform.rotation);
         cellInstance.transform.parent = _grid.transform;
         cellInstance.transform.position = new Vector3(x * _grid.cellSize.x, y * _grid.cellSize.y, 0.0f) + _grid.transform.position;
         cellInstance.gameObject.name = "Cell" + x + y;
@@ -86,24 +61,49 @@ public class SampleGridSceneBhv : MonoBehaviour
         cellInstance.GetComponent<CellBhv>().Y = y;
         cellInstance.GetComponent<CellBhv>().Type = (CellBhv.CellType)int.Parse(c.ToString(),System.Globalization.NumberStyles.Integer);
         cellInstance.GetComponent<CellBhv>().State = CellBhv.CellState.None;
+        Cells[x, y] = cellInstance;
+    }
+    public void ResetAllCellsDisplay()
+    {
+        for (int y = 0; y < Constants.GridMax; ++y)
+        {
+            for (int x = 0; x < Constants.GridMax; ++x)
+            {
+                Cells[x, y].GetComponent<CellBhv>().ResetDisplay();
+            }
+        }
+    }
+
+    public void ResetAllCellsVisited()
+    {
+        for (int y = 0; y < Constants.GridMax; ++y)
+        {
+            for (int x = 0; x < Constants.GridMax; ++x)
+            {
+                Cells[x, y].GetComponent<CellBhv>().ResetVisited();
+            }
+        }
     }
 
     private void InitPlayer()
     {
         var characterObject = Resources.Load<GameObject>("Prefabs/TemplateCharacter");
-        _player = Instantiate(characterObject, GameObject.Find("Cell31").transform);
-        _player.GetComponent<Character>().X = 3;
-        _player.GetComponent<Character>().Y = 1;
-        _player.GetComponent<Character>().Name = "TemplateCharacter";
-        _player.GetComponent<Character>().Race = Character.CharacterRace.Human;
-        _player.GetComponent<Character>().Level = 1;
-        _player.GetComponent<Character>().Gold = 0;
-        _player.GetComponent<Character>().Hp = 1000;
-        _player.GetComponent<Character>().Pm = 2;
+        _player = Instantiate(characterObject, GameObject.Find("Cell31").transform.position, characterObject.transform.rotation);
+        _player.name = "Player";
+        _player.GetComponent<CharacterBhv>().X = 3;
+        _player.GetComponent<CharacterBhv>().Y = 1;
+        _player.GetComponent<CharacterBhv>().Name = "TemplateCharacter";
+        _player.GetComponent<CharacterBhv>().Race = CharacterBhv.CharacterRace.Human;
+        _player.GetComponent<CharacterBhv>().Level = 1;
+        _player.GetComponent<CharacterBhv>().Gold = 0;
+        _player.GetComponent<CharacterBhv>().Hp = 1000;
+        _player.GetComponent<CharacterBhv>().Pm = 4;
     }
 
     private void GameLife()
     {
+        ResetAllCellsDisplay();
+        ResetAllCellsVisited();
         PlayerTurn();
     }
 
@@ -112,28 +112,47 @@ public class SampleGridSceneBhv : MonoBehaviour
         ShowPm();
     }
 
-    private void ShowPm()
+    public void AfterPlayerMoved()
     {
-        var nbPm = _player.GetComponent<Character>().Pm;
-        if (nbPm <= 0)
-            return;
-        SpreadPm(_player.GetComponent<Character>().X, _player.GetComponent<Character>().Y + 1, nbPm, 1, 1);
-        SpreadPm(_player.GetComponent<Character>().X + 1, _player.GetComponent<Character>().Y, nbPm, 1, -1);
-        SpreadPm(_player.GetComponent<Character>().X, _player.GetComponent<Character>().Y - 1, nbPm, -1, -1);
-        SpreadPm(_player.GetComponent<Character>().X - 1, _player.GetComponent<Character>().Y, nbPm, -1, 1);
+        ResetAllCellsVisited();
+        ShowPm();
     }
 
-    private void SpreadPm(int x, int y, int nbPm, int xMult, int yMult)
+    private void ShowPm()
     {
-        var cell = GameObject.Find("Cell" + x + y);
-        if (cell == null)
+        var nbPm = _player.GetComponent<CharacterBhv>().Pm;
+        if (nbPm <= 0)
             return;
-        if (cell.GetComponent<CellBhv>().Type == CellBhv.CellType.On && cell.GetComponent<CellBhv>().State != CellBhv.CellState.Mouvement)
-            cell.GetComponent<CellBhv>().ShowPm();
-        if (--nbPm > 0)
+        SpreadPmStart(_player.GetComponent<CharacterBhv>().X, _player.GetComponent<CharacterBhv>().Y, nbPm);
+    }
+
+    private void SpreadPmStart(int x, int y, int nbPm)
+    {
+        SpreadPm(x, y + 1, nbPm, 1);
+        SpreadPm(x + 1, y, nbPm, 1);
+        SpreadPm(x, y - 1, nbPm, 1);
+        SpreadPm(x - 1, y, nbPm, 1);
+    }
+
+    private void SpreadPm(int x, int y, int nbPm, int spentPm)
+    {
+        if (x >= Constants.GridMax || y >= Constants.GridMax || x < 0 || y < 0)
+            return;
+        var cell = Cells[x, y];
+        if (cell == null || (x == _player.GetComponent<CharacterBhv>().X && y == _player.GetComponent<CharacterBhv>().Y))
+            return;
+        if (cell.GetComponent<CellBhv>().Type == CellBhv.CellType.On && (spentPm < cell.GetComponent<CellBhv>().Visited || cell.GetComponent<CellBhv>().Visited == -1))
         {
-            SpreadPm(x, y + yMult, nbPm, xMult, yMult);
-            SpreadPm(x + xMult, y, nbPm, xMult, yMult);
+            cell.GetComponent<CellBhv>().ShowPm();
+            cell.GetComponent<CellBhv>().Visited = spentPm;
+            cell.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = cell.GetComponent<CellBhv>().Visited.ToString();
+        }
+        if (cell.GetComponent<CellBhv>().Type == CellBhv.CellType.On && --nbPm > 0)
+        {
+            SpreadPm(x, y + 1, nbPm, spentPm + 1);
+            SpreadPm(x + 1, y, nbPm, spentPm + 1);
+            SpreadPm(x, y - 1, nbPm, spentPm + 1);
+            SpreadPm(x - 1, y, nbPm, spentPm + 1);
         }
     }
 

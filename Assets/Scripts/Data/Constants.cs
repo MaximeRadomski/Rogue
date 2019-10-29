@@ -6,6 +6,7 @@ public static class Constants
 {
     //  TAGS  //
 
+    public const string TagCell = "Cell";
     public const string TagButton = "Button";
     public const string TagGrabbableCard = "GrabbableCard";
     public const string TagSoundControler = "SoundControler";
@@ -19,4 +20,8 @@ public static class Constants
 
     public const string SampleScene = "SampleScene";
     public const string SampleGridScene = "SampleGridScene";
+
+    //  VALUES  //
+
+    public const int GridMax = 6;
 }

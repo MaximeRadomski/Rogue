@@ -9,6 +9,7 @@ public class SampleSceneBhv : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 60;
         SetPrivates();
         SetButtons();
     }

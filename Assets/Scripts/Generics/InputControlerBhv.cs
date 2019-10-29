@@ -44,6 +44,18 @@ public class InputControlerBhv : MonoBehaviour
                         else
                             _currentObject.GetComponent<GrabbableCardBhv>().GrabAction(touchPosWorld2D);
                     }
+                    else if (_currentObject.tag == Constants.TagCell)
+                    {
+                        if (Input.GetTouch(i).phase == TouchPhase.Began)
+                            _currentObject.GetComponent<CellBhv>().BeginAction();
+                        else if (Input.GetTouch(i).phase == TouchPhase.Ended)
+                        {
+                            _currentObject.GetComponent<CellBhv>().EndAction();
+                            _currentObject = null;
+                        }
+                        else
+                            _currentObject.GetComponent<CellBhv>().DoAction();
+                    }
                 }
                 else
                     CancelCurrentObjectIfNewBeforeEnd();
@@ -62,6 +74,8 @@ public class InputControlerBhv : MonoBehaviour
                     _currentObject.GetComponent<ButtonBhv>().BeginAction();
                 else if (_currentObject.tag == Constants.TagGrabbableCard)
                     _currentObject.GetComponent<GrabbableCardBhv>().BeginAction(touchPosWorld2D);
+                else if (_currentObject.tag == Constants.TagCell)
+                    _currentObject.GetComponent<CellBhv>().BeginAction();
             }
             else
                 CancelCurrentObjectIfNewBeforeEnd();
@@ -85,6 +99,11 @@ public class InputControlerBhv : MonoBehaviour
                     _currentObject.GetComponent<GrabbableCardBhv>().EndAction();
                     _currentObject = null;
                 }
+                else if (_currentObject.tag == Constants.TagCell)
+                {
+                    _currentObject.GetComponent<CellBhv>().EndAction();
+                    _currentObject = null;
+                }
             }
             else
                 CancelCurrentObjectIfNewBeforeEnd();
@@ -102,6 +121,8 @@ public class InputControlerBhv : MonoBehaviour
                     _currentObject.GetComponent<ButtonBhv>().DoAction();
                 else if (_currentObject.tag == Constants.TagGrabbableCard)
                     _currentObject.GetComponent<GrabbableCardBhv>().GrabAction(touchPosWorld2D);
+                else if (_currentObject.tag == Constants.TagCell)
+                    _currentObject.GetComponent<CellBhv>().DoAction();
             }
             else
                 CancelCurrentObjectIfNewBeforeEnd();
