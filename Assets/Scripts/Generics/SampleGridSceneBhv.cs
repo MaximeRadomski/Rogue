@@ -76,7 +76,7 @@ public class SampleGridSceneBhv : MonoBehaviour
         _opponent.GetComponent<CharacterBhv>().X = 2;
         _opponent.GetComponent<CharacterBhv>().Y = 4;
         _opponent.GetComponent<CharacterBhv>().Name = "TemplateOpponent";
-        _opponent.GetComponent<CharacterBhv>().Race = CharacterBhv.CharacterRace.Elf;
+        _opponent.GetComponent<CharacterBhv>().Race = CharacterRace.Elf;
         _opponent.GetComponent<CharacterBhv>().Level = 1;
         _opponent.GetComponent<CharacterBhv>().Gold = 0;
         _opponent.GetComponent<CharacterBhv>().HpMax = 1000;
@@ -91,7 +91,7 @@ public class SampleGridSceneBhv : MonoBehaviour
         _player.GetComponent<CharacterBhv>().X = 3;
         _player.GetComponent<CharacterBhv>().Y = 1;
         _player.GetComponent<CharacterBhv>().Name = "TemplateCharacter";
-        _player.GetComponent<CharacterBhv>().Race = CharacterBhv.CharacterRace.Human;
+        _player.GetComponent<CharacterBhv>().Race = CharacterRace.Human;
         _player.GetComponent<CharacterBhv>().Level = 1;
         _player.GetComponent<CharacterBhv>().Gold = 0;
         _player.GetComponent<CharacterBhv>().HpMax = 1000;

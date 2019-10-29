@@ -12,12 +12,15 @@ public class CharacterBhv : MonoBehaviour
     public string Name;
     public CharacterRace Race;
     public int Level;
+    public int LevelingHealthPercent;
+    public int LevelingDamagePercent;
     public int Experience;
     public int Gold;
     public int HpMax;
     public int Hp;
     public int PmMax;
     public int Pm;
+    public List<WeaponType> FavWeapons;
     public List<Weapon> Weapons;
 
     private SampleGridSceneBhv _sampleGridSceneBhv;
@@ -92,7 +95,7 @@ public class CharacterBhv : MonoBehaviour
 
     public void Move()
     {
-        transform.position = Vector2.Lerp(transform.position, _pathfindingSteps[0], 0.5f);
+        transform.position = Vector2.Lerp(transform.position, _pathfindingSteps[0], 0.7f);
         if ((Vector2)transform.position == _pathfindingSteps[0])
         {
             _pathfindingSteps.RemoveAt(0);
@@ -105,19 +108,4 @@ public class CharacterBhv : MonoBehaviour
             }
         }
     }
-
-    public enum CharacterRace
-    {
-        Human = 0,
-        Gobelin = 1,
-        Elf = 2,
-        Dwarf = 3,
-        Orc = 4
-    }
-
-    #region PathFinding
-
-    
-
-    #endregion
 }

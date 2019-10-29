@@ -18,15 +18,6 @@ public static class Constants
     public const string SampleScene = "SampleScene";
     public const string SampleGridScene = "SampleGridScene";
 
-    //  VALUES  //
+    //  GRID  //
     public const int GridMax = 6;
-
-
-    //  WEAPONS //
-    public static List<string> NormalNames = new List<string> { "", "Classic", "Usual", "Unoriginal", "Average", "Child", "Weird" };
-    public static List<string> MagicalNames = new List<string> { "Magical", "Enchanted", "Lost", "Knight", "Your mom's", "Mythical", "Ok" };
-    public static List<string> RareNames = new List<string> { "|Of Doom", "Enormous", "Super", "|2.0", "|of Death", "|of Truth" };
-
-    //  SWORD  //
-
 }

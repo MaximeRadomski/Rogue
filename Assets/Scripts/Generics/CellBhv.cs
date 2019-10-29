@@ -14,6 +14,10 @@ public class CellBhv : MonoBehaviour
     private SampleGridSceneBhv _sampleGridSceneBhv;
     private SoundControlerBhv _soundControler;
 
+    private bool _isStretching;
+    private Vector3 _resetedScale;
+    private Vector3 _pressedScale;
+
     private void Start()
     {
         SetPrivates();
@@ -24,6 +28,9 @@ public class CellBhv : MonoBehaviour
     {
         _sampleGridSceneBhv = GameObject.Find("Canvas").GetComponent<SampleGridSceneBhv>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
+        _isStretching = false;
+        _resetedScale = new Vector3(1.0f, 1.0f, 1.0f);
+        _pressedScale = new Vector3(1.1f, 1.1f, 1.0f);
     }
 
     private void SetVisuals()
@@ -45,6 +52,8 @@ public class CellBhv : MonoBehaviour
 
     public void BeginAction()
     {
+        _isStretching = true;
+        transform.localScale = _pressedScale;
         _soundControler.PlaySound(_soundControler.ClickIn);
     }
 
@@ -94,11 +103,20 @@ public class CellBhv : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().color = new Color(0.8f, 1.0f, 0.8f, 1.0f);
     }
 
-    //DEBUG//
-    //void Update()
-    //{
-    //    transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = Visited.ToString();
-    //}
+    void Update()
+    {
+        if (_isStretching)
+            StretchOnBegin();
+        //DEBUG//
+        //transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = Visited.ToString();
+    }
+
+    private void StretchOnBegin()
+    {
+        transform.localScale = Vector3.Lerp(transform.localScale, _resetedScale, 0.2f);
+        if (transform.localScale == _resetedScale)
+            _isStretching = false;
+    }
 
     public enum CellType
     {

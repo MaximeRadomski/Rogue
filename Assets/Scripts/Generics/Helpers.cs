@@ -23,4 +23,74 @@ public static class Helpers
             && (color1.b >= color2.b - precision && color1.b <= color2.b + precision)
             && (color1.a >= color2.a - precision && color1.a <= color2.a + precision);
     }
+
+    public static RangePos DetermineRangePosFromRangeDirection(RangePos position, RangeDirection diretion)
+    {
+        //Up
+        if (position.X == 0 && position.Y == 1)
+        {
+            switch (diretion)
+            {
+                case RangeDirection.Up:
+                    return new RangePos(0, 1);
+                case RangeDirection.Left:
+                    return new RangePos(-1, 0);
+                case RangeDirection.Right:
+                    return new RangePos(1, 0);
+                case RangeDirection.DiagonalLeft:
+                    return new RangePos(-1, 1);
+                case RangeDirection.DiagonalRight:
+                    return new RangePos(1, 1);
+            }
+        }
+        else if (position.X == 1 && position.Y == 0)
+        {
+            switch (diretion)
+            {
+                case RangeDirection.Up:
+                    return new RangePos(1, 0);
+                case RangeDirection.Left:
+                    return new RangePos(0, 1);
+                case RangeDirection.Right:
+                    return new RangePos(0, -1);
+                case RangeDirection.DiagonalLeft:
+                    return new RangePos(1, 1);
+                case RangeDirection.DiagonalRight:
+                    return new RangePos(1, -1);
+            }
+        }
+        else if (position.X == 0 && position.Y == -1)
+        {
+            switch (diretion)
+            {
+                case RangeDirection.Up:
+                    return new RangePos(0, -1);
+                case RangeDirection.Left:
+                    return new RangePos(1, 0);
+                case RangeDirection.Right:
+                    return new RangePos(-1, 0);
+                case RangeDirection.DiagonalLeft:
+                    return new RangePos(1, -1);
+                case RangeDirection.DiagonalRight:
+                    return new RangePos(-1, -1);
+            }
+        }
+        else if (position.X == -1 && position.Y == 0)
+        {
+            switch (diretion)
+            {
+                case RangeDirection.Up:
+                    return new RangePos(-1, 0);
+                case RangeDirection.Left:
+                    return new RangePos(0, -1);
+                case RangeDirection.Right:
+                    return new RangePos(0, 1);
+                case RangeDirection.DiagonalLeft:
+                    return new RangePos(-1, -1);
+                case RangeDirection.DiagonalRight:
+                    return new RangePos(-1, 1);
+            }
+        }
+        return new RangePos(0, 0);
+    }
 }
