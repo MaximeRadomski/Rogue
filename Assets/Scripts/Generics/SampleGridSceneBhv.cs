@@ -10,12 +10,15 @@ public class SampleGridSceneBhv : MonoBehaviour
     private Maps.Map _map;
     private Grid _grid;
     private GameObject _player;
+    private GameObject _opponent;
 
     void Start()
     {
+        Application.targetFrameRate = 60;
         SetPrivates();
         SetButtons();
         InitGrid();
+        InitOpponent();
         InitPlayer();
         GameLife();
     }
@@ -30,6 +33,7 @@ public class SampleGridSceneBhv : MonoBehaviour
     {
         GameObject.Find("ButtonReload").GetComponent<ButtonBhv>().EndActionDelegate = ReloadScene;
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToSampleScene;
+        GameObject.Find("ButtonPassTurn").GetComponent<ButtonBhv>().EndActionDelegate = PassTurn;
     }
 
     public void GoToSampleScene()
@@ -63,6 +67,37 @@ public class SampleGridSceneBhv : MonoBehaviour
         cellInstance.GetComponent<CellBhv>().State = CellBhv.CellState.None;
         Cells[x, y] = cellInstance;
     }
+
+    private void InitOpponent()
+    {
+        var characterObject = Resources.Load<GameObject>("Prefabs/TemplateCharacter");
+        _opponent = Instantiate(characterObject, GameObject.Find("Cell24").transform.position, characterObject.transform.rotation);
+        _opponent.name = "Opponent";
+        _opponent.GetComponent<CharacterBhv>().X = 2;
+        _opponent.GetComponent<CharacterBhv>().Y = 4;
+        _opponent.GetComponent<CharacterBhv>().Name = "TemplateOpponent";
+        _opponent.GetComponent<CharacterBhv>().Race = CharacterBhv.CharacterRace.Elf;
+        _opponent.GetComponent<CharacterBhv>().Level = 1;
+        _opponent.GetComponent<CharacterBhv>().Gold = 0;
+        _opponent.GetComponent<CharacterBhv>().HpMax = 1000;
+        _opponent.GetComponent<CharacterBhv>().PmMax = 4;
+    }
+
+    private void InitPlayer()
+    {
+        var characterObject = Resources.Load<GameObject>("Prefabs/TemplateCharacter");
+        _player = Instantiate(characterObject, GameObject.Find("Cell31").transform.position, characterObject.transform.rotation);
+        _player.name = "Player";
+        _player.GetComponent<CharacterBhv>().X = 3;
+        _player.GetComponent<CharacterBhv>().Y = 1;
+        _player.GetComponent<CharacterBhv>().Name = "TemplateCharacter";
+        _player.GetComponent<CharacterBhv>().Race = CharacterBhv.CharacterRace.Human;
+        _player.GetComponent<CharacterBhv>().Level = 1;
+        _player.GetComponent<CharacterBhv>().Gold = 0;
+        _player.GetComponent<CharacterBhv>().HpMax = 1000;
+        _player.GetComponent<CharacterBhv>().PmMax = 4;
+    }
+
     public void ResetAllCellsDisplay()
     {
         for (int y = 0; y < Constants.GridMax; ++y)
@@ -85,21 +120,6 @@ public class SampleGridSceneBhv : MonoBehaviour
         }
     }
 
-    private void InitPlayer()
-    {
-        var characterObject = Resources.Load<GameObject>("Prefabs/TemplateCharacter");
-        _player = Instantiate(characterObject, GameObject.Find("Cell31").transform.position, characterObject.transform.rotation);
-        _player.name = "Player";
-        _player.GetComponent<CharacterBhv>().X = 3;
-        _player.GetComponent<CharacterBhv>().Y = 1;
-        _player.GetComponent<CharacterBhv>().Name = "TemplateCharacter";
-        _player.GetComponent<CharacterBhv>().Race = CharacterBhv.CharacterRace.Human;
-        _player.GetComponent<CharacterBhv>().Level = 1;
-        _player.GetComponent<CharacterBhv>().Gold = 0;
-        _player.GetComponent<CharacterBhv>().Hp = 1000;
-        _player.GetComponent<CharacterBhv>().Pm = 4;
-    }
-
     private void GameLife()
     {
         ResetAllCellsDisplay();
@@ -109,7 +129,14 @@ public class SampleGridSceneBhv : MonoBehaviour
 
     private void PlayerTurn()
     {
+        _player.GetComponent<CharacterBhv>().Pm = _player.GetComponent<CharacterBhv>().PmMax;
         ShowPm();
+    }
+
+    private void PassTurn()
+    {
+        GameObject.Find("TurnCount").GetComponent<UnityEngine.UI.Text>().text = "Turn Count: " + (++_player.GetComponent<CharacterBhv>().Turn).ToString();
+        PlayerTurn();
     }
 
     public void AfterPlayerMoved()
@@ -121,9 +148,11 @@ public class SampleGridSceneBhv : MonoBehaviour
     private void ShowPm()
     {
         var nbPm = _player.GetComponent<CharacterBhv>().Pm;
-        if (nbPm <= 0)
+        int x = _player.GetComponent<CharacterBhv>().X;
+        int y = _player.GetComponent<CharacterBhv>().Y;
+        if (nbPm <= 0 || IsAdjacentOpponent(x, y))
             return;
-        SpreadPmStart(_player.GetComponent<CharacterBhv>().X, _player.GetComponent<CharacterBhv>().Y, nbPm);
+        SpreadPmStart(x, y, nbPm);
     }
 
     private void SpreadPmStart(int x, int y, int nbPm)
@@ -141,19 +170,37 @@ public class SampleGridSceneBhv : MonoBehaviour
         var cell = Cells[x, y];
         if (cell == null || (x == _player.GetComponent<CharacterBhv>().X && y == _player.GetComponent<CharacterBhv>().Y))
             return;
-        if (cell.GetComponent<CellBhv>().Type == CellBhv.CellType.On && (spentPm < cell.GetComponent<CellBhv>().Visited || cell.GetComponent<CellBhv>().Visited == -1))
+        if (cell.GetComponent<CellBhv>().Type == CellBhv.CellType.On
+            && (spentPm < cell.GetComponent<CellBhv>().Visited || cell.GetComponent<CellBhv>().Visited == -1)
+            && !(x == _opponent.GetComponent<CharacterBhv>().X && y == _opponent.GetComponent<CharacterBhv>().Y))
         {
             cell.GetComponent<CellBhv>().ShowPm();
             cell.GetComponent<CellBhv>().Visited = spentPm;
-            cell.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = cell.GetComponent<CellBhv>().Visited.ToString();
+            //DEBUG//
+            //cell.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = cell.GetComponent<CellBhv>().Visited.ToString();
         }
-        if (cell.GetComponent<CellBhv>().Type == CellBhv.CellType.On && --nbPm > 0)
+        if (cell.GetComponent<CellBhv>().Type == CellBhv.CellType.On && --nbPm > 0 && !IsAdjacentOpponent(x, y))
         {
             SpreadPm(x, y + 1, nbPm, spentPm + 1);
             SpreadPm(x + 1, y, nbPm, spentPm + 1);
             SpreadPm(x, y - 1, nbPm, spentPm + 1);
             SpreadPm(x - 1, y, nbPm, spentPm + 1);
         }
+    }
+
+    public bool IsAdjacentOpponent(int x, int y)
+    {
+        int xOpponent = _opponent.GetComponent<CharacterBhv>().X;
+        int yOpponent = _opponent.GetComponent<CharacterBhv>().Y;
+        if (x == xOpponent && y + 1 == yOpponent)
+            return true;
+        else if (x + 1 == xOpponent && y == yOpponent)
+            return true;
+        else if (x == xOpponent && y - 1 == yOpponent)
+            return true;
+        else if (x - 1 == xOpponent && y == yOpponent)
+            return true;
+        return false;
     }
 
     private void ReloadScene()

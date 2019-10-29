@@ -21,10 +21,9 @@ public class CharacterBhv : MonoBehaviour
     public List<Weapon> Weapons;
 
     private SampleGridSceneBhv _sampleGridSceneBhv;
-    private Vector2 _cellToReach;
     private int _cellToReachX;
     private int _cellToReachY;
-    private List<Vector2> _pathfindingCorders;
+    private List<Vector2> _pathfindingSteps;
 
     void Start()
     {
@@ -35,8 +34,7 @@ public class CharacterBhv : MonoBehaviour
     {
         Turn = 0;
         IsMoving = false;
-        _cellToReach = transform.position;
-        _pathfindingCorders = new List<Vector2>();
+        _pathfindingSteps = new List<Vector2>();
         _sampleGridSceneBhv = GameObject.Find("Canvas").GetComponent<SampleGridSceneBhv>();
     }
 
@@ -46,51 +44,59 @@ public class CharacterBhv : MonoBehaviour
             Move();
     }
 
-    public void MoveToPosition(Vector2 cellToReach, int x, int y)
+    public void MoveToPosition(int x, int y, bool usePm = true)
     {
-        _cellToReach = cellToReach;
         _cellToReachX = x;
         _cellToReachY = y;
-        SetPath();
+        if (usePm)
+            SetPath();
+        else
+        {
+            _pathfindingSteps.Clear();
+            _pathfindingSteps.Add(_sampleGridSceneBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
+        }
         IsMoving = true;
     }
 
     private void SetPath()
     {
-        _pathfindingCorders.Clear();
-        _pathfindingCorders.Add(_sampleGridSceneBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
+        _pathfindingSteps.Clear();
+        _pathfindingSteps.Add(_sampleGridSceneBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
         var visitedIndex = _sampleGridSceneBhv.Cells[_cellToReachX, _cellToReachY].GetComponent<CellBhv>().Visited;
+        Pm -= visitedIndex;
         int x = _cellToReachX;
         int y = _cellToReachY;
         while (visitedIndex > 0)
         {
-            if (LookForLowerIndex(x, y + 1, visitedIndex - 1))
+            if (LookForLowerIndex(x, y + 1, visitedIndex - 1) && !_sampleGridSceneBhv.IsAdjacentOpponent(x, y + 1))
                 ++y;
-            else if (LookForLowerIndex(x + 1, y, visitedIndex - 1))
+            else if (LookForLowerIndex(x + 1, y, visitedIndex - 1) && !_sampleGridSceneBhv.IsAdjacentOpponent(x + 1, y))
                 ++x;
-            else if (LookForLowerIndex(x, y - 1, visitedIndex - 1))
+            else if (LookForLowerIndex(x, y - 1, visitedIndex - 1) && !_sampleGridSceneBhv.IsAdjacentOpponent(x, y - 1))
                 --y;
-            else if (LookForLowerIndex(x - 1, y, visitedIndex - 1))
+            else if (LookForLowerIndex(x - 1, y, visitedIndex - 1) && !_sampleGridSceneBhv.IsAdjacentOpponent(x - 1, y))
                 --x;
-            _pathfindingCorders.Insert(0, _sampleGridSceneBhv.Cells[x, y].transform.position);
+            _pathfindingSteps.Insert(0, _sampleGridSceneBhv.Cells[x, y].transform.position);
             --visitedIndex;
         }
     }
 
     private bool LookForLowerIndex(int x, int y, int visitedIndex)
     {
-        if (_sampleGridSceneBhv.Cells[_cellToReachX, _cellToReachY].GetComponent<CellBhv>().Visited == visitedIndex)
+        if (x >= Constants.GridMax || y >= Constants.GridMax || x < 0 || y < 0)
+            return false;
+        if (_sampleGridSceneBhv.Cells[x, y].GetComponent<CellBhv>().Visited == visitedIndex)
             return true;
         return false;
     }
 
     public void Move()
     {
-        transform.position = Vector2.Lerp(transform.position, _pathfindingCorders[0], 0.2f);
-        if ((Vector2)transform.position == _pathfindingCorders[0])
+        transform.position = Vector2.Lerp(transform.position, _pathfindingSteps[0], 0.5f);
+        if ((Vector2)transform.position == _pathfindingSteps[0])
         {
-            _pathfindingCorders.RemoveAt(0);
-            if (_pathfindingCorders.Count == 0)
+            _pathfindingSteps.RemoveAt(0);
+            if (_pathfindingSteps.Count == 0)
             {
                 IsMoving = false;
                 X = _cellToReachX;

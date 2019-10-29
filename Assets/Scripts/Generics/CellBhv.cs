@@ -12,6 +12,7 @@ public class CellBhv : MonoBehaviour
 
     private CharacterBhv _player;
     private SampleGridSceneBhv _sampleGridSceneBhv;
+    private SoundControlerBhv _soundControler;
 
     private void Start()
     {
@@ -21,9 +22,9 @@ public class CellBhv : MonoBehaviour
 
     private void SetPrivates()
     {
-        Visited = -1;
         _sampleGridSceneBhv = GameObject.Find("Canvas").GetComponent<SampleGridSceneBhv>();
-}
+        _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
+    }
 
     private void SetVisuals()
     {
@@ -44,7 +45,7 @@ public class CellBhv : MonoBehaviour
 
     public void BeginAction()
     {
-        
+        _soundControler.PlaySound(_soundControler.ClickIn);
     }
 
     public void DoAction()
@@ -56,7 +57,8 @@ public class CellBhv : MonoBehaviour
     {
         if (State == CellState.None)
             return;
-        else if (State == CellState.Mouvement)
+        _soundControler.PlaySound(_soundControler.ClickOut);
+        if (State == CellState.Mouvement)
         {
             AskPlayerToMove();
             _sampleGridSceneBhv.ResetAllCellsDisplay();
@@ -69,8 +71,7 @@ public class CellBhv : MonoBehaviour
             GetPlayer();
         if (!_player.IsMoving)
         {
-            Visited = 0;
-            _player.MoveToPosition(transform.position, X, Y);
+            _player.MoveToPosition(X, Y);
         }
     }
 
@@ -92,6 +93,12 @@ public class CellBhv : MonoBehaviour
         State = CellState.Mouvement;
         gameObject.GetComponent<SpriteRenderer>().color = new Color(0.8f, 1.0f, 0.8f, 1.0f);
     }
+
+    //DEBUG//
+    //void Update()
+    //{
+    //    transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = Visited.ToString();
+    //}
 
     public enum CellType
     {
