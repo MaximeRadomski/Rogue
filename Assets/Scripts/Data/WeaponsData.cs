@@ -87,8 +87,7 @@ public static class WeaponsData
         }
         tmpWeapon.Name = name;
         tmpWeapon.Rarity = rarity;
-        float BaseInitDamageRangePercentageFloat = BaseInitDamageRangePercentage;
-        var baseDamageFloat = tmpWeapon.BaseDamage * (1.0f + (Random.Range(-BaseInitDamageRangePercentageFloat, BaseInitDamageRangePercentageFloat) / 100));
+        var baseDamageFloat = tmpWeapon.BaseDamage * Helpers.MultiplierFromPercent(1, Random.Range(-BaseInitDamageRangePercentage, BaseInitDamageRangePercentage));
         tmpWeapon.BaseDamage = (int)baseDamageFloat;
         return tmpWeapon;
     }
@@ -101,7 +100,7 @@ public static class WeaponsData
         switch (rarity)
         {
             case WeaponRarity.Normal:
-                return NormalNames[Random.Range(0, NormalNames.Length)] + weaponTypeName;
+                return NormalNames[Random.Range(0, NormalNames.Length)] + " " + weaponTypeName;
             case WeaponRarity.Magical:
                 return MagicalNames[Random.Range(0, MagicalNames.Length)] + " " + weaponTypeName;
             case WeaponRarity.Rare:

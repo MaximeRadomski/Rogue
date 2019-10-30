@@ -6,28 +6,31 @@ public class CharacterBhv : MonoBehaviour
 {
     public int X;
     public int Y;
-    public bool IsMoving;
-    public int Turn;
+    public bool IsMoving = false;
+    public int Turn = 0;
     public int Pm;
     public int Pa;
     public Character Character;
+    public bool IsPlayer = false;
 
     private GridSceneBhv _gridSceneBhv;
     private int _cellToReachX;
     private int _cellToReachY;
-    private List<Vector2> _pathfindingSteps;
+    private List<Vector2> _pathfindingSteps = new List<Vector2>();
 
     void Start()
     {
         SetVariables();
     }
 
+    private void GetGridScene()
+    {
+        _gridSceneBhv = GameObject.Find("Canvas").GetComponent<GridSceneBhv>();
+    }
+
     private void SetVariables()
     {
-        Turn = 0;
-        IsMoving = false;
-        _pathfindingSteps = new List<Vector2>();
-        _gridSceneBhv = GameObject.Find("Canvas").GetComponent<GridSceneBhv>();
+        GetGridScene();
     }
 
     void Update()
@@ -45,6 +48,8 @@ public class CharacterBhv : MonoBehaviour
         else
         {
             _pathfindingSteps.Clear();
+            if (_gridSceneBhv == null)
+                GetGridScene();
             _pathfindingSteps.Add(_gridSceneBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
         }
         IsMoving = true;
@@ -93,7 +98,8 @@ public class CharacterBhv : MonoBehaviour
                 IsMoving = false;
                 X = _cellToReachX;
                 Y = _cellToReachY;
-                _gridSceneBhv.AfterPlayerAction();
+                if (IsPlayer)
+                    _gridSceneBhv.AfterPlayerAction();
             }
         }
     }

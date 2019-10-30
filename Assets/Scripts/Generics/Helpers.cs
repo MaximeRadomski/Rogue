@@ -11,11 +11,27 @@ public static class Helpers
         {
             floatXp = floatXp + (floatXp * (0.5f - ((float)(i - 1) / 100)));
         }
-        int intXp = (int)floatXp;
-        int roundedXp = intXp + (intXp % 10 == 0 ? 0 : 10 - intXp % 10);
-        //DEBUG//
-        //Debug.Log("XP for level " + level + ":" + roundedXp);
-        return roundedXp;
+        return RoundToNextDecade((int)floatXp);
+    }
+
+    public static int MaxHpFromLevelOne(int baseMaxHp, int level, int LevelingHealthPercent)
+    {
+        float floatMaxHp = baseMaxHp;
+        for (int i = 1; i < level; ++i)
+        {
+            floatMaxHp = floatMaxHp * MultiplierFromPercent(1, LevelingHealthPercent);
+        }
+        return RoundToNextDecade((int)floatMaxHp);
+    }
+
+    public static float MultiplierFromPercent(int root, int percent)
+    {
+        return (float)root + ((float)percent / 100.0f);
+    }
+
+    public static int RoundToNextDecade(int value)
+    {
+        return value + (value % 10 == 0 ? 0 : 10 - value % 10);
     }
 
     public static bool FloatEqualsPrecision(float float1, float float2, float precision)

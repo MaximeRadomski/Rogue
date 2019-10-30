@@ -26,7 +26,7 @@ public static class RacesData
     public static int StringInDamagePercent = 10;
     public static int TransgenderChancePercentage = 5;
 
-    public static Character GetCharacterFromRaceAndLevel(CharacterRace race, int level)
+    public static Character GetCharacterFromRaceAndLevel(CharacterRace race, int level, bool isPlayer = false)
     {
         CharacterGender gender = (CharacterGender)Random.Range(0, 2);
         CharacterGender nameGender = gender;
@@ -45,30 +45,124 @@ public static class RacesData
         switch (race)
         {
             case CharacterRace.Human:
-                tmpCharacter = GetBaseHuman();
+                tmpCharacter = GetBaseHuman(isPlayer);
+                break;
+            case CharacterRace.Gobelin:
+                tmpCharacter = GetBaseGobelin(isPlayer);
+                break;
+            case CharacterRace.Elf:
+                tmpCharacter = GetBaseElf(isPlayer);
+                break;
+            case CharacterRace.Dwarf:
+                tmpCharacter = GetBaseDwarf(isPlayer);
+                break;
+            case CharacterRace.Orc:
+                tmpCharacter = GetBaseOrc(isPlayer);
                 break;
         }
         tmpCharacter.Gender = gender;
         tmpCharacter.Name = name;
+        tmpCharacter.Level = level;
+        tmpCharacter.HpMax = Helpers.MaxHpFromLevelOne(tmpCharacter.HpMax, level, tmpCharacter.LevelingHealthPercent);
+        tmpCharacter.Gold = 0;
+        tmpCharacter.Experience = 0;
         return tmpCharacter;
     }
 
     //  HUMAN  //
-    public static Character GetBaseHuman(bool IsPlayer = true)
+    public static Character GetBaseHuman(bool isPlayer = false)
     {
         return new Character()
         {
             Race = CharacterRace.Human,
             StrongAgainst = CharacterRace.Gobelin,
-            StrongIn = MapType.city,
+            StrongIn = MapType.City,
             HpMax = 300,
             PaMax = 6,
             PmMax = 2,
             LevelingHealthPercent = 15,
             LevelingDamagePercent = 15,
             FavWeapons = new List<WeaponType> { WeaponType.Sword, WeaponType.Spear },
-            Weapons = new List<Weapon> { WeaponsData.GetWeaponFromType(WeaponType.Sword, IsPlayer),
-                                         WeaponsData.GetWeaponFromType(WeaponType.Spear, IsPlayer) }
+            Weapons = new List<Weapon> { WeaponsData.GetWeaponFromType(WeaponType.Sword, isPlayer),
+                                         WeaponsData.GetWeaponFromType(WeaponType.Spear, isPlayer) }
+        };
+    }
+
+    //  GOBELIN  //
+    public static Character GetBaseGobelin(bool isPlayer = false)
+    {
+        return new Character()
+        {
+            Race = CharacterRace.Gobelin,
+            StrongAgainst = CharacterRace.Elf,
+            StrongIn = MapType.Sewers,
+            HpMax = 250,
+            PaMax = 6,
+            PmMax = 3,
+            LevelingHealthPercent = 10,
+            LevelingDamagePercent = 20,
+            FavWeapons = new List<WeaponType> { WeaponType.Club, WeaponType.Knife },
+            Weapons = new List<Weapon> { WeaponsData.GetWeaponFromType(WeaponType.Club, isPlayer),
+                                         WeaponsData.GetWeaponFromType(WeaponType.Knife, isPlayer) }
+        };
+    }
+
+    //  ELF  //
+    public static Character GetBaseElf(bool isPlayer = false)
+    {
+        return new Character()
+        {
+            Race = CharacterRace.Elf,
+            StrongAgainst = CharacterRace.Dwarf,
+            StrongIn = MapType.Forest,
+            HpMax = 200,
+            PaMax = 6,
+            PmMax = 4,
+            LevelingHealthPercent = 5,
+            LevelingDamagePercent = 25,
+            FavWeapons = new List<WeaponType> { WeaponType.Bow, WeaponType.Daggers },
+            Weapons = new List<Weapon> { WeaponsData.GetWeaponFromType(WeaponType.Bow, isPlayer),
+                                         WeaponsData.GetWeaponFromType(WeaponType.Daggers, isPlayer) }
+        };
+    }
+
+
+    //  DWARF  //
+    public static Character GetBaseDwarf(bool isPlayer = false)
+    {
+        return new Character()
+        {
+            Race = CharacterRace.Dwarf,
+            StrongAgainst = CharacterRace.Orc,
+            StrongIn = MapType.Mines,
+            HpMax = 400,
+            PaMax = 6,
+            PmMax = 2,
+            LevelingHealthPercent = 10,
+            LevelingDamagePercent = 20,
+            FavWeapons = new List<WeaponType> { WeaponType.Hammer, WeaponType.Axe },
+            Weapons = new List<Weapon> { WeaponsData.GetWeaponFromType(WeaponType.Hammer, isPlayer),
+                                         WeaponsData.GetWeaponFromType(WeaponType.Axe, isPlayer) }
+        };
+    }
+
+
+    //  ORC  //
+    public static Character GetBaseOrc(bool isPlayer = false)
+    {
+        return new Character()
+        {
+            Race = CharacterRace.Orc,
+            StrongAgainst = CharacterRace.Human,
+            StrongIn = MapType.Mountains,
+            HpMax = 500,
+            PaMax = 6,
+            PmMax = 2,
+            LevelingHealthPercent = 20,
+            LevelingDamagePercent = 10,
+            FavWeapons = new List<WeaponType> { WeaponType.GreatSword, WeaponType.Gauntlets },
+            Weapons = new List<Weapon> { WeaponsData.GetWeaponFromType(WeaponType.GreatSword, isPlayer),
+                                         WeaponsData.GetWeaponFromType(WeaponType.Gauntlets, isPlayer) }
         };
     }
 }

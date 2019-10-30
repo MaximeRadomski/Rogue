@@ -21,17 +21,6 @@ public class GridSceneBhv : MonoBehaviour
         InitOpponent();
         InitPlayer();
         GameLife();
-        Helpers.XpNeedForLevel(1);
-        Helpers.XpNeedForLevel(2);
-        Helpers.XpNeedForLevel(3);
-        Helpers.XpNeedForLevel(4);
-        Helpers.XpNeedForLevel(5);
-        Helpers.XpNeedForLevel(6);
-        Helpers.XpNeedForLevel(7);
-        Helpers.XpNeedForLevel(8);
-        Helpers.XpNeedForLevel(9);
-        Helpers.XpNeedForLevel(10);
-        Helpers.XpNeedForLevel(11);
     }
 
     private void SetPrivates()
@@ -75,64 +64,58 @@ public class GridSceneBhv : MonoBehaviour
         var cellBhv = cellInstance.GetComponent<CellBhv>();
         cellBhv.X = x;
         cellBhv.Y = y;
-        cellBhv.Type = (CellBhv.CellType)int.Parse(c.ToString(),System.Globalization.NumberStyles.Integer);
-        cellBhv.State = CellBhv.CellState.None;
+        cellBhv.Type = (CellType)int.Parse(c.ToString(),System.Globalization.NumberStyles.Integer);
+        if (cellBhv.Type == CellType.Spawn || cellBhv.Type == CellType.OpponentSpawn)
+            cellBhv.State = CellState.Spawn;
+        else
+            cellBhv.State = CellState.None;
         Cells[x, y] = cellInstance;
     }
 
     private void InitOpponent()
     {
         var characterObject = Resources.Load<GameObject>("Prefabs/TemplateCharacter");
-        _opponent = Instantiate(characterObject, GameObject.Find("Cell24").transform.position, characterObject.transform.rotation);
+        _opponent = Instantiate(characterObject, new Vector2(-3.0f, 5.0f), characterObject.transform.rotation);
         _opponent.name = "Opponent";
         var characterBhv = _opponent.GetComponent<CharacterBhv>();
-        characterBhv.X = 2;
-        characterBhv.Y = 4;
-        characterBhv.Character = RacesData.GetBaseHuman();
-        characterBhv.Character.Name = "TemplateOpponent";
-        characterBhv.Character.Race = CharacterRace.Elf;
-        characterBhv.Character.Level = 1;
-        characterBhv.Character.Gold = 0;
-        characterBhv.Character.HpMax = 1000;
-        characterBhv.Character.PmMax = 4;
+        characterBhv.X = 0;
+        characterBhv.Y = 0;
+        characterBhv.Character = RacesData.GetCharacterFromRaceAndLevel(CharacterRace.Gobelin, 1);
     }
 
     private void InitPlayer()
     {
         var characterObject = Resources.Load<GameObject>("Prefabs/TemplateCharacter");
-        _player = Instantiate(characterObject, GameObject.Find("Cell31").transform.position, characterObject.transform.rotation);
+        _player = Instantiate(characterObject, new Vector2(3.0f, -5.0f), characterObject.transform.rotation);
         _player.name = "Player";
         var characterBhv = _player.GetComponent<CharacterBhv>();
-        characterBhv.X = 3;
-        characterBhv.Y = 1;
-        characterBhv.Character = RacesData.GetBaseHuman();
-        characterBhv.Character.Name = "TemplateCharacter";
-        characterBhv.Character.Race = CharacterRace.Human;
-        characterBhv.Character.Level = 1;
-        characterBhv.Character.Gold = 0;
-        characterBhv.Character.HpMax = 1000;
-        characterBhv.Character.PmMax = 4;
+        characterBhv.X = 0;
+        characterBhv.Y = 0;
+        characterBhv.Character = RacesData.GetCharacterFromRaceAndLevel(CharacterRace.Human, 1, true);
+        characterBhv.IsPlayer = true;
     }
 
     public void ResetAllCellsDisplay()
     {
-        for (int y = 0; y < Constants.GridMax; ++y)
+        foreach (var cell in Cells)
         {
-            for (int x = 0; x < Constants.GridMax; ++x)
-            {
-                Cells[x, y].GetComponent<CellBhv>().ResetDisplay();
-            }
+            cell.GetComponent<CellBhv>().ResetDisplay();
         }
     }
 
     public void ResetAllCellsVisited()
     {
-        for (int y = 0; y < Constants.GridMax; ++y)
+        foreach (var cell in Cells)
         {
-            for (int x = 0; x < Constants.GridMax; ++x)
-            {
-                Cells[x, y].GetComponent<CellBhv>().ResetVisited();
-            }
+            cell.GetComponent<CellBhv>().ResetVisited();
+        }
+    }
+
+    public void ResetAllCellsSpawn()
+    {
+        foreach (var cell in Cells)
+        {
+            cell.GetComponent<CellBhv>().ResetSpawn();
         }
     }
 
@@ -140,25 +123,60 @@ public class GridSceneBhv : MonoBehaviour
     {
         ResetAllCellsDisplay();
         ResetAllCellsVisited();
-        PlayerTurn();
+        PlaceOpponent();
+        PlacePlayer();
+    }
+
+    private void PlaceOpponent()
+    {
+        int nbOpponentSpawns = 0;
+        char spawnChar = CellType.OpponentSpawn.GetHashCode().ToString()[0];
+        foreach (char c in _map.Cells)
+        {
+            if (c == spawnChar)
+                ++nbOpponentSpawns;
+        }
+        int opponentSpawn = Random.Range(0, nbOpponentSpawns);
+        int preciseCharId = -1;
+        for (int i = 0; i <= opponentSpawn; ++i)
+        {
+            preciseCharId = _map.Cells.IndexOf(spawnChar, preciseCharId + 1);
+        }
+        _opponent.GetComponent<CharacterBhv>().MoveToPosition(preciseCharId % Constants.GridMax, preciseCharId / Constants.GridMax, false);
+    }
+
+    private void PlacePlayer()
+    {
+        foreach (var cell in Cells)
+        {
+            cell.GetComponent<CellBhv>().ShowPlayerSpawn();
+        }
     }
 
     private void PlayerTurn()
     {
         _player.GetComponent<CharacterBhv>().Pm = _player.GetComponent<CharacterBhv>().Character.PmMax;
+        _player.GetComponent<CharacterBhv>().Turn++;
+        //DEBUG//
+        GameObject.Find("TurnCount").GetComponent<UnityEngine.UI.Text>().text = "Turn Count: " + (_player.GetComponent<CharacterBhv>().Turn).ToString();
         ShowPm();
     }
 
     private void PassTurn()
     {
-        GameObject.Find("TurnCount").GetComponent<UnityEngine.UI.Text>().text = "Turn Count: " + (++_player.GetComponent<CharacterBhv>().Turn).ToString();
+        if (_player.GetComponent<CharacterBhv>().Turn == 0)
+            return;
         PlayerTurn();
     }
 
     public void AfterPlayerAction()
     {
         ResetAllCellsVisited();
-        ShowPm();
+        ResetAllCellsDisplay();
+        if (_player.GetComponent<CharacterBhv>().Turn == 0)
+            PlayerTurn();
+        else
+            ShowPm();
     }
 
     private void ShowPm()
@@ -186,7 +204,7 @@ public class GridSceneBhv : MonoBehaviour
         var cell = Cells[x, y];
         if (cell == null || (x == _player.GetComponent<CharacterBhv>().X && y == _player.GetComponent<CharacterBhv>().Y))
             return;
-        if (cell.GetComponent<CellBhv>().Type == CellBhv.CellType.On
+        if (cell.GetComponent<CellBhv>().Type == CellType.On
             && (spentPm < cell.GetComponent<CellBhv>().Visited || cell.GetComponent<CellBhv>().Visited == -1)
             && !(x == _opponent.GetComponent<CharacterBhv>().X && y == _opponent.GetComponent<CharacterBhv>().Y))
         {
@@ -195,7 +213,7 @@ public class GridSceneBhv : MonoBehaviour
             //DEBUG//
             //cell.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = cell.GetComponent<CellBhv>().Visited.ToString();
         }
-        if (cell.GetComponent<CellBhv>().Type == CellBhv.CellType.On && --nbPm > 0 && !IsAdjacentOpponent(x, y))
+        if (cell.GetComponent<CellBhv>().Type == CellType.On && --nbPm > 0 && !IsAdjacentOpponent(x, y))
         {
             SpreadPm(x, y + 1, nbPm, spentPm + 1);
             SpreadPm(x + 1, y, nbPm, spentPm + 1);

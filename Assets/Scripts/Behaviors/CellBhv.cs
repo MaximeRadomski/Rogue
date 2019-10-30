@@ -11,7 +11,7 @@ public class CellBhv : MonoBehaviour
     public CellState State;
 
     private CharacterBhv _player;
-    private GridSceneBhv _sampleGridSceneBhv;
+    private GridSceneBhv _gridSceneBhv;
     private SoundControlerBhv _soundControler;
 
     private bool _isStretching;
@@ -21,27 +21,41 @@ public class CellBhv : MonoBehaviour
     private void Start()
     {
         SetPrivates();
-        SetVisuals();
+        SetStartVisuals();
     }
 
     private void SetPrivates()
     {
-        _sampleGridSceneBhv = GameObject.Find("Canvas").GetComponent<GridSceneBhv>();
+        _gridSceneBhv = GameObject.Find("Canvas").GetComponent<GridSceneBhv>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _isStretching = false;
         _resetedScale = new Vector3(1.0f, 1.0f, 1.0f);
         _pressedScale = new Vector3(1.1f, 1.1f, 1.0f);
     }
 
-    private void SetVisuals()
+    private void SetStartVisuals()
     {
         if (Type == CellType.Off)
         {
             gameObject.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
         }
-        else if (Type == CellType.Destructible)
+        else if (Type == CellType.Impracticable)
         {
             gameObject.GetComponent<SpriteRenderer>().color = new Color(0.7f, 0.7f, 0.7f, 1.0f);
+        }
+    }
+
+    public void ShowPlayerSpawn()
+    {
+        if (Type == CellType.Spawn)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(0.8f, 0.8f, 1.0f, 1.0f);
+            State = CellState.Spawn;
+        }
+        else if (Type == CellType.OpponentSpawn)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.8f, 1.0f, 1.0f);
+            State = CellState.Spawn;
         }
     }
 
@@ -70,23 +84,28 @@ public class CellBhv : MonoBehaviour
         if (State == CellState.Mouvement)
         {
             AskPlayerToMove();
-            _sampleGridSceneBhv.ResetAllCellsDisplay();
+            //_gridSceneBhv.ResetAllCellsDisplay();
+        }
+        else if (State == CellState.Spawn && Type == CellType.Spawn)
+        {
+            _gridSceneBhv.ResetAllCellsSpawn();
+            AskPlayerToMove(false);
         }
     }
 
-    private void AskPlayerToMove()
+    private void AskPlayerToMove(bool usePm = true)
     {
         if (_player == null)
             GetPlayer();
         if (!_player.IsMoving)
         {
-            _player.MoveToPosition(X, Y);
+            _player.MoveToPosition(X, Y, usePm);
         }
     }
 
     public void ResetDisplay()
     {
-        if (Type == CellType.Off || Type == CellType.Destructible)
+        if (Type == CellType.Off || Type == CellType.Impracticable)
             return;
         State = CellState.None;
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
@@ -95,6 +114,12 @@ public class CellBhv : MonoBehaviour
     public void ResetVisited()
     {
         Visited = -1;
+    }
+
+    public void ResetSpawn()
+    {
+        if (Type == CellType.Spawn || Type == CellType.OpponentSpawn)
+            Type = CellType.On;
     }
 
     public void ShowPm()
@@ -116,20 +141,5 @@ public class CellBhv : MonoBehaviour
         transform.localScale = Vector3.Lerp(transform.localScale, _resetedScale, 0.2f);
         if (transform.localScale == _resetedScale)
             _isStretching = false;
-    }
-
-    public enum CellType
-    {
-        Off = 0,
-        On = 1,
-        Destructible = 2
-    }
-
-    public enum CellState
-    {
-        None = 0,
-        Mouvement = 1,
-        AttackRange = 2,
-        AttackZone = 3
     }
 }

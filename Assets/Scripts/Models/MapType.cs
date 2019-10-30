@@ -4,9 +4,9 @@ using UnityEngine;
 
 public enum MapType
 {
-    city,
-    sewers,
-    forest,
-    mines,
-    montains
+    City,
+    Sewers,
+    Forest,
+    Mines,
+    Mountains
 }
