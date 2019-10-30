@@ -15,8 +15,8 @@ public static class Constants
     public const float PPAudioLevelDefault = 1;
 
     //  SCENES  //
-    public const string SampleScene = "SampleScene";
-    public const string SampleGridScene = "SampleGridScene";
+    public const string SwipeScene = "SwipeScene";
+    public const string GridScene = "GridScene";
 
     //  GRID  //
     public const int GridMax = 6;

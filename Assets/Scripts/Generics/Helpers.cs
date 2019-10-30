@@ -4,6 +4,20 @@ using UnityEngine;
 
 public static class Helpers
 {
+    public static int XpNeedForLevel(int level)
+    {
+        float floatXp = RacesData.LevelOneXpNeeded;
+        for (int i = 1; i < level; ++i)
+        {
+            floatXp = floatXp + (floatXp * (0.5f - ((float)(i - 1) / 100)));
+        }
+        int intXp = (int)floatXp;
+        int roundedXp = intXp + (intXp % 10 == 0 ? 0 : 10 - intXp % 10);
+        //DEBUG//
+        //Debug.Log("XP for level " + level + ":" + roundedXp);
+        return roundedXp;
+    }
+
     public static bool FloatEqualsPrecision(float float1, float float2, float precision)
     {
         return float1 >= float2 - precision && float1 <= float2 + precision;

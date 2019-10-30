@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SampleSceneBhv : MonoBehaviour
+public class SwipeSceneBhv : MonoBehaviour
 {
     private UnityEngine.UI.Text _sampleText;
 
@@ -26,7 +26,7 @@ public class SampleSceneBhv : MonoBehaviour
         SetSampleButton("ButtonBotRight");
         SetSampleButton("ButtonFloatingTopRight");
         SetSampleButton("ButtonTopMid");
-        GameObject.Find("ButtonTopRight").GetComponent<ButtonBhv>().EndActionDelegate = GoToSampleGridScene;
+        GameObject.Find("ButtonTopRight").GetComponent<ButtonBhv>().EndActionDelegate = GoToGridScene;
         GameObject.Find("ButtonFloatingDislike").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("TemplateCard").GetComponent<GrabbableCardBhv>().Dislike;
         GameObject.Find("ButtonFloatingLike").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("TemplateCard").GetComponent<GrabbableCardBhv>().Like;
     }
@@ -54,8 +54,8 @@ public class SampleSceneBhv : MonoBehaviour
         _sampleText.text += "\nEnd";
     }
 
-    public void GoToSampleGridScene()
+    public void GoToGridScene()
     {
-        SceneManager.LoadScene(Constants.SampleGridScene);
+        SceneManager.LoadScene(Constants.GridScene);
     }
 }

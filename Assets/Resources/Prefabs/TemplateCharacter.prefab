@@ -41,17 +41,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 307629294952203592}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a3f73bcf7fec2f4c99e3faae6180d75, type: 3}
+  m_Script: {fileID: 11500000, guid: ba998b83a7ca00d438e688d993871570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: 
-  Race: 0
-  Level: 0
-  Experience: 0
-  Gold: 0
-  Hp: 0
+  X: 0
+  Y: 0
+  IsMoving: 0
+  Turn: 0
   Pm: 0
-  Weapons: []
 --- !u!1 &7271550393178406498
 GameObject:
   m_ObjectHideFlags: 0

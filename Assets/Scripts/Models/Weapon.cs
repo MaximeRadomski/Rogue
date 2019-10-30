@@ -12,7 +12,7 @@ public class Weapon : MonoBehaviour
     public int CritChancePercent;
     public int CritMultiplierPercent;
     public int FailChancePercent;
-    public int UsePerTurn;
+    public int PaNeeded;
     public int MinRange;
     public int MaxRange;
     public List<RangePos> RangePositions;

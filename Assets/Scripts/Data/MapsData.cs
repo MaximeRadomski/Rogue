@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Maps
+public static class MapsData
 {
     public static List<Map> EasyMaps = new List<Map>()
     {
@@ -14,27 +14,4 @@ public static class Maps
         new Map("Tamplate Map 06", MapType.city, "111111"+"111111"+"111111"+"111111"+"111111"+"111111"),
         new Map("Tamplate Map 07", MapType.city, "011110"+"011110"+"011110"+"011110"+"011110"+"011110"),
     };
-
-    public class Map
-    {
-        public Map(string name, MapType type, string cells)
-        {
-            Name = name;
-            Type = type;
-            Cells = cells;
-        }
-
-        public string Name;
-        public MapType Type;
-        public string Cells;
-    }
-
-    public enum MapType
-    {
-        city,
-        caves,
-        forest,
-        mines,
-        montains
-    }
 }

@@ -11,7 +11,7 @@ public class CellBhv : MonoBehaviour
     public CellState State;
 
     private CharacterBhv _player;
-    private SampleGridSceneBhv _sampleGridSceneBhv;
+    private GridSceneBhv _sampleGridSceneBhv;
     private SoundControlerBhv _soundControler;
 
     private bool _isStretching;
@@ -26,7 +26,7 @@ public class CellBhv : MonoBehaviour
 
     private void SetPrivates()
     {
-        _sampleGridSceneBhv = GameObject.Find("Canvas").GetComponent<SampleGridSceneBhv>();
+        _sampleGridSceneBhv = GameObject.Find("Canvas").GetComponent<GridSceneBhv>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _isStretching = false;
         _resetedScale = new Vector3(1.0f, 1.0f, 1.0f);

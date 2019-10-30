@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/SwipeScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/SampleGridScene.unity
+    path: Assets/Scenes/GridScene.unity
     guid: 23f61f4219f2ba044af1da422425c2cb
   m_configObjects: {}

@@ -8,22 +8,11 @@ public class CharacterBhv : MonoBehaviour
     public int Y;
     public bool IsMoving;
     public int Turn;
-
-    public string Name;
-    public CharacterRace Race;
-    public int Level;
-    public int LevelingHealthPercent;
-    public int LevelingDamagePercent;
-    public int Experience;
-    public int Gold;
-    public int HpMax;
-    public int Hp;
-    public int PmMax;
     public int Pm;
-    public List<WeaponType> FavWeapons;
-    public List<Weapon> Weapons;
+    public int Pa;
+    public Character Character;
 
-    private SampleGridSceneBhv _sampleGridSceneBhv;
+    private GridSceneBhv _gridSceneBhv;
     private int _cellToReachX;
     private int _cellToReachY;
     private List<Vector2> _pathfindingSteps;
@@ -38,7 +27,7 @@ public class CharacterBhv : MonoBehaviour
         Turn = 0;
         IsMoving = false;
         _pathfindingSteps = new List<Vector2>();
-        _sampleGridSceneBhv = GameObject.Find("Canvas").GetComponent<SampleGridSceneBhv>();
+        _gridSceneBhv = GameObject.Find("Canvas").GetComponent<GridSceneBhv>();
     }
 
     void Update()
@@ -56,7 +45,7 @@ public class CharacterBhv : MonoBehaviour
         else
         {
             _pathfindingSteps.Clear();
-            _pathfindingSteps.Add(_sampleGridSceneBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
+            _pathfindingSteps.Add(_gridSceneBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
         }
         IsMoving = true;
     }
@@ -64,22 +53,22 @@ public class CharacterBhv : MonoBehaviour
     private void SetPath()
     {
         _pathfindingSteps.Clear();
-        _pathfindingSteps.Add(_sampleGridSceneBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
-        var visitedIndex = _sampleGridSceneBhv.Cells[_cellToReachX, _cellToReachY].GetComponent<CellBhv>().Visited;
+        _pathfindingSteps.Add(_gridSceneBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
+        var visitedIndex = _gridSceneBhv.Cells[_cellToReachX, _cellToReachY].GetComponent<CellBhv>().Visited;
         Pm -= visitedIndex;
         int x = _cellToReachX;
         int y = _cellToReachY;
         while (visitedIndex > 0)
         {
-            if (LookForLowerIndex(x, y + 1, visitedIndex - 1) && !_sampleGridSceneBhv.IsAdjacentOpponent(x, y + 1))
+            if (LookForLowerIndex(x, y + 1, visitedIndex - 1) && !_gridSceneBhv.IsAdjacentOpponent(x, y + 1))
                 ++y;
-            else if (LookForLowerIndex(x + 1, y, visitedIndex - 1) && !_sampleGridSceneBhv.IsAdjacentOpponent(x + 1, y))
+            else if (LookForLowerIndex(x + 1, y, visitedIndex - 1) && !_gridSceneBhv.IsAdjacentOpponent(x + 1, y))
                 ++x;
-            else if (LookForLowerIndex(x, y - 1, visitedIndex - 1) && !_sampleGridSceneBhv.IsAdjacentOpponent(x, y - 1))
+            else if (LookForLowerIndex(x, y - 1, visitedIndex - 1) && !_gridSceneBhv.IsAdjacentOpponent(x, y - 1))
                 --y;
-            else if (LookForLowerIndex(x - 1, y, visitedIndex - 1) && !_sampleGridSceneBhv.IsAdjacentOpponent(x - 1, y))
+            else if (LookForLowerIndex(x - 1, y, visitedIndex - 1) && !_gridSceneBhv.IsAdjacentOpponent(x - 1, y))
                 --x;
-            _pathfindingSteps.Insert(0, _sampleGridSceneBhv.Cells[x, y].transform.position);
+            _pathfindingSteps.Insert(0, _gridSceneBhv.Cells[x, y].transform.position);
             --visitedIndex;
         }
     }
@@ -88,7 +77,7 @@ public class CharacterBhv : MonoBehaviour
     {
         if (x >= Constants.GridMax || y >= Constants.GridMax || x < 0 || y < 0)
             return false;
-        if (_sampleGridSceneBhv.Cells[x, y].GetComponent<CellBhv>().Visited == visitedIndex)
+        if (_gridSceneBhv.Cells[x, y].GetComponent<CellBhv>().Visited == visitedIndex)
             return true;
         return false;
     }
@@ -104,7 +93,7 @@ public class CharacterBhv : MonoBehaviour
                 IsMoving = false;
                 X = _cellToReachX;
                 Y = _cellToReachY;
-                _sampleGridSceneBhv.AfterPlayerMoved();
+                _gridSceneBhv.AfterPlayerAction();
             }
         }
     }

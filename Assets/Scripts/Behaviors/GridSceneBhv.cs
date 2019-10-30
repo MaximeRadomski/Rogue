@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SampleGridSceneBhv : MonoBehaviour
+public class GridSceneBhv : MonoBehaviour
 {
     public GameObject[,] Cells;
 
-    private Maps.Map _map;
+    private Map _map;
     private Grid _grid;
     private GameObject _player;
     private GameObject _opponent;
@@ -21,6 +21,17 @@ public class SampleGridSceneBhv : MonoBehaviour
         InitOpponent();
         InitPlayer();
         GameLife();
+        Helpers.XpNeedForLevel(1);
+        Helpers.XpNeedForLevel(2);
+        Helpers.XpNeedForLevel(3);
+        Helpers.XpNeedForLevel(4);
+        Helpers.XpNeedForLevel(5);
+        Helpers.XpNeedForLevel(6);
+        Helpers.XpNeedForLevel(7);
+        Helpers.XpNeedForLevel(8);
+        Helpers.XpNeedForLevel(9);
+        Helpers.XpNeedForLevel(10);
+        Helpers.XpNeedForLevel(11);
     }
 
     private void SetPrivates()
@@ -32,18 +43,18 @@ public class SampleGridSceneBhv : MonoBehaviour
     private void SetButtons()
     {
         GameObject.Find("ButtonReload").GetComponent<ButtonBhv>().EndActionDelegate = ReloadScene;
-        GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToSampleScene;
+        GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToSwipeScene;
         GameObject.Find("ButtonPassTurn").GetComponent<ButtonBhv>().EndActionDelegate = PassTurn;
     }
 
-    public void GoToSampleScene()
+    public void GoToSwipeScene()
     {
-        SceneManager.LoadScene(Constants.SampleScene);
+        SceneManager.LoadScene(Constants.SwipeScene);
     }
 
     private void InitGrid()
     {
-        _map = Maps.EasyMaps[Random.Range(0, Maps.EasyMaps.Count)];
+        _map = MapsData.EasyMaps[Random.Range(0, MapsData.EasyMaps.Count)];
         GameObject.Find("MapName").GetComponent<UnityEngine.UI.Text>().text = _map.Name;
         for (int y = 0; y < Constants.GridMax; ++y)
         {
@@ -61,10 +72,11 @@ public class SampleGridSceneBhv : MonoBehaviour
         cellInstance.transform.parent = _grid.transform;
         cellInstance.transform.position = new Vector3(x * _grid.cellSize.x, y * _grid.cellSize.y, 0.0f) + _grid.transform.position;
         cellInstance.gameObject.name = "Cell" + x + y;
-        cellInstance.GetComponent<CellBhv>().X = x;
-        cellInstance.GetComponent<CellBhv>().Y = y;
-        cellInstance.GetComponent<CellBhv>().Type = (CellBhv.CellType)int.Parse(c.ToString(),System.Globalization.NumberStyles.Integer);
-        cellInstance.GetComponent<CellBhv>().State = CellBhv.CellState.None;
+        var cellBhv = cellInstance.GetComponent<CellBhv>();
+        cellBhv.X = x;
+        cellBhv.Y = y;
+        cellBhv.Type = (CellBhv.CellType)int.Parse(c.ToString(),System.Globalization.NumberStyles.Integer);
+        cellBhv.State = CellBhv.CellState.None;
         Cells[x, y] = cellInstance;
     }
 
@@ -73,14 +85,16 @@ public class SampleGridSceneBhv : MonoBehaviour
         var characterObject = Resources.Load<GameObject>("Prefabs/TemplateCharacter");
         _opponent = Instantiate(characterObject, GameObject.Find("Cell24").transform.position, characterObject.transform.rotation);
         _opponent.name = "Opponent";
-        _opponent.GetComponent<CharacterBhv>().X = 2;
-        _opponent.GetComponent<CharacterBhv>().Y = 4;
-        _opponent.GetComponent<CharacterBhv>().Name = "TemplateOpponent";
-        _opponent.GetComponent<CharacterBhv>().Race = CharacterRace.Elf;
-        _opponent.GetComponent<CharacterBhv>().Level = 1;
-        _opponent.GetComponent<CharacterBhv>().Gold = 0;
-        _opponent.GetComponent<CharacterBhv>().HpMax = 1000;
-        _opponent.GetComponent<CharacterBhv>().PmMax = 4;
+        var characterBhv = _opponent.GetComponent<CharacterBhv>();
+        characterBhv.X = 2;
+        characterBhv.Y = 4;
+        characterBhv.Character = RacesData.GetBaseHuman();
+        characterBhv.Character.Name = "TemplateOpponent";
+        characterBhv.Character.Race = CharacterRace.Elf;
+        characterBhv.Character.Level = 1;
+        characterBhv.Character.Gold = 0;
+        characterBhv.Character.HpMax = 1000;
+        characterBhv.Character.PmMax = 4;
     }
 
     private void InitPlayer()
@@ -88,14 +102,16 @@ public class SampleGridSceneBhv : MonoBehaviour
         var characterObject = Resources.Load<GameObject>("Prefabs/TemplateCharacter");
         _player = Instantiate(characterObject, GameObject.Find("Cell31").transform.position, characterObject.transform.rotation);
         _player.name = "Player";
-        _player.GetComponent<CharacterBhv>().X = 3;
-        _player.GetComponent<CharacterBhv>().Y = 1;
-        _player.GetComponent<CharacterBhv>().Name = "TemplateCharacter";
-        _player.GetComponent<CharacterBhv>().Race = CharacterRace.Human;
-        _player.GetComponent<CharacterBhv>().Level = 1;
-        _player.GetComponent<CharacterBhv>().Gold = 0;
-        _player.GetComponent<CharacterBhv>().HpMax = 1000;
-        _player.GetComponent<CharacterBhv>().PmMax = 4;
+        var characterBhv = _player.GetComponent<CharacterBhv>();
+        characterBhv.X = 3;
+        characterBhv.Y = 1;
+        characterBhv.Character = RacesData.GetBaseHuman();
+        characterBhv.Character.Name = "TemplateCharacter";
+        characterBhv.Character.Race = CharacterRace.Human;
+        characterBhv.Character.Level = 1;
+        characterBhv.Character.Gold = 0;
+        characterBhv.Character.HpMax = 1000;
+        characterBhv.Character.PmMax = 4;
     }
 
     public void ResetAllCellsDisplay()
@@ -129,7 +145,7 @@ public class SampleGridSceneBhv : MonoBehaviour
 
     private void PlayerTurn()
     {
-        _player.GetComponent<CharacterBhv>().Pm = _player.GetComponent<CharacterBhv>().PmMax;
+        _player.GetComponent<CharacterBhv>().Pm = _player.GetComponent<CharacterBhv>().Character.PmMax;
         ShowPm();
     }
 
@@ -139,7 +155,7 @@ public class SampleGridSceneBhv : MonoBehaviour
         PlayerTurn();
     }
 
-    public void AfterPlayerMoved()
+    public void AfterPlayerAction()
     {
         ResetAllCellsVisited();
         ShowPm();

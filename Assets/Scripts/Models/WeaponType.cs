@@ -12,6 +12,6 @@ public enum WeaponType
     Daggers = 5,
     Hammer = 6,
     Axe = 7,
-    LongSword = 8,
-    Gauntets = 9
+    GreatSword = 8,
+    Gauntlets = 9
 }
