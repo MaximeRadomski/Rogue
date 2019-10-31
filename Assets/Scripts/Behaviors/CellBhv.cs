@@ -10,8 +10,9 @@ public class CellBhv : MonoBehaviour
     public CellType Type;
     public CellState State;
 
+    private GridBhv _gridBhv;
     private CharacterBhv _player;
-    private GridSceneBhv _gridSceneBhv;
+    private FightSceneBhv _fightSceneBhv;
     private SoundControlerBhv _soundControler;
 
     private bool _isStretching;
@@ -26,7 +27,8 @@ public class CellBhv : MonoBehaviour
 
     private void SetPrivates()
     {
-        _gridSceneBhv = GameObject.Find("Canvas").GetComponent<GridSceneBhv>();
+        _gridBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GridBhv>();
+        _fightSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _isStretching = false;
         _resetedScale = new Vector3(1.0f, 1.0f, 1.0f);
@@ -84,12 +86,17 @@ public class CellBhv : MonoBehaviour
         if (State == CellState.Mouvement)
         {
             AskPlayerToMove();
-            //_gridSceneBhv.ResetAllCellsDisplay();
         }
         else if (State == CellState.Spawn && Type == CellType.Spawn)
         {
-            _gridSceneBhv.ResetAllCellsSpawn();
-            AskPlayerToMove(false);
+            _gridBhv.ResetAllCellsSpawn();
+            if (_player == null)
+                GetPlayer();
+            _player.Spawn(X, Y);
+        }
+        else if (State == CellState.AttackRange)
+        {
+            _fightSceneBhv.AfterPlayerAttack();
         }
     }
 
@@ -111,6 +118,12 @@ public class CellBhv : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
     }
 
+    public void ResetMovement()
+    {
+        if (State == CellState.Mouvement)
+            State = CellState.None;
+    }
+
     public void ResetVisited()
     {
         Visited = -1;
@@ -126,6 +139,12 @@ public class CellBhv : MonoBehaviour
     {
         State = CellState.Mouvement;
         gameObject.GetComponent<SpriteRenderer>().color = new Color(0.8f, 1.0f, 0.8f, 1.0f);
+    }
+
+    public void ShowWeaponRange()
+    {
+        State = CellState.AttackRange;
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.8f, 0.8f, 1.0f);
     }
 
     void Update()

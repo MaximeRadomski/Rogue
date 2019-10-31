@@ -13,24 +13,26 @@ public class CharacterBhv : MonoBehaviour
     public Character Character;
     public bool IsPlayer = false;
 
-    private GridSceneBhv _gridSceneBhv;
+    private GameObject _opponent;
+    private FightSceneBhv _fightSceneBhv;
+    private GridBhv _gridBhv;
     private int _cellToReachX;
     private int _cellToReachY;
     private List<Vector2> _pathfindingSteps = new List<Vector2>();
 
-    void Start()
+    private void GetFightScene()
     {
-        SetVariables();
+        
     }
 
-    private void GetGridScene()
+    public void SetPrivates()
     {
-        _gridSceneBhv = GameObject.Find("Canvas").GetComponent<GridSceneBhv>();
-    }
-
-    private void SetVariables()
-    {
-        GetGridScene();
+        _fightSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>();
+        _gridBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GridBhv>();
+        if (IsPlayer)
+            _opponent = GameObject.Find(Constants.GoOpponentName);
+        else
+            _opponent = GameObject.Find(Constants.GoPlayerName);
     }
 
     void Update()
@@ -48,9 +50,7 @@ public class CharacterBhv : MonoBehaviour
         else
         {
             _pathfindingSteps.Clear();
-            if (_gridSceneBhv == null)
-                GetGridScene();
-            _pathfindingSteps.Add(_gridSceneBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
+            _pathfindingSteps.Add(_gridBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
         }
         IsMoving = true;
     }
@@ -58,31 +58,31 @@ public class CharacterBhv : MonoBehaviour
     private void SetPath()
     {
         _pathfindingSteps.Clear();
-        _pathfindingSteps.Add(_gridSceneBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
-        var visitedIndex = _gridSceneBhv.Cells[_cellToReachX, _cellToReachY].GetComponent<CellBhv>().Visited;
+        _pathfindingSteps.Add(_gridBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
+        var visitedIndex = _gridBhv.Cells[_cellToReachX, _cellToReachY].GetComponent<CellBhv>().Visited;
         Pm -= visitedIndex;
         int x = _cellToReachX;
         int y = _cellToReachY;
         while (visitedIndex > 0)
         {
-            if (LookForLowerIndex(x, y + 1, visitedIndex - 1) && !_gridSceneBhv.IsAdjacentOpponent(x, y + 1))
+            if (LookForLowerIndex(x, y + 1, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x, y + 1, _opponent))
                 ++y;
-            else if (LookForLowerIndex(x + 1, y, visitedIndex - 1) && !_gridSceneBhv.IsAdjacentOpponent(x + 1, y))
+            else if (LookForLowerIndex(x + 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x + 1, y, _opponent))
                 ++x;
-            else if (LookForLowerIndex(x, y - 1, visitedIndex - 1) && !_gridSceneBhv.IsAdjacentOpponent(x, y - 1))
+            else if (LookForLowerIndex(x, y - 1, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x, y - 1, _opponent))
                 --y;
-            else if (LookForLowerIndex(x - 1, y, visitedIndex - 1) && !_gridSceneBhv.IsAdjacentOpponent(x - 1, y))
+            else if (LookForLowerIndex(x - 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x - 1, y, _opponent))
                 --x;
-            _pathfindingSteps.Insert(0, _gridSceneBhv.Cells[x, y].transform.position);
+            _pathfindingSteps.Insert(0, _gridBhv.Cells[x, y].transform.position);
             --visitedIndex;
         }
     }
 
     private bool LookForLowerIndex(int x, int y, int visitedIndex)
     {
-        if (x >= Constants.GridMax || y >= Constants.GridMax || x < 0 || y < 0)
+        if (!Helpers.IsPosValid(x, y))
             return false;
-        if (_gridSceneBhv.Cells[x, y].GetComponent<CellBhv>().Visited == visitedIndex)
+        if (_gridBhv.Cells[x, y].GetComponent<CellBhv>().Visited == visitedIndex)
             return true;
         return false;
     }
@@ -99,8 +99,17 @@ public class CharacterBhv : MonoBehaviour
                 X = _cellToReachX;
                 Y = _cellToReachY;
                 if (IsPlayer)
-                    _gridSceneBhv.AfterPlayerAction();
+                    _fightSceneBhv.AfterPlayerMovement();
             }
         }
+    }
+
+    public void Spawn(int x, int y)
+    {
+        X = x;
+        Y = y;
+        transform.position = _gridBhv.Cells[x, y].transform.position;
+        if (IsPlayer)
+            _fightSceneBhv.AfterPlayerSpawn();
     }
 }

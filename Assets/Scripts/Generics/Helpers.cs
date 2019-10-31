@@ -1,10 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class Helpers
 {
-    public static int XpNeedForLevel(int level)
+    public static bool IsPosValid(int x, int y)
+    {
+        if (x >= Constants.GridMax || y >= Constants.GridMax || x < 0 || y < 0)
+            return false;
+        return true;
+    }
+
+    public static int EnumCount<EnumType>()
+    {
+        return System.Enum.GetNames(typeof(EnumType)).Length;
+    }
+
+public static int XpNeedForLevel(int level)
     {
         float floatXp = RacesData.LevelOneXpNeeded;
         for (int i = 1; i < level; ++i)
@@ -122,5 +135,10 @@ public static class Helpers
             }
         }
         return new RangePos(0, 0);
+    }
+
+    public static void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

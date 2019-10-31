@@ -26,7 +26,7 @@ public class SwipeSceneBhv : MonoBehaviour
         SetSampleButton("ButtonBotRight");
         SetSampleButton("ButtonFloatingTopRight");
         SetSampleButton("ButtonTopMid");
-        GameObject.Find("ButtonTopRight").GetComponent<ButtonBhv>().EndActionDelegate = GoToGridScene;
+        GameObject.Find("ButtonTopRight").GetComponent<ButtonBhv>().EndActionDelegate = GoToFightScene;
         GameObject.Find("ButtonFloatingDislike").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("TemplateCard").GetComponent<GrabbableCardBhv>().Dislike;
         GameObject.Find("ButtonFloatingLike").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("TemplateCard").GetComponent<GrabbableCardBhv>().Like;
     }
@@ -54,8 +54,8 @@ public class SwipeSceneBhv : MonoBehaviour
         _sampleText.text += "\nEnd";
     }
 
-    public void GoToGridScene()
+    public void GoToFightScene()
     {
-        SceneManager.LoadScene(Constants.GridScene);
+        SceneManager.LoadScene(Constants.FightScene);
     }
 }

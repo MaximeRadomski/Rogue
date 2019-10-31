@@ -16,8 +16,13 @@ public static class Constants
 
     //  SCENES  //
     public const string SwipeScene = "SwipeScene";
-    public const string GridScene = "GridScene";
+    public const string FightScene = "FightScene";
 
     //  GRID  //
     public const int GridMax = 6;
+
+    //  GAMEOBJECT NAMES  //
+    public const string GoSceneBhvName = "SceneBhv";
+    public const string GoPlayerName = "Player";
+    public const string GoOpponentName = "Opponent";
 }
