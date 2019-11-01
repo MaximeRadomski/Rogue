@@ -67,10 +67,10 @@ public static int XpNeedForLevel(int level)
             && (color1.a >= color2.a - precision && color1.a <= color2.a + precision);
     }
 
-    public static RangePos DetermineRangePosFromRangeDirection(RangePos position, RangeDirection diretion)
+    public static RangePos DetermineRangePosFromRangeDirection(int x, int y, RangeDirection diretion)
     {
         //Up
-        if (position.X == 0 && position.Y == 1)
+        if (x == 0 && y == 1)
         {
             switch (diretion)
             {
@@ -86,7 +86,7 @@ public static int XpNeedForLevel(int level)
                     return new RangePos(1, 1);
             }
         }
-        else if (position.X == 1 && position.Y == 0)
+        else if (x == 1 && y == 0)
         {
             switch (diretion)
             {
@@ -102,7 +102,7 @@ public static int XpNeedForLevel(int level)
                     return new RangePos(1, -1);
             }
         }
-        else if (position.X == 0 && position.Y == -1)
+        else if (x == 0 && y == -1)
         {
             switch (diretion)
             {
@@ -118,7 +118,7 @@ public static int XpNeedForLevel(int level)
                     return new RangePos(-1, -1);
             }
         }
-        else if (position.X == -1 && position.Y == 0)
+        else if (x == -1 && y == 0)
         {
             switch (diretion)
             {

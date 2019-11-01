@@ -9,6 +9,8 @@ public class GridBhv : MonoBehaviour
     private Map _map;
     private Grid _grid;
     private FightSceneBhv _fightSceneBhv;
+    private CharacterBhv _currentCharacterBhv;
+    private int _currentWeaponId;
 
     public void SetPrivates()
     {
@@ -150,6 +152,8 @@ public class GridBhv : MonoBehaviour
     public void ShowWeaponRange(CharacterBhv characterBhv, int weaponId)
     {
         ResetAllCellsDisplay();
+        _currentCharacterBhv = characterBhv;
+        _currentWeaponId = weaponId;
         var character = characterBhv.Character;
         for (int i = 0; i < character.Weapons[weaponId].RangePositions.Count; ++i)
         {
@@ -158,14 +162,40 @@ public class GridBhv : MonoBehaviour
             if (!Helpers.IsPosValid(x, y))
                 continue;
             var cell = Cells[x, y].GetComponent<CellBhv>();
-            if (cell.Type == CellType.On && cell.State == CellState.None)
+            if (cell.Type == CellType.On && cell.State == CellState.None && !IsWallBetween(characterBhv.X, characterBhv.Y, x, y))
                 cell.ShowWeaponRange();
-            else if (cell.Type == CellType.On && cell.State == CellState.AttackRange)
-            {
-                _fightSceneBhv.AfterPlayerAttack();
-                return;
-            }
         }
+    }
+
+    public void ShowWeaponZone(int x, int y)
+    {
+        var character = _currentCharacterBhv.Character;
+        foreach (var tmpDirection in character.Weapons[_currentWeaponId].RangeZones)
+        {
+            var tmpPos = Helpers.DetermineRangePosFromRangeDirection(x - _currentCharacterBhv.X, y - _currentCharacterBhv.Y, tmpDirection);
+            var tmpX = tmpPos.X + x;
+            var tmpY = tmpPos.Y + y;
+            if (!Helpers.IsPosValid(tmpX, tmpY))
+                continue;
+            var cell = Cells[tmpX, tmpY].GetComponent<CellBhv>();
+            if (cell.Type == CellType.On && cell.State == CellState.None)
+                cell.ShowWeaponZone();
+        }
+    }
+
+    private bool IsWallBetween(int x1, int y1, int x2, int y2)
+    {
+        for (int i = x1 + 1; i < x2; ++i)
+        {
+            if (Cells[i, y1].GetComponent<CellBhv>().Type == CellType.Off)
+                return true;
+        }
+        for (int i = y1 + 1; i < y2; ++i)
+        {
+            if (Cells[x1, i].GetComponent<CellBhv>().Type == CellType.Off)
+                return true;
+        }
+        return false;
     }
 
     #endregion
@@ -193,6 +223,14 @@ public class GridBhv : MonoBehaviour
         foreach (var cell in Cells)
         {
             cell.GetComponent<CellBhv>().ResetSpawn();
+        }
+    }
+
+    public void ResetAllCellsZone()
+    {
+        foreach (var cell in Cells)
+        {
+            cell.GetComponent<CellBhv>().ResetZone();
         }
     }
 

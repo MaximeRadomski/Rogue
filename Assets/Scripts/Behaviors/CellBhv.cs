@@ -39,11 +39,11 @@ public class CellBhv : MonoBehaviour
     {
         if (Type == CellType.Off)
         {
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(0.7f, 0.7f, 0.7f, 1.0f);
         }
         else if (Type == CellType.Impracticable)
         {
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(0.7f, 0.7f, 0.7f, 1.0f);
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.1f);
         }
     }
 
@@ -75,15 +75,21 @@ public class CellBhv : MonoBehaviour
 
     public void DoAction()
     {
-
+        if (State == CellState.AttackRange)
+        {
+            _gridBhv.ShowWeaponZone(X, Y);
+        }
     }
 
     public void EndAction()
     {
-        if (State == CellState.None)
-            return;
         _soundControler.PlaySound(_soundControler.ClickOut);
-        if (State == CellState.Mouvement)
+        if (State == CellState.None)
+        {
+            _gridBhv.ResetAllCellsZone();
+            return;
+        }
+        else if (State == CellState.Mouvement)
         {
             AskPlayerToMove();
         }
@@ -94,7 +100,7 @@ public class CellBhv : MonoBehaviour
                 GetPlayer();
             _player.Spawn(X, Y);
         }
-        else if (State == CellState.AttackRange)
+        else if (State == CellState.AttackRange || State == CellState.AttackZone)
         {
             _fightSceneBhv.AfterPlayerAttack();
         }
@@ -124,6 +130,12 @@ public class CellBhv : MonoBehaviour
             State = CellState.None;
     }
 
+    public void ResetZone()
+    {
+        if (State == CellState.AttackZone)
+            ResetDisplay();
+    }
+
     public void ResetVisited()
     {
         Visited = -1;
@@ -145,6 +157,12 @@ public class CellBhv : MonoBehaviour
     {
         State = CellState.AttackRange;
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.8f, 0.8f, 1.0f);
+    }
+
+    public void ShowWeaponZone()
+    {
+        State = CellState.AttackZone;
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.5f, 0.5f, 1.0f);
     }
 
     void Update()
