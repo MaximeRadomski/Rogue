@@ -39,7 +39,7 @@ public class SoundControlerBhv : MonoBehaviour
 #if UNITY_EDITOR
         _pcAudio.PlayOneShot((AudioClip)Resources.Load("Sounds/" + _pcAudioReference[id]));
 #else
-        float level = PlayerPrefs.GetFloat(Constants.PPAudioLevel, Constants.PPAudioLevelDefault);
+        float level = PlayerPrefs.GetFloat(Constants.PpAudioLevel, Constants.PpAudioLevelDefault);
         AndroidNativeAudio.play(id, level, rate: customRate);
 #endif
     }

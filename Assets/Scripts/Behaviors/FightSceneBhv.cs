@@ -10,7 +10,9 @@ public class FightSceneBhv : MonoBehaviour
     private Map _map;
     private GridBhv _gridBhv;
     private GameObject _player;
+    private CharacterBhv _playerBhv;
     private GameObject _opponent;
+    private CharacterBhv _opponentBhv;
 
     void Start()
     {
@@ -21,6 +23,8 @@ public class FightSceneBhv : MonoBehaviour
         InitGrid();
         InitOpponent();
         InitPlayer();
+        _playerBhv.SetPrivates();
+        _opponentBhv.SetPrivates();
         GameStart();
     }
 
@@ -53,12 +57,11 @@ public class FightSceneBhv : MonoBehaviour
         var characterObject = Resources.Load<GameObject>("Prefabs/TemplateCharacter");
         _opponent = Instantiate(characterObject, new Vector2(-3.0f, 5.0f), characterObject.transform.rotation);
         _opponent.name = Constants.GoOpponentName;
-        var characterBhv = _opponent.GetComponent<CharacterBhv>();
-        characterBhv.X = 0;
-        characterBhv.Y = 0;
-        characterBhv.Character = RacesData.GetCharacterFromRaceAndLevel((CharacterRace)Random.Range(0, Helpers.EnumCount<CharacterRace>()), 1);
-        characterBhv.SetPrivates();
-        DisplayCharacterStats(_opponent.name, characterBhv.Character);
+        _opponentBhv = _opponent.GetComponent<CharacterBhv>();
+        _opponentBhv.X = 0;
+        _opponentBhv.Y = 0;
+        _opponentBhv.Character = RacesData.GetCharacterFromRaceAndLevel((CharacterRace)Random.Range(0, Helpers.EnumCount<CharacterRace>()), 1);
+        DisplayCharacterStats(_opponent.name, _opponentBhv.Character);
     }
 
     private void InitPlayer()
@@ -66,13 +69,12 @@ public class FightSceneBhv : MonoBehaviour
         var characterObject = Resources.Load<GameObject>("Prefabs/TemplateCharacter");
         _player = Instantiate(characterObject, new Vector2(3.0f, -5.0f), characterObject.transform.rotation);
         _player.name = Constants.GoPlayerName;
-        var characterBhv = _player.GetComponent<CharacterBhv>();
-        characterBhv.X = 0;
-        characterBhv.Y = 0;
-        characterBhv.Character = RacesData.GetCharacterFromRaceAndLevel((CharacterRace)Random.Range(0, Helpers.EnumCount<CharacterRace>()), 1, true);
-        characterBhv.IsPlayer = true;
-        characterBhv.SetPrivates();
-        DisplayCharacterStats(_player.name, characterBhv.Character);
+        _playerBhv = _player.GetComponent<CharacterBhv>();
+        _playerBhv.X = 0;
+        _playerBhv.Y = 0;
+        _playerBhv.Character = RacesData.GetCharacterFromRaceAndLevel((CharacterRace)Random.Range(0, Helpers.EnumCount<CharacterRace>()), 1, true);
+        _playerBhv.IsPlayer = true;
+        DisplayCharacterStats(_player.name, _playerBhv.Character);
     }
 
     #endregion
@@ -83,30 +85,31 @@ public class FightSceneBhv : MonoBehaviour
     {
         _gridBhv.ResetAllCellsDisplay();
         _gridBhv.ResetAllCellsVisited();
-        _gridBhv.SpawnOpponent(_opponent);
+        _gridBhv.SpawnOpponent(_opponentBhv);
         _gridBhv.SpawnPlayer();
     }
 
     private void PlayerTurn()
     {
         State = FightState.PlayerTurn;
-        _player.GetComponent<CharacterBhv>().Pm = _player.GetComponent<CharacterBhv>().Character.PmMax;
-        _player.GetComponent<CharacterBhv>().Turn++;
+        _playerBhv.Pa = _playerBhv.Character.PaMax;
+        _playerBhv.Pm = _playerBhv.Character.PmMax;
+        _playerBhv.Turn++;
         //DEBUG//
-        GameObject.Find("TurnCountPlayer").GetComponent<UnityEngine.UI.Text>().text = "Turn Count: " + (_player.GetComponent<CharacterBhv>().Turn).ToString();
-        _gridBhv.ShowPm(_player, _opponent);
+        GameObject.Find("TurnCountPlayer").GetComponent<UnityEngine.UI.Text>().text = "Turn Count: " + (_playerBhv.Turn).ToString();
+        _gridBhv.ShowPm(_playerBhv, _opponentBhv);
     }
 
     private void PassTurn()
     {
-        if (_player.GetComponent<CharacterBhv>().Turn == 0)
-            return;
-        PlayerTurn();
+        if (State == FightState.PlayerTurn)
+            PlayerTurn();
     }
 
     public void AfterPlayerMovement()
     {
-        _gridBhv.ShowPm(_player, _opponent);
+        if (State == FightState.PlayerTurn)
+            _gridBhv.ShowPm(_playerBhv, _opponentBhv);
     }
 
     public void AfterPlayerSpawn()
@@ -114,9 +117,17 @@ public class FightSceneBhv : MonoBehaviour
         PlayerTurn();
     }
 
-    public void AfterPlayerAttack()
+    public void AfterPlayerAttack(int weaponId, bool hasTouchedOpponent)
     {
-        _gridBhv.ShowPm(_player, _opponent);
+        if (hasTouchedOpponent)
+        {
+            _opponentBhv.TakeDamages(_playerBhv.AttackWithWeapon(weaponId, _opponentBhv, _map));
+        }
+        else
+        {
+            _playerBhv.AttackWithWeapon(weaponId, _opponentBhv, _map);
+        }
+        _gridBhv.ShowPm(_playerBhv, _opponentBhv);
     }
 
     #endregion
@@ -153,14 +164,14 @@ public class FightSceneBhv : MonoBehaviour
 
     private void ShowWeaponOneRange()
     {
-        if (State == FightState.PlayerTurn)
-            _gridBhv.ShowWeaponRange(_player.GetComponent<CharacterBhv>(), 0);
+        if (State == FightState.PlayerTurn && _playerBhv.Pa >= _playerBhv.Character.Weapons[0].PaNeeded && !_playerBhv.IsMoving)
+            _gridBhv.ShowWeaponRange(_playerBhv, 0, _opponentBhv);
     }
 
     private void ShowWeaponTwoRange()
     {
-        if (State == FightState.PlayerTurn)
-            _gridBhv.ShowWeaponRange(_player.GetComponent<CharacterBhv>(), 1);
+        if (State == FightState.PlayerTurn && _playerBhv.Pa >= _playerBhv.Character.Weapons[1].PaNeeded && !_playerBhv.IsMoving)
+            _gridBhv.ShowWeaponRange(_playerBhv, 1, _opponentBhv);
     }
 
     #endregion

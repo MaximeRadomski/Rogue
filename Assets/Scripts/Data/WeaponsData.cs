@@ -21,8 +21,8 @@ public static class WeaponsData
     public static string[] RareNames = { "|Of Doom", "Enormous", "Super", "|2.0", "|of Death", "|of Truth", "|of Fertility", "El Famoso" };
     public static int BaseInitDamageRangePercentage = 15;
     public static int ChanceNotRaceWeaponPercent = 10;
-    public static int RareWeaponAppearancePercent = 10;
-    public static int MagicalWeaponAppearancePercent = 20;
+    public static int RareWeaponAppearancePercent = 5;
+    public static int MagicalWeaponAppearancePercent = 15;
 
     public static Weapon GetWeaponFromType(WeaponType type, bool isBase = false)
     {
@@ -125,7 +125,7 @@ public static class WeaponsData
             DamageRangePercentage = 10,
             PaNeeded = 4,
             CritChancePercent = 5,
-            CritMultiplierPercent = 120,
+            CritMultiplierPercent = 50,
             MinRange = 1,
             MaxRange = 1,
             RangePositions = new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) },
@@ -143,7 +143,7 @@ public static class WeaponsData
             DamageRangePercentage = 5,
             PaNeeded = 4,
             CritChancePercent = 1,
-            CritMultiplierPercent = 200,
+            CritMultiplierPercent = 150,
             MinRange = 2,
             MaxRange = 2,
             RangePositions = new List<RangePos> { new RangePos(0, 2), new RangePos(2, 0), new RangePos(0, -2), new RangePos(-2, 0) },
@@ -161,7 +161,7 @@ public static class WeaponsData
             DamageRangePercentage = 15,
             PaNeeded = 4,
             CritChancePercent = 10,
-            CritMultiplierPercent = 111,
+            CritMultiplierPercent = 30,
             MinRange = 1,
             MaxRange = 1,
             RangePositions = new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) },
@@ -179,7 +179,7 @@ public static class WeaponsData
             DamageRangePercentage = 50,
             PaNeeded = 3,
             CritChancePercent = 33,
-            CritMultiplierPercent = 170,
+            CritMultiplierPercent = 40,
             MinRange = 2,
             MaxRange = 2,
             RangePositions = new List<RangePos> { new RangePos(-1, 1), new RangePos(1, 1), new RangePos(1, -1), new RangePos(-1, -1) },
@@ -197,13 +197,13 @@ public static class WeaponsData
             DamageRangePercentage = 5,
             PaNeeded = 4,
             CritChancePercent = 1,
-            CritMultiplierPercent = 200,
+            CritMultiplierPercent = 150,
             MinRange = 3,
             MaxRange = 5,
-            RangePositions = new List<RangePos> { new RangePos(0, 3), new RangePos(0, 4), new RangePos(0, 5),
-                                                  new RangePos(3, 0), new RangePos(4, 0), new RangePos(5, 0),
-                                                  new RangePos(0, -3), new RangePos(0, -4), new RangePos(0, -5),
-                                                  new RangePos(-3, 0), new RangePos(-4, 0), new RangePos(-5, 0)},
+            RangePositions = new List<RangePos> { new RangePos(0, 2), new RangePos(0, 3), new RangePos(0, 4), new RangePos(0, 5),
+                                                  new RangePos(2, 0), new RangePos(3, 0), new RangePos(4, 0), new RangePos(5, 0),
+                                                  new RangePos(0, -2), new RangePos(0, -3), new RangePos(0, -4), new RangePos(0, -5),
+                                                  new RangePos(-2, 0), new RangePos(-3, 0), new RangePos(-4, 0), new RangePos(-5, 0)},
             RangeZones = null
         };
     }
@@ -218,10 +218,10 @@ public static class WeaponsData
             DamageRangePercentage = 10,
             PaNeeded = 2,
             CritChancePercent = 50,
-            CritMultiplierPercent = 130,
+            CritMultiplierPercent = 50,
             MinRange = 1,
             MaxRange = 1,
-            RangePositions = new List<RangePos> { new RangePos(-1, 1), new RangePos(1, 1), new RangePos(1, -1), new RangePos(-1, -1) },
+            RangePositions = new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) },
             RangeZones = null
         };
     }
@@ -236,7 +236,7 @@ public static class WeaponsData
             DamageRangePercentage = 0,
             PaNeeded = 5,
             CritChancePercent = 15,
-            CritMultiplierPercent = 120,
+            CritMultiplierPercent = 40,
             MinRange = 1,
             MaxRange = 1,
             RangePositions = new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) },
@@ -254,7 +254,7 @@ public static class WeaponsData
             DamageRangePercentage = 0,
             PaNeeded = 4,
             CritChancePercent = 15,
-            CritMultiplierPercent = 120,
+            CritMultiplierPercent = 40,
             MinRange = 1,
             MaxRange = 1,
             RangePositions = new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) },
@@ -270,9 +270,9 @@ public static class WeaponsData
         {
             Type = WeaponType.GreatSword,
             DamageRangePercentage = 20,
-            PaNeeded = 6,
+            PaNeeded = 5,
             CritChancePercent = 5,
-            CritMultiplierPercent = 120,
+            CritMultiplierPercent = 70,
             MinRange = 1,
             MaxRange = 1,
             RangePositions = new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) },
@@ -288,9 +288,9 @@ public static class WeaponsData
         {
             Type = WeaponType.Gauntlets,
             DamageRangePercentage = 30,
-            PaNeeded = 5,
+            PaNeeded = 4,
             CritChancePercent = 1,
-            CritMultiplierPercent = 170,
+            CritMultiplierPercent = 130,
             MinRange = 2,
             MaxRange = 2,
             RangePositions = new List<RangePos> { new RangePos(-1, 1), new RangePos(1, 1), new RangePos(1, -1), new RangePos(-1, -1) },

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SwipeSceneBhv : MonoBehaviour
 {
+    private Character _playerCharacter;
     private UnityEngine.UI.Text _sampleText;
 
     void Start()
@@ -16,13 +17,14 @@ public class SwipeSceneBhv : MonoBehaviour
 
     private void SetPrivates()
     {
+        _playerCharacter = JsonUtility.FromJson<Character>(PlayerPrefs.GetString(Constants.PpPlayer, Constants.PpPlayerDefault));
         _sampleText = GameObject.Find("SampleText").GetComponent<UnityEngine.UI.Text>();
     }
 
     private void SetButtons()
     {
         SetSampleButton("ButtonBotMid");
-        SetSampleButton("ButtonBotLeft");
+        GameObject.Find("ButtonBotLeft").GetComponent<ButtonBhv>().EndActionDelegate = GoToRaceChoiceScene;
         SetSampleButton("ButtonBotRight");
         SetSampleButton("ButtonFloatingTopRight");
         SetSampleButton("ButtonTopMid");
@@ -52,6 +54,11 @@ public class SwipeSceneBhv : MonoBehaviour
     public void EndAction()
     {
         _sampleText.text += "\nEnd";
+    }
+
+    public void GoToRaceChoiceScene()
+    {
+        SceneManager.LoadScene(Constants.RaceChoiceScene);
     }
 
     public void GoToFightScene()

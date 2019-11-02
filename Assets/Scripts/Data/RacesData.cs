@@ -21,10 +21,12 @@ public static class RacesData
 
     //  SHARED STATS  //
     public static int LevelOneXpNeeded = 100;
-    public static int NotRaceWeaponDamagePercent = 80;
+    public static int NotRaceWeaponDamagePercent = 60;
     public static int StrongAgainstDamagePercent = 20;
-    public static int StringInDamagePercent = 10;
+    public static int StrongInDamagePercent = 10;
     public static int TransgenderChancePercentage = 5;
+    public static int GenderDamage = 5;
+    public static int GenderCritical = 15;
 
     public static Character GetCharacterFromRaceAndLevel(CharacterRace race, int level, bool isPlayer = false)
     {

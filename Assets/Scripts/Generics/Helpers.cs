@@ -17,7 +17,7 @@ public static class Helpers
         return System.Enum.GetNames(typeof(EnumType)).Length;
     }
 
-public static int XpNeedForLevel(int level)
+    public static int XpNeedForLevel(int level)
     {
         float floatXp = RacesData.LevelOneXpNeeded;
         for (int i = 1; i < level; ++i)
@@ -37,9 +37,9 @@ public static int XpNeedForLevel(int level)
         return RoundToNextDecade((int)floatMaxHp);
     }
 
-    public static float MultiplierFromPercent(int root, int percent)
+    public static float MultiplierFromPercent(float root, int percent)
     {
-        return (float)root + ((float)percent / 100.0f);
+        return root + ((float)percent / 100.0f);
     }
 
     public static int RoundToNextDecade(int value)
@@ -69,7 +69,6 @@ public static int XpNeedForLevel(int level)
 
     public static RangePos DetermineRangePosFromRangeDirection(int x, int y, RangeDirection diretion)
     {
-        //Up
         if (x == 0 && y == 1)
         {
             switch (diretion)
@@ -135,6 +134,29 @@ public static int XpNeedForLevel(int level)
             }
         }
         return new RangePos(0, 0);
+    }
+
+    public static Color ColorFromTextType(int id)
+    {
+        TextType tmpType = (TextType)id;
+        switch (tmpType)
+        {
+            case TextType.Normal:
+                return Constants.ColorNormal;
+            case TextType.Magical:
+                return Constants.ColorMagic;
+            case TextType.Rare:
+                return Constants.ColorRare;
+            case TextType.Legendary:
+                return Constants.ColorLegendary;
+            case TextType.Life:
+                return Constants.ColorLife;
+            case TextType.Pa:
+                return Constants.ColorPa;
+            case TextType.Pm:
+                return Constants.ColorPm;
+        }
+        return Constants.ColorTransparent;
     }
 
     public static void ReloadScene()

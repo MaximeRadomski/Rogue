@@ -13,32 +13,74 @@ public class CharacterBhv : MonoBehaviour
     public Character Character;
     public bool IsPlayer = false;
 
-    private GameObject _opponent;
+    private CharacterBhv _opponentBhv;
     private FightSceneBhv _fightSceneBhv;
+    private Instantiator _instantiator;
     private GridBhv _gridBhv;
     private int _cellToReachX;
     private int _cellToReachY;
     private List<Vector2> _pathfindingSteps = new List<Vector2>();
-
-    private void GetFightScene()
-    {
-        
-    }
+    private List<RangePos> _pathfindingPos = new List<RangePos>();
+    private SpriteRenderer _spriteRenderer;
 
     public void SetPrivates()
     {
         _fightSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>();
         _gridBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GridBhv>();
         if (IsPlayer)
-            _opponent = GameObject.Find(Constants.GoOpponentName);
+            _opponentBhv = GameObject.Find(Constants.GoOpponentName).GetComponent<CharacterBhv>();
         else
-            _opponent = GameObject.Find(Constants.GoPlayerName);
+            _opponentBhv = GameObject.Find(Constants.GoPlayerName).GetComponent<CharacterBhv>();
+        _instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<Instantiator>();
+        _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
         if (IsMoving)
             Move();
+    }
+
+    public void TakeDamages(int damages)
+    {
+        _instantiator.PopText(damages.ToString(), transform.position, TextType.Life);
+        Character.Hp -= damages;
+    }
+
+    public int AttackWithWeapon(int weaponId, CharacterBhv opponentBhv, Map map)
+    {
+        var tmpWeapon = Character.Weapons[weaponId];
+
+        float baseDamages = tmpWeapon.BaseDamage * Helpers.MultiplierFromPercent(1, Random.Range(-tmpWeapon.DamageRangePercentage, tmpWeapon.DamageRangePercentage));
+        if (tmpWeapon.Type != Character.FavWeapons[0] && tmpWeapon.Type != Character.FavWeapons[1])
+            baseDamages = baseDamages * Helpers.MultiplierFromPercent(0, RacesData.NotRaceWeaponDamagePercent);
+
+        float multiplier = 1.0f;
+        if (opponentBhv.Character.Race == Character.StrongAgainst)
+            multiplier = Helpers.MultiplierFromPercent(multiplier, RacesData.StrongAgainstDamagePercent);
+        if (map.Type == Character.StrongIn)
+            multiplier = Helpers.MultiplierFromPercent(multiplier, RacesData.StrongInDamagePercent);
+        if (Character.Gender == CharacterGender.Female)
+            multiplier = Helpers.MultiplierFromPercent(multiplier, -RacesData.GenderDamage);
+        else
+            multiplier = Helpers.MultiplierFromPercent(multiplier, RacesData.GenderDamage);
+
+        float criticalMultiplier = 1.0f;
+        int criticalPercent = Random.Range(0, 100);
+        if (criticalPercent < tmpWeapon.CritChancePercent)
+        {
+            criticalMultiplier = Helpers.MultiplierFromPercent(multiplier, tmpWeapon.CritMultiplierPercent);
+            if (Character.Gender == CharacterGender.Male)
+                criticalMultiplier = Helpers.MultiplierFromPercent(criticalMultiplier, -RacesData.GenderCritical);
+            else
+                criticalMultiplier = Helpers.MultiplierFromPercent(criticalMultiplier, RacesData.GenderCritical);
+        }
+
+        int resultIn = (int)((baseDamages * multiplier) * criticalMultiplier);
+        Debug.Log("Final Damages = " + resultIn);
+        Pa -= tmpWeapon.PaNeeded;
+        _instantiator.PopText(tmpWeapon.PaNeeded.ToString(), transform.position, TextType.Pa);
+        return resultIn;
     }
 
     public void MoveToPosition(int x, int y, bool usePm = true)
@@ -50,7 +92,9 @@ public class CharacterBhv : MonoBehaviour
         else
         {
             _pathfindingSteps.Clear();
+            _pathfindingPos.Clear();
             _pathfindingSteps.Add(_gridBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
+            _pathfindingPos.Add(new RangePos(_cellToReachX, _cellToReachY));
         }
         IsMoving = true;
     }
@@ -58,22 +102,26 @@ public class CharacterBhv : MonoBehaviour
     private void SetPath()
     {
         _pathfindingSteps.Clear();
+        _pathfindingPos.Clear();
         _pathfindingSteps.Add(_gridBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
+        _pathfindingPos.Add(new RangePos(_cellToReachX, _cellToReachY));
         var visitedIndex = _gridBhv.Cells[_cellToReachX, _cellToReachY].GetComponent<CellBhv>().Visited;
         Pm -= visitedIndex;
+        _instantiator.PopText(visitedIndex.ToString(), transform.position, TextType.Pm);
         int x = _cellToReachX;
         int y = _cellToReachY;
         while (visitedIndex > 0)
         {
-            if (LookForLowerIndex(x, y + 1, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x, y + 1, _opponent))
+            if (LookForLowerIndex(x, y + 1, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x, y + 1, _opponentBhv))
                 ++y;
-            else if (LookForLowerIndex(x + 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x + 1, y, _opponent))
+            else if (LookForLowerIndex(x + 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x + 1, y, _opponentBhv))
                 ++x;
-            else if (LookForLowerIndex(x, y - 1, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x, y - 1, _opponent))
+            else if (LookForLowerIndex(x, y - 1, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x, y - 1, _opponentBhv))
                 --y;
-            else if (LookForLowerIndex(x - 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x - 1, y, _opponent))
+            else if (LookForLowerIndex(x - 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x - 1, y, _opponentBhv))
                 --x;
             _pathfindingSteps.Insert(0, _gridBhv.Cells[x, y].transform.position);
+            _pathfindingPos.Insert(0, new RangePos(_cellToReachX, _cellToReachY));
             --visitedIndex;
         }
     }
@@ -92,6 +140,8 @@ public class CharacterBhv : MonoBehaviour
         transform.position = Vector2.Lerp(transform.position, _pathfindingSteps[0], 0.7f);
         if ((Vector2)transform.position == _pathfindingSteps[0])
         {
+            _spriteRenderer.sortingOrder = Constants.GridMax - _pathfindingPos[0].Y;
+            _pathfindingPos.RemoveAt(0);
             _pathfindingSteps.RemoveAt(0);
             if (_pathfindingSteps.Count == 0)
             {
@@ -108,6 +158,7 @@ public class CharacterBhv : MonoBehaviour
     {
         X = x;
         Y = y;
+        _spriteRenderer.sortingOrder = Constants.GridMax - y;
         transform.position = _gridBhv.Cells[x, y].transform.position;
         if (IsPlayer)
             _fightSceneBhv.AfterPlayerSpawn();

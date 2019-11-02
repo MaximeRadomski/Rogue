@@ -77,6 +77,7 @@ public class CellBhv : MonoBehaviour
     {
         if (State == CellState.AttackRange)
         {
+            _gridBhv.ResetAllCellsZone();
             _gridBhv.ShowWeaponZone(X, Y);
         }
     }
@@ -84,7 +85,7 @@ public class CellBhv : MonoBehaviour
     public void EndAction()
     {
         _soundControler.PlaySound(_soundControler.ClickOut);
-        if (State == CellState.None)
+        if (State == CellState.None || State == CellState.AttackZone)
         {
             _gridBhv.ResetAllCellsZone();
             return;
@@ -100,9 +101,9 @@ public class CellBhv : MonoBehaviour
                 GetPlayer();
             _player.Spawn(X, Y);
         }
-        else if (State == CellState.AttackRange || State == CellState.AttackZone)
+        else if (State == CellState.AttackRange)
         {
-            _fightSceneBhv.AfterPlayerAttack();
+            _gridBhv.CheckIfOpponentInRangeOrZone(X, Y);
         }
     }
 
