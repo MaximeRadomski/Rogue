@@ -115,6 +115,37 @@ public static class WeaponsData
         return weaponTypeName;
     }
 
+    public static List<RangePos> GetWeaponRangeFromType(WeaponType type)
+    {
+        switch (type)
+        {
+            case WeaponType.Sword:
+                return new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) };
+            case WeaponType.Spear:
+                return new List<RangePos> { new RangePos(0, 2), new RangePos(2, 0), new RangePos(0, -2), new RangePos(-2, 0) };
+            case WeaponType.Club:
+                return new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) };
+            case WeaponType.Knife:
+                return new List<RangePos> { new RangePos(-1, 1), new RangePos(1, 1), new RangePos(1, -1), new RangePos(-1, -1) };
+            case WeaponType.Bow:
+                return new List<RangePos> { new RangePos(0, 2), new RangePos(0, 3), new RangePos(0, 4), new RangePos(0, 5),
+                                            new RangePos(2, 0), new RangePos(3, 0), new RangePos(4, 0), new RangePos(5, 0),
+                                            new RangePos(0, -2), new RangePos(0, -3), new RangePos(0, -4), new RangePos(0, -5),
+                                            new RangePos(-2, 0), new RangePos(-3, 0), new RangePos(-4, 0), new RangePos(-5, 0)};
+            case WeaponType.Daggers:
+                return new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) };
+            case WeaponType.Hammer:
+                return new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) };
+            case WeaponType.Axe:
+                return new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) };
+            case WeaponType.GreatSword:
+                return new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) };
+            case WeaponType.Gauntlets:
+                return new List<RangePos> { new RangePos(-1, 1), new RangePos(1, 1), new RangePos(1, -1), new RangePos(-1, -1) };
+        }
+        return null;
+    }
+
     //  SWORD  //
     public static int[] SwordDamage = { 100, 150, 220, 300 };
     public static Weapon GetBaseSword()
@@ -128,7 +159,7 @@ public static class WeaponsData
             CritMultiplierPercent = 50,
             MinRange = 1,
             MaxRange = 1,
-            RangePositions = new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) },
+            RangePositions = GetWeaponRangeFromType(WeaponType.Sword),
             RangeZones = null
         };
     }
@@ -146,7 +177,7 @@ public static class WeaponsData
             CritMultiplierPercent = 150,
             MinRange = 2,
             MaxRange = 2,
-            RangePositions = new List<RangePos> { new RangePos(0, 2), new RangePos(2, 0), new RangePos(0, -2), new RangePos(-2, 0) },
+            RangePositions = GetWeaponRangeFromType(WeaponType.Spear),
             RangeZones = null
         };
     }
@@ -164,7 +195,7 @@ public static class WeaponsData
             CritMultiplierPercent = 30,
             MinRange = 1,
             MaxRange = 1,
-            RangePositions = new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) },
+            RangePositions = GetWeaponRangeFromType(WeaponType.Club),
             RangeZones = new List<RangeDirection> { RangeDirection.Up }
         };
     }
@@ -182,7 +213,7 @@ public static class WeaponsData
             CritMultiplierPercent = 40,
             MinRange = 2,
             MaxRange = 2,
-            RangePositions = new List<RangePos> { new RangePos(-1, 1), new RangePos(1, 1), new RangePos(1, -1), new RangePos(-1, -1) },
+            RangePositions = GetWeaponRangeFromType(WeaponType.Knife),
             RangeZones = null
         };
     }
@@ -200,10 +231,7 @@ public static class WeaponsData
             CritMultiplierPercent = 150,
             MinRange = 3,
             MaxRange = 5,
-            RangePositions = new List<RangePos> { new RangePos(0, 2), new RangePos(0, 3), new RangePos(0, 4), new RangePos(0, 5),
-                                                  new RangePos(2, 0), new RangePos(3, 0), new RangePos(4, 0), new RangePos(5, 0),
-                                                  new RangePos(0, -2), new RangePos(0, -3), new RangePos(0, -4), new RangePos(0, -5),
-                                                  new RangePos(-2, 0), new RangePos(-3, 0), new RangePos(-4, 0), new RangePos(-5, 0)},
+            RangePositions = GetWeaponRangeFromType(WeaponType.Bow),
             RangeZones = null
         };
     }
@@ -221,7 +249,7 @@ public static class WeaponsData
             CritMultiplierPercent = 50,
             MinRange = 1,
             MaxRange = 1,
-            RangePositions = new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) },
+            RangePositions = GetWeaponRangeFromType(WeaponType.Daggers),
             RangeZones = null
         };
     }
@@ -239,7 +267,7 @@ public static class WeaponsData
             CritMultiplierPercent = 40,
             MinRange = 1,
             MaxRange = 1,
-            RangePositions = new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) },
+            RangePositions = GetWeaponRangeFromType(WeaponType.Hammer),
             RangeZones = new List<RangeDirection> { RangeDirection.Left, RangeDirection.Right }
         };
     }
@@ -257,7 +285,7 @@ public static class WeaponsData
             CritMultiplierPercent = 40,
             MinRange = 1,
             MaxRange = 1,
-            RangePositions = new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) },
+            RangePositions = GetWeaponRangeFromType(WeaponType.Axe),
             RangeZones = null
         };
     }
@@ -275,7 +303,7 @@ public static class WeaponsData
             CritMultiplierPercent = 70,
             MinRange = 1,
             MaxRange = 1,
-            RangePositions = new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) },
+            RangePositions = GetWeaponRangeFromType(WeaponType.GreatSword),
             RangeZones = new List<RangeDirection> { RangeDirection.Up, RangeDirection.Left, RangeDirection.Right, RangeDirection.DiagonalLeft, RangeDirection.DiagonalRight }
         };
     }
@@ -293,7 +321,7 @@ public static class WeaponsData
             CritMultiplierPercent = 130,
             MinRange = 2,
             MaxRange = 2,
-            RangePositions = new List<RangePos> { new RangePos(-1, 1), new RangePos(1, 1), new RangePos(1, -1), new RangePos(-1, -1) },
+            RangePositions = GetWeaponRangeFromType(WeaponType.Gauntlets),
             RangeZones = null
         };
     }

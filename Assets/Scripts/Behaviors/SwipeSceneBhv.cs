@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class SwipeSceneBhv : MonoBehaviour
 {
     private Character _playerCharacter;
-    private UnityEngine.UI.Text _sampleText;
+    private Instantiator _instantiator;
 
     void Start()
     {
@@ -17,43 +17,28 @@ public class SwipeSceneBhv : MonoBehaviour
 
     private void SetPrivates()
     {
-        _playerCharacter = JsonUtility.FromJson<Character>(PlayerPrefs.GetString(Constants.PpPlayer, Constants.PpPlayerDefault));
-        _sampleText = GameObject.Find("SampleText").GetComponent<UnityEngine.UI.Text>();
+        _playerCharacter = JsonUtility.FromJson<Character>(PlayerPrefs.GetString(Constants.PpPlayer, Constants.PpSerializeDefault));
+        _instantiator = GetComponent<Instantiator>();
+        _instantiator.SetPrivates();
     }
 
     private void SetButtons()
     {
-        SetSampleButton("ButtonBotMid");
-        GameObject.Find("ButtonBotLeft").GetComponent<ButtonBhv>().EndActionDelegate = GoToRaceChoiceScene;
-        SetSampleButton("ButtonBotRight");
-        SetSampleButton("ButtonFloatingTopRight");
-        SetSampleButton("ButtonTopMid");
-        GameObject.Find("ButtonTopRight").GetComponent<ButtonBhv>().EndActionDelegate = GoToFightScene;
-        GameObject.Find("ButtonFloatingDislike").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("TemplateCard").GetComponent<GrabbableCardBhv>().Dislike;
-        GameObject.Find("ButtonFloatingLike").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("TemplateCard").GetComponent<GrabbableCardBhv>().Like;
+        GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToRaceChoiceScene;
+        _instantiator.NewCard(1);
+        _instantiator.NewCard(0);
+        GameObject.Find("ButtonFloatingDislike").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("Card1").GetComponent<GrabbableCardBhv>().Dislike;
+        GameObject.Find("ButtonFloatingLike").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("Card1").GetComponent<GrabbableCardBhv>().Like;
     }
 
-    private void SetSampleButton(string name)
+    public void NewCard()
     {
-        var tmpButtonBhv = GameObject.Find(name).GetComponent<ButtonBhv>();
-        tmpButtonBhv.BeginActionDelegate = BeginAction;
-        tmpButtonBhv.DoActionDelegate = DoAction;
-        tmpButtonBhv.EndActionDelegate = EndAction;
-    }
-
-    public void BeginAction()
-    {
-        _sampleText.text = "Start\n";
-    }
-
-    public void DoAction()
-    {
-        _sampleText.text += "|";
-    }
-
-    public void EndAction()
-    {
-        _sampleText.text += "\nEnd";
+        Destroy(GameObject.Find("Card1"));
+        var backCard = GameObject.Find("Card0");
+        backCard.GetComponent<GrabbableCardBhv>().BringToFront();
+        GameObject.Find("ButtonFloatingDislike").GetComponent<ButtonBhv>().EndActionDelegate = backCard.GetComponent<GrabbableCardBhv>().Dislike;
+        GameObject.Find("ButtonFloatingLike").GetComponent<ButtonBhv>().EndActionDelegate = backCard.GetComponent<GrabbableCardBhv>().Like;
+        _instantiator.NewCard(0);
     }
 
     public void GoToRaceChoiceScene()
@@ -61,8 +46,11 @@ public class SwipeSceneBhv : MonoBehaviour
         SceneManager.LoadScene(Constants.RaceChoiceScene);
     }
 
-    public void GoToFightScene()
+    public void GoToFightScene(Character opponentCharacter)
     {
+        PlayerPrefs.SetString(Constants.PpOpponent, JsonUtility.ToJson(opponentCharacter));
+        PlayerPrefs.SetString(Constants.PpOpponentWeapon1, JsonUtility.ToJson(opponentCharacter.Weapons[0]));
+        PlayerPrefs.SetString(Constants.PpOpponentWeapon2, JsonUtility.ToJson(opponentCharacter.Weapons[1]));
         SceneManager.LoadScene(Constants.FightScene);
     }
 }

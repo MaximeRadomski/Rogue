@@ -60,7 +60,12 @@ public class FightSceneBhv : MonoBehaviour
         _opponentBhv = _opponent.GetComponent<CharacterBhv>();
         _opponentBhv.X = 0;
         _opponentBhv.Y = 0;
-        _opponentBhv.Character = RacesData.GetCharacterFromRaceAndLevel((CharacterRace)Random.Range(0, Helpers.EnumCount<CharacterRace>()), 1);
+        _opponentBhv.Character = JsonUtility.FromJson<Character>(PlayerPrefs.GetString(Constants.PpOpponent, Constants.PpSerializeDefault));
+        _opponentBhv.Character.Weapons = new List<Weapon>();
+        _opponentBhv.Character.Weapons.Add(JsonUtility.FromJson<Weapon>(PlayerPrefs.GetString(Constants.PpOpponentWeapon1, Constants.PpSerializeDefault)));
+        _opponentBhv.Character.Weapons[0].RangePositions = WeaponsData.GetWeaponRangeFromType(_opponentBhv.Character.Weapons[0].Type);
+        _opponentBhv.Character.Weapons.Add(JsonUtility.FromJson<Weapon>(PlayerPrefs.GetString(Constants.PpOpponentWeapon2, Constants.PpSerializeDefault)));
+        _opponentBhv.Character.Weapons[1].RangePositions = WeaponsData.GetWeaponRangeFromType(_opponentBhv.Character.Weapons[1].Type);
         DisplayCharacterStats(_opponent.name, _opponentBhv.Character);
     }
 
@@ -72,7 +77,12 @@ public class FightSceneBhv : MonoBehaviour
         _playerBhv = _player.GetComponent<CharacterBhv>();
         _playerBhv.X = 0;
         _playerBhv.Y = 0;
-        _playerBhv.Character = RacesData.GetCharacterFromRaceAndLevel((CharacterRace)Random.Range(0, Helpers.EnumCount<CharacterRace>()), 1, true);
+        _playerBhv.Character = JsonUtility.FromJson<Character>(PlayerPrefs.GetString(Constants.PpPlayer, Constants.PpSerializeDefault));
+        _playerBhv.Character.Weapons = new List<Weapon>();
+        _playerBhv.Character.Weapons.Add(JsonUtility.FromJson<Weapon>(PlayerPrefs.GetString(Constants.PpPlayerWeapon1, Constants.PpSerializeDefault)));
+        _playerBhv.Character.Weapons[0].RangePositions = WeaponsData.GetWeaponRangeFromType(_playerBhv.Character.Weapons[0].Type);
+        _playerBhv.Character.Weapons.Add(JsonUtility.FromJson<Weapon>(PlayerPrefs.GetString(Constants.PpPlayerWeapon2, Constants.PpSerializeDefault)));
+        _playerBhv.Character.Weapons[1].RangePositions = WeaponsData.GetWeaponRangeFromType(_playerBhv.Character.Weapons[1].Type);
         _playerBhv.IsPlayer = true;
         DisplayCharacterStats(_player.name, _playerBhv.Character);
     }

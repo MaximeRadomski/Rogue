@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 7899045}
   - component: {fileID: 7899044}
   m_Layer: 5
-  m_Name: Name
+  m_Name: Text
   m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -944,7 +944,7 @@ GameObject:
   - component: {fileID: 709085809}
   - component: {fileID: 709085808}
   m_Layer: 5
-  m_Name: Name
+  m_Name: Text
   m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1039,7 +1039,7 @@ GameObject:
   - component: {fileID: 781454753}
   - component: {fileID: 781454752}
   m_Layer: 5
-  m_Name: Name
+  m_Name: Text
   m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1580,7 +1580,7 @@ GameObject:
   - component: {fileID: 1170703552}
   - component: {fileID: 1170703551}
   m_Layer: 5
-  m_Name: Name
+  m_Name: Text
   m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1675,7 +1675,7 @@ GameObject:
   - component: {fileID: 1227050876}
   - component: {fileID: 1227050875}
   m_Layer: 5
-  m_Name: Name
+  m_Name: Text
   m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2131,7 +2131,7 @@ GameObject:
   - component: {fileID: 1827214688}
   - component: {fileID: 1827214687}
   m_Layer: 5
-  m_Name: Name
+  m_Name: Text
   m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2710,7 +2710,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0.21}
-  m_SizeDelta: {x: 543.3423, y: 87.2554}
+  m_SizeDelta: {x: 1197.6156, y: 87.2554}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2063882433
 MonoBehaviour:

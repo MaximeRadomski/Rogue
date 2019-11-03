@@ -14,20 +14,26 @@ public static class Constants
     public const string PpAudioLevel = "AudioLevel";
     public const float PpAudioLevelDefault = 1;
     public const string PpPlayer = "Player";
-    public const string PpPlayerDefault = null;
+    public const string PpPlayerWeapon1 = "PlayerWeapon1";
+    public const string PpPlayerWeapon2 = "PlayerWeapon2";
+    public const string PpOpponent = "Opponent";
+    public const string PpOpponentWeapon1 = "OpponentWeapon1";
+    public const string PpOpponentWeapon2 = "OpponentWeapon2";
+    public const string PpSerializeDefault = null;
 
     //  SCENES  //
     public const string RaceChoiceScene = "RaceChoiceScene";
     public const string SwipeScene = "SwipeScene";
     public const string FightScene = "FightScene";
 
-    //  GRID  //
-    public const int GridMax = 6;
-
     //  GAMEOBJECT NAMES  //
     public const string GoSceneBhvName = "SceneBhv";
     public const string GoPlayerName = "Player";
     public const string GoOpponentName = "Opponent";
+
+    //  GAMEOBJECTS VALUES  //
+    public const int GridMax = 6;
+    public static Vector2 CardInitialPosition = new Vector2(0.0f, 0.5f);
 
     //  COLORS  //
     public static Color ColorNormal = new Color(0.83f, 0.83f, 0.83f, 1.0f);     //#d4d4d4
