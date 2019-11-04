@@ -32,7 +32,7 @@ public static class Constants
     public const string GoOpponentName = "Opponent";
 
     //  GAMEOBJECTS VALUES  //
-    public const int GridMax = 6;
+    public const int GridMax = 7;
     public static Vector2 CardInitialPosition = new Vector2(0.0f, 0.5f);
 
     //  COLORS  //

@@ -29,4 +29,20 @@ public class Instantiator : MonoBehaviour
         var tmpCardInstance = Instantiate(tmpCardObject, tmpCardObject.transform.position, tmpCardObject.transform.rotation, _canvas.transform);
         tmpCardInstance.GetComponent<GrabbableCardBhv>().SetPrivates(id);
     }
+
+    public static GameObject NewCharacterGameObject(string characterName, bool isPlayer = false)
+    {
+        var characterObject = Resources.Load<GameObject>("Prefabs/TemplateCharacter");
+        var characterInstance = Instantiate(characterObject, new Vector2(-3.0f, -5.0f), characterObject.transform.rotation);
+        if (isPlayer)
+            characterInstance.name = Constants.GoPlayerName;
+        else
+            characterInstance.name = Constants.GoOpponentName;
+        var playerBhv = characterInstance.GetComponent<CharacterBhv>();
+        playerBhv.X = 0;
+        playerBhv.Y = 0;
+        playerBhv.Character = PlayerPrefsHelper.GetCharacter(characterName);
+        playerBhv.IsPlayer = isPlayer;
+        return characterInstance;
+    }
 }

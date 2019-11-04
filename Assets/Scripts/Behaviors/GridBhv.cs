@@ -24,7 +24,6 @@ public class GridBhv : MonoBehaviour
 
     public void InitGrid()
     {
-        GameObject.Find("MapName").GetComponent<UnityEngine.UI.Text>().text = _map.Name;
         for (int y = 0; y < Constants.GridMax; ++y)
         {
             for (int x = 0; x < Constants.GridMax; ++x)
@@ -109,7 +108,7 @@ public class GridBhv : MonoBehaviour
 
     private void SpreadPm(int x, int y, int nbPm, int spentPm, CharacterBhv characterBhv, CharacterBhv opponentBhv)
     {
-        if (!Helpers.IsPosValid(x, y))
+        if (!Helper.IsPosValid(x, y))
             return;
         var cell = Cells[x, y];
         if (cell == null || (x == characterBhv.X && y == characterBhv.Y))
@@ -160,7 +159,7 @@ public class GridBhv : MonoBehaviour
         {
             var x = character.Weapons[weaponId].RangePositions[i].X + characterBhv.X;
             var y = character.Weapons[weaponId].RangePositions[i].Y + characterBhv.Y;
-            if (!Helpers.IsPosValid(x, y))
+            if (!Helper.IsPosValid(x, y))
                 continue;
             var cell = Cells[x, y].GetComponent<CellBhv>();
             if (cell.Type == CellType.On && cell.State == CellState.None && !IsAnythingBetween(characterBhv.X, characterBhv.Y, x, y, opponentBhv))
@@ -175,10 +174,10 @@ public class GridBhv : MonoBehaviour
             return;
         foreach (var tmpDirection in character.Weapons[_currentWeaponId].RangeZones)
         {
-            var tmpPos = Helpers.DetermineRangePosFromRangeDirection(x - _currentCharacterBhv.X, y - _currentCharacterBhv.Y, tmpDirection);
+            var tmpPos = Helper.DetermineRangePosFromRangeDirection(x - _currentCharacterBhv.X, y - _currentCharacterBhv.Y, tmpDirection);
             var tmpX = tmpPos.X + x;
             var tmpY = tmpPos.Y + y;
-            if (!Helpers.IsPosValid(tmpX, tmpY))
+            if (!Helper.IsPosValid(tmpX, tmpY))
                 continue;
             var cell = Cells[tmpX, tmpY].GetComponent<CellBhv>();
             if (cell.Type == CellType.On && cell.State == CellState.None)
@@ -218,10 +217,10 @@ public class GridBhv : MonoBehaviour
             return false;
         foreach (var tmpDirection in character.Weapons[_currentWeaponId].RangeZones)
         {
-            var tmpPos = Helpers.DetermineRangePosFromRangeDirection(x - _currentCharacterBhv.X, y - _currentCharacterBhv.Y, tmpDirection);
+            var tmpPos = Helper.DetermineRangePosFromRangeDirection(x - _currentCharacterBhv.X, y - _currentCharacterBhv.Y, tmpDirection);
             var tmpX = tmpPos.X + x;
             var tmpY = tmpPos.Y + y;
-            if (!Helpers.IsPosValid(tmpX, tmpY))
+            if (!Helper.IsPosValid(tmpX, tmpY))
                 continue;
             var cell = Cells[tmpX, tmpY].GetComponent<CellBhv>();
             if (cell.Type == CellType.On && _currentOpponentBhv.X == tmpX && _currentOpponentBhv.Y == tmpY)

@@ -21,10 +21,7 @@ public class FightSceneBhv : MonoBehaviour
         SetPrivates();
         SetButtons();
         InitGrid();
-        InitOpponent();
-        InitPlayer();
-        _playerBhv.SetPrivates();
-        _opponentBhv.SetPrivates();
+        InitCharacters();
         GameStart();
     }
 
@@ -38,12 +35,13 @@ public class FightSceneBhv : MonoBehaviour
 
     private void SetButtons()
     {
-        GameObject.Find("ButtonReload").GetComponent<ButtonBhv>().EndActionDelegate = Helpers.ReloadScene;
+        GameObject.Find("ButtonReload").GetComponent<ButtonBhv>().EndActionDelegate = Helper.ReloadScene;
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToSwipe;
         GameObject.Find("ButtonPassTurn").GetComponent<ButtonBhv>().EndActionDelegate = PassTurn;
-        GameObject.Find("ButtonWeapon1").GetComponent<ButtonBhv>().EndActionDelegate = ShowWeaponOneRange;
-        GameObject.Find("ButtonWeapon2").GetComponent<ButtonBhv>().EndActionDelegate = ShowWeaponTwoRange;
-        GameObject.Find("ButtonPlayer").GetComponent<ButtonBhv>().EndActionDelegate = AfterPlayerMovement;
+        GameObject.Find("PlayerCharacter").GetComponent<ButtonBhv>().EndActionDelegate = AfterPlayerMovement;
+        GameObject.Find("PlayerWeapon1").GetComponent<ButtonBhv>().EndActionDelegate = ShowWeaponOneRange;
+        GameObject.Find("PlayerWeapon2").GetComponent<ButtonBhv>().EndActionDelegate = ShowWeaponTwoRange;
+        
     }
 
     private void InitGrid()
@@ -52,39 +50,26 @@ public class FightSceneBhv : MonoBehaviour
         _gridBhv.InitGrid();
     }
 
+    private void InitCharacters()
+    {
+        InitOpponent();
+        InitPlayer();
+        _playerBhv.SetPrivates();
+        _opponentBhv.SetPrivates();
+    }
+
     private void InitOpponent()
     {
-        var characterObject = Resources.Load<GameObject>("Prefabs/TemplateCharacter");
-        _opponent = Instantiate(characterObject, new Vector2(-3.0f, 5.0f), characterObject.transform.rotation);
-        _opponent.name = Constants.GoOpponentName;
+        _opponent = Instantiator.NewCharacterGameObject(Constants.PpOpponent);
         _opponentBhv = _opponent.GetComponent<CharacterBhv>();
-        _opponentBhv.X = 0;
-        _opponentBhv.Y = 0;
-        _opponentBhv.Character = JsonUtility.FromJson<Character>(PlayerPrefs.GetString(Constants.PpOpponent, Constants.PpSerializeDefault));
-        _opponentBhv.Character.Weapons = new List<Weapon>();
-        _opponentBhv.Character.Weapons.Add(JsonUtility.FromJson<Weapon>(PlayerPrefs.GetString(Constants.PpOpponentWeapon1, Constants.PpSerializeDefault)));
-        _opponentBhv.Character.Weapons[0].RangePositions = WeaponsData.GetWeaponRangeFromType(_opponentBhv.Character.Weapons[0].Type);
-        _opponentBhv.Character.Weapons.Add(JsonUtility.FromJson<Weapon>(PlayerPrefs.GetString(Constants.PpOpponentWeapon2, Constants.PpSerializeDefault)));
-        _opponentBhv.Character.Weapons[1].RangePositions = WeaponsData.GetWeaponRangeFromType(_opponentBhv.Character.Weapons[1].Type);
-        DisplayCharacterStats(_opponent.name, _opponentBhv.Character);
+        //DisplayCharacterStats(_opponent.name, _opponentBhv.Character);
     }
 
     private void InitPlayer()
     {
-        var characterObject = Resources.Load<GameObject>("Prefabs/TemplateCharacter");
-        _player = Instantiate(characterObject, new Vector2(3.0f, -5.0f), characterObject.transform.rotation);
-        _player.name = Constants.GoPlayerName;
+        _player = Instantiator.NewCharacterGameObject(Constants.PpPlayer, true);
         _playerBhv = _player.GetComponent<CharacterBhv>();
-        _playerBhv.X = 0;
-        _playerBhv.Y = 0;
-        _playerBhv.Character = JsonUtility.FromJson<Character>(PlayerPrefs.GetString(Constants.PpPlayer, Constants.PpSerializeDefault));
-        _playerBhv.Character.Weapons = new List<Weapon>();
-        _playerBhv.Character.Weapons.Add(JsonUtility.FromJson<Weapon>(PlayerPrefs.GetString(Constants.PpPlayerWeapon1, Constants.PpSerializeDefault)));
-        _playerBhv.Character.Weapons[0].RangePositions = WeaponsData.GetWeaponRangeFromType(_playerBhv.Character.Weapons[0].Type);
-        _playerBhv.Character.Weapons.Add(JsonUtility.FromJson<Weapon>(PlayerPrefs.GetString(Constants.PpPlayerWeapon2, Constants.PpSerializeDefault)));
-        _playerBhv.Character.Weapons[1].RangePositions = WeaponsData.GetWeaponRangeFromType(_playerBhv.Character.Weapons[1].Type);
-        _playerBhv.IsPlayer = true;
-        DisplayCharacterStats(_player.name, _playerBhv.Character);
+        //DisplayCharacterStats(_player.name, _playerBhv.Character);
     }
 
     #endregion
@@ -105,8 +90,6 @@ public class FightSceneBhv : MonoBehaviour
         _playerBhv.Pa = _playerBhv.Character.PaMax;
         _playerBhv.Pm = _playerBhv.Character.PmMax;
         _playerBhv.Turn++;
-        //DEBUG//
-        GameObject.Find("TurnCountPlayer").GetComponent<UnityEngine.UI.Text>().text = "Turn Count: " + (_playerBhv.Turn).ToString();
         _gridBhv.ShowPm(_playerBhv, _opponentBhv);
     }
 

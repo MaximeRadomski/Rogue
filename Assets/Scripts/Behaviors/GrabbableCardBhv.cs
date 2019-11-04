@@ -68,7 +68,7 @@ public class GrabbableCardBhv : MonoBehaviour
 
     private void InitOpponent()
     {
-        _opponentCharacter = RacesData.GetCharacterFromRaceAndLevel((CharacterRace)Random.Range(0, Helpers.EnumCount<CharacterRace>()), 1);
+        _opponentCharacter = RacesData.GetCharacterFromRaceAndLevel((CharacterRace)Random.Range(0, Helper.EnumCount<CharacterRace>()), 1);
         DisplayCharacterStats();
     }
 
@@ -80,12 +80,12 @@ public class GrabbableCardBhv : MonoBehaviour
         _canvas.transform.GetChild(3).GetComponent<UnityEngine.UI.Text>().text = "Level:" + _opponentCharacter.Level;
 
         _canvas.transform.GetChild(4).GetComponent<UnityEngine.UI.Text>().text = _opponentCharacter.Weapons[0].Name;
-        _canvas.transform.GetChild(4).GetComponent<UnityEngine.UI.Text>().color = Helpers.ColorFromTextType(_opponentCharacter.Weapons[0].Rarity.GetHashCode());
+        _canvas.transform.GetChild(4).GetComponent<UnityEngine.UI.Text>().color = Helper.ColorFromTextType(_opponentCharacter.Weapons[0].Rarity.GetHashCode());
         _canvas.transform.GetChild(5).GetComponent<UnityEngine.UI.Text>().text = "Type:" + _opponentCharacter.Weapons[0].Type;
         _canvas.transform.GetChild(6).GetComponent<UnityEngine.UI.Text>().text = "Rarity:" + _opponentCharacter.Weapons[0].Rarity;
 
         _canvas.transform.GetChild(7).GetComponent<UnityEngine.UI.Text>().text = _opponentCharacter.Weapons[1].Name;
-        _canvas.transform.GetChild(7).GetComponent<UnityEngine.UI.Text>().color = Helpers.ColorFromTextType(_opponentCharacter.Weapons[1].Rarity.GetHashCode());
+        _canvas.transform.GetChild(7).GetComponent<UnityEngine.UI.Text>().color = Helper.ColorFromTextType(_opponentCharacter.Weapons[1].Rarity.GetHashCode());
         _canvas.transform.GetChild(8).GetComponent<UnityEngine.UI.Text>().text = "Type:" + _opponentCharacter.Weapons[1].Type;
         _canvas.transform.GetChild(9).GetComponent<UnityEngine.UI.Text>().text = "Rarity:" + _opponentCharacter.Weapons[1].Rarity;
     }
@@ -164,7 +164,7 @@ public class GrabbableCardBhv : MonoBehaviour
         _state = CardState.Liked;
         transform.position = Vector2.Lerp(transform.position, _likePosition, 0.1f);
         transform.eulerAngles = new Vector3(0.0f, 0.0f, _rotateAngle * (transform.position.x / 2));
-        if (Helpers.FloatEqualsPrecision(transform.position.x, _likePosition.x, 0.1f))
+        if (Helper.FloatEqualsPrecision(transform.position.x, _likePosition.x, 0.1f))
             _swipeSceneBhv.GoToFightScene(_opponentCharacter);
     }
 
@@ -173,7 +173,7 @@ public class GrabbableCardBhv : MonoBehaviour
         _state = CardState.Disliked;
         transform.position = Vector2.Lerp(transform.position, _dislikePosition, 0.1f);
         transform.eulerAngles = new Vector3(0.0f, 0.0f, _rotateAngle * (transform.position.x / 2));
-        if (Helpers.FloatEqualsPrecision(transform.position.x, _dislikePosition.x, 1.0f))
+        if (Helper.FloatEqualsPrecision(transform.position.x, _dislikePosition.x, 1.0f))
             _swipeSceneBhv.NewCard();
     }
 

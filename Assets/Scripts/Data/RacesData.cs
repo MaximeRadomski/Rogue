@@ -28,6 +28,9 @@ public static class RacesData
     public static int GenderDamage = 5;
     public static int GenderCritical = 15;
 
+    public static int LevelScore = 100;
+    public static int[] RarityScore = { 10, 30, 70, 150 };
+
     public static Character GetCharacterFromRaceAndLevel(CharacterRace race, int level, bool isPlayer = false)
     {
         CharacterGender gender = (CharacterGender)Random.Range(0, 2);
@@ -65,7 +68,7 @@ public static class RacesData
         tmpCharacter.Gender = gender;
         tmpCharacter.Name = name;
         tmpCharacter.Level = level;
-        tmpCharacter.HpMax = Helpers.MaxHpFromLevelOne(tmpCharacter.HpMax, level, tmpCharacter.LevelingHealthPercent);
+        tmpCharacter.HpMax = Helper.MaxHpFromLevelOne(tmpCharacter.HpMax, level, tmpCharacter.LevelingHealthPercent);
         tmpCharacter.Gold = 0;
         tmpCharacter.Experience = 0;
         return tmpCharacter;

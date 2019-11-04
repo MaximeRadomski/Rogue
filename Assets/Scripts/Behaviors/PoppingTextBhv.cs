@@ -17,11 +17,11 @@ public class PoppingTextBhv : MonoBehaviour
         transform.position = new Vector2(startingPosition.x, startingPosition.y + 0.6f);
         _positionToReach = new Vector2(startingPosition.x, startingPosition.y + 1.1f);
         _text = GetComponent<UnityEngine.UI.Text>();
-        _text.color = Helpers.ColorFromTextType(type.GetHashCode());
+        _text.color = Helper.ColorFromTextType(type.GetHashCode());
         _text.text = text;
         _textShadow = GetComponent<UnityEngine.UI.Shadow>();
         _colorToFade = new Color(_text.color.r, _text.color.g, _text.color.b, 0.0f);
-        _shadowColorToFade = Helpers.ColorFromTextType(-1);
+        _shadowColorToFade = Helper.ColorFromTextType(-1);
         _isMoving = true;
     }
 

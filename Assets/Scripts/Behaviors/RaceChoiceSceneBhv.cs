@@ -73,9 +73,7 @@ public class RaceChoiceSceneBhv : MonoBehaviour
     {
         if (_playerCharacter == null)
             return;
-        PlayerPrefs.SetString(Constants.PpPlayer, JsonUtility.ToJson(_playerCharacter));
-        PlayerPrefs.SetString(Constants.PpPlayerWeapon1, JsonUtility.ToJson(_playerCharacter.Weapons[0]));
-        PlayerPrefs.SetString(Constants.PpPlayerWeapon2, JsonUtility.ToJson(_playerCharacter.Weapons[1]));
+        PlayerPrefsHelper.SaveCharacter(Constants.PpPlayer, _playerCharacter);
         SceneManager.LoadScene(Constants.SwipeScene);
     }
 }

@@ -21,4 +21,6 @@ public class Character
     public int PmMax;
     public List<WeaponType> FavWeapons;
     public List<Weapon> Weapons;
+    public List<SkillType> SkillsTypes;
+    public int Score;
 }

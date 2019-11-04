@@ -48,9 +48,7 @@ public class SwipeSceneBhv : MonoBehaviour
 
     public void GoToFightScene(Character opponentCharacter)
     {
-        PlayerPrefs.SetString(Constants.PpOpponent, JsonUtility.ToJson(opponentCharacter));
-        PlayerPrefs.SetString(Constants.PpOpponentWeapon1, JsonUtility.ToJson(opponentCharacter.Weapons[0]));
-        PlayerPrefs.SetString(Constants.PpOpponentWeapon2, JsonUtility.ToJson(opponentCharacter.Weapons[1]));
+        PlayerPrefsHelper.SaveCharacter(Constants.PpOpponent, opponentCharacter);
         SceneManager.LoadScene(Constants.FightScene);
     }
 }

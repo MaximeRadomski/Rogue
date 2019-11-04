@@ -87,7 +87,7 @@ public static class WeaponsData
         }
         tmpWeapon.Name = name;
         tmpWeapon.Rarity = rarity;
-        var baseDamageFloat = tmpWeapon.BaseDamage * Helpers.MultiplierFromPercent(1, Random.Range(-BaseInitDamageRangePercentage, BaseInitDamageRangePercentage));
+        var baseDamageFloat = tmpWeapon.BaseDamage * Helper.MultiplierFromPercent(1, Random.Range(-BaseInitDamageRangePercentage, BaseInitDamageRangePercentage));
         tmpWeapon.BaseDamage = (int)baseDamageFloat;
         return tmpWeapon;
     }

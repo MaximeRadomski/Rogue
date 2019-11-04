@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public static class Helpers
+public static class Helper
 {
     public static bool IsPosValid(int x, int y)
     {

@@ -51,29 +51,29 @@ public class CharacterBhv : MonoBehaviour
     {
         var tmpWeapon = Character.Weapons[weaponId];
 
-        float baseDamages = tmpWeapon.BaseDamage * Helpers.MultiplierFromPercent(1, Random.Range(-tmpWeapon.DamageRangePercentage, tmpWeapon.DamageRangePercentage));
+        float baseDamages = tmpWeapon.BaseDamage * Helper.MultiplierFromPercent(1, Random.Range(-tmpWeapon.DamageRangePercentage, tmpWeapon.DamageRangePercentage));
         if (tmpWeapon.Type != Character.FavWeapons[0] && tmpWeapon.Type != Character.FavWeapons[1])
-            baseDamages = baseDamages * Helpers.MultiplierFromPercent(0, RacesData.NotRaceWeaponDamagePercent);
+            baseDamages = baseDamages * Helper.MultiplierFromPercent(0, RacesData.NotRaceWeaponDamagePercent);
 
         float multiplier = 1.0f;
         if (opponentBhv.Character.Race == Character.StrongAgainst)
-            multiplier = Helpers.MultiplierFromPercent(multiplier, RacesData.StrongAgainstDamagePercent);
+            multiplier = Helper.MultiplierFromPercent(multiplier, RacesData.StrongAgainstDamagePercent);
         if (map.Type == Character.StrongIn)
-            multiplier = Helpers.MultiplierFromPercent(multiplier, RacesData.StrongInDamagePercent);
+            multiplier = Helper.MultiplierFromPercent(multiplier, RacesData.StrongInDamagePercent);
         if (Character.Gender == CharacterGender.Female)
-            multiplier = Helpers.MultiplierFromPercent(multiplier, -RacesData.GenderDamage);
+            multiplier = Helper.MultiplierFromPercent(multiplier, -RacesData.GenderDamage);
         else
-            multiplier = Helpers.MultiplierFromPercent(multiplier, RacesData.GenderDamage);
+            multiplier = Helper.MultiplierFromPercent(multiplier, RacesData.GenderDamage);
 
         float criticalMultiplier = 1.0f;
         int criticalPercent = Random.Range(0, 100);
         if (criticalPercent < tmpWeapon.CritChancePercent)
         {
-            criticalMultiplier = Helpers.MultiplierFromPercent(multiplier, tmpWeapon.CritMultiplierPercent);
+            criticalMultiplier = Helper.MultiplierFromPercent(multiplier, tmpWeapon.CritMultiplierPercent);
             if (Character.Gender == CharacterGender.Male)
-                criticalMultiplier = Helpers.MultiplierFromPercent(criticalMultiplier, -RacesData.GenderCritical);
+                criticalMultiplier = Helper.MultiplierFromPercent(criticalMultiplier, -RacesData.GenderCritical);
             else
-                criticalMultiplier = Helpers.MultiplierFromPercent(criticalMultiplier, RacesData.GenderCritical);
+                criticalMultiplier = Helper.MultiplierFromPercent(criticalMultiplier, RacesData.GenderCritical);
         }
 
         int resultIn = (int)((baseDamages * multiplier) * criticalMultiplier);
@@ -128,7 +128,7 @@ public class CharacterBhv : MonoBehaviour
 
     private bool LookForLowerIndex(int x, int y, int visitedIndex)
     {
-        if (!Helpers.IsPosValid(x, y))
+        if (!Helper.IsPosValid(x, y))
             return false;
         if (_gridBhv.Cells[x, y].GetComponent<CellBhv>().Visited == visitedIndex)
             return true;
