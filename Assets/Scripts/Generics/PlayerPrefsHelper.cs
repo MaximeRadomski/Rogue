@@ -16,9 +16,7 @@ public class PlayerPrefsHelper : MonoBehaviour
         var character = JsonUtility.FromJson<Character>(PlayerPrefs.GetString(characterName, Constants.PpSerializeDefault));
         character.Weapons = new List<Weapon>();
         character.Weapons.Add(JsonUtility.FromJson<Weapon>(PlayerPrefs.GetString(Constants.PpPlayerWeapon1, Constants.PpSerializeDefault)));
-        character.Weapons[0].RangePositions = WeaponsData.GetWeaponRangeFromType(character.Weapons[0].Type);
         character.Weapons.Add(JsonUtility.FromJson<Weapon>(PlayerPrefs.GetString(Constants.PpPlayerWeapon2, Constants.PpSerializeDefault)));
-        character.Weapons[1].RangePositions = WeaponsData.GetWeaponRangeFromType(character.Weapons[1].Type);
         return character;
     }
 }

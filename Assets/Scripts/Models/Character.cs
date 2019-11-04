@@ -22,5 +22,6 @@ public class Character
     public List<WeaponType> FavWeapons;
     public List<Weapon> Weapons;
     public List<SkillType> SkillsTypes;
+    public List<Skill> Skills;
     public int Score;
 }

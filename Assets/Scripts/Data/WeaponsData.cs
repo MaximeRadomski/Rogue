@@ -31,14 +31,14 @@ public static class WeaponsData
         {
             type = (WeaponType)Random.Range(0, System.Enum.GetNames(typeof(WeaponType)).Length);
         }
-        WeaponRarity rarity = WeaponRarity.Normal;
+        Rarity rarity = Rarity.Normal;
         if (!isBase)
         {
             int rarityPercent = Random.Range(0, 100);
             if (rarityPercent < RareWeaponAppearancePercent)
-                rarity = WeaponRarity.Rare;
+                rarity = Rarity.Rare;
             else if (rarityPercent < MagicalWeaponAppearancePercent)
-                rarity = WeaponRarity.Magical;
+                rarity = Rarity.Magical;
         }
         string name = GetWeaponNameFromRarity(type, rarity, isBase);
         Weapon tmpWeapon = null;
@@ -92,18 +92,18 @@ public static class WeaponsData
         return tmpWeapon;
     }
 
-    private static string GetWeaponNameFromRarity(WeaponType type, WeaponRarity rarity, bool isBase = false)
+    private static string GetWeaponNameFromRarity(WeaponType type, Rarity rarity, bool isBase = false)
     {
         var weaponTypeName = WeaponTypeNames[type.GetHashCode()][Random.Range(0, WeaponTypeNames[type.GetHashCode()].Length)];
         if (isBase)
             return weaponTypeName;
         switch (rarity)
         {
-            case WeaponRarity.Normal:
+            case Rarity.Normal:
                 return NormalNames[Random.Range(0, NormalNames.Length)] + " " + weaponTypeName;
-            case WeaponRarity.Magical:
+            case Rarity.Magical:
                 return MagicalNames[Random.Range(0, MagicalNames.Length)] + " " + weaponTypeName;
-            case WeaponRarity.Rare:
+            case Rarity.Rare:
                 var tmpName = MagicalNames[Random.Range(0, MagicalNames.Length)] + " " + weaponTypeName;
                 var rareNameId = Random.Range(0, RareNames.Length);
                 if (RareNames[rareNameId][0] == '|')
@@ -113,37 +113,6 @@ public static class WeaponsData
                 return RareNames[rareNameId] + " " + tmpName;
         }
         return weaponTypeName;
-    }
-
-    public static List<RangePos> GetWeaponRangeFromType(WeaponType type)
-    {
-        switch (type)
-        {
-            case WeaponType.Sword:
-                return new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) };
-            case WeaponType.Spear:
-                return new List<RangePos> { new RangePos(0, 2), new RangePos(2, 0), new RangePos(0, -2), new RangePos(-2, 0) };
-            case WeaponType.Club:
-                return new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) };
-            case WeaponType.Knife:
-                return new List<RangePos> { new RangePos(-1, 1), new RangePos(1, 1), new RangePos(1, -1), new RangePos(-1, -1) };
-            case WeaponType.Bow:
-                return new List<RangePos> { new RangePos(0, 2), new RangePos(0, 3), new RangePos(0, 4), new RangePos(0, 5),
-                                            new RangePos(2, 0), new RangePos(3, 0), new RangePos(4, 0), new RangePos(5, 0),
-                                            new RangePos(0, -2), new RangePos(0, -3), new RangePos(0, -4), new RangePos(0, -5),
-                                            new RangePos(-2, 0), new RangePos(-3, 0), new RangePos(-4, 0), new RangePos(-5, 0)};
-            case WeaponType.Daggers:
-                return new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) };
-            case WeaponType.Hammer:
-                return new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) };
-            case WeaponType.Axe:
-                return new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) };
-            case WeaponType.GreatSword:
-                return new List<RangePos> { new RangePos(0, 1), new RangePos(1, 0), new RangePos(0, -1), new RangePos(-1, 0) };
-            case WeaponType.Gauntlets:
-                return new List<RangePos> { new RangePos(-1, 1), new RangePos(1, 1), new RangePos(1, -1), new RangePos(-1, -1) };
-        }
-        return null;
     }
 
     //  SWORD  //
@@ -159,7 +128,7 @@ public static class WeaponsData
             CritMultiplierPercent = 50,
             MinRange = 1,
             MaxRange = 1,
-            RangePositions = GetWeaponRangeFromType(WeaponType.Sword),
+            RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
             RangeZones = null
         };
     }
@@ -177,7 +146,7 @@ public static class WeaponsData
             CritMultiplierPercent = 150,
             MinRange = 2,
             MaxRange = 2,
-            RangePositions = GetWeaponRangeFromType(WeaponType.Spear),
+            RangePositions = new List<int> { 0,2, 2,0, 0,-2, -2,0 },
             RangeZones = null
         };
     }
@@ -195,7 +164,7 @@ public static class WeaponsData
             CritMultiplierPercent = 30,
             MinRange = 1,
             MaxRange = 1,
-            RangePositions = GetWeaponRangeFromType(WeaponType.Club),
+            RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
             RangeZones = new List<RangeDirection> { RangeDirection.Up }
         };
     }
@@ -213,7 +182,7 @@ public static class WeaponsData
             CritMultiplierPercent = 40,
             MinRange = 2,
             MaxRange = 2,
-            RangePositions = GetWeaponRangeFromType(WeaponType.Knife),
+            RangePositions = new List<int> { -1,1, 1,1, 1,-1, -1,-1 },
             RangeZones = null
         };
     }
@@ -229,9 +198,12 @@ public static class WeaponsData
             PaNeeded = 4,
             CritChancePercent = 1,
             CritMultiplierPercent = 150,
-            MinRange = 3,
+            MinRange = 2,
             MaxRange = 5,
-            RangePositions = GetWeaponRangeFromType(WeaponType.Bow),
+            RangePositions = new List<int> { 0,2, 0,3, 0,4, 0,5,
+                                             2,0, 3,0, 4,0, 5,0,
+                                             0,-2, 0,-3, 0,-4, 0,-5,
+                                             -2,0, -3,0, -4,0, -5,0 },
             RangeZones = null
         };
     }
@@ -249,7 +221,7 @@ public static class WeaponsData
             CritMultiplierPercent = 50,
             MinRange = 1,
             MaxRange = 1,
-            RangePositions = GetWeaponRangeFromType(WeaponType.Daggers),
+            RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
             RangeZones = null
         };
     }
@@ -267,7 +239,7 @@ public static class WeaponsData
             CritMultiplierPercent = 40,
             MinRange = 1,
             MaxRange = 1,
-            RangePositions = GetWeaponRangeFromType(WeaponType.Hammer),
+            RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
             RangeZones = new List<RangeDirection> { RangeDirection.Left, RangeDirection.Right }
         };
     }
@@ -285,7 +257,7 @@ public static class WeaponsData
             CritMultiplierPercent = 40,
             MinRange = 1,
             MaxRange = 1,
-            RangePositions = GetWeaponRangeFromType(WeaponType.Axe),
+            RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
             RangeZones = null
         };
     }
@@ -303,7 +275,7 @@ public static class WeaponsData
             CritMultiplierPercent = 70,
             MinRange = 1,
             MaxRange = 1,
-            RangePositions = GetWeaponRangeFromType(WeaponType.GreatSword),
+            RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
             RangeZones = new List<RangeDirection> { RangeDirection.Up, RangeDirection.Left, RangeDirection.Right, RangeDirection.DiagonalLeft, RangeDirection.DiagonalRight }
         };
     }
@@ -321,7 +293,7 @@ public static class WeaponsData
             CritMultiplierPercent = 130,
             MinRange = 2,
             MaxRange = 2,
-            RangePositions = GetWeaponRangeFromType(WeaponType.Gauntlets),
+            RangePositions = new List<int> { -1,1, 1,1, 1,-1, -1,-1 },
             RangeZones = null
         };
     }

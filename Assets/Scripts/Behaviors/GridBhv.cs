@@ -155,10 +155,10 @@ public class GridBhv : MonoBehaviour
         _currentOpponentBhv = opponentBhv;
         _currentWeaponId = weaponId;
         var character = characterBhv.Character;
-        for (int i = 0; i < character.Weapons[weaponId].RangePositions.Count; ++i)
+        for (int i = 0; i < character.Weapons[weaponId].RangePositions.Count; i += 2)
         {
-            var x = character.Weapons[weaponId].RangePositions[i].X + characterBhv.X;
-            var y = character.Weapons[weaponId].RangePositions[i].Y + characterBhv.Y;
+            var x = character.Weapons[weaponId].RangePositions[i] + characterBhv.X;
+            var y = character.Weapons[weaponId].RangePositions[i+1] + characterBhv.Y;
             if (!Helper.IsPosValid(x, y))
                 continue;
             var cell = Cells[x, y].GetComponent<CellBhv>();

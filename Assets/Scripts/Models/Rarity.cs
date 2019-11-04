@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum WeaponRarity
+public enum Rarity
 {
     Normal = 0,
     Magical = 1,
