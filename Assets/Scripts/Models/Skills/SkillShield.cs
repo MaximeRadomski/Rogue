@@ -1,0 +1,30 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SkillShield : Skill
+{
+    public SkillShield()
+    {
+        Name = "Shield";
+        Type = SkillType.Racial;
+        Race = CharacterRace.Human;
+        Rarity = Rarity.Normal;
+        CooldownType = CooldownType.Normal;
+        CooldownMax = 2;
+        Cooldown = 0;
+        PaNeeded = 2;
+        MinRange = 0;
+        MaxRange = 0;
+        RangeType = RangeType.Normal;
+        RangePositions = new List<int> { 0,0 };
+    }
+
+    public override int OnTakeDamage(int damages)
+    {
+        if (Cooldown == CooldownMax)
+            return 0;
+        return damages;
+
+    }
+}

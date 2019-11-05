@@ -77,6 +77,7 @@ public static class RacesData
     //  HUMAN  //
     public static Character GetBaseHuman(bool isPlayer = false)
     {
+        var tmpSkillData = new SkillsData();
         return new Character()
         {
             Race = CharacterRace.Human,
@@ -89,7 +90,10 @@ public static class RacesData
             LevelingDamagePercent = 15,
             FavWeapons = new List<WeaponType> { WeaponType.Sword, WeaponType.Spear },
             Weapons = new List<Weapon> { WeaponsData.GetWeaponFromType(WeaponType.Sword, isPlayer),
-                                         WeaponsData.GetWeaponFromType(WeaponType.Spear, isPlayer) }
+                                         WeaponsData.GetWeaponFromType(WeaponType.Spear, isPlayer) },
+            SkillsTypes = new List<SkillType> { SkillType.Racial, SkillType.Racial },
+            Skills = new List<Skill> { Random.Range(0, 2) == 0 ? tmpSkillData.GetSkillFromName("Shield") :
+                                                                 tmpSkillData.GetSkillFromName("Jump")}
         };
     }
 

@@ -41,7 +41,8 @@ public class FightSceneBhv : MonoBehaviour
         GameObject.Find("PlayerCharacter").GetComponent<ButtonBhv>().EndActionDelegate = AfterPlayerMovement;
         GameObject.Find("PlayerWeapon1").GetComponent<ButtonBhv>().EndActionDelegate = ShowWeaponOneRange;
         GameObject.Find("PlayerWeapon2").GetComponent<ButtonBhv>().EndActionDelegate = ShowWeaponTwoRange;
-        
+        GameObject.Find("PlayerSkill").GetComponent<ButtonBhv>().EndActionDelegate = ClickSkill1;
+
     }
 
     private void InitGrid()
@@ -86,6 +87,11 @@ public class FightSceneBhv : MonoBehaviour
 
     private void PlayerTurn()
     {
+        foreach (var skill in _playerBhv.Character.Skills)
+        {
+            if (skill != null)
+                skill.OnStartTurn();
+        }
         State = FightState.PlayerTurn;
         _playerBhv.Pa = _playerBhv.Character.PaMax;
         _playerBhv.Pm = _playerBhv.Character.PmMax;
@@ -96,7 +102,14 @@ public class FightSceneBhv : MonoBehaviour
     private void PassTurn()
     {
         if (State == FightState.PlayerTurn)
+        {
+            foreach (var skill in _playerBhv.Character.Skills)
+            {
+                if (skill != null)
+                    skill.OnEndTurn();
+            }
             PlayerTurn();
+        }
     }
 
     public void AfterPlayerMovement()
@@ -121,6 +134,11 @@ public class FightSceneBhv : MonoBehaviour
             _playerBhv.AttackWithWeapon(weaponId, _opponentBhv, _map);
         }
         _gridBhv.ShowPm(_playerBhv, _opponentBhv);
+    }
+
+    public void AfterPlayerSkill(int skillId, int x, int y)
+    {
+        _playerBhv.Character.Skills[skillId].Activate(x, y);
     }
 
     #endregion
@@ -165,6 +183,13 @@ public class FightSceneBhv : MonoBehaviour
     {
         if (State == FightState.PlayerTurn && _playerBhv.Pa >= _playerBhv.Character.Weapons[1].PaNeeded && !_playerBhv.IsMoving)
             _gridBhv.ShowWeaponRange(_playerBhv, 1, _opponentBhv);
+    }
+
+    private void ClickSkill1()
+    {
+        if (State == FightState.PlayerTurn && _playerBhv.Character.Skills != null && _playerBhv.Character.Skills.Count >= 1
+            && _playerBhv.Pa >= _playerBhv.Character.Skills[0].PaNeeded && !_playerBhv.IsMoving)
+            _playerBhv.Character.Skills[0].OnClick();
     }
 
     #endregion

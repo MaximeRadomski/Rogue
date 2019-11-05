@@ -2,21 +2,73 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill
+public abstract class Skill
 {
     public string Name;
+    public string Description;
     public SkillType Type;
+    public CharacterRace Race;
     public Rarity Rarity;
     public CooldownType CooldownType;
-    public int CoolDown;
-    public int BaseDamage;
-    public int BaseSelfDamage;
-    public int DamageRangePercentage;
+    public int CooldownMax;
+    public int Cooldown;
     public int PaNeeded;
-    public bool Activated;
-    public bool NullifiyNextDamage;
-    public bool MoveOnPosition;
-    public bool FullRange;
+    public int MinRange;
+    public int MaxRange;
+    public RangeType RangeType;
     public List<int> RangePositions;
     public List<RangeDirection> RangeZones;
+
+    public CharacterBhv CharacterBhv;
+    public CharacterBhv OpponentBhv;
+    public GridBhv GridBhv;
+    public int Id;
+
+    public virtual void Init(CharacterBhv characterBhv, CharacterBhv opponentBhv, GridBhv gridBhv, int id)
+    {
+        CharacterBhv = characterBhv;
+        OpponentBhv = opponentBhv;
+        GridBhv = gridBhv;
+        Id = id;
+    }
+
+    public virtual void Activate(int x, int y)
+    {
+        if (CooldownType == CooldownType.Normal)
+            Cooldown = CooldownMax;
+        else if (CooldownType == CooldownType.OnceAFight)
+            Cooldown = -1;
+    }
+
+    public virtual void Destruct()
+    {
+        
+    }
+
+    public virtual void OnClick()
+    {
+        if (Cooldown == 0)
+            GridBhv.ShowSkillRange(RangeType, CharacterBhv, Id, OpponentBhv);
+    }
+
+    public virtual void OnStartTurn()
+    {
+        if (CooldownType == CooldownType.Normal && Cooldown > 0)
+            --Cooldown;
+    }
+
+    public virtual void OnEndTurn()
+    {
+
+    }
+
+    public virtual void OnStartAttack()
+    {
+
+    }
+
+    public virtual int OnTakeDamage(int damages)
+    {
+        return damages;
+    }
 }

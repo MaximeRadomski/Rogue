@@ -105,6 +105,10 @@ public class CellBhv : MonoBehaviour
         {
             _gridBhv.CheckIfOpponentInRangeOrZone(X, Y);
         }
+        else if (State == CellState.SkillRange)
+        {
+            _gridBhv.AfterPlayerSkill(X, Y);
+        }
     }
 
     private void AskPlayerToMove(bool usePm = true)
@@ -164,6 +168,12 @@ public class CellBhv : MonoBehaviour
     {
         State = CellState.AttackZone;
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.5f, 0.5f, 1.0f);
+    }
+
+    public void ShowSkillRange()
+    {
+        State = CellState.SkillRange;
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 0.0f, 1.0f);
     }
 
     void Update()

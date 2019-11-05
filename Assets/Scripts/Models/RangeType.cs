@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CooldownType
+public enum RangeType
 {
     Normal = 0,
-    OnceAFight = 1,
-    Passive = 4
+    OverWalls = 1,
+    FullRange = 2
 }

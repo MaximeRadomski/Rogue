@@ -33,6 +33,11 @@ public class CharacterBhv : MonoBehaviour
             _opponentBhv = GameObject.Find(Constants.GoPlayerName).GetComponent<CharacterBhv>();
         _instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<Instantiator>();
         _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        for (int i = 0; i < Character.Skills.Count; ++i)
+        {
+            if (Character.Skills[i] != null)
+                Character.Skills[i].Init(this, _opponentBhv, _gridBhv, i);
+        }
     }
 
     void Update()
@@ -43,12 +48,22 @@ public class CharacterBhv : MonoBehaviour
 
     public void TakeDamages(int damages)
     {
+        foreach (var skill in Character.Skills)
+        {
+            if (skill != null)
+                skill.OnTakeDamage(damages);
+        }
         _instantiator.PopText(damages.ToString(), transform.position, TextType.Life);
         Character.Hp -= damages;
     }
 
     public int AttackWithWeapon(int weaponId, CharacterBhv opponentBhv, Map map)
     {
+        foreach (var skill in Character.Skills)
+        {
+            if (skill != null)
+                skill.OnStartAttack();
+        }
         var tmpWeapon = Character.Weapons[weaponId];
 
         float baseDamages = tmpWeapon.BaseDamage * Helper.MultiplierFromPercent(1, Random.Range(-tmpWeapon.DamageRangePercentage, tmpWeapon.DamageRangePercentage));

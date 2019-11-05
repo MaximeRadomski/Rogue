@@ -12,6 +12,7 @@ public class GridBhv : MonoBehaviour
     private CharacterBhv _currentCharacterBhv;
     private CharacterBhv _currentOpponentBhv;
     private int _currentWeaponId;
+    private int _currentSkillId;
 
     public void SetPrivates()
     {
@@ -227,6 +228,34 @@ public class GridBhv : MonoBehaviour
                 return true;
         }
         return false;
+    }
+
+    #endregion
+
+    #region SKill
+
+    public void ShowSkillRange(RangeType rangeType, CharacterBhv characterBhv, int skillId, CharacterBhv opponentBhv)
+    {
+        ResetAllCellsDisplay();
+        _currentCharacterBhv = characterBhv;
+        _currentOpponentBhv = opponentBhv;
+        _currentSkillId = skillId;
+        var character = characterBhv.Character;
+        for (int i = 0; i < character.Skills[skillId].RangePositions.Count; i += 2)
+        {
+            var x = character.Skills[skillId].RangePositions[i] + characterBhv.X;
+            var y = character.Skills[skillId].RangePositions[i + 1] + characterBhv.Y;
+            if (!Helper.IsPosValid(x, y))
+                continue;
+            var cell = Cells[x, y].GetComponent<CellBhv>();
+            if (cell.Type == CellType.On && cell.State == CellState.None && !IsAnythingBetween(characterBhv.X, characterBhv.Y, x, y, opponentBhv))
+                cell.ShowSkillRange();
+        }
+    }
+
+    public void AfterPlayerSkill(int x, int y)
+    {
+        _fightSceneBhv.AfterPlayerSkill(_currentSkillId, x, y);
     }
 
     #endregion

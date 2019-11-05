@@ -8,5 +8,6 @@ public enum CellState
     Mouvement = 1,
     AttackRange = 2,
     AttackZone = 3,
-    Spawn = 4
+    SkillRange = 4,
+    Spawn = 5
 }
