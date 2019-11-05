@@ -248,7 +248,7 @@ public class GridBhv : MonoBehaviour
             if (!Helper.IsPosValid(x, y))
                 continue;
             var cell = Cells[x, y].GetComponent<CellBhv>();
-            if (cell.Type == CellType.On && cell.State == CellState.None && !IsAnythingBetween(characterBhv.X, characterBhv.Y, x, y, opponentBhv))
+            if (cell.Type == CellType.On && cell.State == CellState.None)
                 cell.ShowSkillRange();
         }
     }

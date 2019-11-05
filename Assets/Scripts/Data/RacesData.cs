@@ -31,6 +31,8 @@ public static class RacesData
     public static int LevelScore = 100;
     public static int[] RarityScore = { 10, 30, 70, 150 };
 
+    public static SkillsData SkillsData = new SkillsData();
+
     public static Character GetCharacterFromRaceAndLevel(CharacterRace race, int level, bool isPlayer = false)
     {
         CharacterGender gender = (CharacterGender)Random.Range(0, 2);
@@ -77,7 +79,6 @@ public static class RacesData
     //  HUMAN  //
     public static Character GetBaseHuman(bool isPlayer = false)
     {
-        var tmpSkillData = new SkillsData();
         return new Character()
         {
             Race = CharacterRace.Human,
@@ -91,9 +92,9 @@ public static class RacesData
             FavWeapons = new List<WeaponType> { WeaponType.Sword, WeaponType.Spear },
             Weapons = new List<Weapon> { WeaponsData.GetWeaponFromType(WeaponType.Sword, isPlayer),
                                          WeaponsData.GetWeaponFromType(WeaponType.Spear, isPlayer) },
-            SkillsTypes = new List<SkillType> { SkillType.Racial, SkillType.Racial },
-            Skills = new List<Skill> { Random.Range(0, 2) == 0 ? tmpSkillData.GetSkillFromName("Shield") :
-                                                                 tmpSkillData.GetSkillFromName("Jump")}
+            SkillsTypes = new List<SkillType> { SkillType.Racial, SkillType.NotRatial },
+            Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.HumanSkillsNames[0]) :
+                                                                 SkillsData.GetSkillFromName(SkillsData.HumanSkillsNames[1])}
         };
     }
 
@@ -112,7 +113,10 @@ public static class RacesData
             LevelingDamagePercent = 20,
             FavWeapons = new List<WeaponType> { WeaponType.Club, WeaponType.Knife },
             Weapons = new List<Weapon> { WeaponsData.GetWeaponFromType(WeaponType.Club, isPlayer),
-                                         WeaponsData.GetWeaponFromType(WeaponType.Knife, isPlayer) }
+                                         WeaponsData.GetWeaponFromType(WeaponType.Knife, isPlayer) },
+            SkillsTypes = new List<SkillType> { SkillType.Racial, SkillType.NotRatial },
+            Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.GoblinSkillsNames[0]) :
+                                                                 SkillsData.GetSkillFromName(SkillsData.GoblinSkillsNames[1])}
         };
     }
 
@@ -131,7 +135,10 @@ public static class RacesData
             LevelingDamagePercent = 25,
             FavWeapons = new List<WeaponType> { WeaponType.Bow, WeaponType.Daggers },
             Weapons = new List<Weapon> { WeaponsData.GetWeaponFromType(WeaponType.Bow, isPlayer),
-                                         WeaponsData.GetWeaponFromType(WeaponType.Daggers, isPlayer) }
+                                         WeaponsData.GetWeaponFromType(WeaponType.Daggers, isPlayer) },
+            SkillsTypes = new List<SkillType> { SkillType.Racial, SkillType.NotRatial },
+            Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.ElfSkillsNames[0]) :
+                                                                 SkillsData.GetSkillFromName(SkillsData.ElfSkillsNames[1])}
         };
     }
 
@@ -151,7 +158,10 @@ public static class RacesData
             LevelingDamagePercent = 20,
             FavWeapons = new List<WeaponType> { WeaponType.Hammer, WeaponType.Axe },
             Weapons = new List<Weapon> { WeaponsData.GetWeaponFromType(WeaponType.Hammer, isPlayer),
-                                         WeaponsData.GetWeaponFromType(WeaponType.Axe, isPlayer) }
+                                         WeaponsData.GetWeaponFromType(WeaponType.Axe, isPlayer) },
+            SkillsTypes = new List<SkillType> { SkillType.Racial, SkillType.NotRatial },
+            Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.DwarfSkillsNames[0]) :
+                                                                 SkillsData.GetSkillFromName(SkillsData.DwarfSkillsNames[1])}
         };
     }
 
@@ -171,7 +181,10 @@ public static class RacesData
             LevelingDamagePercent = 10,
             FavWeapons = new List<WeaponType> { WeaponType.GreatSword, WeaponType.Gauntlets },
             Weapons = new List<Weapon> { WeaponsData.GetWeaponFromType(WeaponType.GreatSword, isPlayer),
-                                         WeaponsData.GetWeaponFromType(WeaponType.Gauntlets, isPlayer) }
+                                         WeaponsData.GetWeaponFromType(WeaponType.Gauntlets, isPlayer) },
+            SkillsTypes = new List<SkillType> { SkillType.Racial, SkillType.NotRatial },
+            Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.OrcSkillsNames[0]) :
+                                                                 SkillsData.GetSkillFromName(SkillsData.OrcSkillsNames[1])}
         };
     }
 }

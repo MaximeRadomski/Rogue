@@ -15,14 +15,13 @@ public class PlayerPrefsHelper : MonoBehaviour
 
     public static Character GetCharacter(string characterName)
     {
-        SkillsData tmpSkillsData = new SkillsData();
         var character = JsonUtility.FromJson<Character>(PlayerPrefs.GetString(characterName, Constants.PpSerializeDefault));
         character.Weapons = new List<Weapon>();
         character.Weapons.Add(JsonUtility.FromJson<Weapon>(PlayerPrefs.GetString(characterName + "Weapon1", Constants.PpSerializeDefault)));
         character.Weapons.Add(JsonUtility.FromJson<Weapon>(PlayerPrefs.GetString(characterName + "Weapon2", Constants.PpSerializeDefault)));
         character.Skills = new List<Skill>();
-        character.Skills.Add(tmpSkillsData.GetSkillFromName(PlayerPrefs.GetString(characterName + "Skill1", Constants.PpSerializeDefault)));
-        character.Skills.Add(tmpSkillsData.GetSkillFromName(PlayerPrefs.GetString(characterName + "Skill2", Constants.PpSerializeDefault)));
+        character.Skills.Add(RacesData.SkillsData.GetSkillFromName(PlayerPrefs.GetString(characterName + "Skill1", Constants.PpSerializeDefault)));
+        character.Skills.Add(RacesData.SkillsData.GetSkillFromName(PlayerPrefs.GetString(characterName + "Skill2", Constants.PpSerializeDefault)));
         return character;
     }
 }

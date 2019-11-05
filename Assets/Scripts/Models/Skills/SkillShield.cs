@@ -20,6 +20,12 @@ public class SkillShield : Skill
         RangePositions = new List<int> { 0,0 };
     }
 
+    public override void Activate(int x, int y)
+    {
+        base.Activate(x, y);
+        GridBhv.ShowPm(CharacterBhv, OpponentBhv);
+    }
+
     public override int OnTakeDamage(int damages)
     {
         if (Cooldown == CooldownMax)

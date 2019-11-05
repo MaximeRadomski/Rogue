@@ -5,13 +5,11 @@ using UnityEngine;
 
 public class SkillsData
 {
-    public string[] SkillsNames = {
-        "Shield", "Jump",
-        "Vampire", "Avarice",
-        "Dash", "Trap",
-        "Forge", "Grappling Hook",
-        "Roots", "Restoration"
-    };
+    public string[] HumanSkillsNames = { "Shield", "Jump" };
+    public string[] GoblinSkillsNames = { "Vampire", "Avarice" };
+    public string[] ElfSkillsNames = { "Dash", "Trap" };
+    public string[] DwarfSkillsNames = { "Forge", "Grappling Hook" };
+    public string[] OrcSkillsNames = { "Roots", "Restoration" };
 
     public Skill GetSkillFromName(string name)
     {
