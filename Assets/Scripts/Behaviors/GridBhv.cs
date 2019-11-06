@@ -188,8 +188,14 @@ public class GridBhv : MonoBehaviour
             if (!Helper.IsPosValid(x, y))
                 continue;
             var cell = Cells[x, y].GetComponent<CellBhv>();
-            if (cell.Type == CellType.On && cell.State == CellState.None && !IsAnythingBetween(characterBhv.X, characterBhv.Y, x, y, opponentBhvs))
-                cell.ShowWeaponRange();
+            if (cell.Type == CellType.On && cell.State == CellState.None)
+            {
+                if (IsAnythingBetween(characterBhv.X, characterBhv.Y, x, y))
+                    cell.ShowWeaponOutOfRange();
+                else
+                    cell.ShowWeaponRange();
+            }
+                
         }
     }
 
@@ -211,18 +217,16 @@ public class GridBhv : MonoBehaviour
         }
     }
 
-    private bool IsAnythingBetween(int x1, int y1, int x2, int y2, List<CharacterBhv> opponentBhvs)
+    private bool IsAnythingBetween(int x1, int y1, int x2, int y2)
     {
-        foreach (var opponentBhv in opponentBhvs)
+        List<RaycastHit2D> hits = new List<RaycastHit2D>();
+        ContactFilter2D contactFilter = new ContactFilter2D();
+        if (Physics2D.Linecast(Cells[x1, y1].transform.position, Cells[x2, y2].transform.position, contactFilter.NoFilter(), results:hits ) > 0)
         {
-            for (int i = x1 + 1; i < x2; ++i)
+            foreach (var hit in hits)
             {
-                if (Cells[i, y1].GetComponent<CellBhv>().Type == CellType.Off || (opponentBhv.X == i && opponentBhv.Y == y1))
-                    return true;
-            }
-            for (int i = y1 + 1; i < y2; ++i)
-            {
-                if (Cells[x1, i].GetComponent<CellBhv>().Type == CellType.Off || (opponentBhv.X == x1 && opponentBhv.Y == i))
+                if ((hit.transform.gameObject.TryGetComponent(out CellBhv cell) && cell.Type == CellType.Off) ||
+                    (hit.transform.gameObject.TryGetComponent(out CharacterBhv characterBhv) && characterBhv.IsPlayer == false && !(characterBhv.X == x2 && characterBhv.Y == y2)))
                     return true;
             }
         }
@@ -236,6 +240,7 @@ public class GridBhv : MonoBehaviour
         List<CharacterBhv> touchedZone = null;
         if ((touchedCell = IsOpponentOnCell(x, y)) != null || (touchedZone = IsOpponentInZone(x, y)) != null)
         {
+            tmpTouchedOpponents = new List<CharacterBhv>();
             if (touchedCell != null)
                 tmpTouchedOpponents.Add(touchedCell);
             if (touchedZone != null)
@@ -297,9 +302,10 @@ public class GridBhv : MonoBehaviour
             var cell = Cells[x, y].GetComponent<CellBhv>();
             if (cell.Type == CellType.On && cell.State == CellState.None)
             {
-                if (hasToBeEmpty && IsOpponentOnCell(x, y))
-                    continue;
-                cell.ShowSkillRange();
+                if ((hasToBeEmpty && IsOpponentOnCell(x, y)) || IsAnythingBetween(characterBhv.X, characterBhv.Y, x, y))
+                    cell.ShowSkillOutOfRange();
+                else
+                    cell.ShowSkillRange();
             }
         }
     }

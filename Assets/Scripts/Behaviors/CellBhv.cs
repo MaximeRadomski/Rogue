@@ -143,6 +143,11 @@ public class CellBhv : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.8f, 0.8f, 1.0f);
     }
 
+    public void ShowWeaponOutOfRange()
+    {
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.92f, 0.92f, 1.0f);
+    }
+
     public void ShowWeaponZone()
     {
         State = CellState.AttackZone;
@@ -153,6 +158,11 @@ public class CellBhv : MonoBehaviour
     {
         State = CellState.SkillRange;
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 0.0f, 1.0f);
+    }
+
+    public void ShowSkillOutOfRange()
+    {
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 0.8f, 1.0f);
     }
 
     void Update()
