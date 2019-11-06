@@ -11,8 +11,8 @@ public class FightSceneBhv : MonoBehaviour
     private GridBhv _gridBhv;
     private GameObject _player;
     private CharacterBhv _playerBhv;
-    private GameObject _opponent;
-    private CharacterBhv _opponentBhv;
+    private List<GameObject> _opponents;
+    private List<CharacterBhv> _opponentBhvs;
 
     void Start()
     {
@@ -38,7 +38,7 @@ public class FightSceneBhv : MonoBehaviour
         GameObject.Find("ButtonReload").GetComponent<ButtonBhv>().EndActionDelegate = Helper.ReloadScene;
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToSwipe;
         GameObject.Find("ButtonPassTurn").GetComponent<ButtonBhv>().EndActionDelegate = PassTurn;
-        GameObject.Find("PlayerCharacter").GetComponent<ButtonBhv>().EndActionDelegate = AfterPlayerMovement;
+        GameObject.Find("PlayerCharacter").GetComponent<ButtonBhv>().EndActionDelegate = OnPlayerCharacterClick;
         GameObject.Find("PlayerWeapon1").GetComponent<ButtonBhv>().EndActionDelegate = ShowWeaponOneRange;
         GameObject.Find("PlayerWeapon2").GetComponent<ButtonBhv>().EndActionDelegate = ShowWeaponTwoRange;
         GameObject.Find("PlayerSkill").GetComponent<ButtonBhv>().EndActionDelegate = ClickSkill1;
@@ -53,16 +53,23 @@ public class FightSceneBhv : MonoBehaviour
 
     private void InitCharacters()
     {
-        InitOpponent();
+        InitOpponents();
         InitPlayer();
         _playerBhv.SetPrivates();
-        _opponentBhv.SetPrivates();
+        foreach (var opponentBhv in _opponentBhvs)
+            opponentBhv.SetPrivates();
     }
 
-    private void InitOpponent()
+    private void InitOpponents()
     {
-        _opponent = Instantiator.NewCharacterGameObject(Constants.PpOpponent);
-        _opponentBhv = _opponent.GetComponent<CharacterBhv>();
+        int nbOpponents = PlayerPrefs.GetInt(Constants.PpNbOpponents);
+        _opponents = new List<GameObject>();
+        _opponentBhvs = new List<CharacterBhv>();
+        for (int i = 0; i < nbOpponents; ++i)
+        {
+            _opponents.Add(Instantiator.NewCharacterGameObject(Constants.PpOpponent + i, false, i.ToString()));
+            _opponentBhvs.Add(_opponents[i].GetComponent<CharacterBhv>());
+        }
         //DisplayCharacterStats(_opponent.name, _opponentBhv.Character);
     }
 
@@ -81,7 +88,7 @@ public class FightSceneBhv : MonoBehaviour
     {
         _gridBhv.ResetAllCellsDisplay();
         _gridBhv.ResetAllCellsVisited();
-        _gridBhv.SpawnOpponent(_opponentBhv);
+        _gridBhv.SpawnOpponent(_opponentBhvs);
         _gridBhv.SpawnPlayer();
     }
 
@@ -96,7 +103,7 @@ public class FightSceneBhv : MonoBehaviour
         _playerBhv.Pa = _playerBhv.Character.PaMax;
         _playerBhv.Pm = _playerBhv.Character.PmMax;
         _playerBhv.Turn++;
-        _gridBhv.ShowPm(_playerBhv, _opponentBhv);
+        _gridBhv.ShowPm(_playerBhv, _opponentBhvs);
     }
 
     private void PassTurn()
@@ -111,32 +118,49 @@ public class FightSceneBhv : MonoBehaviour
             PlayerTurn();
         }
     }
+    public void OnPlayerMovementClick(int x, int y)
+    {
+        if (State != FightState.PlayerTurn)
+            return;
+        _gridBhv.ResetAllCellsDisplay();
+        _playerBhv.MoveToPosition(x, y, true);
+    }
 
     public void AfterPlayerMovement()
     {
-        if (State == FightState.PlayerTurn)
-            _gridBhv.ShowPm(_playerBhv, _opponentBhv);
+        if (State != FightState.PlayerTurn)
+            return;
+        _gridBhv.ShowPm(_playerBhv, _opponentBhvs);
     }
 
-    public void AfterPlayerSpawn()
+    public void OnPlayerSpawnClick(int x, int y)
     {
+        _playerBhv.Spawn(x, y);
         PlayerTurn();
     }
 
-    public void AfterPlayerAttack(int weaponId, bool hasTouchedOpponent)
+    public void OnPlayerAttackClick(int weaponId, List<CharacterBhv> touchedOpponents)
     {
-        if (hasTouchedOpponent)
+        if (touchedOpponents != null)
         {
-            _opponentBhv.TakeDamages(_playerBhv.AttackWithWeapon(weaponId, _opponentBhv, _map));
+            foreach (var opponentBhv in touchedOpponents)
+            {
+                opponentBhv.TakeDamages(_playerBhv.AttackWithWeapon(weaponId, opponentBhv, _map));
+            }
         }
         else
         {
-            _playerBhv.AttackWithWeapon(weaponId, _opponentBhv, _map);
+            _playerBhv.AttackWithWeapon(weaponId, null, _map);
         }
-        _gridBhv.ShowPm(_playerBhv, _opponentBhv);
+        _gridBhv.ShowPm(_playerBhv, _opponentBhvs);
     }
 
-    public void AfterPlayerSkill(int skillId, int x, int y)
+    public void OnPlayerCharacterClick()
+    {
+        _gridBhv.ShowPm(_playerBhv, _opponentBhvs);
+    }
+
+    public void OnPlayerSkillClick(int skillId, int x, int y)
     {
         _playerBhv.Character.Skills[skillId].Activate(x, y);
     }
@@ -176,13 +200,13 @@ public class FightSceneBhv : MonoBehaviour
     private void ShowWeaponOneRange()
     {
         if (State == FightState.PlayerTurn && _playerBhv.Pa >= _playerBhv.Character.Weapons[0].PaNeeded && !_playerBhv.IsMoving)
-            _gridBhv.ShowWeaponRange(_playerBhv, 0, _opponentBhv);
+            _gridBhv.ShowWeaponRange(_playerBhv, 0, _opponentBhvs);
     }
 
     private void ShowWeaponTwoRange()
     {
         if (State == FightState.PlayerTurn && _playerBhv.Pa >= _playerBhv.Character.Weapons[1].PaNeeded && !_playerBhv.IsMoving)
-            _gridBhv.ShowWeaponRange(_playerBhv, 1, _opponentBhv);
+            _gridBhv.ShowWeaponRange(_playerBhv, 1, _opponentBhvs);
     }
 
     private void ClickSkill1()

@@ -14,15 +14,12 @@ public static class Constants
     public const string PpAudioLevel = "AudioLevel";
     public const float PpAudioLevelDefault = 1;
     public const string PpPlayer = "Player";
-    public const string PpPlayerWeapon1 = "PlayerWeapon1";
-    public const string PpPlayerWeapon2 = "PlayerWeapon2";
-    public const string PpPlayerSkill1 = "PlayerSkill1";
-    public const string PpPlayerSkill2 = "PlayerSkill2";
     public const string PpOpponent = "Opponent";
-    public const string PpOpponentWeapon1 = "OpponentWeapon1";
-    public const string PpOpponentWeapon2 = "OpponentWeapon2";
-    public const string PpOpponentSkill1 = "OpponentSkill1";
-    public const string PpOpponentSkill2 = "OpponentSkill2";
+    public const string PpWeapon1 = "Weapon1";
+    public const string PpWeapon2 = "Weapon2";
+    public const string PpSkill1 = "Skill1";
+    public const string PpSkill2 = "Skill2";
+    public const string PpNbOpponents = "NbOpponents";
     public const string PpSerializeDefault = null;
 
     //  SCENES  //

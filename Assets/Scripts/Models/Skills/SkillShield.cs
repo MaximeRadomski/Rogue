@@ -6,7 +6,7 @@ public class SkillShield : Skill
 {
     public SkillShield()
     {
-        Name = "Shield";
+        Name = RacesData.SkillsData.HumanSkillsNames[0];
         Type = SkillType.Racial;
         Race = CharacterRace.Human;
         Rarity = Rarity.Normal;
@@ -23,7 +23,7 @@ public class SkillShield : Skill
     public override void Activate(int x, int y)
     {
         base.Activate(x, y);
-        GridBhv.ShowPm(CharacterBhv, OpponentBhv);
+        GridBhv.ShowPm(CharacterBhv, OpponentBhvs);
     }
 
     public override int OnTakeDamage(int damages)

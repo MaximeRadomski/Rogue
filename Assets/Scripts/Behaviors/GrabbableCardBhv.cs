@@ -10,7 +10,7 @@ public class GrabbableCardBhv : MonoBehaviour
     private BoxCollider2D _boxCollider2D;
     private Canvas _canvas;
 
-    private Character _opponentCharacter;
+    private List<Character> _opponentCharacters;
 
     private Vector2 _initialTouchPosition;
     private Vector2 _initialPosition;
@@ -68,26 +68,32 @@ public class GrabbableCardBhv : MonoBehaviour
 
     private void InitOpponent()
     {
-        _opponentCharacter = RacesData.GetCharacterFromRaceAndLevel((CharacterRace)Random.Range(0, Helper.EnumCount<CharacterRace>()), 1);
-        DisplayCharacterStats();
+
+        _opponentCharacters = new List<Character>();
+        _opponentCharacters.Add(RacesData.GetCharacterFromRaceAndLevel((CharacterRace)Random.Range(0, Helper.EnumCount<CharacterRace>()), 1));
+        for (int i = 0; i < _opponentCharacters.Count; ++i)
+        {
+            DisplayCharacterStats(i);
+        }
+            
     }
 
-    public void DisplayCharacterStats()
+    public void DisplayCharacterStats(int id)
     {
-        _canvas.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = "Name:" + _opponentCharacter.Name;
-        _canvas.transform.GetChild(1).GetComponent<UnityEngine.UI.Text>().text = "Gender:" + _opponentCharacter.Gender;
-        _canvas.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = "Race:" + _opponentCharacter.Race;
-        _canvas.transform.GetChild(3).GetComponent<UnityEngine.UI.Text>().text = "Level:" + _opponentCharacter.Level;
+        _canvas.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = "Name:" + _opponentCharacters[id].Name;
+        _canvas.transform.GetChild(1).GetComponent<UnityEngine.UI.Text>().text = "Gender:" + _opponentCharacters[id].Gender;
+        _canvas.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = "Race:" + _opponentCharacters[id].Race;
+        _canvas.transform.GetChild(3).GetComponent<UnityEngine.UI.Text>().text = "Level:" + _opponentCharacters[id].Level;
 
-        _canvas.transform.GetChild(4).GetComponent<UnityEngine.UI.Text>().text = _opponentCharacter.Weapons[0].Name;
-        _canvas.transform.GetChild(4).GetComponent<UnityEngine.UI.Text>().color = Helper.ColorFromTextType(_opponentCharacter.Weapons[0].Rarity.GetHashCode());
-        _canvas.transform.GetChild(5).GetComponent<UnityEngine.UI.Text>().text = "Type:" + _opponentCharacter.Weapons[0].Type;
-        _canvas.transform.GetChild(6).GetComponent<UnityEngine.UI.Text>().text = "Rarity:" + _opponentCharacter.Weapons[0].Rarity;
+        _canvas.transform.GetChild(4).GetComponent<UnityEngine.UI.Text>().text = _opponentCharacters[id].Weapons[0].Name;
+        _canvas.transform.GetChild(4).GetComponent<UnityEngine.UI.Text>().color = Helper.ColorFromTextType(_opponentCharacters[id].Weapons[0].Rarity.GetHashCode());
+        _canvas.transform.GetChild(5).GetComponent<UnityEngine.UI.Text>().text = "Type:" + _opponentCharacters[id].Weapons[0].Type;
+        _canvas.transform.GetChild(6).GetComponent<UnityEngine.UI.Text>().text = "Rarity:" + _opponentCharacters[id].Weapons[0].Rarity;
 
-        _canvas.transform.GetChild(7).GetComponent<UnityEngine.UI.Text>().text = _opponentCharacter.Weapons[1].Name;
-        _canvas.transform.GetChild(7).GetComponent<UnityEngine.UI.Text>().color = Helper.ColorFromTextType(_opponentCharacter.Weapons[1].Rarity.GetHashCode());
-        _canvas.transform.GetChild(8).GetComponent<UnityEngine.UI.Text>().text = "Type:" + _opponentCharacter.Weapons[1].Type;
-        _canvas.transform.GetChild(9).GetComponent<UnityEngine.UI.Text>().text = "Rarity:" + _opponentCharacter.Weapons[1].Rarity;
+        _canvas.transform.GetChild(7).GetComponent<UnityEngine.UI.Text>().text = _opponentCharacters[id].Weapons[1].Name;
+        _canvas.transform.GetChild(7).GetComponent<UnityEngine.UI.Text>().color = Helper.ColorFromTextType(_opponentCharacters[id].Weapons[1].Rarity.GetHashCode());
+        _canvas.transform.GetChild(8).GetComponent<UnityEngine.UI.Text>().text = "Type:" + _opponentCharacters[id].Weapons[1].Type;
+        _canvas.transform.GetChild(9).GetComponent<UnityEngine.UI.Text>().text = "Rarity:" + _opponentCharacters[id].Weapons[1].Rarity;
     }
 
     public void BeginAction(Vector2 initialTouchPosition)
@@ -165,7 +171,7 @@ public class GrabbableCardBhv : MonoBehaviour
         transform.position = Vector2.Lerp(transform.position, _likePosition, 0.1f);
         transform.eulerAngles = new Vector3(0.0f, 0.0f, _rotateAngle * (transform.position.x / 2));
         if (Helper.FloatEqualsPrecision(transform.position.x, _likePosition.x, 0.1f))
-            _swipeSceneBhv.GoToFightScene(_opponentCharacter);
+            _swipeSceneBhv.GoToFightScene(_opponentCharacters);
     }
 
     public void Dislike()

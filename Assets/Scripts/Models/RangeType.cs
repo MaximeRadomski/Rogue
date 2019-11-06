@@ -6,5 +6,6 @@ public enum RangeType
 {
     Normal = 0,
     OverWalls = 1,
-    FullRange = 2
+    FullRange = 2,
+    NoRange = 3
 }

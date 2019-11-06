@@ -10,7 +10,7 @@ public class GridBhv : MonoBehaviour
     private Grid _grid;
     private FightSceneBhv _fightSceneBhv;
     private CharacterBhv _currentCharacterBhv;
-    private CharacterBhv _currentOpponentBhv;
+    private List<CharacterBhv> _currentOpponentBhvs;
     private int _currentWeaponId;
     private int _currentSkillId;
 
@@ -57,22 +57,21 @@ public class GridBhv : MonoBehaviour
 
     #region Spawn
 
-    public void SpawnOpponent(CharacterBhv opponentBhv)
+    public void SpawnOpponent(List<CharacterBhv> opponentBhvs)
     {
-        int nbOpponentSpawns = 0;
+        List<RangePos> opponentSpawns = new List<RangePos>();
         char spawnChar = CellType.OpponentSpawn.GetHashCode().ToString()[0];
-        foreach (char c in _map.Cells)
+        for (int i = 0; i < _map.Cells.Length; ++i)
         {
-            if (c == spawnChar)
-                ++nbOpponentSpawns;
+            if (_map.Cells[i] == spawnChar)
+                opponentSpawns.Add(new RangePos(i % Constants.GridMax, i / Constants.GridMax));
         }
-        int opponentSpawn = Random.Range(0, nbOpponentSpawns);
-        int preciseCharId = -1;
-        for (int i = 0; i <= opponentSpawn; ++i)
-        {
-            preciseCharId = _map.Cells.IndexOf(spawnChar, preciseCharId + 1);
+        foreach (var opponentBhv in opponentBhvs)
+        {            
+            int spawnId = Random.Range(0, opponentSpawns.Count);
+            opponentBhv.Spawn(opponentSpawns[spawnId].X, opponentSpawns[spawnId].Y);
+            opponentSpawns.RemoveAt(spawnId);
         }
-        opponentBhv.MoveToPosition(preciseCharId % Constants.GridMax, preciseCharId / Constants.GridMax, false);
     }
 
     public void SpawnPlayer()
@@ -83,31 +82,37 @@ public class GridBhv : MonoBehaviour
         }
     }
 
+    public void OnPlayerSpawnClick(int x, int y)
+    {
+        ResetAllCellsSpawn();
+        _fightSceneBhv.OnPlayerSpawnClick(x, y);
+    }
+
     #endregion
 
     #region Mouvement
 
-    public void ShowPm(CharacterBhv characterBhv, CharacterBhv opponentBhv)
+    public void ShowPm(CharacterBhv characterBhv, List<CharacterBhv> opponentBhvs)
     {
         ResetAllCellsVisited();
         ResetAllCellsDisplay();
         var nbPm = characterBhv.GetComponent<CharacterBhv>().Pm;
         int x = characterBhv.GetComponent<CharacterBhv>().X;
         int y = characterBhv.GetComponent<CharacterBhv>().Y;
-        if (nbPm <= 0 || IsAdjacentOpponent(x, y, opponentBhv))
+        if (nbPm <= 0 || IsAdjacentOpponent(x, y, opponentBhvs))
             return;
-        SpreadPmStart(x, y, nbPm, characterBhv, opponentBhv);
+        SpreadPmStart(x, y, nbPm, characterBhv, opponentBhvs);
     }
 
-    private void SpreadPmStart(int x, int y, int nbPm, CharacterBhv characterBhv, CharacterBhv opponentBhv)
+    private void SpreadPmStart(int x, int y, int nbPm, CharacterBhv characterBhv, List<CharacterBhv> opponentBhvs)
     {
-        SpreadPm(x, y + 1, nbPm, 1, characterBhv, opponentBhv);
-        SpreadPm(x + 1, y, nbPm, 1, characterBhv, opponentBhv);
-        SpreadPm(x, y - 1, nbPm, 1, characterBhv, opponentBhv);
-        SpreadPm(x - 1, y, nbPm, 1, characterBhv, opponentBhv);
+        SpreadPm(x, y + 1, nbPm, 1, characterBhv, opponentBhvs);
+        SpreadPm(x + 1, y, nbPm, 1, characterBhv, opponentBhvs);
+        SpreadPm(x, y - 1, nbPm, 1, characterBhv, opponentBhvs);
+        SpreadPm(x - 1, y, nbPm, 1, characterBhv, opponentBhvs);
     }
 
-    private void SpreadPm(int x, int y, int nbPm, int spentPm, CharacterBhv characterBhv, CharacterBhv opponentBhv)
+    private void SpreadPm(int x, int y, int nbPm, int spentPm, CharacterBhv characterBhv, List<CharacterBhv> opponentBhvs)
     {
         if (!Helper.IsPosValid(x, y))
             return;
@@ -116,44 +121,64 @@ public class GridBhv : MonoBehaviour
             return;
         if (cell.GetComponent<CellBhv>().Type == CellType.On
             && (spentPm < cell.GetComponent<CellBhv>().Visited || cell.GetComponent<CellBhv>().Visited == -1)
-            && !(x == opponentBhv.X && y == opponentBhv.Y))
+            && !IsOpponentOnCell(x, y))
         {
             cell.GetComponent<CellBhv>().ShowPm();
             cell.GetComponent<CellBhv>().Visited = spentPm;
             //DEBUG//
             //cell.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = cell.GetComponent<CellBhv>().Visited.ToString();
         }
-        if (cell.GetComponent<CellBhv>().Type == CellType.On && --nbPm > 0 && !IsAdjacentOpponent(x, y, opponentBhv))
+        if (cell.GetComponent<CellBhv>().Type == CellType.On && --nbPm > 0 && !IsAdjacentOpponent(x, y, opponentBhvs))
         {
-            SpreadPm(x, y + 1, nbPm, spentPm + 1, characterBhv, opponentBhv);
-            SpreadPm(x + 1, y, nbPm, spentPm + 1, characterBhv, opponentBhv);
-            SpreadPm(x, y - 1, nbPm, spentPm + 1, characterBhv, opponentBhv);
-            SpreadPm(x - 1, y, nbPm, spentPm + 1, characterBhv, opponentBhv);
+            SpreadPm(x, y + 1, nbPm, spentPm + 1, characterBhv, opponentBhvs);
+            SpreadPm(x + 1, y, nbPm, spentPm + 1, characterBhv, opponentBhvs);
+            SpreadPm(x, y - 1, nbPm, spentPm + 1, characterBhv, opponentBhvs);
+            SpreadPm(x - 1, y, nbPm, spentPm + 1, characterBhv, opponentBhvs);
         }
     }
 
-    public bool IsAdjacentOpponent(int x, int y, CharacterBhv opponentBhv)
+    public bool IsAdjacentOpponent(int x, int y, List<CharacterBhv> opponentBhvs)
     {
-        if (x == opponentBhv.X && y + 1 == opponentBhv.Y)
-            return true;
-        else if (x + 1 == opponentBhv.X && y == opponentBhv.Y)
-            return true;
-        else if (x == opponentBhv.X && y - 1 == opponentBhv.Y)
-            return true;
-        else if (x - 1 == opponentBhv.X && y == opponentBhv.Y)
-            return true;
+        foreach (var opponentBhv in opponentBhvs)
+        {
+            if (x == opponentBhv.X && y + 1 == opponentBhv.Y)
+                return true;
+            else if (x + 1 == opponentBhv.X && y == opponentBhv.Y)
+                return true;
+            else if (x == opponentBhv.X && y - 1 == opponentBhv.Y)
+                return true;
+            else if (x - 1 == opponentBhv.X && y == opponentBhv.Y)
+                return true;
+        }
         return false;
+    }
+
+    public CharacterBhv IsOpponentOnCell(int x, int y)
+    {
+        if (_currentOpponentBhvs == null)
+            return null;
+        foreach (var opponentBhv in _currentOpponentBhvs)
+        {
+            if (x == opponentBhv.X && y == opponentBhv.Y)
+                return opponentBhv;
+        }
+        return null;
+    }
+
+    public void OnPlayerMovementClick(int x, int y)
+    {
+        _fightSceneBhv.OnPlayerMovementClick(x, y);
     }
 
     #endregion
 
     #region Weapon
 
-    public void ShowWeaponRange(CharacterBhv characterBhv, int weaponId, CharacterBhv opponentBhv)
+    public void ShowWeaponRange(CharacterBhv characterBhv, int weaponId, List<CharacterBhv> opponentBhvs)
     {
         ResetAllCellsDisplay();
         _currentCharacterBhv = characterBhv;
-        _currentOpponentBhv = opponentBhv;
+        _currentOpponentBhvs = opponentBhvs;
         _currentWeaponId = weaponId;
         var character = characterBhv.Character;
         for (int i = 0; i < character.Weapons[weaponId].RangePositions.Count; i += 2)
@@ -163,7 +188,7 @@ public class GridBhv : MonoBehaviour
             if (!Helper.IsPosValid(x, y))
                 continue;
             var cell = Cells[x, y].GetComponent<CellBhv>();
-            if (cell.Type == CellType.On && cell.State == CellState.None && !IsAnythingBetween(characterBhv.X, characterBhv.Y, x, y, opponentBhv))
+            if (cell.Type == CellType.On && cell.State == CellState.None && !IsAnythingBetween(characterBhv.X, characterBhv.Y, x, y, opponentBhvs))
                 cell.ShowWeaponRange();
         }
     }
@@ -186,36 +211,52 @@ public class GridBhv : MonoBehaviour
         }
     }
 
-    private bool IsAnythingBetween(int x1, int y1, int x2, int y2, CharacterBhv opponentBhv)
+    private bool IsAnythingBetween(int x1, int y1, int x2, int y2, List<CharacterBhv> opponentBhvs)
     {
-        for (int i = x1 + 1; i < x2; ++i)
+        foreach (var opponentBhv in opponentBhvs)
         {
-            if (Cells[i, y1].GetComponent<CellBhv>().Type == CellType.Off || (opponentBhv.X == i && opponentBhv.Y == y1))
-                return true;
-        }
-        for (int i = y1 + 1; i < y2; ++i)
-        {
-            if (Cells[x1, i].GetComponent<CellBhv>().Type == CellType.Off || (opponentBhv.X == x1 && opponentBhv.Y == i))
-                return true;
+            for (int i = x1 + 1; i < x2; ++i)
+            {
+                if (Cells[i, y1].GetComponent<CellBhv>().Type == CellType.Off || (opponentBhv.X == i && opponentBhv.Y == y1))
+                    return true;
+            }
+            for (int i = y1 + 1; i < y2; ++i)
+            {
+                if (Cells[x1, i].GetComponent<CellBhv>().Type == CellType.Off || (opponentBhv.X == x1 && opponentBhv.Y == i))
+                    return true;
+            }
         }
         return false;
     }
 
-    public void CheckIfOpponentInRangeOrZone(int x, int y)
+    public void OnPlayerAttackClick(int x, int y)
     {
-        if ((_currentOpponentBhv.X == x && _currentOpponentBhv.Y == y) || IsOpponentInZone(x, y))
+        List<CharacterBhv> tmpTouchedOpponents = null;
+        CharacterBhv touchedCell = null;
+        List<CharacterBhv> touchedZone = null;
+        if ((touchedCell = IsOpponentOnCell(x, y)) != null || (touchedZone = IsOpponentInZone(x, y)) != null)
         {
-            _fightSceneBhv.AfterPlayerAttack(_currentWeaponId, true);
+            if (touchedCell != null)
+                tmpTouchedOpponents.Add(touchedCell);
+            if (touchedZone != null)
+            {
+                foreach (var touched in touchedZone)
+                {
+                    tmpTouchedOpponents.Add(touched);
+                }
+            }
+            _fightSceneBhv.OnPlayerAttackClick(_currentWeaponId, tmpTouchedOpponents);
             return;
         }
-        _fightSceneBhv.AfterPlayerAttack(_currentWeaponId, false);
+        _fightSceneBhv.OnPlayerAttackClick(_currentWeaponId, null);
     }
 
-    private bool IsOpponentInZone(int x, int y)
+    private List<CharacterBhv> IsOpponentInZone(int x, int y)
     {
         var character = _currentCharacterBhv.Character;
         if (character.Weapons[_currentWeaponId].RangeZones == null)
-            return false;
+            return null;
+        List<CharacterBhv> tmpTouchedOpponents = new List<CharacterBhv>();
         foreach (var tmpDirection in character.Weapons[_currentWeaponId].RangeZones)
         {
             var tmpPos = Helper.DetermineRangePosFromRangeDirection(x - _currentCharacterBhv.X, y - _currentCharacterBhv.Y, tmpDirection);
@@ -224,21 +265,27 @@ public class GridBhv : MonoBehaviour
             if (!Helper.IsPosValid(tmpX, tmpY))
                 continue;
             var cell = Cells[tmpX, tmpY].GetComponent<CellBhv>();
-            if (cell.Type == CellType.On && _currentOpponentBhv.X == tmpX && _currentOpponentBhv.Y == tmpY)
-                return true;
+            CharacterBhv tmpTouched = null;
+            if (cell.Type == CellType.On && (tmpTouched = IsOpponentOnCell(tmpX, tmpY)) != null)
+            {
+                tmpTouchedOpponents.Add(tmpTouched);
+                continue;
+            }
         }
-        return false;
+        if (tmpTouchedOpponents.Count != 0)
+            return tmpTouchedOpponents;
+        return null;
     }
 
     #endregion
 
     #region SKill
 
-    public void ShowSkillRange(RangeType rangeType, CharacterBhv characterBhv, int skillId, CharacterBhv opponentBhv)
+    public void ShowSkillRange(RangeType rangeType, CharacterBhv characterBhv, int skillId, List<CharacterBhv> opponentBhvs, bool hasToBeEmpty = false)
     {
         ResetAllCellsDisplay();
         _currentCharacterBhv = characterBhv;
-        _currentOpponentBhv = opponentBhv;
+        _currentOpponentBhvs = opponentBhvs;
         _currentSkillId = skillId;
         var character = characterBhv.Character;
         for (int i = 0; i < character.Skills[skillId].RangePositions.Count; i += 2)
@@ -249,13 +296,17 @@ public class GridBhv : MonoBehaviour
                 continue;
             var cell = Cells[x, y].GetComponent<CellBhv>();
             if (cell.Type == CellType.On && cell.State == CellState.None)
+            {
+                if (hasToBeEmpty && IsOpponentOnCell(x, y))
+                    continue;
                 cell.ShowSkillRange();
+            }
         }
     }
 
-    public void AfterPlayerSkill(int x, int y)
+    public void OnPlayerSkillClick(int x, int y)
     {
-        _fightSceneBhv.AfterPlayerSkill(_currentSkillId, x, y);
+        _fightSceneBhv.OnPlayerSkillClick(_currentSkillId, x, y);
     }
 
     #endregion

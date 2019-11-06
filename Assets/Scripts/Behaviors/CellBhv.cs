@@ -11,8 +11,6 @@ public class CellBhv : MonoBehaviour
     public CellState State;
 
     private GridBhv _gridBhv;
-    private CharacterBhv _player;
-    private FightSceneBhv _fightSceneBhv;
     private SoundControlerBhv _soundControler;
 
     private bool _isStretching;
@@ -28,7 +26,6 @@ public class CellBhv : MonoBehaviour
     private void SetPrivates()
     {
         _gridBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GridBhv>();
-        _fightSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _isStretching = false;
         _resetedScale = new Vector3(1.0f, 1.0f, 1.0f);
@@ -61,11 +58,6 @@ public class CellBhv : MonoBehaviour
         }
     }
 
-    private void GetPlayer()
-    {
-        _player = GameObject.Find("Player").GetComponent<CharacterBhv>();
-    }
-
     public void BeginAction()
     {
         _isStretching = true;
@@ -92,32 +84,19 @@ public class CellBhv : MonoBehaviour
         }
         else if (State == CellState.Mouvement)
         {
-            AskPlayerToMove();
+            _gridBhv.OnPlayerMovementClick(X, Y);
         }
         else if (State == CellState.Spawn && Type == CellType.Spawn)
         {
-            _gridBhv.ResetAllCellsSpawn();
-            if (_player == null)
-                GetPlayer();
-            _player.Spawn(X, Y);
+            _gridBhv.OnPlayerSpawnClick(X, Y);
         }
         else if (State == CellState.AttackRange)
         {
-            _gridBhv.CheckIfOpponentInRangeOrZone(X, Y);
+            _gridBhv.OnPlayerAttackClick(X, Y);
         }
         else if (State == CellState.SkillRange)
         {
-            _gridBhv.AfterPlayerSkill(X, Y);
-        }
-    }
-
-    private void AskPlayerToMove(bool usePm = true)
-    {
-        if (_player == null)
-            GetPlayer();
-        if (!_player.IsMoving)
-        {
-            _player.MoveToPosition(X, Y, usePm);
+            _gridBhv.OnPlayerSkillClick(X, Y);
         }
     }
 

@@ -20,14 +20,14 @@ public abstract class Skill
     public List<RangeDirection> RangeZones;
 
     public CharacterBhv CharacterBhv;
-    public CharacterBhv OpponentBhv;
+    public List<CharacterBhv> OpponentBhvs;
     public GridBhv GridBhv;
     public int Id;
 
-    public virtual void Init(CharacterBhv characterBhv, CharacterBhv opponentBhv, GridBhv gridBhv, int id)
+    public virtual void Init(CharacterBhv characterBhv, List<CharacterBhv> opponentBhvs, GridBhv gridBhv, int id)
     {
         CharacterBhv = characterBhv;
-        OpponentBhv = opponentBhv;
+        OpponentBhvs = opponentBhvs;
         GridBhv = gridBhv;
         Id = id;
     }
@@ -48,7 +48,7 @@ public abstract class Skill
     public virtual void OnClick()
     {
         if (Cooldown == 0)
-            GridBhv.ShowSkillRange(RangeType, CharacterBhv, Id, OpponentBhv);
+            GridBhv.ShowSkillRange(RangeType, CharacterBhv, Id, OpponentBhvs);
     }
 
     public virtual void OnStartTurn()
@@ -63,6 +63,11 @@ public abstract class Skill
     }
 
     public virtual void OnStartAttack()
+    {
+
+    }
+
+    public virtual void OnEndAttack(int damages)
     {
 
     }

@@ -46,9 +46,13 @@ public class SwipeSceneBhv : MonoBehaviour
         SceneManager.LoadScene(Constants.RaceChoiceScene);
     }
 
-    public void GoToFightScene(Character opponentCharacter)
+    public void GoToFightScene(List<Character> opponentCharacters)
     {
-        PlayerPrefsHelper.SaveCharacter(Constants.PpOpponent, opponentCharacter);
+        for (int i = 0; i < opponentCharacters.Count; ++i)
+        {
+            PlayerPrefsHelper.SaveCharacter(Constants.PpOpponent + i, opponentCharacters[i]);
+        }
+        PlayerPrefs.SetInt(Constants.PpNbOpponents, opponentCharacters.Count);
         SceneManager.LoadScene(Constants.FightScene);
     }
 }

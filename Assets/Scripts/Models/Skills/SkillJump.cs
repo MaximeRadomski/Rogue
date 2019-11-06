@@ -6,7 +6,7 @@ public class SkillJump : Skill
 {
     public SkillJump()
     {
-        Name = "Jump";
+        Name = RacesData.SkillsData.HumanSkillsNames[1];
         Type = SkillType.Racial;
         Race = CharacterRace.Human;
         Rarity = Rarity.Normal;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public class SkillsData
@@ -21,6 +22,17 @@ public class SkillsData
     }
 
     public Skill GetShield() { return new SkillShield(); }
-
     public Skill GetJump() { return new SkillJump(); }
+
+    public Skill GetVampire() { return new SkillJump(); }
+    public Skill GetAvarice() { return new SkillJump(); }
+
+    public Skill GetDash() { return new SkillJump(); }
+    public Skill GetTrap() { return new SkillJump(); }
+
+    public Skill GetForge() { return new SkillJump(); }
+    public Skill GetGrapplingHook() { return new SkillJump(); }
+
+    public Skill GetRoots() { return new SkillJump(); }
+    public Skill GetRestoration() { return new SkillJump(); }
 }

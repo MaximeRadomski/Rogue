@@ -13,7 +13,7 @@ public class CharacterBhv : MonoBehaviour
     public Character Character;
     public bool IsPlayer = false;
 
-    private CharacterBhv _opponentBhv;
+    private List<CharacterBhv> _opponentBhvs;
     private FightSceneBhv _fightSceneBhv;
     private Instantiator _instantiator;
     private GridBhv _gridBhv;
@@ -27,16 +27,23 @@ public class CharacterBhv : MonoBehaviour
     {
         _fightSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>();
         _gridBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GridBhv>();
+        _opponentBhvs = new List<CharacterBhv>();
         if (IsPlayer)
-            _opponentBhv = GameObject.Find(Constants.GoOpponentName).GetComponent<CharacterBhv>();
+        {
+            int nbOpponents = PlayerPrefs.GetInt(Constants.PpNbOpponents);
+            for (int i = 0; i < nbOpponents; ++i)
+            {
+                _opponentBhvs.Add(GameObject.Find(Constants.GoOpponentName + i).GetComponent<CharacterBhv>());
+            }
+        }
         else
-            _opponentBhv = GameObject.Find(Constants.GoPlayerName).GetComponent<CharacterBhv>();
+            _opponentBhvs.Add(GameObject.Find(Constants.GoPlayerName).GetComponent<CharacterBhv>());
         _instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<Instantiator>();
         _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         for (int i = 0; i < Character.Skills.Count; ++i)
         {
             if (Character.Skills[i] != null)
-                Character.Skills[i].Init(this, _opponentBhv, _gridBhv, i);
+                Character.Skills[i].Init(this, _opponentBhvs, _gridBhv, i);
         }
     }
 
@@ -51,7 +58,7 @@ public class CharacterBhv : MonoBehaviour
         foreach (var skill in Character.Skills)
         {
             if (skill != null)
-                skill.OnTakeDamage(damages);
+                damages = skill.OnTakeDamage(damages);
         }
         _instantiator.PopText(damages.ToString(), transform.position, TextType.Life);
         Character.Hp -= damages;
@@ -71,7 +78,7 @@ public class CharacterBhv : MonoBehaviour
             baseDamages = baseDamages * Helper.MultiplierFromPercent(0, RacesData.NotRaceWeaponDamagePercent);
 
         float multiplier = 1.0f;
-        if (opponentBhv.Character.Race == Character.StrongAgainst)
+        if (opponentBhv != null && opponentBhv.Character.Race == Character.StrongAgainst)
             multiplier = Helper.MultiplierFromPercent(multiplier, RacesData.StrongAgainstDamagePercent);
         if (map.Type == Character.StrongIn)
             multiplier = Helper.MultiplierFromPercent(multiplier, RacesData.StrongInDamagePercent);
@@ -91,11 +98,16 @@ public class CharacterBhv : MonoBehaviour
                 criticalMultiplier = Helper.MultiplierFromPercent(criticalMultiplier, RacesData.GenderCritical);
         }
 
-        int resultIn = (int)((baseDamages * multiplier) * criticalMultiplier);
-        Debug.Log("Final Damages = " + resultIn);
+        int resultInt = (int)((baseDamages * multiplier) * criticalMultiplier);
+        Debug.Log("Final Damages = " + resultInt);
         Pa -= tmpWeapon.PaNeeded;
         _instantiator.PopText(tmpWeapon.PaNeeded.ToString(), transform.position, TextType.Pa);
-        return resultIn;
+        foreach (var skill in Character.Skills)
+        {
+            if (skill != null)
+                skill.OnEndAttack(resultInt);
+        }
+        return resultInt;
     }
 
     public void MoveToPosition(int x, int y, bool usePm = true)
@@ -127,13 +139,13 @@ public class CharacterBhv : MonoBehaviour
         int y = _cellToReachY;
         while (visitedIndex > 0)
         {
-            if (LookForLowerIndex(x, y + 1, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x, y + 1, _opponentBhv))
+            if (LookForLowerIndex(x, y + 1, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x, y + 1, _opponentBhvs))
                 ++y;
-            else if (LookForLowerIndex(x + 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x + 1, y, _opponentBhv))
+            else if (LookForLowerIndex(x + 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x + 1, y, _opponentBhvs))
                 ++x;
-            else if (LookForLowerIndex(x, y - 1, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x, y - 1, _opponentBhv))
+            else if (LookForLowerIndex(x, y - 1, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x, y - 1, _opponentBhvs))
                 --y;
-            else if (LookForLowerIndex(x - 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x - 1, y, _opponentBhv))
+            else if (LookForLowerIndex(x - 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x - 1, y, _opponentBhvs))
                 --x;
             _pathfindingSteps.Insert(0, _gridBhv.Cells[x, y].transform.position);
             _pathfindingPos.Insert(0, new RangePos(_cellToReachX, _cellToReachY));
@@ -175,7 +187,5 @@ public class CharacterBhv : MonoBehaviour
         Y = y;
         _spriteRenderer.sortingOrder = Constants.GridMax - y;
         transform.position = _gridBhv.Cells[x, y].transform.position;
-        if (IsPlayer)
-            _fightSceneBhv.AfterPlayerSpawn();
     }
 }
