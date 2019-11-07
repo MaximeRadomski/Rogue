@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public enum WeaponType
@@ -12,6 +14,7 @@ public enum WeaponType
     Daggers = 5,
     Hammer = 6,
     Axe = 7,
+    [Description("Great Sword")]
     GreatSword = 8,
     Gauntlets = 9
 }

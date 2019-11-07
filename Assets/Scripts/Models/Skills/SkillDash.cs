@@ -16,7 +16,7 @@ public class SkillDash : Skill
         PaNeeded = 4;
         MinRange = 1;
         MaxRange = 2;
-        RangeType = RangeType.OverWalls;
+        RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,1, 1,1, 1,0, 1,-1, 0,-1, -1,-1, -1,0, -1,1 };
     }
 
@@ -34,7 +34,8 @@ public class SkillDash : Skill
     {
         if (Cooldown == CooldownMax)
         {
-            CharacterBhv.MoveToPosition(_currentTargetX, _currentTargetY, false);
+            if (!Helper.IsPosValid(_currentTargetX, _currentTargetX) || GridBhv.IsOpponentOnCell(_currentTargetX, _currentTargetY))
+                CharacterBhv.MoveToPosition(_currentTargetX, _currentTargetY, false);
             return 0;
         }
         return damages;

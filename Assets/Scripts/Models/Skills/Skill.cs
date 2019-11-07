@@ -34,6 +34,8 @@ public abstract class Skill
 
     public virtual void Activate(int x, int y)
     {
+        CharacterBhv.Pa -= PaNeeded;
+        CharacterBhv.Instantiator.PopText(PaNeeded.ToString(), CharacterBhv.transform.position, TextType.Pa);
         if (CooldownType == CooldownType.Normal)
             Cooldown = CooldownMax;
         else if (CooldownType == CooldownType.OnceAFight)
@@ -47,13 +49,14 @@ public abstract class Skill
 
     public virtual void OnClick()
     {
-        if (Cooldown == 0)
+        if (RangeType != RangeType.NoRange && Cooldown == 0)
             GridBhv.ShowSkillRange(RangeType, CharacterBhv, Id, OpponentBhvs);
     }
 
     public virtual void OnStartTurn()
     {
-        if (CooldownType == CooldownType.Normal && Cooldown > 0)
+        if ((CooldownType == CooldownType.Normal && Cooldown > 0) ||
+            (CooldownType == CooldownType.OnceAFight && Cooldown < 0))
             --Cooldown;
     }
 
@@ -62,9 +65,9 @@ public abstract class Skill
 
     }
 
-    public virtual void OnStartAttack()
+    public virtual float OnStartAttack()
     {
-
+        return 0.0f;
     }
 
     public virtual void OnEndAttack(int damages)

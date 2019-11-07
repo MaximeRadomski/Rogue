@@ -8,9 +8,13 @@ public class SkillsData
 {
     public string[] HumanSkillsNames = { "Shield", "Jump" };
     public string[] GoblinSkillsNames = { "Vampire", "Avarice" };
-    public string[] ElfSkillsNames = { "Dash", "Trap" };
+    public string[] ElfSkillsNames = { "Dash", "Double Edged" };
     public string[] DwarfSkillsNames = { "Forge", "Grappling Hook" };
     public string[] OrcSkillsNames = { "Roots", "Restoration" };
+
+    public string[] NormalSkills = { };
+    public string[] MagicSkills = { };
+    public string[] RareSkills = { };
 
     public Skill GetSkillFromName(string name)
     {
@@ -21,17 +25,17 @@ public class SkillsData
         return (Skill)theMethod.Invoke(this, null);
     }
 
-    public Skill GetShield() { return new SkillShield(); }
+    public Skill GetShield() { return new SkillDoubleEdged(); }
     public Skill GetJump() { return new SkillJump(); }
 
-    public Skill GetVampire() { return new SkillJump(); }
-    public Skill GetAvarice() { return new SkillJump(); }
+    public Skill GetVampire() { return new SkillVampire(); }
+    public Skill GetAvarice() { return new SkillAvarice(); }
 
-    public Skill GetDash() { return new SkillJump(); }
-    public Skill GetTrap() { return new SkillJump(); }
+    public Skill GetDash() { return new SkillDash(); }
+    public Skill GetDoubleEdged() { return new SkillDoubleEdged(); }
 
-    public Skill GetForge() { return new SkillJump(); }
-    public Skill GetGrapplingHook() { return new SkillJump(); }
+    public Skill GetForge() { return new SkillForge(); }
+    public Skill GetGrapplingHook() { return new SkillGrapplingHook(); }
 
     public Skill GetRoots() { return new SkillJump(); }
     public Skill GetRestoration() { return new SkillJump(); }

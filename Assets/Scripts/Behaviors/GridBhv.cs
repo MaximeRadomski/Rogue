@@ -219,6 +219,7 @@ public class GridBhv : MonoBehaviour
 
     private bool IsAnythingBetween(int x1, int y1, int x2, int y2)
     {
+        SetOpponentsHitBoxes(true);
         List<RaycastHit2D> hits = new List<RaycastHit2D>();
         ContactFilter2D contactFilter = new ContactFilter2D();
         if (Physics2D.Linecast(Cells[x1, y1].transform.position, Cells[x2, y2].transform.position, contactFilter.NoFilter(), results:hits ) > 0)
@@ -227,10 +228,22 @@ public class GridBhv : MonoBehaviour
             {
                 if ((hit.transform.gameObject.TryGetComponent(out CellBhv cell) && cell.Type == CellType.Off) ||
                     (hit.transform.gameObject.TryGetComponent(out CharacterBhv characterBhv) && characterBhv.IsPlayer == false && !(characterBhv.X == x2 && characterBhv.Y == y2)))
+                {
+                    SetOpponentsHitBoxes(false);
                     return true;
+                }
             }
         }
+        SetOpponentsHitBoxes(false);
         return false;
+    }
+
+    private void SetOpponentsHitBoxes(bool setting)
+    {
+        foreach (var opponentBhv in _currentOpponentBhvs)
+        {
+            opponentBhv.GetComponent<BoxCollider2D>().enabled = setting;
+        }
     }
 
     public void OnPlayerAttackClick(int x, int y)
@@ -293,6 +306,8 @@ public class GridBhv : MonoBehaviour
         _currentOpponentBhvs = opponentBhvs;
         _currentSkillId = skillId;
         var character = characterBhv.Character;
+        if (character.Skills[skillId].RangePositions == null || character.Skills[skillId].RangePositions.Count == 0)
+            return;
         for (int i = 0; i < character.Skills[skillId].RangePositions.Count; i += 2)
         {
             var x = character.Skills[skillId].RangePositions[i] + characterBhv.X;
@@ -302,7 +317,8 @@ public class GridBhv : MonoBehaviour
             var cell = Cells[x, y].GetComponent<CellBhv>();
             if (cell.Type == CellType.On && cell.State == CellState.None)
             {
-                if ((hasToBeEmpty && IsOpponentOnCell(x, y)) || IsAnythingBetween(characterBhv.X, characterBhv.Y, x, y))
+                if ((hasToBeEmpty && IsOpponentOnCell(x, y)) ||
+                    (character.Skills[skillId].RangeType == RangeType.Normal && IsAnythingBetween(characterBhv.X, characterBhv.Y, x, y)))
                     cell.ShowSkillOutOfRange();
                 else
                     cell.ShowSkillRange();
