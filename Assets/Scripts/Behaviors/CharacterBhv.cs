@@ -60,15 +60,42 @@ public class CharacterBhv : MonoBehaviour
             if (skill != null)
                 damages = skill.OnTakeDamage(damages);
         }
-        Instantiator.PopText(damages.ToString(), transform.position, TextType.Life);
         Character.Hp -= damages;
+        Instantiator.PopText(damages.ToString(), transform.position, TextType.Hp);
+    }
+
+    public void GainHp(int amount)
+    {
+        int amountToAdd = amount;
+        if (Character.Hp + amountToAdd > Character.HpMax)
+            amountToAdd = Character.HpMax - Character.Hp;
+        Character.Hp += amountToAdd;
+        Instantiator.PopText(amountToAdd.ToString(), transform.position, TextType.Hp);
+    }
+
+    public void LoosePa(int amount)
+    {
+        int amountToRemove = amount;
+        if (Pa - amountToRemove < 0)
+            amountToRemove = Pa;
+        Pa -= amountToRemove;
+        Instantiator.PopText(amountToRemove.ToString(), transform.position, TextType.Pa);
+    }
+
+    public void LoosePm(int amount)
+    {
+        int amountToRemove = amount;
+        if (Pm - amountToRemove < 0)
+            amountToRemove = Pm;
+        Pm -= amountToRemove;
+        Instantiator.PopText(amountToRemove.ToString(), transform.position, TextType.Pm);
     }
 
     public int AttackWithWeapon(int weaponId, CharacterBhv opponentBhv, Map map)
     {
         var tmpWeapon = Character.Weapons[weaponId];
 
-        float baseDamages = tmpWeapon.BaseDamage * Helper.MultiplierFromPercent(1, Random.Range(-tmpWeapon.DamageRangePercentage, tmpWeapon.DamageRangePercentage));
+        float baseDamages = tmpWeapon.BaseDamage * Helper.MultiplierFromPercent(1, Random.Range(-tmpWeapon.DamageRangePercentage, tmpWeapon.DamageRangePercentage + 1));
         if (tmpWeapon.Type != Character.FavWeapons[0] && tmpWeapon.Type != Character.FavWeapons[1])
             baseDamages = baseDamages * Helper.MultiplierFromPercent(0, RacesData.NotRaceWeaponDamagePercent);
 
@@ -102,12 +129,11 @@ public class CharacterBhv : MonoBehaviour
 
         int resultInt = (int)(baseDamages * raceGenderMultiplier * skillMultiplier * criticalMultiplier);
         Debug.Log("Final Damages = " + resultInt);
-        Pa -= tmpWeapon.PaNeeded;
-        Instantiator.PopText(tmpWeapon.PaNeeded.ToString(), transform.position, TextType.Pa);
+        LoosePa(tmpWeapon.PaNeeded);
         foreach (var skill in Character.Skills)
         {
             if (skill != null)
-                skill.OnEndAttack(resultInt);
+                skill.OnEndAttack(resultInt, opponentBhv);
         }
         return resultInt;
     }
@@ -135,8 +161,7 @@ public class CharacterBhv : MonoBehaviour
         _pathfindingSteps.Add(_gridBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
         _pathfindingPos.Add(new RangePos(_cellToReachX, _cellToReachY));
         var visitedIndex = _gridBhv.Cells[_cellToReachX, _cellToReachY].GetComponent<CellBhv>().Visited;
-        Pm -= visitedIndex;
-        Instantiator.PopText(visitedIndex.ToString(), transform.position, TextType.Pm);
+        LoosePm(visitedIndex);
         int x = _cellToReachX;
         int y = _cellToReachY;
         while (visitedIndex > 0)

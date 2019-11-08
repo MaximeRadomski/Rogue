@@ -69,6 +69,8 @@ public class RaceChoiceSceneBhv : MonoBehaviour
         GameObject.Find("Pm").GetComponent<UnityEngine.UI.Text>().text = "Pm: " + _playerCharacter.PmMax;
         GameObject.Find("RacialSkill").GetComponent<UnityEngine.UI.Text>().text = "SKill: " + _playerCharacter.Skills != null
             && _playerCharacter.Skills.Count >= 1 ? _playerCharacter.Skills[0].Name : "None";
+        GameObject.Find("Skill").GetComponent<UnityEngine.UI.Text>().text = "SKill: " + _playerCharacter.Skills != null
+            && _playerCharacter.Skills.Count >= 2 ? _playerCharacter.Skills[1].Name : "None";
     }
 
     public void GoToSwipeScene()

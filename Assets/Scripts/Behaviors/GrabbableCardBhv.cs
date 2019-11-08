@@ -94,6 +94,9 @@ public class GrabbableCardBhv : MonoBehaviour
         _canvas.transform.GetChild(7).GetComponent<UnityEngine.UI.Text>().color = Helper.ColorFromTextType(_opponentCharacters[id].Weapons[1].Rarity.GetHashCode());
         _canvas.transform.GetChild(8).GetComponent<UnityEngine.UI.Text>().text = "Type:" + _opponentCharacters[id].Weapons[1].Type;
         _canvas.transform.GetChild(9).GetComponent<UnityEngine.UI.Text>().text = "Rarity:" + _opponentCharacters[id].Weapons[1].Rarity;
+
+        _canvas.transform.GetChild(10).GetComponent<UnityEngine.UI.Text>().color = Helper.ColorFromTextType(_opponentCharacters[id].Skills[0].Rarity.GetHashCode());
+        _canvas.transform.GetChild(11).GetComponent<UnityEngine.UI.Text>().color = Helper.ColorFromTextType(_opponentCharacters[id].Skills[1].Rarity.GetHashCode());
     }
 
     public void BeginAction(Vector2 initialTouchPosition)

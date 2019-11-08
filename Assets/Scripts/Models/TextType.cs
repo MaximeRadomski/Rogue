@@ -8,7 +8,7 @@ public enum TextType
     Magical = 1,
     Rare = 2,
     Legendary = 3,
-    Life = 4,
+    Hp = 4,
     Pa = 5,
     Pm = 6
 }

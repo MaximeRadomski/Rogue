@@ -34,8 +34,7 @@ public abstract class Skill
 
     public virtual void Activate(int x, int y)
     {
-        CharacterBhv.Pa -= PaNeeded;
-        CharacterBhv.Instantiator.PopText(PaNeeded.ToString(), CharacterBhv.transform.position, TextType.Pa);
+        CharacterBhv.LoosePa(PaNeeded);
         if (CooldownType == CooldownType.Normal)
             Cooldown = CooldownMax;
         else if (CooldownType == CooldownType.OnceAFight)
@@ -70,7 +69,7 @@ public abstract class Skill
         return 0.0f;
     }
 
-    public virtual void OnEndAttack(int damages)
+    public virtual void OnEndAttack(int damages, CharacterBhv opponentBhv)
     {
 
     }

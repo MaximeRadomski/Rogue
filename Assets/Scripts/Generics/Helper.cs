@@ -149,7 +149,7 @@ public static class Helper
                 return Constants.ColorRare;
             case TextType.Legendary:
                 return Constants.ColorLegendary;
-            case TextType.Life:
+            case TextType.Hp:
                 return Constants.ColorLife;
             case TextType.Pa:
                 return Constants.ColorPa;

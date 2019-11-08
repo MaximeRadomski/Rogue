@@ -41,7 +41,8 @@ public class FightSceneBhv : MonoBehaviour
         GameObject.Find("PlayerCharacter").GetComponent<ButtonBhv>().EndActionDelegate = OnPlayerCharacterClick;
         GameObject.Find("PlayerWeapon1").GetComponent<ButtonBhv>().EndActionDelegate = ShowWeaponOneRange;
         GameObject.Find("PlayerWeapon2").GetComponent<ButtonBhv>().EndActionDelegate = ShowWeaponTwoRange;
-        GameObject.Find("PlayerSkill").GetComponent<ButtonBhv>().EndActionDelegate = ClickSkill1;
+        GameObject.Find("PlayerSkill1").GetComponent<ButtonBhv>().EndActionDelegate = ClickSkill1;
+        GameObject.Find("PlayerSkill2").GetComponent<ButtonBhv>().EndActionDelegate = ClickSkill2;
 
     }
 
@@ -214,6 +215,13 @@ public class FightSceneBhv : MonoBehaviour
         if (State == FightState.PlayerTurn && _playerBhv.Character.Skills != null && _playerBhv.Character.Skills.Count >= 1
             && _playerBhv.Pa >= _playerBhv.Character.Skills[0].PaNeeded && !_playerBhv.IsMoving)
             _playerBhv.Character.Skills[0].OnClick();
+    }
+
+    private void ClickSkill2()
+    {
+        if (State == FightState.PlayerTurn && _playerBhv.Character.Skills != null && _playerBhv.Character.Skills.Count >= 2
+            && _playerBhv.Pa >= _playerBhv.Character.Skills[1].PaNeeded && !_playerBhv.IsMoving)
+            _playerBhv.Character.Skills[1].OnClick();
     }
 
     #endregion

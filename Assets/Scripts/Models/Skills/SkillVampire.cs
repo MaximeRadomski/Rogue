@@ -19,8 +19,8 @@ public class SkillVampire : Skill
         RangeType = RangeType.NoRange;
     }
 
-    public override void OnEndAttack(int damages)
+    public override void OnEndAttack(int damages, CharacterBhv opponentBhv)
     {
-        base.OnEndAttack(damages);
+        base.OnEndAttack(damages, opponentBhv);
     }
 }
