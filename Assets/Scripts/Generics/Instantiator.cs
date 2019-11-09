@@ -19,8 +19,18 @@ public class Instantiator : MonoBehaviour
     public void PopText(string text, Vector2 position, TextType type)
     {
         var tmpPoppingTextObject = Resources.Load<GameObject>("Prefabs/PoppingText");
+
+        var tmpTexts = GameObject.FindGameObjectsWithTag(Constants.TagPoppingText);
+        var nbTextsOnThisPosition = 0;
+        foreach (var tmpText in tmpTexts)
+        {
+            if (Helper.FloatEqualsPrecision(tmpText.transform.position.x, position.x, 0.1f) &&
+                Helper.FloatEqualsPrecision(tmpText.transform.position.y, position.y, 1f))
+                ++nbTextsOnThisPosition;
+        }
+
         var tmpPoppingTextInstance = Instantiate(tmpPoppingTextObject, position, tmpPoppingTextObject.transform.rotation, _canvas.transform);
-        tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().SetPrivates(text, position, type);
+        tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().SetPrivates(text, position + new Vector2(0.0f, -0.2f * nbTextsOnThisPosition), type);
     }
 
     public void NewCard(int id)

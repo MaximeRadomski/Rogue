@@ -15,7 +15,7 @@ public class SkillGrapplingHook : Skill
         Cooldown = 0;
         PaNeeded = 2;
         MinRange = 1;
-        MaxRange = 2;
+        MaxRange = 1;
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,2, 0,3, 0,4, 0,5, 0,6,
                                          2,0, 3,0, 4,0, 5,0, 6,0,
@@ -23,38 +23,50 @@ public class SkillGrapplingHook : Skill
                                          -2,0, -3,0, -4,0, -5,0, -6,0 };
     }
 
+    private CharacterBhv _grabbedOpponentBhv;
+
     public override void Activate(int x, int y)
     {
         base.Activate(x, y);
-        Grap(GridBhv.IsOpponentOnCell(x, y));
-        GridBhv.ShowPm(CharacterBhv, OpponentBhvs);
+        var result = Grap(GridBhv.IsOpponentOnCell(x, y));
+        if (result == false)
+            AfterGrap();
     }
 
-    public void Grap(CharacterBhv grabbedOpponentBhv)
+    public bool Grap(CharacterBhv grabbedOpponentBhv)
     {
-        if (grabbedOpponentBhv == null)
-            return;
-        int x = CharacterBhv.X - grabbedOpponentBhv.X;
-        int y = CharacterBhv.Y - grabbedOpponentBhv.Y;
+        _grabbedOpponentBhv = grabbedOpponentBhv;
+        if (_grabbedOpponentBhv == null)
+            return false;
+        _grabbedOpponentBhv.AfterMouvementDelegate = AfterGrap;
+        int x = CharacterBhv.X - _grabbedOpponentBhv.X;
+        int y = CharacterBhv.Y - _grabbedOpponentBhv.Y;
         if (x != 0) x = x < 0 ? ++x : --x;
         if (y != 0) y = y < 0 ? ++y : --y;
         while (x != 0)
         {
-            if (GridBhv.Cells[grabbedOpponentBhv.X + x, grabbedOpponentBhv.Y + y].GetComponent<CellBhv>().Type == CellType.On)
+            if (GridBhv.Cells[_grabbedOpponentBhv.X + x, _grabbedOpponentBhv.Y + y].GetComponent<CellBhv>().Type == CellType.On)
             {
-                grabbedOpponentBhv.MoveToPosition(grabbedOpponentBhv.X + x, grabbedOpponentBhv.Y + y, false);
+                _grabbedOpponentBhv.MoveToPosition(_grabbedOpponentBhv.X + x, _grabbedOpponentBhv.Y + y, false);
                 break;
             }
             x = x < 0 ? ++x : --x;
         }
         while (y != 0)
         {
-            if (GridBhv.Cells[grabbedOpponentBhv.X + x, grabbedOpponentBhv.Y + y].GetComponent<CellBhv>().Type == CellType.On)
+            if (GridBhv.Cells[_grabbedOpponentBhv.X + x, _grabbedOpponentBhv.Y + y].GetComponent<CellBhv>().Type == CellType.On)
             {
-                grabbedOpponentBhv.MoveToPosition(grabbedOpponentBhv.X + x, grabbedOpponentBhv.Y + y, false);
+                _grabbedOpponentBhv.MoveToPosition(_grabbedOpponentBhv.X + x, _grabbedOpponentBhv.Y + y, false);
                 break;
             }
             y = y < 0 ? ++y : --y;
         }
+        return true;
+    }
+
+    private void AfterGrap()
+    {
+        GridBhv.ShowPm(CharacterBhv, OpponentBhvs);
+        _grabbedOpponentBhv.AfterMouvementDelegate = null;
     }
 }

@@ -9,6 +9,7 @@ public static class Constants
     public const string TagButton = "Button";
     public const string TagGrabbableCard = "GrabbableCard";
     public const string TagSoundControler = "SoundControler";
+    public const string TagPoppingText = "PoppingText";
 
     //  PLAYER PREFS  //
     public const string PpAudioLevel = "AudioLevel";

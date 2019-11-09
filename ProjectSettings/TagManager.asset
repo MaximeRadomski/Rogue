@@ -8,6 +8,7 @@ TagManager:
   - GrabbableCard
   - SoundControler
   - Cell
+  - PoppingText
   layers:
   - Default
   - TransparentFX

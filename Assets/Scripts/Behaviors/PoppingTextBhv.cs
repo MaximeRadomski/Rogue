@@ -36,8 +36,9 @@ public class PoppingTextBhv : MonoBehaviour
         transform.position = Vector2.Lerp(transform.position, _positionToReach, 0.05f);
         if (transform.position.y >= _positionToReach.y - 0.05f)
         {
-            _text.color = Color.Lerp(_text.color, _colorToFade, 0.05f);
-            _textShadow.effectColor = Color.Lerp(_textShadow.effectColor, _shadowColorToFade, 0.05f);
+            tag = Constants.TagCell;
+            _text.color = Color.Lerp(_text.color, _colorToFade, 0.1f);
+            _textShadow.effectColor = Color.Lerp(_textShadow.effectColor, _shadowColorToFade, 0.1f);
             if (_text.color == _colorToFade)
             {
                 _isMoving = false;

@@ -23,6 +23,9 @@ public class CharacterBhv : MonoBehaviour
     private List<RangePos> _pathfindingPos = new List<RangePos>();
     private SpriteRenderer _spriteRenderer;
 
+    public delegate void ActionDelegate();
+    public ActionDelegate AfterMouvementDelegate;
+
     public void SetPrivates()
     {
         _fightSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>();
@@ -204,6 +207,8 @@ public class CharacterBhv : MonoBehaviour
                 Y = _cellToReachY;
                 if (IsPlayer)
                     _fightSceneBhv.AfterPlayerMovement();
+                if (AfterMouvementDelegate != null)
+                    AfterMouvementDelegate();
             }
         }
     }

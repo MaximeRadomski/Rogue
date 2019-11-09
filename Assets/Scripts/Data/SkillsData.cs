@@ -49,7 +49,7 @@ public class SkillsData
         return (Skill)theMethod.Invoke(this, null);
     }
 
-    public Skill GetShield() { return new SkillDoubleEdged(); }
+    public Skill GetShield() { return new SkillShield(); }
     public Skill GetJump() { return new SkillJump(); }
 
     public Skill GetVampire() { return new SkillVampire(); }
@@ -66,9 +66,9 @@ public class SkillsData
 
 
 
-    public Skill GetTeleportation() { return new SkillJump(); }
-    public Skill GetPush() { return new SkillJump(); }
-    public Skill GetHeal() { return new SkillJump(); }
-    public Skill GetSmite() { return new SkillJump(); }
-    public Skill GetTripleEdge() { return new SkillJump(); }
+    public Skill GetTeleportation() { return new SkillTeleportation(); }
+    public Skill GetPush() { return new SkillPush(); }
+    public Skill GetHeal() { return new SkillTeleportation(); }
+    public Skill GetSmite() { return new SkillTeleportation(); }
+    public Skill GetTripleEdge() { return new SkillTeleportation(); }
 }

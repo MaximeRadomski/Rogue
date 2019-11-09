@@ -50,6 +50,9 @@ public abstract class Skill
     {
         if (RangeType != RangeType.NoRange && Cooldown == 0)
             GridBhv.ShowSkillRange(RangeType, CharacterBhv, Id, OpponentBhvs);
+        else if (CooldownType == CooldownType.Passive)
+            GridBhv.ShowPm(CharacterBhv, OpponentBhvs);
+
     }
 
     public virtual void OnStartTurn()

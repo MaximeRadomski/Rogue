@@ -21,6 +21,13 @@ public class SkillVampire : Skill
 
     public override void OnEndAttack(int damages, CharacterBhv opponentBhv)
     {
-        base.OnEndAttack(damages, opponentBhv);
+        float damagesToSteal = damages * 0.2f;
+        CharacterBhv.GainHp((int)damagesToSteal);
+        //CharacterBhv.GainHp((int)damagesToSteal);
+        //CharacterBhv.GainHp((int)damagesToSteal);
+        //CharacterBhv.GainHp((int)damagesToSteal);
+        //CharacterBhv.GainHp((int)damagesToSteal);
+        //CharacterBhv.GainHp((int)damagesToSteal);
+        //CharacterBhv.GainHp((int)damagesToSteal);
     }
 }

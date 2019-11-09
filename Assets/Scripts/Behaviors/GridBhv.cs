@@ -306,23 +306,41 @@ public class GridBhv : MonoBehaviour
         _currentOpponentBhvs = opponentBhvs;
         _currentSkillId = skillId;
         var character = characterBhv.Character;
-        if (character.Skills[skillId].RangePositions == null || character.Skills[skillId].RangePositions.Count == 0)
-            return;
-        for (int i = 0; i < character.Skills[skillId].RangePositions.Count; i += 2)
+        if (rangeType != RangeType.FullRange)
         {
-            var x = character.Skills[skillId].RangePositions[i] + characterBhv.X;
-            var y = character.Skills[skillId].RangePositions[i + 1] + characterBhv.Y;
-            if (!Helper.IsPosValid(x, y))
-                continue;
-            var cell = Cells[x, y].GetComponent<CellBhv>();
-            if (cell.Type == CellType.On && cell.State == CellState.None)
+            if (character.Skills[skillId].RangePositions == null || character.Skills[skillId].RangePositions.Count == 0)
+                return;
+            for (int i = 0; i < character.Skills[skillId].RangePositions.Count; i += 2)
             {
-                if ((hasToBeEmpty && IsOpponentOnCell(x, y)) ||
-                    (character.Skills[skillId].RangeType == RangeType.Normal && IsAnythingBetween(characterBhv.X, characterBhv.Y, x, y)))
-                    cell.ShowSkillOutOfRange();
-                else
-                    cell.ShowSkillRange();
+                var x = character.Skills[skillId].RangePositions[i] + characterBhv.X;
+                var y = character.Skills[skillId].RangePositions[i + 1] + characterBhv.Y;
+                ShowSkillRangeOnPosition(x, y, hasToBeEmpty, rangeType, characterBhv);
             }
+        }
+        else
+        {
+            for (int x = 0; x < Constants.GridMax; ++x)
+            {
+                for (int y = 0; y < Constants.GridMax; ++y)
+                {
+                    ShowSkillRangeOnPosition(x, y, hasToBeEmpty, rangeType, characterBhv);
+                }
+            }
+        }
+    }
+
+    private void ShowSkillRangeOnPosition(int x, int y, bool hasToBeEmpty, RangeType rangeType, CharacterBhv characterBhv)
+    {
+        if (!Helper.IsPosValid(x, y))
+            return;
+        var cell = Cells[x, y].GetComponent<CellBhv>();
+        if (cell.Type == CellType.On && cell.State == CellState.None)
+        {
+            if ((hasToBeEmpty && IsOpponentOnCell(x, y)) ||
+                (rangeType == RangeType.Normal && IsAnythingBetween(characterBhv.X, characterBhv.Y, x, y)))
+                cell.ShowSkillOutOfRange();
+            else
+                cell.ShowSkillRange();
         }
     }
 
