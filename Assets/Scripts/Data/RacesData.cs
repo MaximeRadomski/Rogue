@@ -115,7 +115,7 @@ public static class RacesData
             PaMax = 6,
             PmMax = 3,
             LevelingHealthPercent = 10,
-            LevelingDamagePercent = 20,
+            LevelingDamagePercent = 10,
             FavWeapons = new List<WeaponType> { WeaponType.Club, WeaponType.Knife },
             Weapons = new List<Weapon> { WeaponsData.GetWeaponFromType(WeaponType.Club, isPlayer),
                                          WeaponsData.GetWeaponFromType(WeaponType.Knife, isPlayer) },

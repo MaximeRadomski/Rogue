@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillForge : Skill
+public class SkillHeal : Skill
 {
-    public SkillForge()
+    public SkillHeal()
     {
-        Name = RacesData.SkillsData.DwarfSkillsNames[0];
-        Type = SkillType.Racial;
-        Race = CharacterRace.Dwarf;
+        Name = RacesData.SkillsData.NormalSkillsNames[2];
+        Type = SkillType.NotRatial;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Normal;
-        CooldownMax = 4;
+        CooldownMax = 3;
         Cooldown = 0;
-        PaNeeded = 4;
+        PaNeeded = 3;
         MinRange = 0;
         MaxRange = 0;
         RangeType = RangeType.Normal;
@@ -24,12 +23,7 @@ public class SkillForge : Skill
     {
         base.Activate(x, y);
         GridBhv.ShowPm(CharacterBhv, OpponentBhvs);
-    }
-
-    public override int OnStartAttack()
-    {
-        if (Cooldown >= CooldownMax - 2)
-            return 75;
-        return base.OnStartAttack();
+        var floatAmount = 50.0f * Helper.MultiplierFromPercent(1, 10 * (CharacterBhv.Character.Level - 1));
+        CharacterBhv.GainHp((int)floatAmount);
     }
 }

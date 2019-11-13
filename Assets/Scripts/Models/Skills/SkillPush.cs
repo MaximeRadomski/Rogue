@@ -38,7 +38,16 @@ public class SkillPush : Skill
         int y = _pushedOpponentBhv.Y - CharacterBhv.Y;
         if (!Helper.IsPosValid(_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y)
             || GridBhv.Cells[_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y].GetComponent<CellBhv>().Type != CellType.On)
-            return false;
+        {
+            if (GridBhv.Cells[_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y].GetComponent<CellBhv>().Type == CellType.Off)
+            {
+                var floatAmount = 30.0f * Helper.MultiplierFromPercent(1, CharacterBhv.Character.LevelingDamagePercent * (CharacterBhv.Character.Level - 1));
+                pushedOpponentBhv.TakeDamages((int)floatAmount);
+            }
+            else if (GridBhv.Cells[_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y].GetComponent<CellBhv>().Type == CellType.Impracticable)
+                pushedOpponentBhv.LoosePm(1);
+                return false;
+        }
         _pushedOpponentBhv.AfterMouvementDelegate = AfterPush;
         _pushedOpponentBhv.MoveToPosition(_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y, false);
         return true;

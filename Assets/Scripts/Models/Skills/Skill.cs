@@ -67,9 +67,9 @@ public abstract class Skill
 
     }
 
-    public virtual float OnStartAttack()
+    public virtual int OnStartAttack()
     {
-        return 0.0f;
+        return 0;
     }
 
     public virtual void OnEndAttack(int damages, CharacterBhv opponentBhv)

@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillDoubleEdged : Skill
+public class SkillTripleEdged : Skill
 {
-    public SkillDoubleEdged()
+    public SkillTripleEdged()
     {
-        Name = RacesData.SkillsData.ElfSkillsNames[1];
-        Type = SkillType.Racial;
-        Race = CharacterRace.Elf;
-        Rarity = Rarity.Normal;
+        Name = RacesData.SkillsData.RareSkillsNames[0];
+        Type = SkillType.NotRatial;
+        Rarity = Rarity.Rare;
         CooldownType = CooldownType.OnceAFight;
         CooldownMax = -1;
         Cooldown = 0;
-        PaNeeded = 2;
+        PaNeeded = 6;
         MinRange = 0;
         MaxRange = 0;
         RangeType = RangeType.Normal;
@@ -28,15 +27,15 @@ public class SkillDoubleEdged : Skill
 
     public override int OnStartAttack()
     {
-        if (Cooldown == CooldownMax)
-            return 100;
+        if (Cooldown >= CooldownMax - 1)
+            return 200;
         return base.OnStartAttack();
     }
 
     public override int OnTakeDamage(int damages)
     {
-        if (Cooldown == CooldownMax)
-            return damages * 2;
+        if (Cooldown >= CooldownMax - 1)
+            return damages * 3;
         return damages;
 
     }

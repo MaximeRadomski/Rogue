@@ -116,7 +116,7 @@ public class CharacterBhv : MonoBehaviour
         foreach (var skill in Character.Skills)
         {
             if (skill != null)
-                skillMultiplier += skill.OnStartAttack();
+                skillMultiplier = Helper.MultiplierFromPercent(skillMultiplier, skill.OnStartAttack());
         }
 
         float criticalMultiplier = 1.0f;

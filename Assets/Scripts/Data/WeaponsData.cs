@@ -198,7 +198,7 @@ public static class WeaponsData
             PaNeeded = 4,
             CritChancePercent = 1,
             CritMultiplierPercent = 150,
-            MinRange = 2,
+            MinRange = 3,
             MaxRange = 5,
             RangePositions = new List<int> { /*0,2,*/ 0,3, 0,4, 0,5,
                                              1,2, 1,3, 1,4, 2,2, 2,3, 3,2, 2,1, 3,1, 4,1,

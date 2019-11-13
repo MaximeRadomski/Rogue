@@ -13,8 +13,8 @@ public class SkillsData
     public string[] OrcSkillsNames = { "Roots", "Restoration" };
 
     public string[] NormalSkillsNames = { "Teleportation", "Push", "Heal" };
-    public string[] MagicSkillsNames = { "Smite" };
-    public string[] RareSkillsNames = { "TripleEdge" };
+    public string[] MagicalSkillsNames = { "Smite", "Great Heal" };
+    public string[] RareSkillsNames = { "TripleEdged" };
 
     public static int RareSkillAppearancePercent = 5;
     public static int MagicalSkillAppearancePercent = 15;
@@ -36,7 +36,7 @@ public class SkillsData
         if (rarity == Rarity.Rare)
             return GetSkillFromName(RareSkillsNames[UnityEngine.Random.Range(0, RareSkillsNames.Length)]);
         else if (rarity == Rarity.Magical)
-            return GetSkillFromName(MagicSkillsNames[UnityEngine.Random.Range(0, MagicSkillsNames.Length)]);
+            return GetSkillFromName(MagicalSkillsNames[UnityEngine.Random.Range(0, MagicalSkillsNames.Length)]);
         return GetSkillFromName(NormalSkillsNames[UnityEngine.Random.Range(0, NormalSkillsNames.Length)]);
     }
 
@@ -45,10 +45,12 @@ public class SkillsData
         if (string.IsNullOrEmpty(name))
             return null;
         Type thisType = GetType();
+        Debug.Log("Get" + name.Replace(" ", ""));
         System.Reflection.MethodInfo theMethod = thisType.GetMethod("Get" + name.Replace(" ", ""));
         return (Skill)theMethod.Invoke(this, null);
     }
 
+    // RACIAL SKILLS
     public Skill GetShield() { return new SkillShield(); }
     public Skill GetJump() { return new SkillJump(); }
 
@@ -65,10 +67,15 @@ public class SkillsData
     public Skill GetRestoration() { return new SkillRestoration(); }
 
 
-
+    // NORMAL SKILLS
     public Skill GetTeleportation() { return new SkillTeleportation(); }
     public Skill GetPush() { return new SkillPush(); }
-    public Skill GetHeal() { return new SkillTeleportation(); }
-    public Skill GetSmite() { return new SkillTeleportation(); }
-    public Skill GetTripleEdge() { return new SkillTeleportation(); }
+    public Skill GetHeal() { return new SkillHeal(); }
+
+    // MAGICAL SKILLS
+    public Skill GetSmite() { return new SkillSmite(); }
+    public Skill GetGreatHeal() { return new SkillGreatHeal(); }
+
+    // RARE SKILLS
+    public Skill GetTripleEdged() { return new SkillTripleEdged(); }
 }
