@@ -14,6 +14,8 @@ public class FightSceneBhv : MonoBehaviour
     private List<GameObject> _opponents;
     private List<CharacterBhv> _opponentBhvs;
 
+    private CharacterBhv _currentPlayingCharacterBhv;
+
     void Start()
     {
         Application.targetFrameRate = 60;
@@ -22,6 +24,7 @@ public class FightSceneBhv : MonoBehaviour
         SetButtons();
         InitGrid();
         InitCharacters();
+        InitCharactersOrder();
         GameStart();
     }
 
@@ -81,6 +84,36 @@ public class FightSceneBhv : MonoBehaviour
         //DisplayCharacterStats(_player.name, _playerBhv.Character);
     }
 
+    private void InitCharactersOrder()
+    {
+        int orderId = 0;
+        CalculateInitiative(_playerBhv, orderId++);
+        foreach (var opponentBhv in _opponentBhvs)
+            CalculateInitiative(opponentBhv, orderId++);
+
+    }
+
+    private void CalculateInitiative(CharacterBhv characterBhv, int orderId)
+    {
+        int initiative = 0;
+        initiative += characterBhv.Character.Level * 100;
+        if (characterBhv.Character.Weapons != null)
+        {
+            if (characterBhv.Character.Weapons.Count > 0)
+                initiative += characterBhv.Character.Weapons[0].Rarity.GetHashCode() * 50;
+            if (characterBhv.Character.Weapons.Count > 1)
+                initiative += characterBhv.Character.Weapons[1].Rarity.GetHashCode() * 50;
+        }
+        if (characterBhv.Character.Skills != null)
+        {
+            if (characterBhv.Character.Skills.Count > 0)
+                initiative += characterBhv.Character.Skills[0].Rarity.GetHashCode() * 50;
+            if (characterBhv.Character.Skills.Count > 1)
+                initiative += characterBhv.Character.Skills[1].Rarity.GetHashCode() * 50;
+        }
+        characterBhv.Initiative = initiative;
+    }
+
     #endregion
 
     #region GameLife
@@ -91,6 +124,11 @@ public class FightSceneBhv : MonoBehaviour
         _gridBhv.ResetAllCellsVisited();
         _gridBhv.SpawnOpponent(_opponentBhvs);
         _gridBhv.SpawnPlayer();
+    }
+
+    private void GameLife(int characterId = -1)
+    {
+
     }
 
     private void PlayerTurn()
@@ -116,9 +154,15 @@ public class FightSceneBhv : MonoBehaviour
                 if (skill != null)
                     skill.OnEndTurn();
             }
-            PlayerTurn();
+            OpponentTurn();
         }
     }
+
+    private void OpponentTurn()
+    {
+        PlayerTurn();
+    }
+
     public void OnPlayerMovementClick(int x, int y)
     {
         if (State != FightState.PlayerTurn)

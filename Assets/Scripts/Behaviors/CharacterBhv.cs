@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CharacterBhv : MonoBehaviour
 {
+    public int OrderId;
+    public int Initiative;
     public int X;
     public int Y;
     public bool IsMoving = false;
