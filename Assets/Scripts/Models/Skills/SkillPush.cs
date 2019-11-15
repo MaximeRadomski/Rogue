@@ -8,6 +8,7 @@ public class SkillPush : Skill
     {
         Name = RacesData.SkillsData.NormalSkillsNames[1];
         Type = SkillType.NotRatial;
+        Nature = SkillNature.MovementFar;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Normal;
         CooldownMax = 2;

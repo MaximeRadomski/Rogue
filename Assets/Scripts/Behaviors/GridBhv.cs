@@ -174,6 +174,30 @@ public class GridBhv : MonoBehaviour
 
     #region Weapon
 
+    public bool IsOpponentInWeaponRangeAndZone(CharacterBhv characterBhv, int weaponId, List<CharacterBhv> opponentBhvs)
+    {
+        _currentCharacterBhv = characterBhv;
+        _currentOpponentBhvs = opponentBhvs;
+        _currentWeaponId = weaponId;
+        var character = characterBhv.Character;
+        for (int i = 0; i < character.Weapons[weaponId].RangePositions.Count; i += 2)
+        {
+            var x = character.Weapons[weaponId].RangePositions[i] + characterBhv.X;
+            var y = character.Weapons[weaponId].RangePositions[i + 1] + characterBhv.Y;
+            if (!Helper.IsPosValid(x, y))
+                continue;
+            var cell = Cells[x, y].GetComponent<CellBhv>();
+            if (cell.Type == CellType.On && cell.State == CellState.None)
+            {
+                if (IsAnythingBetween(characterBhv.X, characterBhv.Y, x, y))
+                    continue;
+                else if (IsOpponentOnCell(x, y) != null || IsOpponentInZone(x, y) != null)
+                    return true;
+            }
+        }
+        return false;
+    }
+
     public void ShowWeaponRange(CharacterBhv characterBhv, int weaponId, List<CharacterBhv> opponentBhvs)
     {
         ResetAllCellsDisplay();

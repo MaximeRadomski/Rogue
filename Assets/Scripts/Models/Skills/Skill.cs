@@ -7,6 +7,7 @@ public abstract class Skill
     public string Name;
     public string Description;
     public SkillType Type;
+    public SkillNature Nature;
     public CharacterRace Race;
     public Rarity Rarity;
     public CooldownType CooldownType;

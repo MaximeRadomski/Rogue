@@ -8,6 +8,7 @@ public class SkillDash : Skill
     {
         Name = RacesData.SkillsData.ElfSkillsNames[0];
         Type = SkillType.Racial;
+        Nature = SkillNature.MovementFar;
         Race = CharacterRace.Elf;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Normal;

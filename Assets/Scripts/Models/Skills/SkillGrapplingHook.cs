@@ -8,6 +8,7 @@ public class SkillGrapplingHook : Skill
     {
         Name = RacesData.SkillsData.DwarfSkillsNames[1];
         Type = SkillType.Racial;
+        Nature = SkillNature.MovementClose;
         Race = CharacterRace.Dwarf;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Normal;

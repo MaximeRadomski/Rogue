@@ -8,6 +8,7 @@ public class SkillForge : Skill
     {
         Name = RacesData.SkillsData.DwarfSkillsNames[0];
         Type = SkillType.Racial;
+        Nature = SkillNature.Offensive;
         Race = CharacterRace.Dwarf;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Normal;

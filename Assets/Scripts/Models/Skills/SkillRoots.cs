@@ -8,6 +8,7 @@ public class SkillRoots : Skill
     {
         Name = RacesData.SkillsData.OrcSkillsNames[0];
         Type = SkillType.Racial;
+        Nature = SkillNature.Debuff;
         Race = CharacterRace.Orc;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Passive;

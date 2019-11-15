@@ -8,6 +8,7 @@ public class SkillSmite : Skill
     {
         Name = RacesData.SkillsData.MagicalSkillsNames[0];
         Type = SkillType.NotRatial;
+        Nature = SkillNature.Offensive;
         Rarity = Rarity.Magical;
         CooldownType = CooldownType.Normal;
         CooldownMax = 5;

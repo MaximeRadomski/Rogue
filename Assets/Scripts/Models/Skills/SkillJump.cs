@@ -8,6 +8,7 @@ public class SkillJump : Skill
     {
         Name = RacesData.SkillsData.HumanSkillsNames[1];
         Type = SkillType.Racial;
+        Nature = SkillNature.MovementBoth;
         Race = CharacterRace.Human;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Normal;

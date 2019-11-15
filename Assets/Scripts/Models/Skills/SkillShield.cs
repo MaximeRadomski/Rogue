@@ -8,6 +8,7 @@ public class SkillShield : Skill
     {
         Name = RacesData.SkillsData.HumanSkillsNames[0];
         Type = SkillType.Racial;
+        Nature = SkillNature.Defensive;
         Race = CharacterRace.Human;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Normal;

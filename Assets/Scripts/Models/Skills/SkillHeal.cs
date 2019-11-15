@@ -8,6 +8,7 @@ public class SkillHeal : Skill
     {
         Name = RacesData.SkillsData.NormalSkillsNames[2];
         Type = SkillType.NotRatial;
+        Nature = SkillNature.Defensive;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Normal;
         CooldownMax = 3;

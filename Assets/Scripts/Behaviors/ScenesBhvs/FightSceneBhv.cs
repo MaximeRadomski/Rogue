@@ -14,7 +14,10 @@ public class FightSceneBhv : MonoBehaviour
     private List<GameObject> _opponents;
     private List<CharacterBhv> _opponentBhvs;
 
+    private int _currentOrderId;
+    private List<CharOrder> _orderList;
     private CharacterBhv _currentPlayingCharacterBhv;
+    
 
     void Start()
     {
@@ -87,31 +90,70 @@ public class FightSceneBhv : MonoBehaviour
     private void InitCharactersOrder()
     {
         int orderId = 0;
+        _orderList = new List<CharOrder>();
         CalculateInitiative(_playerBhv, orderId++);
         foreach (var opponentBhv in _opponentBhvs)
             CalculateInitiative(opponentBhv, orderId++);
-
+        int i = 0;
+        while (i < _orderList.Count)
+        {
+            if (i + 1 < _orderList.Count &&
+                _orderList[i].Initiative < _orderList[i + 1].Initiative)
+            {
+                var tmpCharOrder = new CharOrder(0,0);
+                tmpCharOrder.Id = _orderList[i].Id;
+                tmpCharOrder.Initiative = _orderList[i].Initiative;
+                _orderList[i].Id = _orderList[i + 1].Id;
+                _orderList[i].Initiative = _orderList[i + 1].Initiative;
+                _orderList[i + 1].Id = tmpCharOrder.Id;
+                _orderList[i + 1].Initiative = tmpCharOrder.Initiative;
+                i = 0;
+            }
+            else
+                ++i;
+        }
+        _currentOrderId = -1;
     }
 
-    private void CalculateInitiative(CharacterBhv characterBhv, int orderId)
+    private CharacterBhv GetCharacterBhvFromOrderId(int id)
+    {
+        if (_playerBhv.OrderId == id)
+            return _playerBhv;
+        foreach (var opponentBhv in _opponentBhvs)
+        {
+            if (opponentBhv.OrderId == id)
+                return opponentBhv;
+        }
+        return _opponentBhvs[0];
+    }
+
+    private int CalculateInitiative(CharacterBhv characterBhv, int orderId = -1)
     {
         int initiative = 0;
-        initiative += characterBhv.Character.Level * 100;
+        initiative += (characterBhv.Character.Level - 1) * RacesData.InitiativeLevel;
         if (characterBhv.Character.Weapons != null)
         {
             if (characterBhv.Character.Weapons.Count > 0)
-                initiative += characterBhv.Character.Weapons[0].Rarity.GetHashCode() * 50;
+                initiative += characterBhv.Character.Weapons[0].Rarity.GetHashCode() * RacesData.InitiativeWeapon;
             if (characterBhv.Character.Weapons.Count > 1)
-                initiative += characterBhv.Character.Weapons[1].Rarity.GetHashCode() * 50;
+                initiative += characterBhv.Character.Weapons[1].Rarity.GetHashCode() * RacesData.InitiativeWeapon;
         }
         if (characterBhv.Character.Skills != null)
         {
             if (characterBhv.Character.Skills.Count > 0)
-                initiative += characterBhv.Character.Skills[0].Rarity.GetHashCode() * 50;
+                initiative += characterBhv.Character.Skills[0].Rarity.GetHashCode() * RacesData.InitiativeSkill;
             if (characterBhv.Character.Skills.Count > 1)
-                initiative += characterBhv.Character.Skills[1].Rarity.GetHashCode() * 50;
+                initiative += characterBhv.Character.Skills[1].Rarity.GetHashCode() * RacesData.InitiativeSkill;
         }
-        characterBhv.Initiative = initiative;
+        initiative += characterBhv.Character.Hp / characterBhv.Character.HpMax * 100;
+        initiative += _map.Type == characterBhv.Character.StrongIn ? RacesData.InitiativeStrongIn : 0;
+        if (orderId != -1)
+        {
+            characterBhv.Initiative = initiative;
+            characterBhv.OrderId = orderId;
+            _orderList.Add(new CharOrder(orderId, initiative));
+        }
+        return initiative;
     }
 
     #endregion
@@ -126,23 +168,31 @@ public class FightSceneBhv : MonoBehaviour
         _gridBhv.SpawnPlayer();
     }
 
-    private void GameLife(int characterId = -1)
+    private void NextTurn()
     {
-
-    }
-
-    private void PlayerTurn()
-    {
-        foreach (var skill in _playerBhv.Character.Skills)
+        if (++_currentOrderId >= _orderList.Count)
+            _currentOrderId = 0;
+        _currentPlayingCharacterBhv = GetCharacterBhvFromOrderId(_orderList[_currentOrderId].Id);
+        foreach (var skill in _currentPlayingCharacterBhv.Character.Skills)
         {
             if (skill != null)
                 skill.OnStartTurn();
         }
-        State = FightState.PlayerTurn;
-        _playerBhv.Pa = _playerBhv.Character.PaMax;
-        _playerBhv.Pm = _playerBhv.Character.PmMax;
-        _playerBhv.Turn++;
-        _gridBhv.ShowPm(_playerBhv, _opponentBhvs);
+        _currentPlayingCharacterBhv.Pa = _currentPlayingCharacterBhv.Character.PaMax;
+        _currentPlayingCharacterBhv.Pm = _currentPlayingCharacterBhv.Character.PmMax;
+        _currentPlayingCharacterBhv.Turn++;
+
+        if (_currentPlayingCharacterBhv.IsPlayer)
+        {
+            State = FightState.PlayerTurn;
+            _gridBhv.ShowPm(_currentPlayingCharacterBhv, _currentPlayingCharacterBhv.OpponentBhvs);
+        }            
+        else
+        {
+            State = FightState.OpponentTurn;
+            _currentPlayingCharacterBhv.GetComponent<AiBhv>().StartReflexion();
+        }
+        
     }
 
     private void PassTurn()
@@ -154,13 +204,8 @@ public class FightSceneBhv : MonoBehaviour
                 if (skill != null)
                     skill.OnEndTurn();
             }
-            OpponentTurn();
         }
-    }
-
-    private void OpponentTurn()
-    {
-        PlayerTurn();
+        NextTurn();
     }
 
     public void OnPlayerMovementClick(int x, int y)
@@ -181,7 +226,7 @@ public class FightSceneBhv : MonoBehaviour
     public void OnPlayerSpawnClick(int x, int y)
     {
         _playerBhv.Spawn(x, y);
-        PlayerTurn();
+        NextTurn();
     }
 
     public void OnPlayerAttackClick(int weaponId, List<CharacterBhv> touchedOpponents)

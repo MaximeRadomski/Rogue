@@ -15,8 +15,8 @@ public class CharacterBhv : MonoBehaviour
     public Character Character;
     public bool IsPlayer = false;
     public Instantiator Instantiator;
+    public List<CharacterBhv> OpponentBhvs;
 
-    private List<CharacterBhv> _opponentBhvs;
     private FightSceneBhv _fightSceneBhv;
     private GridBhv _gridBhv;
     private int _cellToReachX;
@@ -32,23 +32,23 @@ public class CharacterBhv : MonoBehaviour
     {
         _fightSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>();
         _gridBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GridBhv>();
-        _opponentBhvs = new List<CharacterBhv>();
+        OpponentBhvs = new List<CharacterBhv>();
         if (IsPlayer)
         {
             int nbOpponents = PlayerPrefs.GetInt(Constants.PpNbOpponents);
             for (int i = 0; i < nbOpponents; ++i)
             {
-                _opponentBhvs.Add(GameObject.Find(Constants.GoOpponentName + i).GetComponent<CharacterBhv>());
+                OpponentBhvs.Add(GameObject.Find(Constants.GoOpponentName + i).GetComponent<CharacterBhv>());
             }
         }
         else
-            _opponentBhvs.Add(GameObject.Find(Constants.GoPlayerName).GetComponent<CharacterBhv>());
+            OpponentBhvs.Add(GameObject.Find(Constants.GoPlayerName).GetComponent<CharacterBhv>());
         Instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<Instantiator>();
         _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         for (int i = 0; i < Character.Skills.Count; ++i)
         {
             if (Character.Skills[i] != null)
-                Character.Skills[i].Init(this, _opponentBhvs, _gridBhv, i);
+                Character.Skills[i].Init(this, OpponentBhvs, _gridBhv, i);
         }
     }
 
@@ -171,13 +171,13 @@ public class CharacterBhv : MonoBehaviour
         int y = _cellToReachY;
         while (visitedIndex > 0)
         {
-            if (LookForLowerIndex(x, y + 1, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x, y + 1, _opponentBhvs))
+            if (LookForLowerIndex(x, y + 1, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x, y + 1, OpponentBhvs))
                 ++y;
-            else if (LookForLowerIndex(x + 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x + 1, y, _opponentBhvs))
+            else if (LookForLowerIndex(x + 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x + 1, y, OpponentBhvs))
                 ++x;
-            else if (LookForLowerIndex(x, y - 1, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x, y - 1, _opponentBhvs))
+            else if (LookForLowerIndex(x, y - 1, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x, y - 1, OpponentBhvs))
                 --y;
-            else if (LookForLowerIndex(x - 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x - 1, y, _opponentBhvs))
+            else if (LookForLowerIndex(x - 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x - 1, y, OpponentBhvs))
                 --x;
             _pathfindingSteps.Insert(0, _gridBhv.Cells[x, y].transform.position);
             _pathfindingPos.Insert(0, new RangePos(_cellToReachX, _cellToReachY));

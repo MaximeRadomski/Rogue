@@ -8,6 +8,7 @@ public class SkillDoubleEdged : Skill
     {
         Name = RacesData.SkillsData.ElfSkillsNames[1];
         Type = SkillType.Racial;
+        Nature = SkillNature.Offensive;
         Race = CharacterRace.Elf;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.OnceAFight;

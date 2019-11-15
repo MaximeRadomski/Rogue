@@ -28,8 +28,10 @@ public static class RacesData
     public static int GenderDamage = 5;
     public static int GenderCritical = 15;
 
-    public static int LevelScore = 100;
-    public static int[] RarityScore = { 10, 30, 70, 150 };
+    public static int InitiativeLevel = 100;
+    public static int InitiativeWeapon = 50;
+    public static int InitiativeSkill = 50;
+    public static int InitiativeStrongIn = 25;
 
     public static SkillsData SkillsData = new SkillsData();
 
