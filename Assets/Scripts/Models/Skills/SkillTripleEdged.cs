@@ -9,6 +9,7 @@ public class SkillTripleEdged : Skill
         Name = RacesData.SkillsData.RareSkillsNames[0];
         Type = SkillType.NotRatial;
         Nature = SkillNature.Offensive;
+        Effect = SkillEffect.AttackUp;
         Rarity = Rarity.Rare;
         CooldownType = CooldownType.OnceAFight;
         CooldownMax = -1;

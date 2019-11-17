@@ -9,6 +9,7 @@ public class SkillAvarice : Skill
         Name = RacesData.SkillsData.GoblinSkillsNames[1];
         Type = SkillType.Racial;
         Nature = SkillNature.Buff;
+        Effect = SkillEffect.None;
         Race = CharacterRace.Gobelin;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Passive;

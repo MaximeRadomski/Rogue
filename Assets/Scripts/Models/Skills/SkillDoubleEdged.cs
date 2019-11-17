@@ -9,11 +9,13 @@ public class SkillDoubleEdged : Skill
         Name = RacesData.SkillsData.ElfSkillsNames[1];
         Type = SkillType.Racial;
         Nature = SkillNature.Offensive;
+        Effect = SkillEffect.AttackUp;
         Race = CharacterRace.Elf;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.OnceAFight;
         CooldownMax = -1;
         Cooldown = 0;
+        EffectDuration = 0;
         PaNeeded = 2;
         MinRange = 0;
         MaxRange = 0;
@@ -29,14 +31,14 @@ public class SkillDoubleEdged : Skill
 
     public override int OnStartAttack()
     {
-        if (Cooldown == CooldownMax)
+        if (Cooldown == CooldownMax - EffectDuration)
             return 100;
         return base.OnStartAttack();
     }
 
     public override int OnTakeDamage(int damages)
     {
-        if (Cooldown == CooldownMax)
+        if (Cooldown == CooldownMax - EffectDuration)
             return damages * 2;
         return damages;
 

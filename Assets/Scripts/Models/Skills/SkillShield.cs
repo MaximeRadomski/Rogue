@@ -9,6 +9,7 @@ public class SkillShield : Skill
         Name = RacesData.SkillsData.HumanSkillsNames[0];
         Type = SkillType.Racial;
         Nature = SkillNature.Defensive;
+        Effect = SkillEffect.Immuned;
         Race = CharacterRace.Human;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Normal;
@@ -29,8 +30,11 @@ public class SkillShield : Skill
 
     public override int OnTakeDamage(int damages)
     {
-        if (Cooldown == CooldownMax)
+        if (Cooldown == CooldownMax - EffectDuration)
+        {
+            CharacterBhv.LoseSkillEffect(Effect);
             return 0;
+        }
         return damages;
 
     }

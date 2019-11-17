@@ -8,11 +8,13 @@ public abstract class Skill
     public string Description;
     public SkillType Type;
     public SkillNature Nature;
+    public SkillEffect Effect;
     public CharacterRace Race;
     public Rarity Rarity;
     public CooldownType CooldownType;
     public int CooldownMax;
     public int Cooldown;
+    public int EffectDuration;
     public int PaNeeded;
     public int MinRange;
     public int MaxRange;
@@ -35,11 +37,19 @@ public abstract class Skill
 
     public virtual void Activate(int x, int y)
     {
-        CharacterBhv.LoosePa(PaNeeded);
+        CharacterBhv.LosePa(PaNeeded);
         if (CooldownType == CooldownType.Normal)
+        {
             Cooldown = CooldownMax;
+            if (Effect != SkillEffect.None)
+                CharacterBhv.GainSkillEffect(Effect);
+        }            
         else if (CooldownType == CooldownType.OnceAFight)
+        {
             Cooldown = -1;
+            if (Effect != SkillEffect.None)
+                CharacterBhv.GainSkillEffect(Effect);
+        }
     }
 
     public virtual void Destruct()
@@ -61,6 +71,8 @@ public abstract class Skill
         if ((CooldownType == CooldownType.Normal && Cooldown > 0) ||
             (CooldownType == CooldownType.OnceAFight && Cooldown < 0))
             --Cooldown;
+        if (Effect != SkillEffect.None && Cooldown < CooldownMax - EffectDuration)
+            CharacterBhv.LoseSkillEffect(Effect);
     }
 
     public virtual void OnEndTurn()

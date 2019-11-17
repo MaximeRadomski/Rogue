@@ -47,7 +47,10 @@ public class Instantiator : MonoBehaviour
         if (isPlayer)
             characterInstance.name = Constants.GoPlayerName;
         else
+        {
             characterInstance.name = Constants.GoOpponentName + id;
+            characterInstance.AddComponent<AiBhv>();
+        }
         var playerBhv = characterInstance.GetComponent<CharacterBhv>();
         playerBhv.X = 0;
         playerBhv.Y = 0;

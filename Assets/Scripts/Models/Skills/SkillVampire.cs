@@ -9,6 +9,7 @@ public class SkillVampire : Skill
         Name = RacesData.SkillsData.GoblinSkillsNames[0];
         Type = SkillType.Racial;
         Nature = SkillNature.Buff;
+        Effect = SkillEffect.None;
         Race = CharacterRace.Gobelin;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Passive;

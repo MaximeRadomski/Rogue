@@ -16,6 +16,7 @@ public class CharacterBhv : MonoBehaviour
     public bool IsPlayer = false;
     public Instantiator Instantiator;
     public List<CharacterBhv> OpponentBhvs;
+    public List<SkillEffect> UnderEffects;
 
     private FightSceneBhv _fightSceneBhv;
     private GridBhv _gridBhv;
@@ -66,7 +67,7 @@ public class CharacterBhv : MonoBehaviour
                 damages = skill.OnTakeDamage(damages);
         }
         Character.Hp -= damages;
-        Instantiator.PopText(damages.ToString(), transform.position, TextType.Hp);
+        Instantiator.PopText("-" + damages.ToString(), transform.position, TextType.Hp);
     }
 
     public void GainHp(int amount)
@@ -75,25 +76,40 @@ public class CharacterBhv : MonoBehaviour
         if (Character.Hp + amountToAdd > Character.HpMax)
             amountToAdd = Character.HpMax - Character.Hp;
         Character.Hp += amountToAdd;
-        Instantiator.PopText(amountToAdd.ToString(), transform.position, TextType.Hp);
+        Instantiator.PopText("+" + amountToAdd.ToString(), transform.position, TextType.Hp);
     }
 
-    public void LoosePa(int amount)
+    public void LosePa(int amount)
     {
         int amountToRemove = amount;
         if (Pa - amountToRemove < 0)
             amountToRemove = Pa;
         Pa -= amountToRemove;
-        Instantiator.PopText(amountToRemove.ToString(), transform.position, TextType.Pa);
+        Instantiator.PopText("-" + amountToRemove.ToString(), transform.position, TextType.Pa);
     }
 
-    public void LoosePm(int amount)
+    public void LosePm(int amount)
     {
         int amountToRemove = amount;
         if (Pm - amountToRemove < 0)
             amountToRemove = Pm;
         Pm -= amountToRemove;
-        Instantiator.PopText(amountToRemove.ToString(), transform.position, TextType.Pm);
+        Instantiator.PopText("-" + amountToRemove.ToString(), transform.position, TextType.Pm);
+    }
+
+    public void GainSkillEffect(SkillEffect effect)
+    {
+        if (UnderEffects == null)
+            UnderEffects = new List<SkillEffect>();
+        UnderEffects.Add(effect);
+    }
+
+    public void LoseSkillEffect(SkillEffect effect)
+    {
+        if (UnderEffects == null)
+            UnderEffects = new List<SkillEffect>();
+        if (UnderEffects.Contains(effect))
+            UnderEffects.Remove(effect);
     }
 
     public int AttackWithWeapon(int weaponId, CharacterBhv opponentBhv, Map map)
@@ -134,7 +150,7 @@ public class CharacterBhv : MonoBehaviour
 
         int resultInt = (int)(baseDamages * raceGenderMultiplier * skillMultiplier * criticalMultiplier);
         Debug.Log("Final Damages = " + resultInt);
-        LoosePa(tmpWeapon.PaNeeded);
+        LosePa(tmpWeapon.PaNeeded);
         foreach (var skill in Character.Skills)
         {
             if (skill != null)
@@ -166,7 +182,7 @@ public class CharacterBhv : MonoBehaviour
         _pathfindingSteps.Add(_gridBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
         _pathfindingPos.Add(new RangePos(_cellToReachX, _cellToReachY));
         var visitedIndex = _gridBhv.Cells[_cellToReachX, _cellToReachY].GetComponent<CellBhv>().Visited;
-        LoosePm(visitedIndex);
+        LosePm(visitedIndex);
         int x = _cellToReachX;
         int y = _cellToReachY;
         while (visitedIndex > 0)

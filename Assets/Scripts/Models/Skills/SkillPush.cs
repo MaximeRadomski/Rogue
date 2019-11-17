@@ -9,6 +9,7 @@ public class SkillPush : Skill
         Name = RacesData.SkillsData.NormalSkillsNames[1];
         Type = SkillType.NotRatial;
         Nature = SkillNature.MovementFar;
+        Effect = SkillEffect.None;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Normal;
         CooldownMax = 2;
@@ -46,7 +47,7 @@ public class SkillPush : Skill
                 pushedOpponentBhv.TakeDamages((int)floatAmount);
             }
             else if (GridBhv.Cells[_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y].GetComponent<CellBhv>().Type == CellType.Impracticable)
-                pushedOpponentBhv.LoosePm(1);
+                pushedOpponentBhv.LosePm(1);
                 return false;
         }
         _pushedOpponentBhv.AfterMouvementDelegate = AfterPush;

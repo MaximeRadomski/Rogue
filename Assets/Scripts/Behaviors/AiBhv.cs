@@ -43,12 +43,20 @@ public class AiBhv : MonoBehaviour
     {
         ResetWeight();
         SetAttackWeight();
+        SetDefenseWeight();
     }
+
+    #region Attack
 
     private void SetAttackWeight()
     {
-        int canI = CanIWeaponThePlayer();
-        int shouldI = ShouldIWeaponThePlayer();
+        int canI = 0;
+        int shouldI = 0;
+
+        canI = CanIWeaponThePlayer();
+        if (canI > 0)
+            shouldI = ShouldIWeaponThePlayer();
+        AttackWeight = canI + shouldI;
     }
 
     private int CanIWeaponThePlayer()
@@ -64,8 +72,29 @@ public class AiBhv : MonoBehaviour
 
     private int ShouldIWeaponThePlayer()
     {
-        return 0;
+        int shouldI = 0;
+        foreach (var skillEffect in _characterBhv.OpponentBhvs[0].UnderEffects.OrEmptyIfNull())
+        {
+            if (skillEffect == SkillEffect.Immuned)
+                shouldI -= 1000;
+            else if (skillEffect == SkillEffect.DefenseUp)
+                shouldI -= 10;
+            else
+                shouldI += 10;
+        }
+        return shouldI;
     }
+
+    #endregion
+
+    #region Defense
+
+    private void SetDefenseWeight()
+    {
+
+    }
+
+    #endregion
 }
 
 /*

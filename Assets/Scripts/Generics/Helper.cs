@@ -1,10 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public static class Helper
 {
+    public static IEnumerable<T> OrEmptyIfNull<T>(this IEnumerable<T> source)
+    {
+        return source ?? Enumerable.Empty<T>();
+    }
+
     public static bool IsPosValid(int x, int y)
     {
         if (x >= Constants.GridMax || y >= Constants.GridMax || x < 0 || y < 0)

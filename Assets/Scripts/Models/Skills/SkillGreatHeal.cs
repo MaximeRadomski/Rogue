@@ -9,6 +9,7 @@ public class SkillGreatHeal : Skill
         Name = RacesData.SkillsData.MagicalSkillsNames[1];
         Type = SkillType.NotRatial;
         Nature = SkillNature.Defensive;
+        Effect = SkillEffect.None;
         Rarity = Rarity.Magical;
         CooldownType = CooldownType.Normal;
         CooldownMax = 6;

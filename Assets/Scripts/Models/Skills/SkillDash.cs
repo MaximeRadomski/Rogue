@@ -9,11 +9,13 @@ public class SkillDash : Skill
         Name = RacesData.SkillsData.ElfSkillsNames[0];
         Type = SkillType.Racial;
         Nature = SkillNature.MovementFar;
+        Effect = SkillEffect.Immuned;
         Race = CharacterRace.Elf;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Normal;
         CooldownMax = 4;
         Cooldown = 0;
+        EffectDuration = 0;
         PaNeeded = 4;
         MinRange = 1;
         MaxRange = 2;
@@ -29,18 +31,24 @@ public class SkillDash : Skill
         base.Activate(x, y);
         _currentTargetX = x;
         _currentTargetY = y;
+        CharacterBhv.GainSkillEffect(SkillEffect.Immuned);
         GridBhv.ShowPm(CharacterBhv, OpponentBhvs);
     }
 
     public override int OnTakeDamage(int damages)
     {
-        if (Cooldown == CooldownMax)
+        if (Cooldown == CooldownMax - EffectDuration)
         {
             if (!Helper.IsPosValid(_currentTargetX, _currentTargetX) || GridBhv.IsOpponentOnCell(_currentTargetX, _currentTargetY))
                 CharacterBhv.MoveToPosition(_currentTargetX, _currentTargetY, false);
+            CharacterBhv.LoseSkillEffect(Effect);
             return 0;
         }
         return damages;
+    }
 
+    public override void OnStartTurn()
+    {
+        base.OnStartTurn();
     }
 }

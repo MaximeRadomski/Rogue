@@ -9,6 +9,7 @@ public class SkillRestoration : Skill
         Name = RacesData.SkillsData.OrcSkillsNames[1];
         Type = SkillType.Racial;
         Nature = SkillNature.Buff;
+        Effect = SkillEffect.None;
         Race = CharacterRace.Orc;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Passive;

@@ -9,6 +9,7 @@ public class SkillRoots : Skill
         Name = RacesData.SkillsData.OrcSkillsNames[0];
         Type = SkillType.Racial;
         Nature = SkillNature.Debuff;
+        Effect = SkillEffect.None;
         Race = CharacterRace.Orc;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Passive;
@@ -32,6 +33,6 @@ public class SkillRoots : Skill
             pmToRemove = 2;
         else
             pmToRemove = 3;
-        CharacterBhv.LoosePm(pmToRemove);
+        CharacterBhv.LosePm(pmToRemove);
     }
 }
