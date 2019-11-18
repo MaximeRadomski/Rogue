@@ -55,7 +55,7 @@ public class FightSceneBhv : MonoBehaviour
     private void InitGrid()
     {
         _gridBhv.SetPrivates();
-        _gridBhv.InitGrid();
+        _gridBhv.InitGrid(_map);
     }
 
     private void InitCharacters()
@@ -190,7 +190,7 @@ public class FightSceneBhv : MonoBehaviour
         else
         {
             State = FightState.OpponentTurn;
-            _currentPlayingCharacterBhv.GetComponent<AiBhv>().StartReflexion();
+            _currentPlayingCharacterBhv.GetComponent<AiBhv>().StartThinking();
         }
         
     }

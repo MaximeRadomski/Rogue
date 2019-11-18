@@ -8,7 +8,7 @@ public class SkillForge : Skill
     {
         Name = RacesData.SkillsData.DwarfSkillsNames[0];
         Type = SkillType.Racial;
-        Nature = SkillNature.Offensive;
+        Nature = SkillNature.Buff;
         Effect = SkillEffect.AttackUp;
         Race = CharacterRace.Dwarf;
         Rarity = Rarity.Normal;
@@ -31,6 +31,8 @@ public class SkillForge : Skill
 
     public override int OnStartAttack()
     {
+        if (IsDebuffed)
+            return base.OnStartAttack();
         if (Cooldown >= CooldownMax - EffectDuration)
             return 75;
         return base.OnStartAttack();

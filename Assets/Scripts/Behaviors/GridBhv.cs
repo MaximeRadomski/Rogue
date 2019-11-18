@@ -5,8 +5,8 @@ using UnityEngine;
 public class GridBhv : MonoBehaviour
 {
     public GameObject[,] Cells = new GameObject[Constants.GridMax, Constants.GridMax];
+    public Map Map;
 
-    private Map _map;
     private Grid _grid;
     private FightSceneBhv _fightSceneBhv;
     private CharacterBhv _currentCharacterBhv;
@@ -16,20 +16,20 @@ public class GridBhv : MonoBehaviour
 
     public void SetPrivates()
     {
-        _map = MapsData.EasyMaps[Random.Range(0, MapsData.EasyMaps.Count)];
         _grid = GameObject.Find("Grid").GetComponent<Grid>();
         _fightSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>();
     }
 
     #region Init
 
-    public void InitGrid()
+    public void InitGrid(Map map)
     {
+        Map = map;
         for (int y = 0; y < Constants.GridMax; ++y)
         {
             for (int x = 0; x < Constants.GridMax; ++x)
             {
-                InitCell(x, y, _map.Cells[Constants.GridMax * y + x]);
+                InitCell(x, y, Map.Cells[Constants.GridMax * y + x]);
             }
         }
     }
@@ -61,9 +61,9 @@ public class GridBhv : MonoBehaviour
     {
         List<RangePos> opponentSpawns = new List<RangePos>();
         char spawnChar = CellType.OpponentSpawn.GetHashCode().ToString()[0];
-        for (int i = 0; i < _map.Cells.Length; ++i)
+        for (int i = 0; i < Map.Cells.Length; ++i)
         {
-            if (_map.Cells[i] == spawnChar)
+            if (Map.Cells[i] == spawnChar)
                 opponentSpawns.Add(new RangePos(i % Constants.GridMax, i / Constants.GridMax));
         }
         foreach (var opponentBhv in opponentBhvs)
@@ -187,7 +187,7 @@ public class GridBhv : MonoBehaviour
             if (!Helper.IsPosValid(x, y))
                 continue;
             var cell = Cells[x, y].GetComponent<CellBhv>();
-            if (cell.Type == CellType.On && cell.State == CellState.None)
+            if (cell.Type == CellType.On)
             {
                 if (IsAnythingBetween(characterBhv.X, characterBhv.Y, x, y))
                     continue;
@@ -322,6 +322,29 @@ public class GridBhv : MonoBehaviour
     #endregion
 
     #region SKill
+
+    public bool IsOpponentInSkillRange(CharacterBhv characterBhv, int skillId, List<CharacterBhv> opponentBhvs)
+    {
+        _currentCharacterBhv = characterBhv;
+        _currentOpponentBhvs = opponentBhvs;
+        var character = characterBhv.Character;
+        for (int i = 0; i < character.Skills[skillId].RangePositions.Count; i += 2)
+        {
+            var x = character.Skills[skillId].RangePositions[i] + characterBhv.X;
+            var y = character.Skills[skillId].RangePositions[i + 1] + characterBhv.Y;
+            if (!Helper.IsPosValid(x, y))
+                continue;
+            var cell = Cells[x, y].GetComponent<CellBhv>();
+            if (cell.Type == CellType.On)
+            {
+                if (IsAnythingBetween(characterBhv.X, characterBhv.Y, x, y))
+                    continue;
+                else if (IsOpponentOnCell(x, y) != null)
+                    return true;
+            }
+        }
+        return false;
+    }
 
     public void ShowSkillRange(RangeType rangeType, CharacterBhv characterBhv, int skillId, List<CharacterBhv> opponentBhvs, bool hasToBeEmpty = false)
     {

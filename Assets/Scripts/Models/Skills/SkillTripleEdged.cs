@@ -8,7 +8,7 @@ public class SkillTripleEdged : Skill
     {
         Name = RacesData.SkillsData.RareSkillsNames[0];
         Type = SkillType.NotRatial;
-        Nature = SkillNature.Offensive;
+        Nature = SkillNature.Buff;
         Effect = SkillEffect.AttackUp;
         Rarity = Rarity.Rare;
         CooldownType = CooldownType.OnceAFight;
@@ -29,6 +29,8 @@ public class SkillTripleEdged : Skill
 
     public override int OnStartAttack()
     {
+        if (IsDebuffed)
+            return base.OnStartAttack();
         if (Cooldown >= CooldownMax - 1)
             return 200;
         return base.OnStartAttack();
@@ -36,6 +38,8 @@ public class SkillTripleEdged : Skill
 
     public override int OnTakeDamage(int damages)
     {
+        if (IsDebuffed)
+            return damages;
         if (Cooldown >= CooldownMax - 1)
             return damages * 3;
         return damages;

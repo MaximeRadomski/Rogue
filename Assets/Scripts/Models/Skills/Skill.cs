@@ -21,6 +21,7 @@ public abstract class Skill
     public RangeType RangeType;
     public List<int> RangePositions;
     public List<RangeDirection> RangeZones;
+    public bool IsDebuffed;
 
     public CharacterBhv CharacterBhv;
     public List<CharacterBhv> OpponentBhvs;
@@ -38,6 +39,7 @@ public abstract class Skill
     public virtual void Activate(int x, int y)
     {
         CharacterBhv.LosePa(PaNeeded);
+        IsDebuffed = false;
         if (CooldownType == CooldownType.Normal)
         {
             Cooldown = CooldownMax;

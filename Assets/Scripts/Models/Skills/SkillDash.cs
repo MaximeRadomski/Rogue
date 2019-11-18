@@ -37,6 +37,8 @@ public class SkillDash : Skill
 
     public override int OnTakeDamage(int damages)
     {
+        if (IsDebuffed)
+            return damages;
         if (Cooldown == CooldownMax - EffectDuration)
         {
             if (!Helper.IsPosValid(_currentTargetX, _currentTargetX) || GridBhv.IsOpponentOnCell(_currentTargetX, _currentTargetY))
@@ -45,10 +47,5 @@ public class SkillDash : Skill
             return 0;
         }
         return damages;
-    }
-
-    public override void OnStartTurn()
-    {
-        base.OnStartTurn();
     }
 }

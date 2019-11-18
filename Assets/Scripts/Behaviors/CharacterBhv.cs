@@ -112,7 +112,7 @@ public class CharacterBhv : MonoBehaviour
             UnderEffects.Remove(effect);
     }
 
-    public int AttackWithWeapon(int weaponId, CharacterBhv opponentBhv, Map map)
+    public int AttackWithWeapon(int weaponId, CharacterBhv opponentBhv, Map map = null)
     {
         var tmpWeapon = Character.Weapons[weaponId];
 
@@ -123,7 +123,7 @@ public class CharacterBhv : MonoBehaviour
         float raceGenderMultiplier = 1.0f;
         if (opponentBhv != null && opponentBhv.Character.Race == Character.StrongAgainst)
             raceGenderMultiplier = Helper.MultiplierFromPercent(raceGenderMultiplier, RacesData.StrongAgainstDamagePercent);
-        if (map.Type == Character.StrongIn)
+        if (map?.Type == Character.StrongIn)
             raceGenderMultiplier = Helper.MultiplierFromPercent(raceGenderMultiplier, RacesData.StrongInDamagePercent);
         if (Character.Gender == CharacterGender.Female)
             raceGenderMultiplier = Helper.MultiplierFromPercent(raceGenderMultiplier, -RacesData.GenderDamage);
