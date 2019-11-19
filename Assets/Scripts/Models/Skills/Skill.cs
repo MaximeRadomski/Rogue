@@ -21,12 +21,30 @@ public abstract class Skill
     public RangeType RangeType;
     public List<int> RangePositions;
     public List<RangeDirection> RangeZones;
-    public bool IsDebuffed;
 
     public CharacterBhv CharacterBhv;
     public List<CharacterBhv> OpponentBhvs;
     public GridBhv GridBhv;
     public int Id;
+
+    private bool _isDebuffed;
+
+    public bool IsApplyingEffect()
+    {
+        if (_isDebuffed || Effect == SkillEffect.None)
+            return false;
+        return Cooldown >= CooldownMax - EffectDuration;
+    }
+
+    public bool IsUnderCooldown()
+    {
+        return Cooldown != 0;
+    }
+
+    public void Debuff()
+    {
+        _isDebuffed = true;
+    }
 
     public virtual void Init(CharacterBhv characterBhv, List<CharacterBhv> opponentBhvs, GridBhv gridBhv, int id)
     {
@@ -39,7 +57,7 @@ public abstract class Skill
     public virtual void Activate(int x, int y)
     {
         CharacterBhv.LosePa(PaNeeded);
-        IsDebuffed = false;
+        _isDebuffed = false;
         if (CooldownType == CooldownType.Normal)
         {
             Cooldown = CooldownMax;
@@ -61,7 +79,7 @@ public abstract class Skill
 
     public virtual void OnClick()
     {
-        if (RangeType != RangeType.NoRange && Cooldown == 0)
+        if (RangeType != RangeType.NoRange && !IsUnderCooldown())
             GridBhv.ShowSkillRange(RangeType, CharacterBhv, Id, OpponentBhvs);
         else if (CooldownType == CooldownType.Passive)
             GridBhv.ShowPm(CharacterBhv, OpponentBhvs);
@@ -70,10 +88,10 @@ public abstract class Skill
 
     public virtual void OnStartTurn()
     {
-        if ((CooldownType == CooldownType.Normal && Cooldown > 0) ||
-            (CooldownType == CooldownType.OnceAFight && Cooldown < 0))
+        if ((CooldownType == CooldownType.Normal && !IsUnderCooldown()) ||
+            (CooldownType == CooldownType.OnceAFight && !IsUnderCooldown()))
             --Cooldown;
-        if (Effect != SkillEffect.None && Cooldown < CooldownMax - EffectDuration)
+        if (Effect != SkillEffect.None && !IsApplyingEffect())
             CharacterBhv.LoseSkillEffect(Effect);
     }
 

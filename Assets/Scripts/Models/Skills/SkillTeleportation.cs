@@ -22,7 +22,7 @@ public class SkillTeleportation : Skill
 
     public override void OnClick()
     {
-        if (Cooldown == 0)
+        if (!IsUnderCooldown())
             GridBhv.ShowSkillRange(RangeType, CharacterBhv, Id, OpponentBhvs, true);
     }
 

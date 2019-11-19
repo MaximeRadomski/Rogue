@@ -14,6 +14,7 @@ public class SkillTripleEdged : Skill
         CooldownType = CooldownType.OnceAFight;
         CooldownMax = -1;
         Cooldown = 0;
+        EffectDuration = 1;
         PaNeeded = 6;
         MinRange = 0;
         MaxRange = 0;
@@ -29,18 +30,14 @@ public class SkillTripleEdged : Skill
 
     public override int OnStartAttack()
     {
-        if (IsDebuffed)
-            return base.OnStartAttack();
-        if (Cooldown >= CooldownMax - 1)
+        if (IsApplyingEffect())
             return 200;
         return base.OnStartAttack();
     }
 
     public override int OnTakeDamage(int damages)
     {
-        if (IsDebuffed)
-            return damages;
-        if (Cooldown >= CooldownMax - 1)
+        if (IsApplyingEffect())
             return damages * 3;
         return damages;
 

@@ -9,10 +9,12 @@ public class CharacterBhv : MonoBehaviour
     public int X;
     public int Y;
     public bool IsMoving = false;
+    public bool IsMovingFirstPathStep = false;
     public int Turn = 0;
     public int Pm;
     public int Pa;
     public Character Character;
+    public AiBhv Ai;
     public bool IsPlayer = false;
     public Instantiator Instantiator;
     public List<CharacterBhv> OpponentBhvs;
@@ -31,6 +33,7 @@ public class CharacterBhv : MonoBehaviour
 
     public void SetPrivates()
     {
+        Ai = GetComponent<AiBhv>();
         _fightSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>();
         _gridBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GridBhv>();
         OpponentBhvs = new List<CharacterBhv>();
@@ -57,6 +60,8 @@ public class CharacterBhv : MonoBehaviour
     {
         if (IsMoving)
             Move();
+        else if (IsMovingFirstPathStep)
+            MoveToFirstPathStep();
     }
 
     public void TakeDamages(int damages)
@@ -112,6 +117,20 @@ public class CharacterBhv : MonoBehaviour
             UnderEffects.Remove(effect);
     }
 
+    public void ClearAllSkillEffects(bool isDebuff = false)
+    {
+        if (UnderEffects == null)
+            UnderEffects = new List<SkillEffect>();
+        UnderEffects.Clear();
+        if (isDebuff)
+        {
+            foreach (var skill in Character.Skills)
+            {
+                skill.Debuff();
+            }
+        }
+    }
+
     public int AttackWithWeapon(int weaponId, CharacterBhv opponentBhv, Map map = null)
     {
         var tmpWeapon = Character.Weapons[weaponId];
@@ -164,7 +183,7 @@ public class CharacterBhv : MonoBehaviour
         _cellToReachX = x;
         _cellToReachY = y;
         if (usePm)
-            SetPath();
+            SetPath(x, y);
         else
         {
             _pathfindingSteps.Clear();
@@ -175,16 +194,17 @@ public class CharacterBhv : MonoBehaviour
         IsMoving = true;
     }
 
-    private void SetPath()
+    public void SetPath(int xToReach, int yToReach, bool usePm = true)
     {
         _pathfindingSteps.Clear();
         _pathfindingPos.Clear();
-        _pathfindingSteps.Add(_gridBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
-        _pathfindingPos.Add(new RangePos(_cellToReachX, _cellToReachY));
-        var visitedIndex = _gridBhv.Cells[_cellToReachX, _cellToReachY].GetComponent<CellBhv>().Visited;
-        LosePm(visitedIndex);
-        int x = _cellToReachX;
-        int y = _cellToReachY;
+        _pathfindingSteps.Add(_gridBhv.Cells[xToReach, yToReach].transform.position);
+        _pathfindingPos.Add(new RangePos(xToReach, yToReach));
+        var visitedIndex = _gridBhv.Cells[xToReach, yToReach].GetComponent<CellBhv>().Visited;
+        if (usePm)
+            LosePm(visitedIndex);
+        int x = xToReach;
+        int y = yToReach;
         while (visitedIndex > 0)
         {
             if (LookForLowerIndex(x, y + 1, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x, y + 1, OpponentBhvs))
@@ -196,7 +216,7 @@ public class CharacterBhv : MonoBehaviour
             else if (LookForLowerIndex(x - 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x - 1, y, OpponentBhvs))
                 --x;
             _pathfindingSteps.Insert(0, _gridBhv.Cells[x, y].transform.position);
-            _pathfindingPos.Insert(0, new RangePos(_cellToReachX, _cellToReachY));
+            _pathfindingPos.Insert(0, new RangePos(x, y));
             --visitedIndex;
         }
     }
@@ -208,6 +228,21 @@ public class CharacterBhv : MonoBehaviour
         if (_gridBhv.Cells[x, y].GetComponent<CellBhv>().Visited == visitedIndex)
             return true;
         return false;
+    }
+
+    public void MoveToFirstPathStep()
+    {
+        IsMovingFirstPathStep = true;
+        transform.position = Vector2.Lerp(transform.position, _pathfindingSteps[0], 0.7f);
+        if ((Vector2)transform.position == _pathfindingSteps[0])
+        {
+            _spriteRenderer.sortingOrder = Constants.GridMax - _pathfindingPos[0].Y;
+            IsMovingFirstPathStep = false;
+            X = _pathfindingPos[0].X;
+            Y = _pathfindingPos[0].Y;
+            if (!IsPlayer)
+                Ai.AfterMovement();
+        }
     }
 
     public void Move()

@@ -190,20 +190,17 @@ public class FightSceneBhv : MonoBehaviour
         else
         {
             State = FightState.OpponentTurn;
-            _currentPlayingCharacterBhv.GetComponent<AiBhv>().StartThinking();
+            _currentPlayingCharacterBhv.Ai.StartThinking();
         }
         
     }
 
-    private void PassTurn()
+    public void PassTurn()
     {
-        if (State == FightState.PlayerTurn)
+        foreach (var skill in _currentPlayingCharacterBhv.Character.Skills)
         {
-            foreach (var skill in _playerBhv.Character.Skills)
-            {
-                if (skill != null)
-                    skill.OnEndTurn();
-            }
+            if (skill != null)
+                skill.OnEndTurn();
         }
         NextTurn();
     }

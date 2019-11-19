@@ -31,9 +31,7 @@ public class SkillForge : Skill
 
     public override int OnStartAttack()
     {
-        if (IsDebuffed)
-            return base.OnStartAttack();
-        if (Cooldown >= CooldownMax - EffectDuration)
+        if (IsApplyingEffect())
             return 75;
         return base.OnStartAttack();
     }

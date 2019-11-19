@@ -31,18 +31,14 @@ public class SkillDoubleEdged : Skill
 
     public override int OnStartAttack()
     {
-        if (IsDebuffed)
-            return base.OnStartAttack();
-        if (Cooldown == CooldownMax - EffectDuration)
+        if (IsApplyingEffect())
             return 100;
         return base.OnStartAttack();
     }
 
     public override int OnTakeDamage(int damages)
     {
-        if (IsDebuffed)
-            return damages;
-        if (Cooldown == CooldownMax - EffectDuration)
+        if (IsApplyingEffect())
             return damages * 2;
         return damages;
 

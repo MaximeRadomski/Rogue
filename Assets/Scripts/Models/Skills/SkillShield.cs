@@ -30,9 +30,7 @@ public class SkillShield : Skill
 
     public override int OnTakeDamage(int damages)
     {
-        if (IsDebuffed)
-            return damages;
-        if (Cooldown == CooldownMax - EffectDuration)
+        if (IsApplyingEffect())
         {
             CharacterBhv.LoseSkillEffect(Effect);
             return 0;

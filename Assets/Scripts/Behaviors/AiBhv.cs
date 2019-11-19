@@ -7,14 +7,19 @@ public class AiBhv : MonoBehaviour
     private CharacterBhv _characterBhv;
     private CharacterBhv _opponentBhv;
     private GridBhv _gridBhv;
+    private FightSceneBhv _fightSceneBhv;
 
-    private int AttackWeight;
-    private int DefenseWeight;
-    private int BuffWeight;
-    private int GetCloseWeight;
-    private int GetFarWeight;
-    private int[] WeaponsWeight = { 0, 0 };
-    private int[] SkillsWeight = { 0, 0 };
+    private List<int> _weights;
+    private int _attackWeight;
+    private int _defenseWeight;
+    private int _buffWeight;
+    private int[] _weaponsWeight = { 0, 0 };
+    private int[] _skillsWeight = { 0, 0 };
+    private int _getCloseWeight;
+    private int _getFarWeight;
+
+    private int _nbCellsWalked;
+
 
     #region Init
 
@@ -23,25 +28,29 @@ public class AiBhv : MonoBehaviour
         _characterBhv = GetComponent<CharacterBhv>();
         _opponentBhv = _characterBhv.OpponentBhvs[0];
         _gridBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GridBhv>();
+        _fightSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>();
     }
 
     private void ResetWeight()
     {
-        AttackWeight = 0;
-        DefenseWeight = 0;
-        BuffWeight = 0;
-        GetCloseWeight = 0;
-        GetFarWeight = 0;
-        WeaponsWeight[0] = 0;
-        WeaponsWeight[1] = 0;
-        SkillsWeight[0] = 0;
-        SkillsWeight[1] = 0;
+        if (_weights != null)
+            _weights.Clear();
+        _attackWeight = 0;
+        _defenseWeight = 0;
+        _buffWeight = 0;
+        _getCloseWeight = 0;
+        _getFarWeight = 0;
+        _weaponsWeight[0] = 0;
+        _weaponsWeight[1] = 0;
+        _skillsWeight[0] = 0;
+        _skillsWeight[1] = 0;
     }
 
     #endregion
 
     public void StartThinking()
     {
+        _nbCellsWalked = 0;
         Think();
     }
     private void Think() //What do I do
@@ -50,6 +59,70 @@ public class AiBhv : MonoBehaviour
         SetAttackWeight();
         SetDefenseWeight();
         SetBuffWeight();
+        SetGetCloseWeight();
+        SetGetFarWeight();
+
+        PopulateWeights();
+        //Action Weight
+        //In the right Order
+        if (IsTheBiggest(_buffWeight))
+        {
+
+        }
+        else if (IsTheBiggest(_attackWeight))
+        {
+
+        }
+        else if (IsTheBiggest(_defenseWeight))
+        {
+
+        }
+        //No Action Weight over 0
+        //Now processing to movement
+        bool canThinkAgain;
+        if (_getFarWeight >= _getCloseWeight
+            && _getFarWeight != 0)
+        {
+            SetPathToOppositeCorner();
+            canThinkAgain = MoveToNextCell();
+        }
+        else if (_getCloseWeight > _getFarWeight)
+        {
+            SetPathToOpponent();
+            canThinkAgain = MoveToNextCell();
+        }
+        else
+        {
+            //No Movement over another
+            //Nothing more to do
+            canThinkAgain = false;
+        }
+        if (!canThinkAgain)
+        _fightSceneBhv.PassTurn();
+    }
+
+    private void PopulateWeights()
+    {
+        if (_weights == null)
+            _weights = new List<int>();
+        _weights.Add(_buffWeight);
+        _weights.Add(_attackWeight);
+        _weights.Add(_defenseWeight);
+    }
+
+    private bool IsTheBiggest(int thisWeight)
+    {
+        int tmpBiggest = 0;
+        foreach (var weight in _weights)
+        {
+            if (weight > tmpBiggest)
+                tmpBiggest = weight;
+        }
+        if (tmpBiggest == 0)
+            return false;
+        if (thisWeight >= tmpBiggest)
+            return true;
+        return false;
     }
 
     #region Attack
@@ -67,7 +140,7 @@ public class AiBhv : MonoBehaviour
             shouldIWeapon += ShouldIWeaponThePlayer();
         if (canISkill > 0)
             shouldISkill += ShouldIAttackSkillThePlayer();
-        AttackWeight = canIWeapon + shouldIWeapon + canISkill + shouldISkill;
+        _attackWeight = canIWeapon + shouldIWeapon + canISkill + shouldISkill;
     }
 
     private int CanIWeaponThePlayer()
@@ -78,8 +151,8 @@ public class AiBhv : MonoBehaviour
             if (_characterBhv.Pa >= _characterBhv.Character.Weapons[i].PaNeeded &&
             _gridBhv.IsOpponentInWeaponRangeAndZone(_characterBhv, i, _characterBhv.OpponentBhvs))
             {
-                WeaponsWeight[i] += 10;
-                canI += WeaponsWeight[i];
+                _weaponsWeight[i] += 10;
+                canI += _weaponsWeight[i];
             }
         }
         return canI;
@@ -94,8 +167,8 @@ public class AiBhv : MonoBehaviour
                 _characterBhv.Pa >= _characterBhv.Character.Skills[i].PaNeeded &&
                 _gridBhv.IsOpponentInSkillRange(_characterBhv, i, _characterBhv.OpponentBhvs))
             {
-                SkillsWeight[i] += 10;
-                canI += SkillsWeight[i];
+                _skillsWeight[i] += 10;
+                canI += _skillsWeight[i];
             }
         }
         return canI;
@@ -115,7 +188,7 @@ public class AiBhv : MonoBehaviour
         }
         for (int i = 0; i < 2; ++i)
         {
-            if (WeaponsWeight[i] <= 0)
+            if (_weaponsWeight[i] <= 0)
                 continue;
             float AttackRatioHp = (float)_characterBhv.AttackWithWeapon(i, _opponentBhv, _gridBhv.Map) / _opponentBhv.Character.Hp;
             float AttackRatioMaxHp = (float)_characterBhv.AttackWithWeapon(i, _opponentBhv, _gridBhv.Map) / _opponentBhv.Character.HpMax;
@@ -158,7 +231,7 @@ public class AiBhv : MonoBehaviour
         canI = CanIDefendMyself();
         if (canI > 0)
             shouldI = ShouldIDefendMyself();
-        DefenseWeight = canI + shouldI;
+        _defenseWeight = canI + shouldI;
     }
 
     private int CanIDefendMyself()
@@ -170,10 +243,10 @@ public class AiBhv : MonoBehaviour
                 _characterBhv.Pa >= _characterBhv.Character.Skills[i].PaNeeded)
             {
                 if (_characterBhv.Character.Skills[i].Effect == SkillEffect.Immuned)
-                    WeaponsWeight[i] += 100;
+                    _skillsWeight[i] += 100;
                 else if (_characterBhv.Character.Skills[i].Nature == SkillNature.Defensive)
-                    WeaponsWeight[i] += 10;
-                canI += WeaponsWeight[i];
+                    _skillsWeight[i] += 10;
+                canI += _skillsWeight[i];
             }
         }
         return canI;
@@ -203,12 +276,22 @@ public class AiBhv : MonoBehaviour
         canI = CanIBuffMyself();
         if (canI > 0)
             shouldI = ShouldIBuffMyself();
-        DefenseWeight = canI + shouldI;
+        _buffWeight = canI + shouldI;
     }
 
     private int CanIBuffMyself()
     {
         int canI = 0;
+        for (int i = 0; i < 2; ++i)
+        {
+            if (_characterBhv.Character.Skills[i].Cooldown == 0 &&
+                _characterBhv.Pa >= _characterBhv.Character.Skills[i].PaNeeded)
+            {
+                if (_characterBhv.Character.Skills[i].Nature == SkillNature.Buff)
+                    _skillsWeight[i] += 50;
+                canI += _skillsWeight[i];
+            }
+        }
         return canI;
     }
 
@@ -219,25 +302,100 @@ public class AiBhv : MonoBehaviour
     }
 
     #endregion
+
+    #region Movement
+
+    private void SetPathToOpponent()
+    {
+        _gridBhv.ShowPm(_characterBhv, _characterBhv.OpponentBhvs, unlimitedPm:true);
+        _characterBhv.SetPath(_opponentBhv.X, _opponentBhv.Y, usePm:false);
+    }
+
+    private void SetPathToOppositeCorner()
+    {
+        int x = 0;
+        int y = 0;
+        if (_opponentBhv.X < 3)
+            x = Constants.GridMax - 1;
+        if (_opponentBhv.Y <= 3)
+            y = Constants.GridMax - 1;
+        _gridBhv.ShowPm(_characterBhv, _characterBhv.OpponentBhvs, unlimitedPm: true);
+        _characterBhv.SetPath(x, y, usePm: false);
+    }
+
+    private bool MoveToNextCell()
+    {
+        if (_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs))
+            return false;
+        _characterBhv.MoveToFirstPathStep();
+        return true;
+    }
+
+    public void AfterMovement()
+    {
+        ++_nbCellsWalked;
+        Think();
+    }
+
+    #endregion
+
+    #region GetClose
+
+    private void SetGetCloseWeight()
+    {
+        int canI;
+        int shouldI = 0;
+
+        canI = CanIGetClose();
+        if (canI > 0)
+            shouldI = ShouldIGetClose();
+        _getCloseWeight = canI + shouldI;
+    }
+
+    private int CanIGetClose()
+    {
+        int canI = _characterBhv.Pm * 10;
+        return canI;
+    }
+
+    private int ShouldIGetClose()
+    {
+        int shouldI = 0;
+        if (_characterBhv.Character.Hp == _characterBhv.Character.HpMax)
+            shouldI += 20;
+        return shouldI;
+    }
+
+    #endregion
+
+    #region GetFar
+
+    private void SetGetFarWeight()
+    {
+        int canI;
+        int shouldI = 0;
+
+        canI = CanIGetFar();
+        if (canI > 0)
+            shouldI = ShouldIGetFar();
+        _getFarWeight = canI + shouldI;
+    }
+
+    private int CanIGetFar()
+    {
+        int canI = _characterBhv.Pm * 10;
+        if (_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs))
+            canI -= 1000;
+        return canI;
+    }
+
+    private int ShouldIGetFar()
+    {
+        int shouldI = 0;
+        if (_characterBhv.Character.Hp <= _characterBhv.Character.HpMax)
+            shouldI += 20;
+        return shouldI;
+    }
+
+    #endregion
 }
-
-/*
-
-
-    What do I do ?
-        Should I Skill ?
-            Is my skill offensive ?
-                Am I in the right position ?
-            Is my skill defensive ?
-            Is my skill movement ?
-            Is my skill control ?
-            Is my skill buff ?
-            Is my skill debuff ?
-        Should I attack ?
-            Do I have enough Pa ?
-            Do I reach the player ?
-        Should I Get Close ?
-        Should I Get Far ?
-
-
-    */

@@ -92,11 +92,11 @@ public class GridBhv : MonoBehaviour
 
     #region Mouvement
 
-    public void ShowPm(CharacterBhv characterBhv, List<CharacterBhv> opponentBhvs)
+    public void ShowPm(CharacterBhv characterBhv, List<CharacterBhv> opponentBhvs, bool unlimitedPm = false)
     {
         ResetAllCellsVisited();
         ResetAllCellsDisplay();
-        var nbPm = characterBhv.GetComponent<CharacterBhv>().Pm;
+        var nbPm = unlimitedPm ? Constants.UnlimitedPm : characterBhv.GetComponent<CharacterBhv>().Pm;
         int x = characterBhv.GetComponent<CharacterBhv>().X;
         int y = characterBhv.GetComponent<CharacterBhv>().Y;
         if (nbPm <= 0 || IsAdjacentOpponent(x, y, opponentBhvs))
@@ -123,7 +123,8 @@ public class GridBhv : MonoBehaviour
             && (spentPm < cell.GetComponent<CellBhv>().Visited || cell.GetComponent<CellBhv>().Visited == -1)
             && !IsOpponentOnCell(x, y))
         {
-            cell.GetComponent<CellBhv>().ShowPm();
+            if (characterBhv.IsPlayer)
+                cell.GetComponent<CellBhv>().ShowPm();
             cell.GetComponent<CellBhv>().Visited = spentPm;
             //DEBUG//
             //cell.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = cell.GetComponent<CellBhv>().Visited.ToString();

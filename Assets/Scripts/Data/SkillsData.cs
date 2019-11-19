@@ -12,7 +12,7 @@ public class SkillsData
     public string[] DwarfSkillsNames = { "Forge", "Grappling Hook" };
     public string[] OrcSkillsNames = { "Roots", "Restoration" };
 
-    public string[] NormalSkillsNames = { "Teleportation", "Push", "Heal" };
+    public string[] NormalSkillsNames = { "Teleportation", "Push", "Heal", "Clarity" };
     public string[] MagicalSkillsNames = { "Smite", "Great Heal" };
     public string[] RareSkillsNames = { "TripleEdged" };
 
