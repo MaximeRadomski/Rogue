@@ -119,22 +119,22 @@ public class GridBhv : MonoBehaviour
         var cell = Cells[x, y];
         if (cell == null || (x == characterBhv.X && y == characterBhv.Y))
             return;
-        if (cell.GetComponent<CellBhv>().Type == CellType.On
-            && (spentPm < cell.GetComponent<CellBhv>().Visited || cell.GetComponent<CellBhv>().Visited == -1)
-            && !IsOpponentOnCell(x, y))
+        if (cell.GetComponent<CellBhv>().Type == CellType.On &&
+            (spentPm < cell.GetComponent<CellBhv>().Visited || cell.GetComponent<CellBhv>().Visited == -1) &&
+            !IsOpponentOnCell(x, y))
         {
-            if (characterBhv.IsPlayer)
+            //if (characterBhv.IsPlayer)
                 cell.GetComponent<CellBhv>().ShowPm();
             cell.GetComponent<CellBhv>().Visited = spentPm;
             //DEBUG//
             //cell.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = cell.GetComponent<CellBhv>().Visited.ToString();
-        }
-        if (cell.GetComponent<CellBhv>().Type == CellType.On && --nbPm > 0 && !IsAdjacentOpponent(x, y, opponentBhvs))
-        {
-            SpreadPm(x, y + 1, nbPm, spentPm + 1, characterBhv, opponentBhvs);
-            SpreadPm(x + 1, y, nbPm, spentPm + 1, characterBhv, opponentBhvs);
-            SpreadPm(x, y - 1, nbPm, spentPm + 1, characterBhv, opponentBhvs);
-            SpreadPm(x - 1, y, nbPm, spentPm + 1, characterBhv, opponentBhvs);
+            if (--nbPm > 0 && !IsAdjacentOpponent(x, y, opponentBhvs))
+            {
+                SpreadPm(x, y + 1, nbPm, spentPm + 1, characterBhv, opponentBhvs);
+                SpreadPm(x + 1, y, nbPm, spentPm + 1, characterBhv, opponentBhvs);
+                SpreadPm(x, y - 1, nbPm, spentPm + 1, characterBhv, opponentBhvs);
+                SpreadPm(x - 1, y, nbPm, spentPm + 1, characterBhv, opponentBhvs);
+            }
         }
     }
 

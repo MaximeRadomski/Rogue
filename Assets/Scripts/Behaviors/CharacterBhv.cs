@@ -176,7 +176,7 @@ public class CharacterBhv : MonoBehaviour
         }
 
         int resultInt = (int)(baseDamages * raceGenderMultiplier * skillMultiplier * criticalMultiplier);
-        Debug.Log("Final Damages = " + resultInt);
+        //Debug.Log("Final Damages = " + resultInt);
         if (usePa)
         {
             LosePa(tmpWeapon.PaNeeded);
@@ -193,6 +193,11 @@ public class CharacterBhv : MonoBehaviour
 
     private void Attack()
     {
+        if (_attackedOpponent == null)
+        {
+            IsAttacking = 0;
+        }
+
         if (IsAttacking == 1)
             transform.position = Vector2.Lerp(transform.position, _attackedOpponent.transform.position, 0.2f);
         else
@@ -203,7 +208,6 @@ public class CharacterBhv : MonoBehaviour
         }
         else if (IsAttacking == 2 && (Vector2)transform.position == (Vector2)_gridBhv.Cells[X, Y].transform.position)
         {
-
             IsAttacking = 0;
             if (!IsPlayer)
                 Ai.AfterAction();

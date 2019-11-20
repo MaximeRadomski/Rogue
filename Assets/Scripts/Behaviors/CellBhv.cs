@@ -176,7 +176,7 @@ public class CellBhv : MonoBehaviour
         if (_isStretching)
             StretchOnBegin();
         //DEBUG//
-        //transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = Visited.ToString();
+        transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = Visited.ToString();
     }
 
     private void StretchOnBegin()

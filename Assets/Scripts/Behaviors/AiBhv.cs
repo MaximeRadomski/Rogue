@@ -76,10 +76,10 @@ public class AiBhv : MonoBehaviour
         //No Action Weight over 0
         //Now processing to movement
         bool moveResult = false;
-        if (_getFarWeight > 0 && _getFarWeight > _getCloseWeight)
-            moveResult = GetFar();
-        else if (_getCloseWeight > 0 && _getCloseWeight > _getFarWeight)
+        if (_getCloseWeight > 0 && _getCloseWeight >= _getFarWeight)
             moveResult = GetClose();
+        else if (_getFarWeight > 0 && _getFarWeight > _getCloseWeight)
+            moveResult = GetFar();
         if (moveResult)
             return;
         _fightSceneBhv.PassTurn();
@@ -253,10 +253,15 @@ public class AiBhv : MonoBehaviour
                 _characterBhv.Pa >= _characterBhv.Character.Skills[i].PaNeeded)
             {
                 if (_characterBhv.Character.Skills[i].Effect == SkillEffect.Immuned)
+                {
                     _skillsWeight[i] += 100;
+                    canI += _skillsWeight[i];
+                }
                 else if (_characterBhv.Character.Skills[i].Nature == SkillNature.Defensive)
+                {
                     _skillsWeight[i] += 10;
-                canI += _skillsWeight[i];
+                    canI += _skillsWeight[i];
+                }
             }
         }
         return canI;
@@ -317,8 +322,11 @@ public class AiBhv : MonoBehaviour
                 _characterBhv.Pa >= _characterBhv.Character.Skills[i].PaNeeded)
             {
                 if (_characterBhv.Character.Skills[i].Nature == SkillNature.Buff)
+                {
                     _skillsWeight[i] += 50;
-                canI += _skillsWeight[i];
+                    canI += _skillsWeight[i];
+                }
+                    
             }
         }
         return canI;
@@ -353,21 +361,24 @@ public class AiBhv : MonoBehaviour
 
     #region Movement
 
-    private void SetPathToOpponent()
+    private void SetPathToOpponent(RangePos tmpPos)
     {
         _gridBhv.ShowPm(_characterBhv, _characterBhv.OpponentBhvs, unlimitedPm:true);
-        _characterBhv.SetPath(_opponentBhv.X, _opponentBhv.Y, usePm:false);
+        _characterBhv.SetPath(tmpPos.X, tmpPos.Y, usePm:false);
     }
 
     private void SetPathToOppositeCorner()
     {
         int x = 0;
         int y = 0;
-        if (_opponentBhv.X < 3)
+        if (_opponentBhv.X < 3 ||
+            (_opponentBhv.X == 3 && _characterBhv.X > 3))
             x = Constants.GridMax - 1;
-        if (_opponentBhv.Y <= 3)
+        if (_opponentBhv.Y < 3 ||
+            (_opponentBhv.Y == 3 && _characterBhv.Y > 3))
             y = Constants.GridMax - 1;
-        _gridBhv.ShowPm(_characterBhv, _characterBhv.OpponentBhvs, unlimitedPm: true);
+        if (x != _characterBhv.X && y != _characterBhv.Y)
+            _gridBhv.ShowPm(_characterBhv, _characterBhv.OpponentBhvs, unlimitedPm: true);
         _characterBhv.SetPath(x, y, usePm: false);
     }
 
@@ -413,8 +424,9 @@ public class AiBhv : MonoBehaviour
 
     private bool MoveToNextCell()
     {
-        if (_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs))
+        if (_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs) || _characterBhv.Pm <= 0)
             return false;
+        _characterBhv.LosePm(1);
         _characterBhv.MoveToFirstPathStep();
         return true;
     }
@@ -454,8 +466,10 @@ public class AiBhv : MonoBehaviour
                 _characterBhv.Pa >= _characterBhv.Character.Skills[i].PaNeeded)
             {
                 if (_characterBhv.Character.Skills[i].Nature == SkillNature.Movement)
+                {
                     _skillsWeight[i] += 50;
-                canI += _skillsWeight[i];
+                    canI += _skillsWeight[i];
+                }
             }
         }
         if (_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs))
@@ -473,8 +487,9 @@ public class AiBhv : MonoBehaviour
 
     private bool GetClose()
     {
-        SetPathToOpponent();
-        if (_gridBhv.Cells[_opponentBhv.X, _opponentBhv.Y].GetComponent<CellBhv>().Visited > _characterBhv.Pm + 1)
+        var posToReach = GetSmallestNearIndex(_opponentBhv.X, _opponentBhv.Y);
+        SetPathToOpponent(posToReach);
+        if (_gridBhv.Cells[posToReach.X, posToReach.Y].GetComponent<CellBhv>().Visited > _characterBhv.Pm)
         {
             NewWeights(new List<int>());
             for (int i = 0; i < 2; ++i)
@@ -494,6 +509,57 @@ public class AiBhv : MonoBehaviour
             }
         }
         return MoveToNextCell();
+    }
+
+    private RangePos GetSmallestNearIndex(int x, int y)
+    {
+        int smallestIndex = Constants.UnlimitedPm;
+        RangePos tmpRangePos = new RangePos(0, 0);
+        int tmpX = x;
+        int tmpY = y + 1;
+        if (Helper.IsPosValid(tmpX, tmpY) &&
+            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Type == CellType.On &&
+            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited > 0 &&
+            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited < smallestIndex)
+        {
+            smallestIndex = _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited;
+            tmpRangePos.X = tmpX;
+            tmpRangePos.Y = tmpY;
+        }
+        tmpX = x + 1;
+        tmpY = y;
+        if (Helper.IsPosValid(tmpX, tmpY) &&
+            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Type == CellType.On &&
+            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited > 0 &&
+            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited < smallestIndex)
+        {
+            smallestIndex = _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited;
+            tmpRangePos.X = tmpX;
+            tmpRangePos.Y = tmpY;
+        }
+        tmpX = x;
+        tmpY = y - 1;
+        if (Helper.IsPosValid(tmpX, tmpY) &&
+            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Type == CellType.On &&
+            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited > 0 &&
+            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited < smallestIndex)
+        {
+            smallestIndex = _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited;
+            tmpRangePos.X = tmpX;
+            tmpRangePos.Y = tmpY;
+        }
+        tmpX = x - 1;
+        tmpY = y;
+        if (Helper.IsPosValid(tmpX, tmpY) &&
+            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Type == CellType.On &&
+            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited > 0 &&
+            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited < smallestIndex)
+        {
+            smallestIndex = _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited;
+            tmpRangePos.X = tmpX;
+            tmpRangePos.Y = tmpY;
+        }
+        return tmpRangePos;
     }
 
     #endregion
@@ -524,8 +590,8 @@ public class AiBhv : MonoBehaviour
                 {
                     _skillsWeight[i] += 50;
                     ++nbSkillMovement;
+                    canI += _skillsWeight[i];
                 }
-                canI += _skillsWeight[i];
             }
         }
         if (nbSkillMovement == 0 && _gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs))
@@ -536,22 +602,22 @@ public class AiBhv : MonoBehaviour
     private int ShouldIGetFar()
     {
         int shouldI = 0;
-        if (_characterBhv.Character.Hp <= _characterBhv.Character.HpMax)
-            shouldI += 20;
-        for (int i = 0; i < 2; ++i)
-        {
-            if (_characterBhv.Character.Weapons[i].Type == WeaponType.Bow &&
-                !_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs))
-            {
-                shouldI += 30;
-            }
-        }
+        //if (_characterBhv.Character.Hp <= _characterBhv.Character.HpMax)
+        //    shouldI += 20;
+        //for (int i = 0; i < 2; ++i)
+        //{
+        //    if (_characterBhv.Character.Weapons[i].Type == WeaponType.Bow &&
+        //        !_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs))
+        //    {
+        //        shouldI += 30;
+        //    }
+        //}
         return shouldI;
     }
 
     private bool GetFar()
     {
-        SetPathToOpponent();
+        SetPathToOppositeCorner();
         if (_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs) || _characterBhv.Pm == 0)
         {
             NewWeights(new List<int>());

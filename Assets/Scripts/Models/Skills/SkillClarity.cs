@@ -6,7 +6,7 @@ public class SkillClarity : Skill
 {
     public SkillClarity()
     {
-        Name = RacesData.SkillsData.NormalSkillsNames[1];
+        Name = RacesData.SkillsData.NormalSkillsNames[3];
         Type = SkillType.NotRatial;
         Nature = SkillNature.Debuff;
         Effect = SkillEffect.None;

@@ -56,6 +56,7 @@ public abstract class Skill
 
     public virtual void Activate(int x, int y)
     {
+        Debug.Log("Activate:" + Name);
         CharacterBhv.LosePa(PaNeeded);
         _isDebuffed = false;
         if (CooldownType == CooldownType.Normal)
@@ -96,8 +97,8 @@ public abstract class Skill
 
     public virtual void OnStartTurn()
     {
-        if ((CooldownType == CooldownType.Normal && !IsUnderCooldown()) ||
-            (CooldownType == CooldownType.OnceAFight && !IsUnderCooldown()))
+        if ((CooldownType == CooldownType.Normal && IsUnderCooldown()) ||
+            (CooldownType == CooldownType.OnceAFight && IsUnderCooldown()))
             --Cooldown;
         if (Effect != SkillEffect.None && !IsApplyingEffect())
             CharacterBhv.LoseSkillEffect(Effect);

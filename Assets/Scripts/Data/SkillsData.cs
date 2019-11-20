@@ -45,7 +45,7 @@ public class SkillsData
         if (string.IsNullOrEmpty(name))
             return null;
         Type thisType = GetType();
-        Debug.Log("Get" + name.Replace(" ", ""));
+        //Debug.Log("Get" + name.Replace(" ", ""));
         System.Reflection.MethodInfo theMethod = thisType.GetMethod("Get" + name.Replace(" ", ""));
         return (Skill)theMethod.Invoke(this, null);
     }
@@ -71,6 +71,8 @@ public class SkillsData
     public Skill GetTeleportation() { return new SkillTeleportation(); }
     public Skill GetPush() { return new SkillPush(); }
     public Skill GetHeal() { return new SkillHeal(); }
+
+    public Skill GetClarity() { return new SkillClarity(); }
 
     // MAGICAL SKILLS
     public Skill GetSmite() { return new SkillSmite(); }
