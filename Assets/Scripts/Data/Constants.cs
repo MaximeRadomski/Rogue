@@ -36,6 +36,8 @@ public static class Constants
     //  GAMEOBJECTS VALUES  //
     public const int GridMax = 7;
     public const int UnlimitedPm = GridMax * GridMax;
+    public const int VisitedPmValue = -1;
+    public const int VisitedSkillValue = -2;
     public static Vector2 CardInitialPosition = new Vector2(0.0f, 0.5f);
 
     //  COLORS  //

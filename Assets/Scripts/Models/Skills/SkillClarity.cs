@@ -25,6 +25,7 @@ public class SkillClarity : Skill
     {
         base.Activate(x, y);
         Debuff(GridBhv.IsOpponentOnCell(x, y));
+        AfterActivation();
     }
 
     public void Debuff(CharacterBhv debuffedOpponentBhv)

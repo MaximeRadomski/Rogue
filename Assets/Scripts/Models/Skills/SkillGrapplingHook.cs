@@ -8,7 +8,7 @@ public class SkillGrapplingHook : Skill
     {
         Name = RacesData.SkillsData.DwarfSkillsNames[1];
         Type = SkillType.Racial;
-        Nature = SkillNature.MovementClose;
+        Nature = SkillNature.Offensive;
         Effect = SkillEffect.None;
         Race = CharacterRace.Dwarf;
         Rarity = Rarity.Normal;
@@ -68,7 +68,7 @@ public class SkillGrapplingHook : Skill
 
     private void AfterGrap()
     {
-        GridBhv.ShowPm(CharacterBhv, OpponentBhvs);
         _grabbedOpponentBhv.AfterMouvementDelegate = null;
+        AfterActivation();
     }
 }

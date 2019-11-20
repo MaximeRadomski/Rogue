@@ -173,6 +173,8 @@ public class FightSceneBhv : MonoBehaviour
         if (++_currentOrderId >= _orderList.Count)
             _currentOrderId = 0;
         _currentPlayingCharacterBhv = GetCharacterBhvFromOrderId(_orderList[_currentOrderId].Id);
+        //DEBUG
+        //_currentPlayingCharacterBhv = _playerBhv;
         foreach (var skill in _currentPlayingCharacterBhv.Character.Skills)
         {
             if (skill != null)

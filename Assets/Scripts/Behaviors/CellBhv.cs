@@ -122,7 +122,7 @@ public class CellBhv : MonoBehaviour
 
     public void ResetVisited()
     {
-        Visited = -1;
+        Visited = Constants.VisitedPmValue;
     }
 
     public void ResetSpawn()
@@ -158,6 +158,12 @@ public class CellBhv : MonoBehaviour
     {
         State = CellState.SkillRange;
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 0.0f, 1.0f);
+    }
+
+    public void ShowSkillRangeVisited()
+    {
+        State = CellState.SkillRange;
+        Visited = Constants.VisitedSkillValue;
     }
 
     public void ShowSkillOutOfRange()

@@ -24,8 +24,8 @@ public class SkillHeal : Skill
     public override void Activate(int x, int y)
     {
         base.Activate(x, y);
-        GridBhv.ShowPm(CharacterBhv, OpponentBhvs);
         var floatAmount = 50.0f * Helper.MultiplierFromPercent(1, 10 * (CharacterBhv.Character.Level - 1));
         CharacterBhv.GainHp((int)floatAmount);
+        AfterActivation();
     }
 }

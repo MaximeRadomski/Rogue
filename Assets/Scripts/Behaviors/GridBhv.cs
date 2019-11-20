@@ -329,7 +329,7 @@ public class GridBhv : MonoBehaviour
         _currentCharacterBhv = characterBhv;
         _currentOpponentBhvs = opponentBhvs;
         var character = characterBhv.Character;
-        for (int i = 0; i < character.Skills[skillId].RangePositions.Count; i += 2)
+        for (int i = 0; i < character.Skills[skillId].RangePositions?.Count; i += 2)
         {
             var x = character.Skills[skillId].RangePositions[i] + characterBhv.X;
             var y = character.Skills[skillId].RangePositions[i + 1] + characterBhv.Y;
@@ -350,6 +350,7 @@ public class GridBhv : MonoBehaviour
     public void ShowSkillRange(RangeType rangeType, CharacterBhv characterBhv, int skillId, List<CharacterBhv> opponentBhvs, bool hasToBeEmpty = false)
     {
         ResetAllCellsDisplay();
+        ResetAllCellsVisited();
         _currentCharacterBhv = characterBhv;
         _currentOpponentBhvs = opponentBhvs;
         _currentSkillId = skillId;
@@ -386,9 +387,18 @@ public class GridBhv : MonoBehaviour
         {
             if ((hasToBeEmpty && IsOpponentOnCell(x, y)) ||
                 (rangeType == RangeType.Normal && IsAnythingBetween(characterBhv.X, characterBhv.Y, x, y)))
-                cell.ShowSkillOutOfRange();
+            {
+                if (characterBhv.IsPlayer)
+                    cell.ShowSkillOutOfRange();
+            }
             else
-                cell.ShowSkillRange();
+            {
+                if (characterBhv.IsPlayer)
+                    cell.ShowSkillRange();
+                else
+                    cell.ShowSkillRangeVisited();
+            }
+                
         }
     }
 

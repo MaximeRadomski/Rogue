@@ -8,7 +8,7 @@ public class SkillDash : Skill
     {
         Name = RacesData.SkillsData.ElfSkillsNames[0];
         Type = SkillType.Racial;
-        Nature = SkillNature.MovementFar;
+        Nature = SkillNature.Defensive;
         Effect = SkillEffect.Immuned;
         Race = CharacterRace.Elf;
         Rarity = Rarity.Normal;
@@ -32,7 +32,7 @@ public class SkillDash : Skill
         _currentTargetX = x;
         _currentTargetY = y;
         CharacterBhv.GainSkillEffect(SkillEffect.Immuned);
-        GridBhv.ShowPm(CharacterBhv, OpponentBhvs);
+        AfterActivation();
     }
 
     public override int OnTakeDamage(int damages)

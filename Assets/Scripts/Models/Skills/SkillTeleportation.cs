@@ -8,7 +8,7 @@ public class SkillTeleportation : Skill
     {
         Name = RacesData.SkillsData.NormalSkillsNames[0];
         Type = SkillType.NotRatial;
-        Nature = SkillNature.MovementBoth;
+        Nature = SkillNature.Movement;
         Effect = SkillEffect.None;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Normal;

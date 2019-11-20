@@ -6,9 +6,7 @@ public enum SkillNature
 {
     Offensive,
     Defensive,
-    MovementClose,
-    MovementFar,
-    MovementBoth,
+    Movement,
     Control,
     Buff,
     Debuff

@@ -32,7 +32,7 @@ public class SkillSmite : Skill
     {
         base.Activate(x, y);
         Smite(GridBhv.IsOpponentOnCell(x, y));
-        GridBhv.ShowPm(CharacterBhv, OpponentBhvs);
+        AfterActivation();
     }
 
     public void Smite(CharacterBhv smitedOpponentBhv)

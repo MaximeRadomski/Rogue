@@ -8,7 +8,7 @@ public class SkillPush : Skill
     {
         Name = RacesData.SkillsData.NormalSkillsNames[1];
         Type = SkillType.NotRatial;
-        Nature = SkillNature.MovementFar;
+        Nature = SkillNature.Offensive;
         Effect = SkillEffect.None;
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Normal;
@@ -57,7 +57,7 @@ public class SkillPush : Skill
 
     private void AfterPush()
     {
-        GridBhv.ShowPm(CharacterBhv, OpponentBhvs);
         _pushedOpponentBhv.AfterMouvementDelegate = null;
+        AfterActivation();
     }
 }

@@ -25,7 +25,7 @@ public class SkillTripleEdged : Skill
     public override void Activate(int x, int y)
     {
         base.Activate(x, y);
-        GridBhv.ShowPm(CharacterBhv, OpponentBhvs);
+        AfterActivation();
     }
 
     public override int OnStartAttack()

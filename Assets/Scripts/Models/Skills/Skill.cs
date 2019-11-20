@@ -72,6 +72,14 @@ public abstract class Skill
         }
     }
 
+    public void AfterActivation()
+    {
+        if (!CharacterBhv.IsPlayer)
+            CharacterBhv.Ai.AfterAction();
+        else
+            GridBhv.ShowPm(CharacterBhv, OpponentBhvs);
+    }
+
     public virtual void Destruct()
     {
         

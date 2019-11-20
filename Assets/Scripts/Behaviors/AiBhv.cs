@@ -33,8 +33,6 @@ public class AiBhv : MonoBehaviour
 
     private void ResetWeight()
     {
-        if (_weights != null)
-            _weights.Clear();
         _attackWeight = 0;
         _defenseWeight = 0;
         _buffWeight = 0;
@@ -53,6 +51,7 @@ public class AiBhv : MonoBehaviour
         _nbCellsWalked = 0;
         Think();
     }
+
     private void Think() //What do I do
     {
         ResetWeight();
@@ -62,52 +61,36 @@ public class AiBhv : MonoBehaviour
         SetGetCloseWeight();
         SetGetFarWeight();
 
-        PopulateWeights();
+        NewWeights(new List<int>() { _buffWeight, _attackWeight, _defenseWeight });
         //Action Weight
         //In the right Order
+        bool actionResult = false;
         if (IsTheBiggest(_buffWeight))
-        {
-
-        }
+            actionResult = Buff();
         else if (IsTheBiggest(_attackWeight))
-        {
-
-        }
+            actionResult = Attack();
         else if (IsTheBiggest(_defenseWeight))
-        {
-
-        }
+            actionResult = Defend();
+        if (actionResult)
+            return;
         //No Action Weight over 0
         //Now processing to movement
-        bool canThinkAgain;
-        if (_getFarWeight >= _getCloseWeight
-            && _getFarWeight != 0)
-        {
-            SetPathToOppositeCorner();
-            canThinkAgain = MoveToNextCell();
-        }
-        else if (_getCloseWeight > _getFarWeight)
-        {
-            SetPathToOpponent();
-            canThinkAgain = MoveToNextCell();
-        }
-        else
-        {
-            //No Movement over another
-            //Nothing more to do
-            canThinkAgain = false;
-        }
-        if (!canThinkAgain)
+        bool moveResult = false;
+        if (_getFarWeight > 0 && _getFarWeight > _getCloseWeight)
+            moveResult = GetFar();
+        else if (_getCloseWeight > 0 && _getCloseWeight > _getFarWeight)
+            moveResult = GetClose();
+        if (moveResult)
+            return;
         _fightSceneBhv.PassTurn();
     }
 
-    private void PopulateWeights()
+    private void NewWeights(List<int> tmpList)
     {
         if (_weights == null)
             _weights = new List<int>();
-        _weights.Add(_buffWeight);
-        _weights.Add(_attackWeight);
-        _weights.Add(_defenseWeight);
+        _weights.Clear();
+        _weights = tmpList;
     }
 
     private bool IsTheBiggest(int thisWeight)
@@ -163,7 +146,7 @@ public class AiBhv : MonoBehaviour
         int canI = 0;
         for (int i = 0; i < 2; ++i)
         {
-            if (_characterBhv.Character.Skills[i].Cooldown == 0 &&
+            if (!_characterBhv.Character.Skills[i].IsUnderCooldown() &&
                 _characterBhv.Pa >= _characterBhv.Character.Skills[i].PaNeeded &&
                 _gridBhv.IsOpponentInSkillRange(_characterBhv, i, _characterBhv.OpponentBhvs))
             {
@@ -190,8 +173,8 @@ public class AiBhv : MonoBehaviour
         {
             if (_weaponsWeight[i] <= 0)
                 continue;
-            float AttackRatioHp = (float)_characterBhv.AttackWithWeapon(i, _opponentBhv, _gridBhv.Map) / _opponentBhv.Character.Hp;
-            float AttackRatioMaxHp = (float)_characterBhv.AttackWithWeapon(i, _opponentBhv, _gridBhv.Map) / _opponentBhv.Character.HpMax;
+            float AttackRatioHp = (float)_characterBhv.AttackWithWeapon(i, _opponentBhv, _gridBhv.Map, usePa:false) / _opponentBhv.Character.Hp;
+            float AttackRatioMaxHp = (float)_characterBhv.AttackWithWeapon(i, _opponentBhv, _gridBhv.Map, usePa: false) / _opponentBhv.Character.HpMax;
             if (AttackRatioHp > 1.15f)
                 shouldI += 100;
             else if (AttackRatioHp >= 1.0f)
@@ -219,6 +202,33 @@ public class AiBhv : MonoBehaviour
         return shouldI;
     }
 
+    private bool Attack()
+    {
+        NewWeights(new List<int>() { _weaponsWeight[0], _weaponsWeight[1] });
+        for (int i = 0; i < 2; ++i)
+        {
+            if (_characterBhv.Character.Skills[i].Nature == SkillNature.Offensive)
+                _weights.Add(_skillsWeight[i]);
+        }
+        for (int i = 0; i < 2; ++i)
+        {
+            if (_characterBhv.Character.Skills[i].Nature == SkillNature.Offensive && IsTheBiggest(_skillsWeight[i]) && _skillsWeight[i] > 0)
+            {
+                _characterBhv.Character.Skills[i].Activate(_opponentBhv.X, _opponentBhv.Y);
+                return true;
+            }
+        }
+        for (int i = 0; i < 2; ++i)
+        {
+            if (IsTheBiggest(_weaponsWeight[i]) && _weaponsWeight[i] > 0)
+            {
+                _opponentBhv.TakeDamages(_characterBhv.AttackWithWeapon(i, _opponentBhv, _gridBhv.Map));
+                return true;
+            }
+        }
+        return false;
+    }
+
     #endregion
 
     #region Defense
@@ -239,7 +249,7 @@ public class AiBhv : MonoBehaviour
         int canI = 0;
         for (int i = 0; i < 2; ++i)
         {
-            if (_characterBhv.Character.Skills[i].Cooldown == 0 &&
+            if (!_characterBhv.Character.Skills[i].IsUnderCooldown() &&
                 _characterBhv.Pa >= _characterBhv.Character.Skills[i].PaNeeded)
             {
                 if (_characterBhv.Character.Skills[i].Effect == SkillEffect.Immuned)
@@ -264,6 +274,25 @@ public class AiBhv : MonoBehaviour
         return shouldI;
     }
 
+    private bool Defend()
+    {
+        NewWeights(new List<int>());
+        for (int i = 0; i < 2; ++i)
+        {
+            if (_characterBhv.Character.Skills[i].Nature == SkillNature.Defensive)
+                _weights.Add(_skillsWeight[i]);
+        }
+        for (int i = 0; i < 2; ++i)
+        {
+            if (_characterBhv.Character.Skills[i].Nature == SkillNature.Defensive && IsTheBiggest(_skillsWeight[i]) && _skillsWeight[i] > 0)
+            {
+                _characterBhv.Character.Skills[i].Activate(_characterBhv.X, _characterBhv.Y);
+                return true;
+            }
+        }
+        return false;
+    }
+
     #endregion
 
     #region Buff
@@ -284,7 +313,7 @@ public class AiBhv : MonoBehaviour
         int canI = 0;
         for (int i = 0; i < 2; ++i)
         {
-            if (_characterBhv.Character.Skills[i].Cooldown == 0 &&
+            if (!_characterBhv.Character.Skills[i].IsUnderCooldown() &&
                 _characterBhv.Pa >= _characterBhv.Character.Skills[i].PaNeeded)
             {
                 if (_characterBhv.Character.Skills[i].Nature == SkillNature.Buff)
@@ -299,6 +328,25 @@ public class AiBhv : MonoBehaviour
     {
         int shouldI = 0;
         return shouldI;
+    }
+
+    private bool Buff()
+    {
+        NewWeights(new List<int>());
+        for (int i = 0; i < 2; ++i)
+        {
+            if (_characterBhv.Character.Skills[i].Nature == SkillNature.Buff)
+                _weights.Add(_skillsWeight[i]);
+        }
+        for (int i = 0; i < 2; ++i)
+        {
+            if (_characterBhv.Character.Skills[i].Nature == SkillNature.Buff && IsTheBiggest(_skillsWeight[i]) && _skillsWeight[i] > 0)
+            {
+                _characterBhv.Character.Skills[i].Activate(_characterBhv.X, _characterBhv.Y);
+                return true;
+            }
+        }
+        return false;
     }
 
     #endregion
@@ -323,6 +371,46 @@ public class AiBhv : MonoBehaviour
         _characterBhv.SetPath(x, y, usePm: false);
     }
 
+    private RangePos GetClosestSkillCellToPlayer()
+    {
+        float minDistance = float.PositiveInfinity;
+        RangePos tmpPos = new RangePos(0,0);
+        foreach (var cell in _gridBhv.Cells)
+        {
+            if (cell.GetComponent<CellBhv>().Visited == Constants.VisitedSkillValue)
+            {
+                float tmpDistance = Vector2.Distance(cell.transform.position, _opponentBhv.transform.position);
+                if (tmpDistance < minDistance)
+                {
+                    minDistance = tmpDistance;
+                    tmpPos.X = cell.GetComponent<CellBhv>().X;
+                    tmpPos.Y = cell.GetComponent<CellBhv>().Y;
+                }
+            }
+        }
+        return tmpPos;
+    }
+
+    private RangePos GetFarestSkillCellToPlayer()
+    {
+        float maxDistance = 0.0f;
+        RangePos tmpPos = new RangePos(0, 0);
+        foreach (var cell in _gridBhv.Cells)
+        {
+            if (cell.GetComponent<CellBhv>().Visited == Constants.VisitedSkillValue)
+            {
+                float tmpDistance = Vector2.Distance(cell.transform.position, _opponentBhv.transform.position);
+                if (tmpDistance > maxDistance)
+                {
+                    maxDistance = tmpDistance;
+                    tmpPos.X = cell.GetComponent<CellBhv>().X;
+                    tmpPos.Y = cell.GetComponent<CellBhv>().Y;
+                }
+            }
+        }
+        return tmpPos;
+    }
+
     private bool MoveToNextCell()
     {
         if (_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs))
@@ -334,6 +422,11 @@ public class AiBhv : MonoBehaviour
     public void AfterMovement()
     {
         ++_nbCellsWalked;
+        Think();
+    }
+
+    public void AfterAction()
+    {
         Think();
     }
 
@@ -355,6 +448,18 @@ public class AiBhv : MonoBehaviour
     private int CanIGetClose()
     {
         int canI = _characterBhv.Pm * 10;
+        for (int i = 0; i < 2; ++i)
+        {
+            if (!_characterBhv.Character.Skills[i].IsUnderCooldown() &&
+                _characterBhv.Pa >= _characterBhv.Character.Skills[i].PaNeeded)
+            {
+                if (_characterBhv.Character.Skills[i].Nature == SkillNature.Movement)
+                    _skillsWeight[i] += 50;
+                canI += _skillsWeight[i];
+            }
+        }
+        if (_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs))
+            canI -= 1000;
         return canI;
     }
 
@@ -364,6 +469,31 @@ public class AiBhv : MonoBehaviour
         if (_characterBhv.Character.Hp == _characterBhv.Character.HpMax)
             shouldI += 20;
         return shouldI;
+    }
+
+    private bool GetClose()
+    {
+        SetPathToOpponent();
+        if (_gridBhv.Cells[_opponentBhv.X, _opponentBhv.Y].GetComponent<CellBhv>().Visited > _characterBhv.Pm + 1)
+        {
+            NewWeights(new List<int>());
+            for (int i = 0; i < 2; ++i)
+            {
+                if (_characterBhv.Character.Skills[i].Nature == SkillNature.Movement)
+                    _weights.Add(_skillsWeight[i]);
+            }
+            for (int i = 0; i < 2; ++i)
+            {
+                if (_characterBhv.Character.Skills[i].Nature == SkillNature.Movement && IsTheBiggest(_skillsWeight[i]))
+                {
+                    _gridBhv.ShowSkillRange(_characterBhv.Character.Skills[i].RangeType, _characterBhv, i, _characterBhv.OpponentBhvs, true);
+                    var tmpPos = GetClosestSkillCellToPlayer();
+                    _characterBhv.Character.Skills[i].Activate(tmpPos.X, tmpPos.Y);
+                    return true;
+                }
+            }
+        }
+        return MoveToNextCell();
     }
 
     #endregion
@@ -384,7 +514,21 @@ public class AiBhv : MonoBehaviour
     private int CanIGetFar()
     {
         int canI = _characterBhv.Pm * 10;
-        if (_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs))
+        int nbSkillMovement = 0;
+        for (int i = 0; i < 2; ++i)
+        {
+            if (!_characterBhv.Character.Skills[i].IsUnderCooldown() &&
+                _characterBhv.Pa >= _characterBhv.Character.Skills[i].PaNeeded)
+            {
+                if (_characterBhv.Character.Skills[i].Nature == SkillNature.Movement)
+                {
+                    _skillsWeight[i] += 50;
+                    ++nbSkillMovement;
+                }
+                canI += _skillsWeight[i];
+            }
+        }
+        if (nbSkillMovement == 0 && _gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs))
             canI -= 1000;
         return canI;
     }
@@ -394,7 +538,40 @@ public class AiBhv : MonoBehaviour
         int shouldI = 0;
         if (_characterBhv.Character.Hp <= _characterBhv.Character.HpMax)
             shouldI += 20;
+        for (int i = 0; i < 2; ++i)
+        {
+            if (_characterBhv.Character.Weapons[i].Type == WeaponType.Bow &&
+                !_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs))
+            {
+                shouldI += 30;
+            }
+        }
         return shouldI;
+    }
+
+    private bool GetFar()
+    {
+        SetPathToOpponent();
+        if (_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs) || _characterBhv.Pm == 0)
+        {
+            NewWeights(new List<int>());
+            for (int i = 0; i < 2; ++i)
+            {
+                if (_characterBhv.Character.Skills[i].Nature == SkillNature.Movement)
+                    _weights.Add(_skillsWeight[i]);
+            }
+            for (int i = 0; i < 2; ++i)
+            {
+                if (_characterBhv.Character.Skills[i].Nature == SkillNature.Movement && IsTheBiggest(_skillsWeight[i]))
+                {
+                    _gridBhv.ShowSkillRange(_characterBhv.Character.Skills[i].RangeType, _characterBhv, i, _characterBhv.OpponentBhvs, true);
+                    var tmpPos = GetFarestSkillCellToPlayer();
+                    _characterBhv.Character.Skills[i].Activate(tmpPos.X, tmpPos.Y);
+                    return true;
+                }
+            }
+        }
+        return MoveToNextCell();
     }
 
     #endregion

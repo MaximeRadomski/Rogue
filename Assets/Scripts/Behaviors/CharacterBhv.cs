@@ -10,6 +10,7 @@ public class CharacterBhv : MonoBehaviour
     public int Y;
     public bool IsMoving = false;
     public bool IsMovingFirstPathStep = false;
+    public int IsAttacking = 0;
     public int Turn = 0;
     public int Pm;
     public int Pa;
@@ -27,13 +28,13 @@ public class CharacterBhv : MonoBehaviour
     private List<Vector2> _pathfindingSteps = new List<Vector2>();
     private List<RangePos> _pathfindingPos = new List<RangePos>();
     private SpriteRenderer _spriteRenderer;
+    private CharacterBhv _attackedOpponent;
 
     public delegate void ActionDelegate();
     public ActionDelegate AfterMouvementDelegate;
 
     public void SetPrivates()
     {
-        Ai = GetComponent<AiBhv>();
         _fightSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>();
         _gridBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GridBhv>();
         OpponentBhvs = new List<CharacterBhv>();
@@ -46,7 +47,12 @@ public class CharacterBhv : MonoBehaviour
             }
         }
         else
+        {
             OpponentBhvs.Add(GameObject.Find(Constants.GoPlayerName).GetComponent<CharacterBhv>());
+            Ai = gameObject.AddComponent<AiBhv>();
+            Ai.SetPrivates();
+        }
+            
         Instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<Instantiator>();
         _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         for (int i = 0; i < Character.Skills.Count; ++i)
@@ -62,6 +68,8 @@ public class CharacterBhv : MonoBehaviour
             Move();
         else if (IsMovingFirstPathStep)
             MoveToFirstPathStep();
+        if (IsAttacking > 0)
+            Attack();
     }
 
     public void TakeDamages(int damages)
@@ -131,7 +139,7 @@ public class CharacterBhv : MonoBehaviour
         }
     }
 
-    public int AttackWithWeapon(int weaponId, CharacterBhv opponentBhv, Map map = null)
+    public int AttackWithWeapon(int weaponId, CharacterBhv opponentBhv, Map map, bool usePa = true)
     {
         var tmpWeapon = Character.Weapons[weaponId];
 
@@ -169,13 +177,37 @@ public class CharacterBhv : MonoBehaviour
 
         int resultInt = (int)(baseDamages * raceGenderMultiplier * skillMultiplier * criticalMultiplier);
         Debug.Log("Final Damages = " + resultInt);
-        LosePa(tmpWeapon.PaNeeded);
+        if (usePa)
+        {
+            LosePa(tmpWeapon.PaNeeded);
+            IsAttacking = 1;
+            _attackedOpponent = opponentBhv;
+        }
         foreach (var skill in Character.Skills)
         {
             if (skill != null)
                 skill.OnEndAttack(resultInt, opponentBhv);
         }
         return resultInt;
+    }
+
+    private void Attack()
+    {
+        if (IsAttacking == 1)
+            transform.position = Vector2.Lerp(transform.position, _attackedOpponent.transform.position, 0.2f);
+        else
+            transform.position = Vector2.Lerp(transform.position, _gridBhv.Cells[X, Y].transform.position, 0.1f);
+        if (IsAttacking == 1 && Vector2.Distance(_gridBhv.Cells[X, Y].transform.position, transform.position) > 0.1f)
+        {
+            IsAttacking = 2;
+        }
+        else if (IsAttacking == 2 && (Vector2)transform.position == (Vector2)_gridBhv.Cells[X, Y].transform.position)
+        {
+
+            IsAttacking = 0;
+            if (!IsPlayer)
+                Ai.AfterAction();
+        }
     }
 
     public void MoveToPosition(int x, int y, bool usePm = true)
@@ -260,6 +292,8 @@ public class CharacterBhv : MonoBehaviour
                 Y = _cellToReachY;
                 if (IsPlayer)
                     _fightSceneBhv.AfterPlayerMovement();
+                else if (!IsPlayer)
+                    Ai.AfterMovement();
                 if (AfterMouvementDelegate != null)
                     AfterMouvementDelegate();
             }
