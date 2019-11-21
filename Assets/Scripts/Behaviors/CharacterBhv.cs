@@ -201,7 +201,7 @@ public class CharacterBhv : MonoBehaviour
         if (IsAttacking == 1)
             transform.position = Vector2.Lerp(transform.position, _attackedOpponent.transform.position, 0.2f);
         else
-            transform.position = Vector2.Lerp(transform.position, _gridBhv.Cells[X, Y].transform.position, 0.1f);
+            transform.position = Vector2.Lerp(transform.position, _gridBhv.Cells[X, Y].transform.position, 0.7f);
         if (IsAttacking == 1 && Vector2.Distance(_gridBhv.Cells[X, Y].transform.position, transform.position) > 0.1f)
         {
             IsAttacking = 2;

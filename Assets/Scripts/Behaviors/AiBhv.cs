@@ -18,9 +18,6 @@ public class AiBhv : MonoBehaviour
     private int _getCloseWeight;
     private int _getFarWeight;
 
-    private int _nbCellsWalked;
-
-
     #region Init
 
     public void SetPrivates()
@@ -48,7 +45,6 @@ public class AiBhv : MonoBehaviour
 
     public void StartThinking()
     {
-        _nbCellsWalked = 0;
         Think();
     }
 
@@ -379,16 +375,17 @@ public class AiBhv : MonoBehaviour
             y = Constants.GridMax - 1;
         if (x != _characterBhv.X && y != _characterBhv.Y)
             _gridBhv.ShowPm(_characterBhv, _characterBhv.OpponentBhvs, unlimitedPm: true);
-        _characterBhv.SetPath(x, y, usePm: false);
+        var tmpPos = GetClosestCellVisitedToPos(_gridBhv.Cells[x, y].transform.position);
+        _characterBhv.SetPath(tmpPos.X, tmpPos.Y, usePm: false);
     }
 
-    private RangePos GetClosestSkillCellToPlayer()
+    private RangePos GetClosestCellVisitedToPos(Vector2 pos)
     {
         float minDistance = float.PositiveInfinity;
         RangePos tmpPos = new RangePos(0,0);
         foreach (var cell in _gridBhv.Cells)
         {
-            if (cell.GetComponent<CellBhv>().Visited == Constants.VisitedSkillValue)
+            if (cell.GetComponent<CellBhv>().Visited != Constants.VisitedPmValue)
             {
                 float tmpDistance = Vector2.Distance(cell.transform.position, _opponentBhv.transform.position);
                 if (tmpDistance < minDistance)
@@ -402,13 +399,13 @@ public class AiBhv : MonoBehaviour
         return tmpPos;
     }
 
-    private RangePos GetFarestSkillCellToPlayer()
+    private RangePos GetFarestIdCellToPlayer(int id)
     {
         float maxDistance = 0.0f;
         RangePos tmpPos = new RangePos(0, 0);
         foreach (var cell in _gridBhv.Cells)
         {
-            if (cell.GetComponent<CellBhv>().Visited == Constants.VisitedSkillValue)
+            if (cell.GetComponent<CellBhv>().Visited == id)
             {
                 float tmpDistance = Vector2.Distance(cell.transform.position, _opponentBhv.transform.position);
                 if (tmpDistance > maxDistance)
@@ -433,13 +430,12 @@ public class AiBhv : MonoBehaviour
 
     public void AfterMovement()
     {
-        ++_nbCellsWalked;
-        Think();
+        Invoke(nameof(Think), 0.05f);
     }
 
     public void AfterAction()
     {
-        Think();
+        Invoke(nameof(Think), 0.5f);
     }
 
     #endregion
@@ -487,7 +483,8 @@ public class AiBhv : MonoBehaviour
 
     private bool GetClose()
     {
-        var posToReach = GetSmallestNearIndex(_opponentBhv.X, _opponentBhv.Y);
+        _gridBhv.ShowPm(_characterBhv, _characterBhv.OpponentBhvs, unlimitedPm: true);
+        var posToReach = GetSmallestNearVisited(_opponentBhv.X, _opponentBhv.Y);
         SetPathToOpponent(posToReach);
         if (_gridBhv.Cells[posToReach.X, posToReach.Y].GetComponent<CellBhv>().Visited > _characterBhv.Pm)
         {
@@ -502,7 +499,7 @@ public class AiBhv : MonoBehaviour
                 if (_characterBhv.Character.Skills[i].Nature == SkillNature.Movement && IsTheBiggest(_skillsWeight[i]))
                 {
                     _gridBhv.ShowSkillRange(_characterBhv.Character.Skills[i].RangeType, _characterBhv, i, _characterBhv.OpponentBhvs, true);
-                    var tmpPos = GetClosestSkillCellToPlayer();
+                    var tmpPos = GetClosestCellVisitedToPos(_opponentBhv.transform.position);
                     _characterBhv.Character.Skills[i].Activate(tmpPos.X, tmpPos.Y);
                     return true;
                 }
@@ -511,53 +508,27 @@ public class AiBhv : MonoBehaviour
         return MoveToNextCell();
     }
 
-    private RangePos GetSmallestNearIndex(int x, int y)
+    private RangePos GetSmallestNearVisited(int x, int y)
     {
-        int smallestIndex = Constants.UnlimitedPm;
+        int smallestVisited = Constants.UnlimitedPm;
         RangePos tmpRangePos = new RangePos(0, 0);
         int tmpX = x;
-        int tmpY = y + 1;
-        if (Helper.IsPosValid(tmpX, tmpY) &&
+        int tmpY = y;
+        for (int i = 0; i < 4; ++i)
+        {
+            if (i == 0) { tmpX = x; tmpY = y + 1; }
+            else if (i == 1) { tmpX = x + 1; tmpY = y; }
+            else if (i == 2) { tmpX = x; tmpY = y - 1; }
+            else if (i == 3) { tmpX = x - 1; tmpY = y; }
+            if (Helper.IsPosValid(tmpX, tmpY) &&
             _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Type == CellType.On &&
             _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited > 0 &&
-            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited < smallestIndex)
-        {
-            smallestIndex = _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited;
-            tmpRangePos.X = tmpX;
-            tmpRangePos.Y = tmpY;
-        }
-        tmpX = x + 1;
-        tmpY = y;
-        if (Helper.IsPosValid(tmpX, tmpY) &&
-            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Type == CellType.On &&
-            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited > 0 &&
-            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited < smallestIndex)
-        {
-            smallestIndex = _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited;
-            tmpRangePos.X = tmpX;
-            tmpRangePos.Y = tmpY;
-        }
-        tmpX = x;
-        tmpY = y - 1;
-        if (Helper.IsPosValid(tmpX, tmpY) &&
-            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Type == CellType.On &&
-            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited > 0 &&
-            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited < smallestIndex)
-        {
-            smallestIndex = _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited;
-            tmpRangePos.X = tmpX;
-            tmpRangePos.Y = tmpY;
-        }
-        tmpX = x - 1;
-        tmpY = y;
-        if (Helper.IsPosValid(tmpX, tmpY) &&
-            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Type == CellType.On &&
-            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited > 0 &&
-            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited < smallestIndex)
-        {
-            smallestIndex = _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited;
-            tmpRangePos.X = tmpX;
-            tmpRangePos.Y = tmpY;
+            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited < smallestVisited)
+            {
+                smallestVisited = _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited;
+                tmpRangePos.X = tmpX;
+                tmpRangePos.Y = tmpY;
+            }
         }
         return tmpRangePos;
     }
@@ -602,8 +573,8 @@ public class AiBhv : MonoBehaviour
     private int ShouldIGetFar()
     {
         int shouldI = 0;
-        //if (_characterBhv.Character.Hp <= _characterBhv.Character.HpMax)
-        //    shouldI += 20;
+        if (_characterBhv.Character.Hp <= _characterBhv.Character.HpMax * 0.2f)
+            shouldI += 20;
         //for (int i = 0; i < 2; ++i)
         //{
         //    if (_characterBhv.Character.Weapons[i].Type == WeaponType.Bow &&
@@ -631,7 +602,7 @@ public class AiBhv : MonoBehaviour
                 if (_characterBhv.Character.Skills[i].Nature == SkillNature.Movement && IsTheBiggest(_skillsWeight[i]))
                 {
                     _gridBhv.ShowSkillRange(_characterBhv.Character.Skills[i].RangeType, _characterBhv, i, _characterBhv.OpponentBhvs, true);
-                    var tmpPos = GetFarestSkillCellToPlayer();
+                    var tmpPos = GetFarestIdCellToPlayer(Constants.VisitedSkillValue);
                     _characterBhv.Character.Skills[i].Activate(tmpPos.X, tmpPos.Y);
                     return true;
                 }

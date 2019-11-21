@@ -41,14 +41,16 @@ public class SkillPush : Skill
         if (!Helper.IsPosValid(_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y)
             || GridBhv.Cells[_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y].GetComponent<CellBhv>().Type != CellType.On)
         {
-            if (GridBhv.Cells[_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y].GetComponent<CellBhv>().Type == CellType.Off)
+            if (Helper.IsPosValid(_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y)
+                && GridBhv.Cells[_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y].GetComponent<CellBhv>().Type == CellType.Off)
             {
                 var floatAmount = 30.0f * Helper.MultiplierFromPercent(1, CharacterBhv.Character.LevelingDamagePercent * (CharacterBhv.Character.Level - 1));
                 pushedOpponentBhv.TakeDamages((int)floatAmount);
             }
-            else if (GridBhv.Cells[_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y].GetComponent<CellBhv>().Type == CellType.Impracticable)
+            else if (!Helper.IsPosValid(_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y)
+                ||GridBhv.Cells[_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y].GetComponent<CellBhv>().Type == CellType.Impracticable)
                 pushedOpponentBhv.LosePm(1);
-                return false;
+            return false;
         }
         _pushedOpponentBhv.AfterMouvementDelegate = AfterPush;
         _pushedOpponentBhv.MoveToPosition(_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y, false);
