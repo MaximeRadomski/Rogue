@@ -9,8 +9,8 @@ public static class WeaponsData
     public static string[] SpearNames = { "Spear", "Trident", "Pike", "Lance", "Halberd" };
     public static string[] ClubNames = { "Club", "Spiked Club", "Crowbar", "Pickaxe", "Baton" };
     public static string[] KnifeNames = { "Knife", "Kris", "Bayonet", "Cleaver", "Shiv" };
-    public static string[] BowNames = { "Bow", "Short Bow", "Long Bow", "Composite Bow", "Hunter's Bow" };
-    public static string[] DaggersNames = { "Daggers", "Dirk", "Poignard", "Stiletto", "Rondel" };
+    public static string[] BowNames = { "Bow", "Short Bow", "Long Bow", "Composite Bow", "Hunting Bow" };
+    public static string[] DaggersNames = { "Daggers", "Dirks", "Poignards", "Stilettos", "Rondels" };
     public static string[] HammerNames = { "Hammer", "Maul", "Morning Star", "Flail", "War Hammer" };
     public static string[] AxeNames = { "Axe", "Hatchet", "Broad Axe", "Great Axe", "Ono" };
     public static string[] GreatSwordNames = { "Great Sword", "Long Sword", "Zweihander", "Flamberge", "Reaver" };
