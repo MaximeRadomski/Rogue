@@ -1,0 +1,1315 @@
+fileFormatVersion: 2
+guid: f14a7362cec17104fbc3137ad1c3a4c4
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8448099908135766764
+    second: HumanFemaleHair_0
+  - first:
+      213: 2973180159030593094
+    second: HumanFemaleHair_1
+  - first:
+      213: -6362099662149589864
+    second: HumanFemaleHair_2
+  - first:
+      213: -6490069590600459749
+    second: HumanFemaleHair_3
+  - first:
+      213: -6645610165629859476
+    second: HumanFemaleHair_4
+  - first:
+      213: 7510280258506258937
+    second: HumanFemaleHair_5
+  - first:
+      213: 8210007599264032531
+    second: HumanFemaleHair_6
+  - first:
+      213: 2163112429778113092
+    second: HumanFemaleHair_7
+  - first:
+      213: -4144613285190171692
+    second: HumanFemaleHair_8
+  - first:
+      213: -8607365674078299822
+    second: HumanFemaleHair_9
+  - first:
+      213: 94132354653239650
+    second: HumanFemaleHair_10
+  - first:
+      213: 3136449470497091130
+    second: HumanFemaleHair_11
+  - first:
+      213: 5733587713314578395
+    second: HumanFemaleHair_12
+  - first:
+      213: -3205019088380415691
+    second: HumanFemaleHair_13
+  - first:
+      213: 7281628425865005409
+    second: HumanFemaleHair_14
+  - first:
+      213: 1435689394339643569
+    second: HumanFemaleHair_15
+  - first:
+      213: -740728445496207524
+    second: HumanFemaleHair_16
+  - first:
+      213: 5983371423733842951
+    second: HumanFemaleHair_17
+  - first:
+      213: -466563125110305211
+    second: HumanFemaleHair_18
+  - first:
+      213: 1945601054396435892
+    second: HumanFemaleHair_19
+  - first:
+      213: -3321794359124024501
+    second: HumanFemaleHair_20
+  - first:
+      213: 4531116836421760697
+    second: HumanFemaleHair_21
+  - first:
+      213: -891290695293812397
+    second: HumanFemaleHair_22
+  - first:
+      213: -1479830585924183671
+    second: HumanFemaleHair_23
+  - first:
+      213: 941387741772591945
+    second: HumanFemaleHair_24
+  - first:
+      213: -4424749132276779803
+    second: HumanFemaleHair_25
+  - first:
+      213: -2402459466293728987
+    second: HumanFemaleHair_26
+  - first:
+      213: -3740520996767827587
+    second: HumanFemaleHair_27
+  - first:
+      213: 5609422566842839395
+    second: HumanFemaleHair_28
+  - first:
+      213: 1113426953503665417
+    second: HumanFemaleHair_29
+  - first:
+      213: 6515779478279305073
+    second: HumanFemaleHair_30
+  - first:
+      213: -168789507528872450
+    second: HumanFemaleHair_31
+  - first:
+      213: 1727662615772170210
+    second: HumanFemaleHair_32
+  - first:
+      213: -3688759597307738002
+    second: HumanFemaleHair_33
+  - first:
+      213: -3952585339004746463
+    second: HumanFemaleHair_34
+  - first:
+      213: -7646745620869621677
+    second: HumanFemaleHair_35
+  - first:
+      213: 4334796653188693696
+    second: HumanFemaleHair_36
+  - first:
+      213: 53090809907443558
+    second: HumanFemaleHair_37
+  - first:
+      213: 3254671443338122415
+    second: HumanFemaleHair_38
+  - first:
+      213: -2288329005242246995
+    second: HumanFemaleHair_39
+  - first:
+      213: -951298287764490095
+    second: HumanFemaleHair_40
+  - first:
+      213: 649776826194975007
+    second: HumanFemaleHair_41
+  - first:
+      213: -2692661307665260095
+    second: HumanFemaleHair_42
+  - first:
+      213: 3960632826455447234
+    second: HumanFemaleHair_43
+  - first:
+      213: -8373003678045955672
+    second: HumanFemaleHair_44
+  - first:
+      213: 7268851739165479686
+    second: HumanFemaleHair_45
+  - first:
+      213: -127353163611978513
+    second: HumanFemaleHair_46
+  - first:
+      213: -5667772237870089434
+    second: HumanFemaleHair_47
+  - first:
+      213: 4089125116580310998
+    second: HumanFemaleHair_48
+  - first:
+      213: -5155050350523362242
+    second: HumanFemaleHair_49
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 36
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: HumanFemaleHair_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f6fc3ef6bafa674cacf06268d38e847
+      internalID: -8448099908135766764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_1
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 64
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb8a03e43b5f5b54495af6f62a14d595
+      internalID: 2973180159030593094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_2
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 64
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2177aa641e866dc4faf3c624f734e10d
+      internalID: -6362099662149589864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_3
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 64
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80bbf39625deace40a04365811c69b8d
+      internalID: -6490069590600459749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_4
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 64
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0cce7da61cb0264da4aa21798bcd66d
+      internalID: -6645610165629859476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_5
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 64
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc6b4cc4793e30b4d809cd704414e9e3
+      internalID: 7510280258506258937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_6
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 64
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90c9c8f47adb9aa40a3dca382ec5602e
+      internalID: 8210007599264032531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_7
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 64
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64bff9fc6edde044f993b6e8c7e11ac2
+      internalID: 2163112429778113092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_8
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 64
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf3c80c1dfaee8848a898060c57295cb
+      internalID: -4144613285190171692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_9
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 64
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eaf67e5018fc6474488f0196e768481d
+      internalID: -8607365674078299822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25866522061c4d449b584e5f45df1066
+      internalID: 94132354653239650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_11
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 48
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 426c7c51bdfdb2f46a3fc7ff53977951
+      internalID: 3136449470497091130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_12
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 48
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dacb1802d697f2e40aff180af7c6ab4e
+      internalID: 5733587713314578395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_13
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 48
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e6e06e680e0e354d9ce04e456f1e641
+      internalID: -3205019088380415691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_14
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 48
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 694c4bda5be948c4aa7bbc93bcf8cf46
+      internalID: 7281628425865005409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_15
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 48
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 853ffdd0a76b2d4488e4f736430e8a64
+      internalID: 1435689394339643569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_16
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 48
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bce2b6af18e708140bfa881183c4073a
+      internalID: -740728445496207524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_17
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 48
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2ef8e1318c13524a92fc17fce8decc3
+      internalID: 5983371423733842951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_18
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 48
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d888833bd39d6c4384cd884dfb0b046
+      internalID: -466563125110305211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_19
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 48
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c56e158b53156e4db357908b22af1d6
+      internalID: 1945601054396435892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11e949910118e7b459358437088ec518
+      internalID: -3321794359124024501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_21
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 32
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edbc0f4b0844137459c05b586232c0c7
+      internalID: 4531116836421760697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_22
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 32
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3639bfd0da18afb408edc0b334716161
+      internalID: -891290695293812397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_23
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 32
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b093f8deeb9955c498fe4aca125f874f
+      internalID: -1479830585924183671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_24
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 32
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d8b599cd1ea96046af80588b6e1d7b8
+      internalID: 941387741772591945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_25
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 32
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa6b03fd32a73ca46bd3f4f69923c7a8
+      internalID: -4424749132276779803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_26
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 32
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65bbfcd9598e59a4dbfa0bfc9e3be0d4
+      internalID: -2402459466293728987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_27
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 32
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b238ff41df14774fa9e5654c082f760
+      internalID: -3740520996767827587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_28
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 32
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6931dbd7c409dc4c88eb6a5e67aa7c4
+      internalID: 5609422566842839395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_29
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 32
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 851388890d0b1e14db50c35086dc0607
+      internalID: 1113426953503665417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35b05c9ad32fc4b4c941d02a2e31d94b
+      internalID: 6515779478279305073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_31
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 16
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81fe8259b4f85b94ebd94359f1e71db0
+      internalID: -168789507528872450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_32
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 16
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12c91a6167088ad42bfa31df9cbf6747
+      internalID: 1727662615772170210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_33
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 16
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc5f4ed4f64bc0f4d9f562d097f52b72
+      internalID: -3688759597307738002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_34
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 16
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12f4b1ae900f6434991f0d5510efdd7a
+      internalID: -3952585339004746463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_35
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 16
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f32c8e856c19d341bcf7e6490bb6ca1
+      internalID: -7646745620869621677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_36
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 16
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7be8158e44a4814f910f69c129261c2
+      internalID: 4334796653188693696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_37
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 16
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 043066b44ef8b734f9ca90cb620441de
+      internalID: 53090809907443558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_38
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 16
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28a71759d78ded542842d8651e6c2e35
+      internalID: 3254671443338122415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_39
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 16
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d196eaf0029908e46b265af403a82207
+      internalID: -2288329005242246995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32676400dc32bd143994edf7f5a665da
+      internalID: -951298287764490095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_41
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c690d96a2f0b3d04a87d30231bc0436a
+      internalID: 649776826194975007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_42
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b22c4e36d004f334ca942a635fbce21b
+      internalID: -2692661307665260095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_43
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fbbcf81e37af424b9420496eb652974
+      internalID: 3960632826455447234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_44
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e76330acde74c748886010ed5438a91
+      internalID: -8373003678045955672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_45
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60c4c00931934b245a78008a6827996c
+      internalID: 7268851739165479686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_46
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 737d8e77f7d7bc74b8354ced7cc0d281
+      internalID: -127353163611978513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_47
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8640e20c340bccb4cbb408927fb69e69
+      internalID: -5667772237870089434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_48
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5981771508b3d64594c4c1c64ee528d
+      internalID: 4089125116580310998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanFemaleHair_49
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a87c5f748468dfd4f99d6f75d0310962
+      internalID: -5155050350523362242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
