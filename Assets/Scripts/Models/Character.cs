@@ -24,4 +24,6 @@ public class Character
     public List<SkillType> SkillsTypes;
     public List<Skill> Skills;
     public int Score;
+
+    public List<string> BodyParts;
 }

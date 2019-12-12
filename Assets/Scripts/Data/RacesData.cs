@@ -19,6 +19,27 @@ public static class RacesData
     public static string[] FemaleOrcNames = { "Mnorg", "Mator", "Grapt", "Zogg" };
     public static string[][] FemaleCharacterRaceNames = { FemaleHumanNames, FemaleGoblinNames, FemaleElfNames, FemaleDwarfNames, FemaleOrcNames };
 
+    // BODY PARTS ///
+    public const string Head = "Head";
+    public const string Hair = "Hair";
+    public const string NakedFace = "NakedFace";
+    public const string FrontHand = "FrontHand";
+    public const string FrontArm = "FrontArm";
+    public const string NakedFrontArm = "NakedFrontArm";
+    public const string Waist = "Waist";
+    public const string Torso = "Torso";
+    public const string NakedTorsoNeck = "NakedTorsoNeck";
+    public const string Feet = "Feet";
+    public const string Legs = "Legs";
+    public const string BackHand = "BackHand";
+    public const string BackArm = "BackArm";
+    public const string NakedLegsFeet = "NakedLegsFeet";
+    public const string NakedBackArm = "NakedBackArm";
+    public static string[] BodyParts = { NakedBackArm, NakedLegsFeet, BackArm, BackHand, Legs, Feet, NakedTorsoNeck, Torso, Waist, NakedFrontArm, FrontArm, FrontHand, NakedFace, Hair, Head};
+    public const int NbSkinTemplates = 4;
+    public const int NbBodyTemplates = 8;
+    public const int NbHairTemplates = 50;
+
     //  SHARED STATS  //
     public static int LevelOneXpNeeded = 100;
     public static int NotRaceWeaponDamagePercent = 60;
@@ -54,19 +75,19 @@ public static class RacesData
         switch (race)
         {
             case CharacterRace.Human:
-                tmpCharacter = GetBaseHuman(isPlayer);
+                tmpCharacter = GetBaseHuman(gender, isPlayer);
                 break;
             case CharacterRace.Gobelin:
-                tmpCharacter = GetBaseGobelin(isPlayer);
+                tmpCharacter = GetBaseGobelin(gender, isPlayer);
                 break;
             case CharacterRace.Elf:
-                tmpCharacter = GetBaseElf(isPlayer);
+                tmpCharacter = GetBaseElf(gender, isPlayer);
                 break;
             case CharacterRace.Dwarf:
-                tmpCharacter = GetBaseDwarf(isPlayer);
+                tmpCharacter = GetBaseDwarf(gender, isPlayer);
                 break;
             case CharacterRace.Orc:
-                tmpCharacter = GetBaseOrc(isPlayer);
+                tmpCharacter = GetBaseOrc(gender, isPlayer);
                 break;
         }
 
@@ -85,7 +106,7 @@ public static class RacesData
     }
 
     //  HUMAN  //
-    public static Character GetBaseHuman(bool isPlayer = false)
+    public static Character GetBaseHuman(CharacterGender gender, bool isPlayer = false)
     {
         return new Character()
         {
@@ -102,12 +123,13 @@ public static class RacesData
                                          WeaponsData.GetWeaponFromType(WeaponType.Spear, isPlayer) },
             SkillsTypes = new List<SkillType> { SkillType.Racial, SkillType.NotRatial },
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.HumanSkillsNames[0]) :
-                                                                 SkillsData.GetSkillFromName(SkillsData.HumanSkillsNames[1])}
+                                                                 SkillsData.GetSkillFromName(SkillsData.HumanSkillsNames[1])},
+            BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender)
         };
     }
 
     //  GOBELIN  //
-    public static Character GetBaseGobelin(bool isPlayer = false)
+    public static Character GetBaseGobelin(CharacterGender gender, bool isPlayer = false)
     {
         return new Character()
         {
@@ -124,12 +146,13 @@ public static class RacesData
                                          WeaponsData.GetWeaponFromType(WeaponType.Knife, isPlayer) },
             SkillsTypes = new List<SkillType> { SkillType.Racial, SkillType.NotRatial },
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.GoblinSkillsNames[0]) :
-                                                                 SkillsData.GetSkillFromName(SkillsData.GoblinSkillsNames[1])}
+                                                                 SkillsData.GetSkillFromName(SkillsData.GoblinSkillsNames[1])},
+            BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender)
         };
     }
 
     //  ELF  //
-    public static Character GetBaseElf(bool isPlayer = false)
+    public static Character GetBaseElf(CharacterGender gender, bool isPlayer = false)
     {
         return new Character()
         {
@@ -146,13 +169,14 @@ public static class RacesData
                                          WeaponsData.GetWeaponFromType(WeaponType.Daggers, isPlayer) },
             SkillsTypes = new List<SkillType> { SkillType.Racial, SkillType.NotRatial },
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.ElfSkillsNames[0]) :
-                                                                 SkillsData.GetSkillFromName(SkillsData.ElfSkillsNames[1])}
+                                                                 SkillsData.GetSkillFromName(SkillsData.ElfSkillsNames[1])},
+            BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender)
         };
     }
 
 
     //  DWARF  //
-    public static Character GetBaseDwarf(bool isPlayer = false)
+    public static Character GetBaseDwarf(CharacterGender gender, bool isPlayer = false)
     {
         return new Character()
         {
@@ -169,13 +193,14 @@ public static class RacesData
                                          WeaponsData.GetWeaponFromType(WeaponType.Axe, isPlayer) },
             SkillsTypes = new List<SkillType> { SkillType.Racial, SkillType.NotRatial },
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.DwarfSkillsNames[0]) :
-                                                                 SkillsData.GetSkillFromName(SkillsData.DwarfSkillsNames[1])}
+                                                                 SkillsData.GetSkillFromName(SkillsData.DwarfSkillsNames[1])},
+            BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender)
         };
     }
 
 
     //  ORC  //
-    public static Character GetBaseOrc(bool isPlayer = false)
+    public static Character GetBaseOrc(CharacterGender gender, bool isPlayer = false)
     {
         return new Character()
         {
@@ -192,8 +217,31 @@ public static class RacesData
                                          WeaponsData.GetWeaponFromType(WeaponType.Gauntlets, isPlayer) },
             SkillsTypes = new List<SkillType> { SkillType.Racial, SkillType.NotRatial },
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.OrcSkillsNames[0]) :
-                                                                 SkillsData.GetSkillFromName(SkillsData.OrcSkillsNames[1])}
+                                                                 SkillsData.GetSkillFromName(SkillsData.OrcSkillsNames[1])},
+            BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender)
         };
+    }
+
+    public static List<string> CreateBodyPartsFromRace(CharacterRace race, CharacterGender gender)
+    {
+        List<string> bodyParts = new List<string>();
+        int skinColor = Random.Range(0, NbSkinTemplates);
+        for (int i = 0; i < BodyParts.Length; ++i)
+        {
+            if (BodyParts[i].Contains("Naked"))
+            {
+                bodyParts.Add("Sprites/" + race + "/" + race + BodyParts[i] + "_" + skinColor);
+            }
+            else if (BodyParts[i].Contains("Hair"))
+            {
+                bodyParts.Add("Sprites/" + race + "/" + race + gender + BodyParts[i] + "_" + Random.Range(0, NbHairTemplates));
+            }
+            else
+            {
+                bodyParts.Add("Sprites/" + race + "/" + race + BodyParts[i] + "_" + Random.Range(0, NbBodyTemplates));
+            }
+        }
+        return bodyParts;
     }
 }
 

@@ -42,8 +42,15 @@ public class Instantiator : MonoBehaviour
 
     public static GameObject NewCharacterGameObject(string characterName, bool isPlayer = false, string id = "")
     {
-        var characterObject = Resources.Load<GameObject>("Prefabs/TemplateCharacter");
+        var tmpCharacter = PlayerPrefsHelper.GetCharacter(characterName);
+        var characterObject = Resources.Load<GameObject>("Prefabs/" + CharacterRace.Human + "Character");
         var characterInstance = Instantiate(characterObject, new Vector2(-3.0f, -5.0f), characterObject.transform.rotation);
+        for (int i = 0; i < tmpCharacter.BodyParts.Count; ++i)
+        {
+            var tmpBodyPart = characterInstance.transform.Find(RacesData.BodyParts[i]);
+            if (tmpBodyPart != null)
+                tmpBodyPart.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(tmpCharacter.BodyParts[i]);
+        }
         if (isPlayer)
             characterInstance.name = Constants.GoPlayerName;
         else
@@ -54,7 +61,7 @@ public class Instantiator : MonoBehaviour
         var playerBhv = characterInstance.GetComponent<CharacterBhv>();
         playerBhv.X = 0;
         playerBhv.Y = 0;
-        playerBhv.Character = PlayerPrefsHelper.GetCharacter(characterName);
+        playerBhv.Character = tmpCharacter;
         playerBhv.IsPlayer = isPlayer;
         return characterInstance;
     }
