@@ -6,6 +6,7 @@ public class GrabbableCardBhv : MonoBehaviour
 {
     private SoundControlerBhv _soundControler;
     private SpriteRenderer _spriteRenderer;
+    private GameObject _skinContainer;
     private SwipeSceneBhv _swipeSceneBhv;
     private BoxCollider2D _boxCollider2D;
     private Canvas _canvas;
@@ -29,6 +30,7 @@ public class GrabbableCardBhv : MonoBehaviour
     {
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _skinContainer = transform.Find("SkinContainer").gameObject;
         _boxCollider2D = GetComponent<BoxCollider2D>();
         _swipeSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SwipeSceneBhv>();
         _canvas = transform.GetChild(0).GetComponent<Canvas>();
@@ -45,10 +47,13 @@ public class GrabbableCardBhv : MonoBehaviour
         _pressedScale = new Vector3(1.05f, 1.05f, 1.0f);
         _disabledScale = new Vector3(0.95f, 0.95f, 1.0f);
         gameObject.name = "Card" + id;
-        _spriteRenderer.sortingOrder = id;
         _canvas.overrideSorting = true;
-        _canvas.sortingLayerName = "Card";
-        _canvas.sortingOrder = id;
+        _canvas.sortingLayerName = Constants.SortingLayerCard;
+        Helper.SetSkinContainerSortingLayer(_skinContainer, Constants.SortingLayerCard);
+        Helper.SetSkinContainerSortingLayerOrder(_skinContainer, id);
+        _spriteRenderer.sortingOrder = id * 99;
+        _canvas.sortingOrder = id * 99;
+        
         if (id == 0)
         {
             _boxCollider2D.enabled = false;
@@ -61,8 +66,9 @@ public class GrabbableCardBhv : MonoBehaviour
     {
         _isStretching = true;
         gameObject.name = "Card1";
-        _spriteRenderer.sortingOrder = 1;
-        _canvas.sortingOrder = 1;
+        _spriteRenderer.sortingOrder = 1 * 99;
+        _canvas.sortingOrder = 1 * 99;
+        Helper.SetSkinContainerSortingLayerOrder(_skinContainer, 1);
         _boxCollider2D.enabled = true;
     }
 
@@ -99,6 +105,8 @@ public class GrabbableCardBhv : MonoBehaviour
         _canvas.transform.GetChild(10).GetComponent<UnityEngine.UI.Text>().color = Helper.ColorFromTextType(_opponentCharacters[id].Skills[0].Rarity.GetHashCode());
         _canvas.transform.GetChild(11).GetComponent<UnityEngine.UI.Text>().text = _opponentCharacters[id].Skills[1].Name;
         _canvas.transform.GetChild(11).GetComponent<UnityEngine.UI.Text>().color = Helper.ColorFromTextType(_opponentCharacters[id].Skills[1].Rarity.GetHashCode());
+
+        Instantiator.LoadCharacterSkin(_opponentCharacters[id], _skinContainer);
     }
 
     public void BeginAction(Vector2 initialTouchPosition)

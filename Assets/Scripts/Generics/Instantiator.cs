@@ -42,15 +42,10 @@ public class Instantiator : MonoBehaviour
 
     public static GameObject NewCharacterGameObject(string characterName, bool isPlayer = false, string id = "")
     {
-        var tmpCharacter = PlayerPrefsHelper.GetCharacter(characterName);
+        var character = PlayerPrefsHelper.GetCharacter(characterName);
         var characterObject = Resources.Load<GameObject>("Prefabs/" + CharacterRace.Human + "Character");
         var characterInstance = Instantiate(characterObject, new Vector2(-3.0f, -5.0f), characterObject.transform.rotation);
-        for (int i = 0; i < tmpCharacter.BodyParts.Count; ++i)
-        {
-            var tmpBodyPart = characterInstance.transform.Find(RacesData.BodyParts[i]);
-            if (tmpBodyPart != null)
-                tmpBodyPart.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(tmpCharacter.BodyParts[i]);
-        }
+        LoadCharacterSkin(character, characterInstance.transform.Find("SkinContainer").gameObject);
         if (isPlayer)
             characterInstance.name = Constants.GoPlayerName;
         else
@@ -61,8 +56,48 @@ public class Instantiator : MonoBehaviour
         var playerBhv = characterInstance.GetComponent<CharacterBhv>();
         playerBhv.X = 0;
         playerBhv.Y = 0;
-        playerBhv.Character = tmpCharacter;
+        playerBhv.Character = character;
         playerBhv.IsPlayer = isPlayer;
         return characterInstance;
+    }
+
+    public static void LoadCharacterSkin(Character character, GameObject skinContainer)
+    {
+        for (int i = 0; i < character.BodyParts.Count; ++i)
+        {
+            var tmpBodyPart = skinContainer.transform.Find(RacesData.BodyParts[i]);
+            if (tmpBodyPart != null)
+            {
+                var path = character.BodyParts[i];
+                var separatorId = path.IndexOf('_');
+                var spriteSheetPath = path.Substring(0, separatorId);
+                var spriteSheet = Resources.LoadAll<Sprite>(spriteSheetPath);
+                var spriteId = int.Parse(path.Substring(separatorId + 1));
+                if (spriteId >= spriteSheet.Length)
+                    tmpBodyPart.GetComponent<SpriteRenderer>().sprite = null;
+                else
+                    tmpBodyPart.GetComponent<SpriteRenderer>().sprite = spriteSheet[spriteId];
+            }
+                
+        }
+    }
+
+    public static GameObject NewCell(int x, int y, char c, Grid grid)
+    {
+        var cellGameObject = Resources.Load<GameObject>("Prefabs/TemplateCell");
+        var cellInstance = Instantiate(cellGameObject, cellGameObject.transform.position, cellGameObject.transform.rotation);
+        cellInstance.transform.parent = grid.transform;
+        cellInstance.transform.position = new Vector3(x * grid.cellSize.x, y * grid.cellSize.y, 0.0f) + grid.transform.position;
+        cellInstance.gameObject.name = "Cell" + x + y;
+        var cellBhv = cellInstance.GetComponent<CellBhv>();
+        cellBhv.X = x;
+        cellBhv.Y = y;
+        cellBhv.Type = (CellType)int.Parse(c.ToString(), System.Globalization.NumberStyles.Integer);
+        if (cellBhv.Type == CellType.Spawn || cellBhv.Type == CellType.OpponentSpawn)
+            cellBhv.State = CellState.Spawn;
+        else
+            cellBhv.State = CellState.None;
+        cellInstance.GetComponent<SpriteRenderer>().sortingOrder = Constants.GridMax - y;
+        return cellInstance;
     }
 }

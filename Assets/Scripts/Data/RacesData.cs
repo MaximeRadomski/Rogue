@@ -25,7 +25,7 @@ public static class RacesData
     public const string NakedFace = "NakedFace";
     public const string FrontHand = "FrontHand";
     public const string FrontArm = "FrontArm";
-    public const string NakedFrontArm = "NakedFrontArm";
+    public const string NakedFrontArmHand = "NakedFrontArmHand";
     public const string Waist = "Waist";
     public const string Torso = "Torso";
     public const string NakedTorsoNeck = "NakedTorsoNeck";
@@ -34,8 +34,8 @@ public static class RacesData
     public const string BackHand = "BackHand";
     public const string BackArm = "BackArm";
     public const string NakedLegsFeet = "NakedLegsFeet";
-    public const string NakedBackArm = "NakedBackArm";
-    public static string[] BodyParts = { NakedBackArm, NakedLegsFeet, BackArm, BackHand, Legs, Feet, NakedTorsoNeck, Torso, Waist, NakedFrontArm, FrontArm, FrontHand, NakedFace, Hair, Head};
+    public const string NakedBackArmHand = "NakedBackArmHand";
+    public static string[] BodyParts = { NakedBackArmHand, NakedLegsFeet, BackArm, BackHand, Legs, Feet, NakedTorsoNeck, Torso, Waist, NakedFrontArmHand, FrontArm, FrontHand, NakedFace, Hair, Head};
     public const int NbSkinTemplates = 4;
     public const int NbBodyTemplates = 8;
     public const int NbHairTemplates = 50;
@@ -226,20 +226,20 @@ public static class RacesData
     {
         List<string> bodyParts = new List<string>();
         int skinColor = Random.Range(0, NbSkinTemplates);
+        int armTemplateId = Random.Range(0, NbBodyTemplates);
+        int handTemplateId = Random.Range(0, NbBodyTemplates);
         for (int i = 0; i < BodyParts.Length; ++i)
         {
             if (BodyParts[i].Contains("Naked"))
-            {
                 bodyParts.Add("Sprites/" + race + "/" + race + BodyParts[i] + "_" + skinColor);
-            }
             else if (BodyParts[i].Contains("Hair"))
-            {
                 bodyParts.Add("Sprites/" + race + "/" + race + gender + BodyParts[i] + "_" + Random.Range(0, NbHairTemplates));
-            }
+            else if (BodyParts[i].Contains("Arm"))
+                bodyParts.Add("Sprites/" + race + "/" + race + BodyParts[i] + "_" + armTemplateId);
+            else if (BodyParts[i].Contains("Hand"))
+                bodyParts.Add("Sprites/" + race + "/" + race + BodyParts[i] + "_" + handTemplateId);
             else
-            {
                 bodyParts.Add("Sprites/" + race + "/" + race + BodyParts[i] + "_" + Random.Range(0, NbBodyTemplates));
-            }
         }
         return bodyParts;
     }
