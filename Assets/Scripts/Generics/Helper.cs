@@ -6,30 +6,6 @@ using UnityEngine.SceneManagement;
 
 public static class Helper
 {
-    public static void SetSkinContainerSortingLayer(GameObject skinContainer, string sortingLayerName)
-    {
-        for (int i = 0; i < skinContainer.transform.childCount; ++i)
-        {
-            var spriteRenderer = skinContainer.transform.GetChild(i).GetComponent<SpriteRenderer>();
-            if (spriteRenderer != null) spriteRenderer.sortingLayerName = sortingLayerName;
-        }
-    }
-
-    public static void SetSkinContainerSortingLayerOrder(GameObject skinContainer, int hundred)
-    {
-        for (int i = 0; i < skinContainer.transform.childCount; ++i)
-        {
-            var spriteRenderer = skinContainer.transform.GetChild(i).GetComponent<SpriteRenderer>();
-            if (spriteRenderer != null)
-            {
-                var currentOrder = spriteRenderer.sortingOrder;
-                int toSubstract = currentOrder / 100;
-                int decimals = currentOrder - (toSubstract * 100);
-                spriteRenderer.sortingOrder = (hundred * 100) + decimals;
-            }
-        }
-    }
-
     public static IEnumerable<T> OrEmptyIfNull<T>(this IEnumerable<T> source)
     {
         return source ?? Enumerable.Empty<T>();

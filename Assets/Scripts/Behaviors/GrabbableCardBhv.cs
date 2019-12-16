@@ -6,7 +6,7 @@ public class GrabbableCardBhv : MonoBehaviour
 {
     private SoundControlerBhv _soundControler;
     private SpriteRenderer _spriteRenderer;
-    private GameObject _skinContainer;
+    private SkinContainerBhv _skinContainerBhv;
     private SwipeSceneBhv _swipeSceneBhv;
     private BoxCollider2D _boxCollider2D;
     private Canvas _canvas;
@@ -30,7 +30,7 @@ public class GrabbableCardBhv : MonoBehaviour
     {
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _skinContainer = transform.Find("SkinContainer").gameObject;
+        _skinContainerBhv = transform.Find("SkinContainer").GetComponent<SkinContainerBhv>();
         _boxCollider2D = GetComponent<BoxCollider2D>();
         _swipeSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SwipeSceneBhv>();
         _canvas = transform.GetChild(0).GetComponent<Canvas>();
@@ -49,8 +49,8 @@ public class GrabbableCardBhv : MonoBehaviour
         gameObject.name = "Card" + id;
         _canvas.overrideSorting = true;
         _canvas.sortingLayerName = Constants.SortingLayerCard;
-        Helper.SetSkinContainerSortingLayer(_skinContainer, Constants.SortingLayerCard);
-        Helper.SetSkinContainerSortingLayerOrder(_skinContainer, id);
+        _skinContainerBhv.SetSkinContainerSortingLayer(Constants.SortingLayerCard);
+        _skinContainerBhv.SetSkinContainerSortingLayerOrder(id);
         _spriteRenderer.sortingOrder = id * 99;
         _canvas.sortingOrder = id * 99;
         
@@ -68,7 +68,7 @@ public class GrabbableCardBhv : MonoBehaviour
         gameObject.name = "Card1";
         _spriteRenderer.sortingOrder = 1 * 99;
         _canvas.sortingOrder = 1 * 99;
-        Helper.SetSkinContainerSortingLayerOrder(_skinContainer, 1);
+        _skinContainerBhv.SetSkinContainerSortingLayerOrder(1);
         _boxCollider2D.enabled = true;
     }
 
@@ -106,7 +106,7 @@ public class GrabbableCardBhv : MonoBehaviour
         _canvas.transform.GetChild(11).GetComponent<UnityEngine.UI.Text>().text = _opponentCharacters[id].Skills[1].Name;
         _canvas.transform.GetChild(11).GetComponent<UnityEngine.UI.Text>().color = Helper.ColorFromTextType(_opponentCharacters[id].Skills[1].Rarity.GetHashCode());
 
-        Instantiator.LoadCharacterSkin(_opponentCharacters[id], _skinContainer);
+        Instantiator.LoadCharacterSkin(_opponentCharacters[id], _skinContainerBhv.gameObject);
     }
 
     public void BeginAction(Vector2 initialTouchPosition)
