@@ -52,4 +52,7 @@ public static class Constants
 
     // SORTING LAYERS //
     public const string SortingLayerCard = "Card";
+
+    // SKIN CONTAINERS Y OFFSET //
+    public const float SkinContainerYOffsetHuman = 0.498f;
 }

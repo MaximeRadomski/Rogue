@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GrabbableCardBhv : MonoBehaviour
 {
+    public List<Sprite> Sprites;
+
     private SoundControlerBhv _soundControler;
     private SpriteRenderer _spriteRenderer;
     private SkinContainerBhv _skinContainerBhv;

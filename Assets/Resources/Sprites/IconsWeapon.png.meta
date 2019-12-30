@@ -1,25 +1,37 @@
 fileFormatVersion: 2
-guid: b9d08dd771e42bf448ccdd4c4e0200a6
+guid: ec545f7a9250aa0469926e606122f093
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7873339745299520073
-    second: CharacterOrbs_0
+      213: -3430479437771487098
+    second: IconsWeapon_0
   - first:
-      213: 6413307994144996003
-    second: CharacterOrbs_1
+      213: -4656576241020188758
+    second: IconsWeapon_1
   - first:
-      213: 3141820248644005581
-    second: CharacterOrbs_2
+      213: -5296068116304923587
+    second: IconsWeapon_2
   - first:
-      213: 8894947811300107085
-    second: CharacterOrbs_3
+      213: 8997902333712012727
+    second: IconsWeapon_3
   - first:
-      213: -8093654186115195304
-    second: CharacterOrbs_4
+      213: 3768824548447245908
+    second: IconsWeapon_4
   - first:
-      213: 8135809649901935884
-    second: CharacterOrbs_5
+      213: 9115270188531246324
+    second: IconsWeapon_5
+  - first:
+      213: -5074998722931772856
+    second: IconsWeapon_6
+  - first:
+      213: -8031208457216772879
+    second: IconsWeapon_7
+  - first:
+      213: -2485523745472329544
+    second: IconsWeapon_8
+  - first:
+      213: 3499827063658642557
+    second: IconsWeapon_9
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -116,76 +128,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CharacterOrbs_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ccda3451d6d51d24a8419ae3b86f4833
-      internalID: -7873339745299520073
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharacterOrbs_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 969af6f7693298a4591fcb5e703f159f
-      internalID: 6413307994144996003
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharacterOrbs_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 985de405469328a47823e4310e45a1e4
-      internalID: 3141820248644005581
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharacterOrbs_3
+      name: IconsWeapon_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 9
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -193,20 +142,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd2237efbf349a14ea24f07a09026375
-      internalID: 8894947811300107085
+      spriteID: 11923d302cae7e24ea99dbd2e5e4ee60
+      internalID: -3430479437771487098
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharacterOrbs_4
+      name: IconsWeapon_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 9
         y: 0
-        width: 32
-        height: 32
+        width: 9
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,20 +163,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b1d1e4741d6c0ae46b51a2d8636089c8
-      internalID: -8093654186115195304
+      spriteID: 010f02e3789d54c408dcb173c60a725f
+      internalID: -4656576241020188758
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharacterOrbs_5
+      name: IconsWeapon_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 18
         y: 0
-        width: 32
-        height: 32
+        width: 9
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -235,8 +184,155 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0bb9a66f7d2ec264ba5af5f52b4b2d54
-      internalID: 8135809649901935884
+      spriteID: 4ad96af5e6f1b5344b1e44ec765a9f7e
+      internalID: -5296068116304923587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconsWeapon_3
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 0
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: faa75d5bacffc7b42a27dfcc83a9c699
+      internalID: 8997902333712012727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconsWeapon_4
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 0
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 156a5d04843d81d4f95f74aa4c071bb9
+      internalID: 3768824548447245908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconsWeapon_5
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 0
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddddca797e436aa4eb6128aa78eed8ed
+      internalID: 9115270188531246324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconsWeapon_6
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 0
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6231c95121291a94ea1e5dff65ed90a7
+      internalID: -5074998722931772856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconsWeapon_7
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 0
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d714419a8c84f624a9d5776f748be520
+      internalID: -8031208457216772879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconsWeapon_8
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 0
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3661b0cb04c5aea43a41810103c2a342
+      internalID: -2485523745472329544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconsWeapon_9
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 0
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67a3f19219a36f344bb57843410e7310
+      internalID: 3499827063658642557
       vertices: []
       indices: 
       edges: []

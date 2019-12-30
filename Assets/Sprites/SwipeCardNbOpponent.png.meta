@@ -1,25 +1,13 @@
 fileFormatVersion: 2
-guid: b9d08dd771e42bf448ccdd4c4e0200a6
+guid: 00bb6666f34411a45989778c2e25c6a4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7873339745299520073
-    second: CharacterOrbs_0
+      213: 5236116787490082456
+    second: SwipeCardNbOpponent_0
   - first:
-      213: 6413307994144996003
-    second: CharacterOrbs_1
-  - first:
-      213: 3141820248644005581
-    second: CharacterOrbs_2
-  - first:
-      213: 8894947811300107085
-    second: CharacterOrbs_3
-  - first:
-      213: -8093654186115195304
-    second: CharacterOrbs_4
-  - first:
-      213: 8135809649901935884
-    second: CharacterOrbs_5
+      213: 6469366665310472715
+    second: SwipeCardNbOpponent_1
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -78,7 +66,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -90,7 +78,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 128
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -102,7 +90,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 128
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -116,76 +104,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CharacterOrbs_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ccda3451d6d51d24a8419ae3b86f4833
-      internalID: -7873339745299520073
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharacterOrbs_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 969af6f7693298a4591fcb5e703f159f
-      internalID: 6413307994144996003
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharacterOrbs_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 985de405469328a47823e4310e45a1e4
-      internalID: 3141820248644005581
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharacterOrbs_3
+      name: SwipeCardNbOpponent_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 19
+        height: 19
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -193,20 +118,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd2237efbf349a14ea24f07a09026375
-      internalID: 8894947811300107085
+      spriteID: 013578d1249c01c40adcfabe8c9cf4a0
+      internalID: 5236116787490082456
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharacterOrbs_4
+      name: SwipeCardNbOpponent_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 19
         y: 0
-        width: 32
-        height: 32
+        width: 19
+        height: 19
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,29 +139,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b1d1e4741d6c0ae46b51a2d8636089c8
-      internalID: -8093654186115195304
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharacterOrbs_5
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0bb9a66f7d2ec264ba5af5f52b4b2d54
-      internalID: 8135809649901935884
+      spriteID: 214bbc9cd460a44459bd090c9089058a
+      internalID: 6469366665310472715
       vertices: []
       indices: 
       edges: []

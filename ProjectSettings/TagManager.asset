@@ -49,9 +49,6 @@ TagManager:
   - name: Grid
     uniqueID: 2355405363
     locked: 0
-  - name: Card
-    uniqueID: 834654313
-    locked: 0
   - name: Characters
     uniqueID: 2041080483
     locked: 0
@@ -66,6 +63,9 @@ TagManager:
     locked: 0
   - name: Buttons
     uniqueID: 882863771
+    locked: 0
+  - name: Card
+    uniqueID: 834654313
     locked: 0
   - name: Default
     uniqueID: 0

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SkinContainerBhv : MonoBehaviour
 {
+    public float SkinContainerYOffset;
+
     public void SetSkinContainerSortingLayer(string sortingLayerName)
     {
         for (int i = 0; i < transform.childCount; ++i)
@@ -25,6 +27,15 @@ public class SkinContainerBhv : MonoBehaviour
                 int decimals = currentOrder - (toSubstract * 100);
                 spriteRenderer.sortingOrder = (hundred * 100) + decimals;
             }
+        }
+    }
+
+    public void SetSkinContainerMaskInteraction(SpriteMaskInteraction maskInteraction)
+    {
+        for (int i = 0; i < transform.childCount; ++i)
+        {
+            var spriteRenderer = transform.GetChild(i).GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null) spriteRenderer.maskInteraction = maskInteraction;
         }
     }
 }
