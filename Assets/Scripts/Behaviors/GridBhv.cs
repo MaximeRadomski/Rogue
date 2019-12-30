@@ -36,20 +36,7 @@ public class GridBhv : MonoBehaviour
 
     private void InitCell(int x, int y, char c)
     {
-        var cellGameObject = Resources.Load<GameObject>("Prefabs/TemplateCell");
-        var cellInstance = Instantiate(cellGameObject, cellGameObject.transform.position, cellGameObject.transform.rotation);
-        cellInstance.transform.parent = _grid.transform;
-        cellInstance.transform.position = new Vector3(x * _grid.cellSize.x, y * _grid.cellSize.y, 0.0f) + _grid.transform.position;
-        cellInstance.gameObject.name = "Cell" + x + y;
-        var cellBhv = cellInstance.GetComponent<CellBhv>();
-        cellBhv.X = x;
-        cellBhv.Y = y;
-        cellBhv.Type = (CellType)int.Parse(c.ToString(), System.Globalization.NumberStyles.Integer);
-        if (cellBhv.Type == CellType.Spawn || cellBhv.Type == CellType.OpponentSpawn)
-            cellBhv.State = CellState.Spawn;
-        else
-            cellBhv.State = CellState.None;
-        cellInstance.GetComponent<SpriteRenderer>().sortingOrder = Constants.GridMax - y;
+        var cellInstance = Instantiator.NewCell(x, y, c, _grid);
         Cells[x, y] = cellInstance;
     }
 

@@ -38,7 +38,7 @@ public static class Constants
     public const int UnlimitedPm = GridMax * GridMax;
     public const int VisitedPmValue = -1;
     public const int VisitedSkillValue = -2;
-    public static Vector2 CardInitialPosition = new Vector2(0.0f, 0.5f);
+    public static Vector2 CardInitialPosition = new Vector2(0.0f, 0.5f);    
 
     //  COLORS  //
     public static Color ColorNormal = new Color(0.83f, 0.83f, 0.83f, 1.0f);     //#d4d4d4
@@ -49,4 +49,7 @@ public static class Constants
     public static Color ColorPa = new Color(0.16f, 0.34f, 0.78f, 1.0f);         //#2557c7
     public static Color ColorPm = new Color(0.11f, 0.53f, 0.0f, 1.0f);          //#a91717
     public static Color ColorTransparent = new Color(0.0f, 0.0f, 0.0f, 0.0f);   //#000000
+
+    // SORTING LAYERS //
+    public const string SortingLayerCard = "Card";
 }
