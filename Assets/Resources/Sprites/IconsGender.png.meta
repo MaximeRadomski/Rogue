@@ -1,25 +1,16 @@
 fileFormatVersion: 2
-guid: 044d0aae61fe9e446989d7d9f667ad88
+guid: e8beb701bb9bf7d4c9628c6e4cd92b5f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8136128231877117135
-    second: IconsUI_0
+      213: -2589360962290357976
+    second: IconsGender_0
   - first:
-      213: 5867741536060620524
-    second: IconsUI_1
+      213: 7466493557512782254
+    second: IconsGender_1
   - first:
-      213: -1108182313213868328
-    second: IconsUI_2
-  - first:
-      213: 297817054470000637
-    second: IconsUI_3
-  - first:
-      213: -9099264826500184552
-    second: IconsUI_4
-  - first:
-      213: 941033744090635947
-    second: IconsUI_5
+      213: -50886848384514327
+    second: IconsGender_2
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -78,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -90,7 +81,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 128
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -102,7 +93,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 128
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -116,7 +107,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IconsUI_0
+      name: IconsGender_0
       rect:
         serializedVersion: 2
         x: 0
@@ -130,14 +121,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e4996f483d425ff4b8e963d7832a97e3
-      internalID: 8136128231877117135
+      spriteID: e1b428fb841a81142b9381206f88f455
+      internalID: -2589360962290357976
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IconsUI_1
+      name: IconsGender_1
       rect:
         serializedVersion: 2
         x: 21
@@ -151,14 +142,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 20aab90d99d372f4b9fce078cd072539
-      internalID: 5867741536060620524
+      spriteID: a332b439212adae4181fcc8424d8f6ef
+      internalID: 7466493557512782254
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IconsUI_2
+      name: IconsGender_2
       rect:
         serializedVersion: 2
         x: 42
@@ -172,8 +163,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9fb03f4d9fc812843a244d2f1138112f
-      internalID: -1108182313213868328
+      spriteID: cce86e225d727a745b960b043ca75a5a
+      internalID: -50886848384514327
       vertices: []
       indices: 
       edges: []

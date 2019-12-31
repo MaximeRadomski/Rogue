@@ -6,6 +6,17 @@ using UnityEngine.SceneManagement;
 
 public static class Helper
 {
+    public static Sprite GetSpriteFromSpriteSheet(string path)
+    {
+        var separatorId = path.IndexOf('_');
+        var spriteSheetPath = path.Substring(0, separatorId);
+        var spriteSheet = Resources.LoadAll<Sprite>(spriteSheetPath);
+        var spriteId = int.Parse(path.Substring(separatorId + 1));
+        if (spriteId >= spriteSheet.Length)
+            return null;
+        else
+            return spriteSheet[spriteId];
+    }
     public static IEnumerable<T> OrEmptyIfNull<T>(this IEnumerable<T> source)
     {
         return source ?? Enumerable.Empty<T>();

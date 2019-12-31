@@ -19,6 +19,7 @@ public class SkillPush : Skill
         MaxRange = 1;
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 };
+        IconId = 11;
     }
 
     private CharacterBhv _pushedOpponentBhv;

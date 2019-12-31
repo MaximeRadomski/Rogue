@@ -26,6 +26,7 @@ public class SkillSmite : Skill
                                          -1,-2, -1,-3, -1,-4, -2,-2, -2,-3, -3,-2, -2,-1, -3,-1, -4,-1,
                                          -3,0, -4,0, -5,0,
                                          -2,1, -3,1, -4,1, 2,-2, 2,-3, 3,-2, -1,2, -1,3, -1,4, };
+        IconId = 14;
     }
 
     public override void Activate(int x, int y)

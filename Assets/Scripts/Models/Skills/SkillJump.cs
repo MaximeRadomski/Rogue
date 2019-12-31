@@ -20,6 +20,7 @@ public class SkillJump : Skill
         MaxRange = 2;
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,1, 0,2, 1,1, 1,0, 2,0, 1,-1, 0,-1, 0,-2, -1,-1, -1,0, -2,0, -1,1 };
+        IconId = 1;
     }
 
     public override void OnClick()

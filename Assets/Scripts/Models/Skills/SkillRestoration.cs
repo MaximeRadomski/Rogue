@@ -19,6 +19,7 @@ public class SkillRestoration : Skill
         MinRange = 0;
         MaxRange = 0;
         RangeType = RangeType.NoRange;
+        IconId = 9;
     }
 
     public override void OnStartTurn()

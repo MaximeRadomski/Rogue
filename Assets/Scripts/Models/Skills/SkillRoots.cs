@@ -19,6 +19,7 @@ public class SkillRoots : Skill
         MinRange = 0;
         MaxRange = 0;
         RangeType = RangeType.NoRange;
+        IconId = 8;
     }
 
     public override void OnEndAttack(int damages, CharacterBhv opponentBhv)

@@ -19,6 +19,7 @@ public class SkillAvarice : Skill
         MinRange = 0;
         MaxRange = 0;
         RangeType = RangeType.NoRange;
+        IconId = 3;
     }
 
     public override void OnEndAttack(int damages, CharacterBhv opponentBhv)

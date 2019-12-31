@@ -19,6 +19,7 @@ public class SkillHeal : Skill
         MaxRange = 0;
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,0 };
+        IconId = 12;
     }
 
     public override void Activate(int x, int y)

@@ -21,6 +21,7 @@ public class SkillDash : Skill
         MaxRange = 2;
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,1, 1,1, 1,0, 1,-1, 0,-1, -1,-1, -1,0, -1,1 };
+        IconId = 4;
     }
 
     private int _currentTargetX;

@@ -21,6 +21,7 @@ public abstract class Skill
     public RangeType RangeType;
     public List<int> RangePositions;
     public List<RangeDirection> RangeZones;
+    public int IconId;
 
     public CharacterBhv CharacterBhv;
     public List<CharacterBhv> OpponentBhvs;

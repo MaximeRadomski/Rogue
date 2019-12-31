@@ -20,6 +20,7 @@ public class SkillTripleEdged : Skill
         MaxRange = 0;
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,0 };
+        IconId = 16;
     }
 
     public override void Activate(int x, int y)

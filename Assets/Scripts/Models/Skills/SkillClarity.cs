@@ -19,6 +19,7 @@ public class SkillClarity : Skill
         MaxRange = 1;
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 };
+        IconId = 13;
     }
 
     public override void Activate(int x, int y)

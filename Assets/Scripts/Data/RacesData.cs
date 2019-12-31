@@ -99,7 +99,7 @@ public static class RacesData
         tmpCharacter.Name = name;
         tmpCharacter.Level = level;
         tmpCharacter.HpMax = Helper.MaxHpFromLevelOne(tmpCharacter.HpMax, level, tmpCharacter.LevelingHealthPercent);
-        tmpCharacter.Gold = 0;
+        tmpCharacter.Gold = Random.Range(0,25*tmpCharacter.Level);
         tmpCharacter.Experience = 0;
         tmpCharacter.Hp = tmpCharacter.HpMax;
         return tmpCharacter;

@@ -18,6 +18,7 @@ public class SkillTeleportation : Skill
         MinRange = 99;
         MaxRange = 99;
         RangeType = RangeType.FullRange;
+        IconId = 10;
     }
 
     public override void OnClick()

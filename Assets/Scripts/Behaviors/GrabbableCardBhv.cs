@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class GrabbableCardBhv : MonoBehaviour
 {
-    public List<Sprite> Sprites;
-
     private SoundControlerBhv _soundControler;
     private SpriteRenderer _spriteRenderer;
     private SkinContainerBhv _skinContainerBhv;
     private SwipeSceneBhv _swipeSceneBhv;
     private BoxCollider2D _boxCollider2D;
-    private Canvas _canvas;
 
     private List<Character> _opponentCharacters;
 
@@ -35,7 +32,6 @@ public class GrabbableCardBhv : MonoBehaviour
         _skinContainerBhv = transform.Find("SkinContainer").GetComponent<SkinContainerBhv>();
         _boxCollider2D = GetComponent<BoxCollider2D>();
         _swipeSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SwipeSceneBhv>();
-        _canvas = transform.GetChild(0).GetComponent<Canvas>();
 
         _initialPosition = Constants.CardInitialPosition;
         _likePosition = new Vector3(6.0f, 0.0f);
@@ -49,13 +45,9 @@ public class GrabbableCardBhv : MonoBehaviour
         _pressedScale = new Vector3(1.05f, 1.05f, 1.0f);
         _disabledScale = new Vector3(0.95f, 0.95f, 1.0f);
         gameObject.name = "Card" + id;
-        _canvas.overrideSorting = true;
-        _canvas.sortingLayerName = Constants.SortingLayerCard;
-        _skinContainerBhv.SetSkinContainerSortingLayer(Constants.SortingLayerCard);
-        _skinContainerBhv.SetSkinContainerSortingLayerOrder(id);
-        _spriteRenderer.sortingOrder = id * 99;
-        _canvas.sortingOrder = id * 99;
-        
+        //_canvas.overrideSorting = true;
+        //_canvas.sortingLayerName = Constants.SortingLayerCard;
+        HandleSortingLayerAndOrder(id);               
         if (id == 0)
         {
             _boxCollider2D.enabled = false;
@@ -64,13 +56,32 @@ public class GrabbableCardBhv : MonoBehaviour
         InitOpponent();
     }
 
+    private void HandleSortingLayerAndOrder(int id)
+    {
+        _skinContainerBhv.SetSkinContainerSortingLayer(Constants.SortingLayerCard);
+        _skinContainerBhv.SetSkinContainerSortingLayerOrder(id);
+        _spriteRenderer.sortingOrder = id * 99;
+        for (int i = 0; i < transform.childCount; ++i)
+        {
+            int currentOrder = 0;
+            var spriteRenderer = transform.GetChild(i).GetComponent<SpriteRenderer>();
+            var textMesh = transform.GetChild(i).GetComponent<TMPro.TextMeshPro>();
+            if (spriteRenderer != null) currentOrder = spriteRenderer.sortingOrder;
+            if (textMesh != null) currentOrder = textMesh.sortingOrder;
+
+            int toSubstract = currentOrder / 100;
+            int decimals = currentOrder - (toSubstract * 100);
+
+            if (spriteRenderer != null) spriteRenderer.sortingOrder = (id * 100) + decimals;
+            if (textMesh != null) textMesh.sortingOrder = (id * 100) + decimals;
+        }
+    }
+
     public void BringToFront()
     {
         _isStretching = true;
         gameObject.name = "Card1";
-        _spriteRenderer.sortingOrder = 1 * 99;
-        _canvas.sortingOrder = 1 * 99;
-        _skinContainerBhv.SetSkinContainerSortingLayerOrder(1);
+        HandleSortingLayerAndOrder(1);
         _boxCollider2D.enabled = true;
     }
 
@@ -78,37 +89,49 @@ public class GrabbableCardBhv : MonoBehaviour
     {
 
         _opponentCharacters = new List<Character>();
-        _opponentCharacters.Add(RacesData.GetCharacterFromRaceAndLevel((CharacterRace)Random.Range(0, Helper.EnumCount<CharacterRace>()), 1));
-        for (int i = 0; i < _opponentCharacters.Count; ++i)
+        var nbOpponents = Random.Range(1, 6);
+        for (int i = 0; i < nbOpponents; ++i)
         {
-            DisplayCharacterStats(i);
+            _opponentCharacters.Add(RacesData.GetCharacterFromRaceAndLevel((CharacterRace)Random.Range(0, Helper.EnumCount<CharacterRace>()), 1));
         }
+        DisplayCharacterStats(0);
             
     }
 
     public void DisplayCharacterStats(int id)
     {
-        _canvas.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = "Name:" + _opponentCharacters[id].Name;
-        _canvas.transform.GetChild(1).GetComponent<UnityEngine.UI.Text>().text = "Gender:" + _opponentCharacters[id].Gender;
-        _canvas.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = "Race:" + _opponentCharacters[id].Race;
-        _canvas.transform.GetChild(3).GetComponent<UnityEngine.UI.Text>().text = "Level:" + _opponentCharacters[id].Level;
+        transform.Find("OpponentName").GetComponent<TMPro.TextMeshPro>().text = _opponentCharacters[id].Name;
+        transform.Find("OpponentRace").GetComponent<TMPro.TextMeshPro>().text = _opponentCharacters[id].Race.ToString();
+        transform.Find("OpponentGender").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsGender_" + _opponentCharacters[id].Gender.GetHashCode());
+        transform.Find("OpponentLevel").GetComponent<TMPro.TextMeshPro>().text = _opponentCharacters[id].Level.ToString();
+        transform.Find("OpponentWeapon1Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsWeapon_" + _opponentCharacters[id].Weapons[0].Type.GetHashCode());
+        transform.Find("OpponentWeapon1Rarity").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsRarity_" + _opponentCharacters[id].Weapons[0].Rarity.GetHashCode());
+        transform.Find("OpponentWeapon2Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsWeapon_" + _opponentCharacters[id].Weapons[1].Type.GetHashCode());
+        transform.Find("OpponentWeapon2Rarity").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsRarity_" + _opponentCharacters[id].Weapons[1].Rarity.GetHashCode());
+        transform.Find("OpponentSkill1Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsSkill_" + _opponentCharacters[id].Skills[0].IconId);
+        transform.Find("OpponentSkill1Rarity").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsRarity_" + _opponentCharacters[id].Skills[0].Rarity.GetHashCode());
+        transform.Find("OpponentSkill2Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsSkill_" + _opponentCharacters[id].Skills[1].IconId);
+        transform.Find("OpponentSkill2Rarity").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsRarity_" + _opponentCharacters[id].Skills[1].Rarity.GetHashCode());
+        transform.Find("OpponentGold").GetComponent<TMPro.TextMeshPro>().text = _opponentCharacters[id].Gold + " ©";
 
-        _canvas.transform.GetChild(4).GetComponent<UnityEngine.UI.Text>().text = _opponentCharacters[id].Weapons[0].Name;
-        _canvas.transform.GetChild(4).GetComponent<UnityEngine.UI.Text>().color = Helper.ColorFromTextType(_opponentCharacters[id].Weapons[0].Rarity.GetHashCode());
-        _canvas.transform.GetChild(5).GetComponent<UnityEngine.UI.Text>().text = "Type:" + _opponentCharacters[id].Weapons[0].Type;
-        _canvas.transform.GetChild(6).GetComponent<UnityEngine.UI.Text>().text = "Rarity:" + _opponentCharacters[id].Weapons[0].Rarity;
-
-        _canvas.transform.GetChild(7).GetComponent<UnityEngine.UI.Text>().text = _opponentCharacters[id].Weapons[1].Name;
-        _canvas.transform.GetChild(7).GetComponent<UnityEngine.UI.Text>().color = Helper.ColorFromTextType(_opponentCharacters[id].Weapons[1].Rarity.GetHashCode());
-        _canvas.transform.GetChild(8).GetComponent<UnityEngine.UI.Text>().text = "Type:" + _opponentCharacters[id].Weapons[1].Type;
-        _canvas.transform.GetChild(9).GetComponent<UnityEngine.UI.Text>().text = "Rarity:" + _opponentCharacters[id].Weapons[1].Rarity;
-
-        _canvas.transform.GetChild(10).GetComponent<UnityEngine.UI.Text>().text = _opponentCharacters[id].Skills[0].Name;
-        _canvas.transform.GetChild(10).GetComponent<UnityEngine.UI.Text>().color = Helper.ColorFromTextType(_opponentCharacters[id].Skills[0].Rarity.GetHashCode());
-        _canvas.transform.GetChild(11).GetComponent<UnityEngine.UI.Text>().text = _opponentCharacters[id].Skills[1].Name;
-        _canvas.transform.GetChild(11).GetComponent<UnityEngine.UI.Text>().color = Helper.ColorFromTextType(_opponentCharacters[id].Skills[1].Rarity.GetHashCode());
+        var nbOpponents = _opponentCharacters.Count;
+        for (int i = 1; i <= 6; ++i)
+        {
+            if (i > nbOpponents)
+            {
+                transform.Find("OpponentNb" + i).gameObject.SetActive(false);
+                transform.Find("OpponentNb" + i + "Back").gameObject.SetActive(false);
+            }
+            if (i == id)
+                transform.Find("SelectedSprite").transform.position = transform.Find("OpponentNb" + i + "Back").transform.position;
+        }
 
         Instantiator.LoadCharacterSkin(_opponentCharacters[id], _skinContainerBhv.gameObject);
+    }
+
+    public void SelectOpponent(int id)
+    {
+        DisplayCharacterStats(id);
     }
 
     public void BeginAction(Vector2 initialTouchPosition)

@@ -21,6 +21,7 @@ public class SkillForge : Skill
         MaxRange = 0;
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,0 };
+        IconId = 6;
     }
 
     public override void Activate(int x, int y)
