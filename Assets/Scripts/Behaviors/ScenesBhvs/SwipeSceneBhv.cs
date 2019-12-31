@@ -24,11 +24,11 @@ public class SwipeSceneBhv : MonoBehaviour
 
     private void SetButtons()
     {
-        GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToRaceChoiceScene;
+        GameObject.Find("ButtonPause").GetComponent<ButtonBhv>().EndActionDelegate = GoToRaceChoiceScene;
         _instantiator.NewCard(1);
         _instantiator.NewCard(0);
-        GameObject.Find("ButtonFloatingDislike").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("Card1").GetComponent<GrabbableCardBhv>().Dislike;
-        GameObject.Find("ButtonFloatingLike").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("Card1").GetComponent<GrabbableCardBhv>().Like;
+        GameObject.Find("ButtonAvoid").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("Card1").GetComponent<GrabbableCardBhv>().Avoid;
+        GameObject.Find("ButtonVenture").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("Card1").GetComponent<GrabbableCardBhv>().Venture;
     }
 
     public void NewCard()
@@ -36,8 +36,8 @@ public class SwipeSceneBhv : MonoBehaviour
         Destroy(GameObject.Find("Card1"));
         var backCard = GameObject.Find("Card0");
         backCard.GetComponent<GrabbableCardBhv>().BringToFront();
-        GameObject.Find("ButtonFloatingDislike").GetComponent<ButtonBhv>().EndActionDelegate = backCard.GetComponent<GrabbableCardBhv>().Dislike;
-        GameObject.Find("ButtonFloatingLike").GetComponent<ButtonBhv>().EndActionDelegate = backCard.GetComponent<GrabbableCardBhv>().Like;
+        GameObject.Find("ButtonAvoid").GetComponent<ButtonBhv>().EndActionDelegate = backCard.GetComponent<GrabbableCardBhv>().Avoid;
+        GameObject.Find("ButtonVenture").GetComponent<ButtonBhv>().EndActionDelegate = backCard.GetComponent<GrabbableCardBhv>().Venture;
         _instantiator.NewCard(0);
     }
 

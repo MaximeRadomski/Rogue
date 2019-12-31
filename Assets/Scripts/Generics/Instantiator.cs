@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Instantiator : MonoBehaviour
 {
-    private GameObject _canvas;
-
     void Start()
     {
         SetPrivates();
@@ -13,7 +11,6 @@ public class Instantiator : MonoBehaviour
 
     public void SetPrivates()
     {
-        _canvas = GameObject.Find("Canvas");
     }
 
     public void PopText(string text, Vector2 position, TextType type)
@@ -29,14 +26,14 @@ public class Instantiator : MonoBehaviour
                 ++nbTextsOnThisPosition;
         }
 
-        var tmpPoppingTextInstance = Instantiate(tmpPoppingTextObject, position, tmpPoppingTextObject.transform.rotation, _canvas.transform);
+        var tmpPoppingTextInstance = Instantiate(tmpPoppingTextObject, position, tmpPoppingTextObject.transform.rotation);
         tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().SetPrivates(text, position + new Vector2(0.0f, -0.2f * nbTextsOnThisPosition), type);
     }
 
     public void NewCard(int id)
     {
         var tmpCardObject = Resources.Load<GameObject>("Prefabs/Card");
-        var tmpCardInstance = Instantiate(tmpCardObject, tmpCardObject.transform.position, tmpCardObject.transform.rotation, _canvas.transform);
+        var tmpCardInstance = Instantiate(tmpCardObject, tmpCardObject.transform.position, tmpCardObject.transform.rotation);
         tmpCardInstance.GetComponent<GrabbableCardBhv>().SetPrivates(id);
     }
 

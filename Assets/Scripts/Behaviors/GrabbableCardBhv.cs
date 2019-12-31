@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class GrabbableCardBhv : MonoBehaviour
@@ -8,7 +7,7 @@ public class GrabbableCardBhv : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private SkinContainerBhv _skinContainerBhv;
     private SwipeSceneBhv _swipeSceneBhv;
-    private BoxCollider2D _boxCollider2D;
+    private BoxCollider2D[] _boxColliders2D;
 
     private List<Character> _opponentCharacters;
 
@@ -30,10 +29,10 @@ public class GrabbableCardBhv : MonoBehaviour
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _skinContainerBhv = transform.Find("SkinContainer").GetComponent<SkinContainerBhv>();
-        _boxCollider2D = GetComponent<BoxCollider2D>();
         _swipeSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SwipeSceneBhv>();
 
         _initialPosition = Constants.CardInitialPosition;
+        _initialTouchPosition = _initialPosition;
         _likePosition = new Vector3(6.0f, 0.0f);
         _dislikePosition = new Vector3(-6.0f, 0.0f);
         _state = CardState.Active;
@@ -47,13 +46,15 @@ public class GrabbableCardBhv : MonoBehaviour
         gameObject.name = "Card" + id;
         //_canvas.overrideSorting = true;
         //_canvas.sortingLayerName = Constants.SortingLayerCard;
-        HandleSortingLayerAndOrder(id);               
+        HandleSortingLayerAndOrder(id);
+        InitOpponent();
+        _boxColliders2D = gameObject.GetComponents<BoxCollider2D>();
         if (id == 0)
         {
-            _boxCollider2D.enabled = false;
+            foreach (BoxCollider2D box in _boxColliders2D)
+                box.enabled = false;
             transform.localScale = _disabledScale;
         }
-        InitOpponent();
     }
 
     private void HandleSortingLayerAndOrder(int id)
@@ -74,6 +75,12 @@ public class GrabbableCardBhv : MonoBehaviour
 
             if (spriteRenderer != null) spriteRenderer.sortingOrder = (id * 100) + decimals;
             if (textMesh != null) textMesh.sortingOrder = (id * 100) + decimals;
+
+            var boxCollider = transform.GetChild(i).GetComponent<BoxCollider2D>();
+            if (boxCollider != null && id == 1)
+                boxCollider.enabled = true;
+            else if (boxCollider != null)
+                boxCollider.enabled = false;
         }
     }
 
@@ -82,7 +89,8 @@ public class GrabbableCardBhv : MonoBehaviour
         _isStretching = true;
         gameObject.name = "Card1";
         HandleSortingLayerAndOrder(1);
-        _boxCollider2D.enabled = true;
+        foreach (BoxCollider2D box in _boxColliders2D)
+            box.enabled = true;
     }
 
     private void InitOpponent()
@@ -90,6 +98,7 @@ public class GrabbableCardBhv : MonoBehaviour
 
         _opponentCharacters = new List<Character>();
         var nbOpponents = Random.Range(1, 6);
+        Debug.Log("nbOpponents: " + nbOpponents);
         for (int i = 0; i < nbOpponents; ++i)
         {
             _opponentCharacters.Add(RacesData.GetCharacterFromRaceAndLevel((CharacterRace)Random.Range(0, Helper.EnumCount<CharacterRace>()), 1));
@@ -115,36 +124,56 @@ public class GrabbableCardBhv : MonoBehaviour
         transform.Find("OpponentGold").GetComponent<TMPro.TextMeshPro>().text = _opponentCharacters[id].Gold + " ©";
 
         var nbOpponents = _opponentCharacters.Count;
-        for (int i = 1; i <= 6; ++i)
+        for (int i = 0; i < 6; ++i)
         {
-            if (i > nbOpponents)
+            if (i < nbOpponents)
             {
-                transform.Find("OpponentNb" + i).gameObject.SetActive(false);
-                transform.Find("OpponentNb" + i + "Back").gameObject.SetActive(false);
+                switch (i)
+                {
+                    case 0: transform.Find("OpponentNb1Back").GetComponent<ButtonBhv>().EndActionDelegate = SelectOpponent1; break;
+                    case 1: transform.Find("OpponentNb2Back").GetComponent<ButtonBhv>().EndActionDelegate = SelectOpponent2; break;
+                    case 2: transform.Find("OpponentNb3Back").GetComponent<ButtonBhv>().EndActionDelegate = SelectOpponent3; break;
+                    case 3: transform.Find("OpponentNb4Back").GetComponent<ButtonBhv>().EndActionDelegate = SelectOpponent4; break;
+                    case 4: transform.Find("OpponentNb5Back").GetComponent<ButtonBhv>().EndActionDelegate = SelectOpponent5; break;
+                    case 5: transform.Find("OpponentNb6Back").GetComponent<ButtonBhv>().EndActionDelegate = SelectOpponent6; break;
+                }
+            }
+            else
+            {
+                var tmpToCopyBox = transform.Find("OpponentNb" + (i + 1) + "Back").GetComponent<BoxCollider2D>();
+                var tmpNewBox = gameObject.AddComponent<BoxCollider2D>();
+                tmpNewBox.offset = new Vector2(tmpToCopyBox.offset.x, tmpToCopyBox.offset.y) + (Vector2)tmpToCopyBox.transform.position - (Vector2)transform.position;
+                tmpNewBox.size = new Vector2(tmpToCopyBox.size.x, tmpToCopyBox.size.y);
+                transform.Find("OpponentNb" + (i + 1)).gameObject.SetActive(false);
+                transform.Find("OpponentNb" + (i + 1) + "Back").gameObject.SetActive(false);
             }
             if (i == id)
-                transform.Find("SelectedSprite").transform.position = transform.Find("OpponentNb" + i + "Back").transform.position;
+                transform.Find("SelectedSprite").transform.position = transform.Find("OpponentNb" + (i + 1) + "Back").transform.position;
         }
 
         Instantiator.LoadCharacterSkin(_opponentCharacters[id], _skinContainerBhv.gameObject);
     }
 
-    public void SelectOpponent(int id)
-    {
-        DisplayCharacterStats(id);
-    }
+    public void SelectOpponent1() { DisplayCharacterStats(0); }
+    public void SelectOpponent2() { DisplayCharacterStats(1); }
+    public void SelectOpponent3() { DisplayCharacterStats(2); }
+    public void SelectOpponent4() { DisplayCharacterStats(3); }
+    public void SelectOpponent5() { DisplayCharacterStats(4); }
+    public void SelectOpponent6() { DisplayCharacterStats(5); }
 
     public void BeginAction(Vector2 initialTouchPosition)
     {
+        _initialTouchPosition = initialTouchPosition;
         _isStretching = true;
         transform.localScale = _pressedScale;
         _soundControler.PlaySound(_soundControler.ClickIn);
         _isReseting = false;
-        _initialTouchPosition = initialTouchPosition;
     }
 
     public void GrabAction(Vector2 touchPosition)
     {
+        if (_initialTouchPosition == _initialPosition)
+            return;
         if (!_hasMoved && Vector2.Distance(_initialTouchPosition, touchPosition) > 0.1f)
             _hasMoved = true;
         if (_hasMoved)
@@ -159,13 +188,14 @@ public class GrabbableCardBhv : MonoBehaviour
         if (_hasMoved)
         {
             if (transform.position.x > 1.0f)
-                Like();
+                Venture();
             else if (transform.position.x < -1.0f)
-                Dislike();
+                Avoid();
             else
                 _isReseting = true;
         }
         _soundControler.PlaySound(_soundControler.ClickOut);
+        _initialTouchPosition = _initialPosition;
     }
 
     public void CancelAction()
@@ -178,9 +208,9 @@ public class GrabbableCardBhv : MonoBehaviour
         if (_isStretching)
             StretchOnBegin();
         if (_state == CardState.Liked)
-            Like();
+            Venture();
         else if (_state == CardState.Disliked)
-            Dislike();
+            Avoid();
         else if (_isReseting)
             ResetPosition();
     }
@@ -203,7 +233,7 @@ public class GrabbableCardBhv : MonoBehaviour
         }
     }
 
-    public void Like()
+    public void Venture()
     {
         _state = CardState.Liked;
         transform.position = Vector2.Lerp(transform.position, _likePosition, 0.1f);
@@ -212,7 +242,7 @@ public class GrabbableCardBhv : MonoBehaviour
             _swipeSceneBhv.GoToFightScene(_opponentCharacters);
     }
 
-    public void Dislike()
+    public void Avoid()
     {
         _state = CardState.Disliked;
         transform.position = Vector2.Lerp(transform.position, _dislikePosition, 0.1f);
