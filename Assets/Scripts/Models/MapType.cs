@@ -8,5 +8,6 @@ public enum MapType
     Sewers,
     Forest,
     Mines,
-    Mountains
+    Mountains,
+    Plains
 }

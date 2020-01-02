@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class PlayerPrefsHelper : MonoBehaviour
 {
+    public static void SaveJourney(Journey journey)
+    {
+        PlayerPrefs.SetString(Constants.PpJourney, JsonUtility.ToJson(journey));
+        Debug.Log(JsonUtility.ToJson(journey));
+    }
+
+    public static Journey GetJourney()
+    {
+        var journey = JsonUtility.FromJson<Journey>(PlayerPrefs.GetString(Constants.PpJourney, Constants.PpSerializeDefault));
+        return journey;
+    }
+
     public static void SaveCharacter(string characterName, Character character)
     {
         PlayerPrefs.SetString(characterName, JsonUtility.ToJson(character));

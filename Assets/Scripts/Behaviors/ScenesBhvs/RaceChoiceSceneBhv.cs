@@ -77,6 +77,8 @@ public class RaceChoiceSceneBhv : MonoBehaviour
     {
         if (_playerCharacter == null)
             return;
+        var journey = new Journey(_playerCharacter);
+        PlayerPrefsHelper.SaveJourney(journey);
         PlayerPrefsHelper.SaveCharacter(Constants.PpPlayer, _playerCharacter);
         SceneManager.LoadScene(Constants.SwipeScene);
     }

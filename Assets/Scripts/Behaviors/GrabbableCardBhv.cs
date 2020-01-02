@@ -207,9 +207,9 @@ public class GrabbableCardBhv : MonoBehaviour
     {
         if (_isStretching)
             StretchOnBegin();
-        if (_state == CardState.Liked)
+        if (_state == CardState.Ventured)
             Venture();
-        else if (_state == CardState.Disliked)
+        else if (_state == CardState.Avoided)
             Avoid();
         else if (_isReseting)
             ResetPosition();
@@ -235,7 +235,7 @@ public class GrabbableCardBhv : MonoBehaviour
 
     public void Venture()
     {
-        _state = CardState.Liked;
+        _state = CardState.Ventured;
         transform.position = Vector2.Lerp(transform.position, _likePosition, 0.1f);
         transform.eulerAngles = new Vector3(0.0f, 0.0f, _rotateAngle * (transform.position.x / 2));
         if (Helper.FloatEqualsPrecision(transform.position.x, _likePosition.x, 0.1f))
@@ -244,7 +244,7 @@ public class GrabbableCardBhv : MonoBehaviour
 
     public void Avoid()
     {
-        _state = CardState.Disliked;
+        _state = CardState.Avoided;
         transform.position = Vector2.Lerp(transform.position, _dislikePosition, 0.1f);
         transform.eulerAngles = new Vector3(0.0f, 0.0f, _rotateAngle * (transform.position.x / 2));
         if (Helper.FloatEqualsPrecision(transform.position.x, _dislikePosition.x, 1.0f))
@@ -262,6 +262,6 @@ public class GrabbableCardBhv : MonoBehaviour
 public enum CardState
 {
     Active,
-    Liked,
-    Disliked
+    Ventured,
+    Avoided
 }

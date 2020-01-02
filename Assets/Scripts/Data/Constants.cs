@@ -14,6 +14,7 @@ public static class Constants
     //  PLAYER PREFS  //
     public const string PpAudioLevel = "AudioLevel";
     public const float PpAudioLevelDefault = 1;
+    public const string PpJourney = "Journey";
     public const string PpPlayer = "Player";
     public const string PpOpponent = "Opponent";
     public const string PpWeapon1 = "Weapon1";
