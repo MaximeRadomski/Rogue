@@ -53,7 +53,8 @@ public class SwipeSceneBhv : MonoBehaviour
 
     public void NewCard()
     {
-        _journey.Minutes += 20;
+        var minutesPassed = Random.Range(20, 61);
+        _journey.Minutes += minutesPassed;
         if (_journey.Minutes >= 60)
         {
             _journey.Minutes -= 60;
@@ -63,6 +64,7 @@ public class SwipeSceneBhv : MonoBehaviour
         {
             _journey.Hour -= 24;
         }
+        Debug.Log("Minutes Passed = " + minutesPassed + "\t|\tHours = " + _journey.Hour + "h" + _journey.Minutes);
         ++_journey.Step;
         Destroy(GameObject.Find("Card1"));
         var backCard = GameObject.Find("Card0");
@@ -99,36 +101,18 @@ public class SwipeSceneBhv : MonoBehaviour
     {
         _hp.text = _playerCharacter.Hp.ToString();
         _level.text = _playerCharacter.Level.ToString();
-        _xp.text = _playerCharacter.Experience.ToString();
-        _gold.text = _playerCharacter.Gold.ToString();
+        _xp.text = _playerCharacter.Experience.ToString() + " ®";
+        _gold.text = _playerCharacter.Gold.ToString() + " ©";
         _matchPercentage.text = "100%";
-        float englishHour = _journey.Hour > 12 ? _journey.Hour - 2 : _journey.Hour;
+        float englishHour = _journey.Hour > 12 ? _journey.Hour - 12 : _journey.Hour;
+        if (_journey.Hour == 24 || _journey.Hour == 12) englishHour = 0;
         float minutes = _journey.Minutes / 60.0f;
         var newRotation = 30.0f * (englishHour + minutes);
-        _hoursCircle.transform.eulerAngles = new Vector3(0.0f, 0.0f, newRotation);
-        for (int i = 0; i < _hoursCircle.transform.childCount; ++i)
-        {
-            var child = _hoursCircle.transform.GetChild(i);
-            if (child == null)
-                continue;
-            if (child.transform.position.y > _hoursCircle.transform.position.y + 0.2f)
-            {
-                child.gameObject.SetActive(true);
-                var tmpColor = child.GetComponent<TMPro.TextMeshPro>().color;
-                var transparency = 1.0f;
-                if (int.Parse(child.GetComponent<TMPro.TextMeshPro>().text) < englishHour)
-                    transparency = 0.5f;
-                else if (int.Parse(child.GetComponent<TMPro.TextMeshPro>().text) > englishHour)
-                    transparency = 0.8f;
-                tmpColor = new Color(tmpColor.r, tmpColor.g, tmpColor.b, transparency);
-            }
-            else
-                child.gameObject.SetActive(false);
-        }
+        _hoursCircle.GetComponent<HoursCircleBhv>().Rotate(new Vector3(0.0f, 0.0f, newRotation));
         _biomePicture.sprite = Resources.Load<Sprite>("Sprites/" + _journey.Biome + "/BiomePicture");
         _amPm.text = _journey.Hour > 12 ? "PM" : "AM";
         _day.text = _journey.Day.ToString();
-        _dayNight.sprite = _journey.Hour >= 8 && _journey.Hour < 4 ? DayNight[1] : DayNight[0];
+        _dayNight.sprite = _journey.Hour >= 20 || _journey.Hour < 4 ? DayNight[1] : DayNight[0];
         _biomeSteps.text = _journey.Step + "-" + _journey.MaxStep;
     }
 

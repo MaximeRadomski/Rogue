@@ -98,7 +98,6 @@ public class GrabbableCardBhv : MonoBehaviour
 
         _opponentCharacters = new List<Character>();
         var nbOpponents = Random.Range(1, 6);
-        Debug.Log("nbOpponents: " + nbOpponents);
         for (int i = 0; i < nbOpponents; ++i)
         {
             _opponentCharacters.Add(RacesData.GetCharacterFromRaceAndLevel((CharacterRace)Random.Range(0, Helper.EnumCount<CharacterRace>()), 1));

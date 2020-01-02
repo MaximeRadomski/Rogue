@@ -8,6 +8,9 @@ TextureImporter:
   - first:
       213: 5409561464055292624
     second: SwipeTopUI_1
+  - first:
+      213: -7908218605306523746
+    second: SwipeTopUI_2
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -108,6 +111,27 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 120
+        width: 144
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d158211b0b1803e43b004e004f0b0eee
+      internalID: 5732174971833316858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SwipeTopUI_1
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 60
         width: 144
         height: 60
@@ -118,14 +142,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34c74f2a9498d59479aabc04ce9d0314
-      internalID: 5732174971833316858
+      spriteID: 93e2f2399785d5a469a981230baf1939
+      internalID: 5409561464055292624
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SwipeTopUI_1
+      name: SwipeTopUI_2
       rect:
         serializedVersion: 2
         x: 0
@@ -139,8 +163,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a764899fd222924eaeffefb550f7a13
-      internalID: 5409561464055292624
+      spriteID: f56ebdf2dfb71a4419db62bafec4050b
+      internalID: -7908218605306523746
       vertices: []
       indices: 
       edges: []

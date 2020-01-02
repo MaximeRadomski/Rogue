@@ -24,15 +24,15 @@ public class Journey
         switch (mapType)
         {
             case MapType.City:
-                return Random.Range(3, 5);
+                return Random.Range(3, 5 + 1);
             case MapType.Sewers:
-                return Random.Range(5, 7);
+                return Random.Range(5, 7 + 1);
             case MapType.Forest:
-                return Random.Range(7, 20);
+                return Random.Range(7, 20 + 1);
             case MapType.Mines:
-                return Random.Range(3, 15);
+                return Random.Range(3, 15 + 1);
             case MapType.Mountains:
-                return Random.Range(7, 20);
+                return Random.Range(7, 20 + 1);
         }
         return 1;
     }
