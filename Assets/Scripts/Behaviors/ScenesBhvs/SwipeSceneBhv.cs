@@ -45,10 +45,10 @@ public class SwipeSceneBhv : MonoBehaviour
     private void SetButtons()
     {
         GameObject.Find("ButtonPause").GetComponent<ButtonBhv>().EndActionDelegate = GoToRaceChoiceScene;
-        _instantiator.NewCard(1);
-        _instantiator.NewCard(0);
-        GameObject.Find("ButtonAvoid").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("Card1").GetComponent<GrabbableCardBhv>().Avoid;
-        GameObject.Find("ButtonVenture").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("Card1").GetComponent<GrabbableCardBhv>().Venture;
+        _instantiator.NewRandomCard(1);
+        _instantiator.NewRandomCard(0);
+        GameObject.Find("ButtonAvoid").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("Card1").GetComponent<CardBhv>().Avoid;
+        GameObject.Find("ButtonVenture").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("Card1").GetComponent<CardBhv>().Venture;
     }
 
     public void NewCard()
@@ -64,14 +64,21 @@ public class SwipeSceneBhv : MonoBehaviour
         {
             _journey.Hour -= 24;
         }
-        Debug.Log("Minutes Passed = " + minutesPassed + "\t|\tHours = " + _journey.Hour + "h" + _journey.Minutes);
+        //Debug.Log("Minutes Passed = " + minutesPassed + "\t|\t\tHours = " + _journey.Hour + "h" + _journey.Minutes);
         ++_journey.Step;
         Destroy(GameObject.Find("Card1"));
         var backCard = GameObject.Find("Card0");
-        backCard.GetComponent<GrabbableCardBhv>().BringToFront();
-        GameObject.Find("ButtonAvoid").GetComponent<ButtonBhv>().EndActionDelegate = backCard.GetComponent<GrabbableCardBhv>().Avoid;
-        GameObject.Find("ButtonVenture").GetComponent<ButtonBhv>().EndActionDelegate = backCard.GetComponent<GrabbableCardBhv>().Venture;
-        _instantiator.NewCard(0);
+        backCard.GetComponent<CardBhv>().BringToFront();
+        GameObject.Find("ButtonAvoid").GetComponent<ButtonBhv>().EndActionDelegate = backCard.GetComponent<CardBhv>().Avoid;
+        GameObject.Find("ButtonVenture").GetComponent<ButtonBhv>().EndActionDelegate = backCard.GetComponent<CardBhv>().Venture;
+        if (_journey.Step < _journey.MaxStep) //Just '<' because it instantiates one in advance
+        {
+            _instantiator.NewRandomCard(0);
+        }            
+        else
+        {
+            _instantiator.NewBiomeCard(0);
+        }
         UpdateDisplayJourneyAndCharacterStats();
     }
 
@@ -113,7 +120,7 @@ public class SwipeSceneBhv : MonoBehaviour
         _amPm.text = _journey.Hour > 12 ? "PM" : "AM";
         _day.text = _journey.Day.ToString();
         _dayNight.sprite = _journey.Hour >= 20 || _journey.Hour < 4 ? DayNight[1] : DayNight[0];
-        _biomeSteps.text = _journey.Step + "-" + _journey.MaxStep;
+        _biomeSteps.text = (_journey.Step <= _journey.MaxStep ? _journey.Step : _journey.MaxStep) + "-" + _journey.MaxStep;
     }
 
     public void GoToRaceChoiceScene()

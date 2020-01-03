@@ -50,6 +50,8 @@ public static class Constants
     public static Color ColorPa = new Color(0.16f, 0.34f, 0.78f, 1.0f);         //#2557c7
     public static Color ColorPm = new Color(0.11f, 0.53f, 0.0f, 1.0f);          //#a91717
     public static Color ColorTransparent = new Color(0.0f, 0.0f, 0.0f, 0.0f);   //#000000
+    public static Color ColorPlain = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+    public static Color ColorPlainTransparent = new Color(1.0f, 1.0f, 1.0f, 0.0f);
 
     // SORTING LAYERS //
     public const string SortingLayerCard = "Card";

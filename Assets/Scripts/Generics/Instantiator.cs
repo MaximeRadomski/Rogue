@@ -30,11 +30,30 @@ public class Instantiator : MonoBehaviour
         tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().SetPrivates(text, position + new Vector2(0.0f, -0.2f * nbTextsOnThisPosition), type);
     }
 
-    public void NewCard(int id)
+    public void NewRandomCard(int id)
     {
-        var tmpCardObject = Resources.Load<GameObject>("Prefabs/Card");
+        var rand = Random.Range(0, 2);
+        //if (rand == 0)
+            NewOpponentCard(id);
+        //else
+        //    NewEventCard(id);
+    }
+
+    public void NewOpponentCard(int id)
+    {
+        var tmpCardObject = Resources.Load<GameObject>("Prefabs/OpponentCard");
         var tmpCardInstance = Instantiate(tmpCardObject, tmpCardObject.transform.position, tmpCardObject.transform.rotation);
-        tmpCardInstance.GetComponent<GrabbableCardBhv>().SetPrivates(id);
+        tmpCardInstance.GetComponent<OpponentCardBhv>().SetPrivates(id);
+    }
+
+    public void NewEventCard(int id)
+    {
+
+    }
+
+    public void NewBiomeCard(int id)
+    {
+
     }
 
     public static GameObject NewCharacterGameObject(string characterName, bool isPlayer = false, string id = "")
