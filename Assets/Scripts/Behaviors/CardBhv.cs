@@ -49,6 +49,7 @@ public abstract class CardBhv : MonoBehaviour
         _boxColliders2D = gameObject.GetComponents<BoxCollider2D>();
         if (id == 0)
         {
+            _cacheSpriteRenderer.enabled = true;
             foreach (BoxCollider2D box in _boxColliders2D)
                 box.enabled = false;
             transform.localScale = _disabledScale;
@@ -138,7 +139,7 @@ public abstract class CardBhv : MonoBehaviour
     {
         transform.localScale = Vector3.Lerp(transform.localScale, _resetedScale, 0.1f);
         if (_cacheSpriteRenderer != null && _cacheSpriteRenderer.color != Constants.ColorPlainTransparent)
-            _cacheSpriteRenderer.color = Color.Lerp(_cacheSpriteRenderer.color, Constants.ColorPlainTransparent, 0.1f);
+            _cacheSpriteRenderer.color = Color.Lerp(_cacheSpriteRenderer.color, Constants.ColorPlainTransparent, 0.04f);
         if (transform.localScale == _resetedScale)
             _isStretching = false;
     }
