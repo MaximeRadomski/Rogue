@@ -8,6 +8,7 @@ public class ButtonBhv : MonoBehaviour
     public ActionDelegate BeginActionDelegate;
     public ActionDelegate DoActionDelegate;
     public ActionDelegate EndActionDelegate;
+    public bool Disabled;
 
     private SpriteRenderer _spriteRenderer;
     private SoundControlerBhv _soundControler;
@@ -33,7 +34,7 @@ public class ButtonBhv : MonoBehaviour
         _resetedScale = new Vector3(1.0f, 1.0f, 1.0f);
         _pressedScale = new Vector3(1.2f, 1.1f, 1.0f);
         _isResetingColor = false;
-        _resetedColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        _resetedColor = Constants.ColorPlain;
         _pressedColor = new Color(0.85f, 0.85f, 0.85f, 1.0f);
     }
 
@@ -87,8 +88,51 @@ public class ButtonBhv : MonoBehaviour
             _isResetingColor = false;
             return;
         }
-        _spriteRenderer.color = Color.Lerp(_spriteRenderer.color, _resetedColor, 0.1f);
-        if (_spriteRenderer.color == _resetedColor)
-            _isResetingColor = false;
+        if (Disabled)
+        {
+            _spriteRenderer.color = Color.Lerp(_spriteRenderer.color, Constants.ColorPlainSemiTransparent, 0.1f);
+            if (_spriteRenderer.color == Constants.ColorPlainSemiTransparent)
+                _isResetingColor = false;
+        }
+        else
+        {
+            _spriteRenderer.color = Color.Lerp(_spriteRenderer.color, _resetedColor, 0.1f);
+            if (_spriteRenderer.color == _resetedColor)
+                _isResetingColor = false;
+        }
+    }
+
+    public void DisableButton()
+    {
+        Disabled = true;
+        _spriteRenderer.color = Constants.ColorPlainSemiTransparent;
+        GetComponent<BoxCollider2D>().enabled = false;
+        for (int i = 0; i < transform.childCount; ++i)
+        {
+            var spriteRenderer = transform.GetChild(i).GetComponent<SpriteRenderer>();
+            var textMesh = transform.GetChild(i).GetComponent<TMPro.TextMeshPro>();
+            if (spriteRenderer != null) spriteRenderer.color = Constants.ColorPlainSemiTransparent;
+            if (textMesh != null) textMesh.color = Constants.ColorPlainSemiTransparent;
+            var boxCollider = transform.GetChild(i).GetComponent<BoxCollider2D>();
+            if (boxCollider != null)
+                boxCollider.enabled = false;
+        }
+    }
+
+    public void EnableButton()
+    {
+        Disabled = false;
+        _spriteRenderer.color = Constants.ColorPlain;
+        GetComponent<BoxCollider2D>().enabled = true;
+        for (int i = 0; i < transform.childCount; ++i)
+        {
+            var spriteRenderer = transform.GetChild(i).GetComponent<SpriteRenderer>();
+            var textMesh = transform.GetChild(i).GetComponent<TMPro.TextMeshPro>();
+            if (spriteRenderer != null) spriteRenderer.color = Constants.ColorPlain;
+            if (textMesh != null) textMesh.color = Constants.ColorPlain;
+            var boxCollider = transform.GetChild(i).GetComponent<BoxCollider2D>();
+            if (boxCollider != null)
+                boxCollider.enabled = false;
+        }
     }
 }

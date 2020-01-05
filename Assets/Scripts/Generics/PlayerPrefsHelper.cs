@@ -7,12 +7,14 @@ public class PlayerPrefsHelper : MonoBehaviour
     public static void SaveJourney(Journey journey)
     {
         PlayerPrefs.SetString(Constants.PpJourney, JsonUtility.ToJson(journey));
+        PlayerPrefs.SetString(Constants.PpCurrentBiome, JsonUtility.ToJson(journey.Biome));
         Debug.Log(JsonUtility.ToJson(journey));
     }
 
     public static Journey GetJourney()
     {
         var journey = JsonUtility.FromJson<Journey>(PlayerPrefs.GetString(Constants.PpJourney, Constants.PpSerializeDefault));
+        journey.Biome = JsonUtility.FromJson<Biome>(PlayerPrefs.GetString(Constants.PpCurrentBiome, Constants.PpSerializeDefault));
         return journey;
     }
 

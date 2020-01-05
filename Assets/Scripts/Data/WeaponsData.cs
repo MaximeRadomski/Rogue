@@ -16,9 +16,9 @@ public static class WeaponsData
     public static string[] GreatSwordNames = { "Great Sword", "Long Sword", "Zweihander", "Flamberge", "Reaver" };
     public static string[] GauntletsNames = { "Gauntlets", "Cestus", "Fangs", "Claws", "Knuckles" };
     public static string[][] WeaponTypeNames = { SwordNames, SpearNames, ClubNames, KnifeNames, BowNames, DaggersNames, HammerNames, AxeNames, GreatSwordNames, GauntletsNames };
-    public static string[] NormalNames = { "", "Classic", "Usual", "Unoriginal", "Average", "Child", "Weird", "Redneck" };
-    public static string[] MagicalNames = { "Magical", "Enchanted", "Lost", "Knight", "Your mom's", "Mythical", "Ok" };
-    public static string[] RareNames = { "|Of Doom", "Enormous", "Super", "|2.0", "|of Death", "|of Truth", "|of Fertility", "El Famoso" };
+    public static string[] NormalNames = { "", "Classic", "Usual", "Unoriginal", "Average", "Child", "Weird", "Redneck", "Common", "So Common" };
+    public static string[] MagicalNames = { "Magical", "Enchanted", "Lost", "Knight", "Mythical", "Ok", "Good", "Handmade", "Exciting" };
+    public static string[] RareNames = { "Your mom's", "|of Doom", "Enormous", "Super", "|2.0", "|of Death", "|of Truth", "|of Fertility", "El Famoso", "|of Legend", "|of Love" };
     public static int BaseInitDamageRangePercentage = 15;
     public static int ChanceNotRaceWeaponPercent = 10;
     public static int RareWeaponAppearancePercent = 5;

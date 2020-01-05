@@ -26,6 +26,11 @@ public class SwipeSceneBhv : MonoBehaviour
     private TMPro.TextMeshPro _day;
     private TMPro.TextMeshPro _biomeSteps;
 
+    private int _currentBiomeChoice;
+
+    private ButtonBhv _avoidBhv;
+    private ButtonBhv _ventureBhv;
+
     void Start()
     {
         Application.targetFrameRate = 60;
@@ -40,15 +45,19 @@ public class SwipeSceneBhv : MonoBehaviour
         _playerCharacter = JsonUtility.FromJson<Character>(PlayerPrefs.GetString(Constants.PpPlayer, Constants.PpSerializeDefault));
         _instantiator = GetComponent<Instantiator>();
         _instantiator.SetPrivates();
+        _currentBiomeChoice = 0;
+        _avoidBhv = GameObject.Find("ButtonAvoid").GetComponent<ButtonBhv>();
+        _ventureBhv = GameObject.Find("ButtonVenture").GetComponent<ButtonBhv>();
+
     }
 
     private void SetButtons()
     {
         GameObject.Find("ButtonPause").GetComponent<ButtonBhv>().EndActionDelegate = GoToRaceChoiceScene;
-        _instantiator.NewRandomCard(1);
-        _instantiator.NewRandomCard(0);
-        GameObject.Find("ButtonAvoid").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("Card1").GetComponent<CardBhv>().Avoid;
-        GameObject.Find("ButtonVenture").GetComponent<ButtonBhv>().EndActionDelegate = GameObject.Find("Card1").GetComponent<CardBhv>().Venture;
+        _instantiator.NewRandomCard(1, _journey.Day, _journey.Biome.MapType);
+        _instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType);
+        _avoidBhv.EndActionDelegate = GameObject.Find("Card1").GetComponent<CardBhv>().Avoid;
+        _ventureBhv.EndActionDelegate = GameObject.Find("Card1").GetComponent<CardBhv>().Venture;
     }
 
     public void NewCard()
@@ -69,15 +78,20 @@ public class SwipeSceneBhv : MonoBehaviour
         Destroy(GameObject.Find("Card1"));
         var backCard = GameObject.Find("Card0");
         backCard.GetComponent<CardBhv>().BringToFront();
-        GameObject.Find("ButtonAvoid").GetComponent<ButtonBhv>().EndActionDelegate = backCard.GetComponent<CardBhv>().Avoid;
-        GameObject.Find("ButtonVenture").GetComponent<ButtonBhv>().EndActionDelegate = backCard.GetComponent<CardBhv>().Venture;
-        if (_journey.Step < _journey.MaxStep) //Just '<' because it instantiates one in advance
+        _avoidBhv.EndActionDelegate = backCard.GetComponent<CardBhv>().Avoid;
+        _ventureBhv.EndActionDelegate = backCard.GetComponent<CardBhv>().Venture;
+        if (_journey.Step < _journey.Biome.Steps) //Just '<' because it instantiates one in advance
         {
-            _instantiator.NewRandomCard(0);
+            _instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType);
         }            
+        else if (_currentBiomeChoice < _journey.Biome.Destinations)
+        {
+            ++_currentBiomeChoice;
+            _instantiator.NewBiomeCard(0, _journey.Day, _currentBiomeChoice, _journey.Biome.Destinations);
+        }
         else
         {
-            _instantiator.NewBiomeCard(0);
+            _avoidBhv.DisableButton();
         }
         UpdateDisplayJourneyAndCharacterStats();
     }
@@ -116,11 +130,34 @@ public class SwipeSceneBhv : MonoBehaviour
         float minutes = _journey.Minutes / 60.0f;
         var newRotation = 30.0f * (englishHour + minutes);
         _hoursCircle.GetComponent<HoursCircleBhv>().Rotate(new Vector3(0.0f, 0.0f, newRotation));
-        _biomePicture.sprite = Resources.Load<Sprite>("Sprites/" + _journey.Biome + "/BiomePicture");
+        _biomePicture.sprite = Resources.Load<Sprite>("Sprites/" + _journey.Biome.MapType + "/BiomePicture");
         _amPm.text = _journey.Hour > 12 ? "PM" : "AM";
         _day.text = _journey.Day.ToString();
         _dayNight.sprite = _journey.Hour >= 20 || _journey.Hour < 4 ? DayNight[1] : DayNight[0];
-        _biomeSteps.text = (_journey.Step <= _journey.MaxStep ? _journey.Step : _journey.MaxStep) + "-" + _journey.MaxStep;
+        _biomeSteps.text = (_journey.Step <= _journey.Biome.Steps ? _journey.Step : _journey.Biome.Steps) + "-" + _journey.Biome.Steps;
+    }
+
+    public void NewBiome(Biome biome)
+    {
+        _avoidBhv.EnableButton();
+        _currentBiomeChoice = 0;
+        _journey.Step = 1;
+        _journey.Biome = biome;
+        _instantiator.NewRandomCard(1, _journey.Day, _journey.Biome.MapType);
+        _instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType);
+        _avoidBhv.EndActionDelegate = GameObject.Find("Card1").GetComponent<CardBhv>().Avoid;
+        _ventureBhv.EndActionDelegate = GameObject.Find("Card1").GetComponent<CardBhv>().Venture;
+        UpdateDisplayJourneyAndCharacterStats();
+    }
+
+    public bool CanAvoid()
+    {
+        return !_avoidBhv.Disabled;
+    }
+
+    public bool CanVenture()
+    {
+        return !_ventureBhv.Disabled;
     }
 
     public void GoToRaceChoiceScene()

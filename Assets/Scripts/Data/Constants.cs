@@ -15,6 +15,7 @@ public static class Constants
     public const string PpAudioLevel = "AudioLevel";
     public const float PpAudioLevelDefault = 1;
     public const string PpJourney = "Journey";
+    public const string PpCurrentBiome = "CurrentBiome";
     public const string PpPlayer = "Player";
     public const string PpOpponent = "Opponent";
     public const string PpWeapon1 = "Weapon1";
@@ -52,6 +53,7 @@ public static class Constants
     public static Color ColorTransparent = new Color(0.0f, 0.0f, 0.0f, 0.0f);   //#000000
     public static Color ColorPlain = new Color(1.0f, 1.0f, 1.0f, 1.0f);
     public static Color ColorPlainTransparent = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+    public static Color ColorPlainSemiTransparent = new Color(1.0f, 1.0f, 1.0f, 0.5f);
 
     // SORTING LAYERS //
     public const string SortingLayerCard = "Card";

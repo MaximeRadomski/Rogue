@@ -23,7 +23,7 @@ public abstract class CardBhv : MonoBehaviour
     internal Vector3 _pressedScale;
     internal Vector3 _disabledScale;
 
-    public virtual void SetPrivates(int id)
+    public virtual void SetPrivates(int id, int day)
     {
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -43,8 +43,6 @@ public abstract class CardBhv : MonoBehaviour
         _pressedScale = new Vector3(1.05f, 1.05f, 1.0f);
         _disabledScale = new Vector3(0.95f, 0.95f, 1.0f);
         gameObject.name = "Card" + id;
-        //_canvas.overrideSorting = true;
-        //_canvas.sortingLayerName = Constants.SortingLayerCard;
         HandleSortingLayerAndOrder(id);
         _boxColliders2D = gameObject.GetComponents<BoxCollider2D>();
         if (id == 0)
@@ -81,7 +79,7 @@ public abstract class CardBhv : MonoBehaviour
         }
     }
 
-    public void BeginAction(Vector2 initialTouchPosition)
+    public virtual void BeginAction(Vector2 initialTouchPosition)
     {
         _initialTouchPosition = initialTouchPosition;
         _isStretching = true;
@@ -90,7 +88,7 @@ public abstract class CardBhv : MonoBehaviour
         _isReseting = false;
     }
 
-    public void GrabAction(Vector2 touchPosition)
+    public virtual void GrabAction(Vector2 touchPosition)
     {
         if (_initialTouchPosition == _initialPosition)
             return;
@@ -103,13 +101,13 @@ public abstract class CardBhv : MonoBehaviour
         }
     }
 
-    public void EndAction()
+    public virtual void EndAction()
     {
         if (_hasMoved)
         {
-            if (transform.position.x > 1.0f)
+            if (transform.position.x > 1.0f && _swipeSceneBhv.CanVenture())
                 Venture();
-            else if (transform.position.x < -1.0f)
+            else if (transform.position.x < -1.0f && _swipeSceneBhv.CanAvoid())
                 Avoid();
             else
                 _isReseting = true;

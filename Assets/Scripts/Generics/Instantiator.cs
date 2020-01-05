@@ -30,30 +30,33 @@ public class Instantiator : MonoBehaviour
         tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().SetPrivates(text, position + new Vector2(0.0f, -0.2f * nbTextsOnThisPosition), type);
     }
 
-    public void NewRandomCard(int id)
+    public void NewRandomCard(int id, int day, MapType mapType)
     {
         var rand = Random.Range(0, 2);
         //if (rand == 0)
-            NewOpponentCard(id);
+            NewOpponentCard(id, day, mapType);
         //else
-        //    NewEventCard(id);
+        //    NewEventCard(id, day, mapType);
     }
 
-    public void NewOpponentCard(int id)
+    public void NewOpponentCard(int id, int day, MapType mapType)
     {
         var tmpCardObject = Resources.Load<GameObject>("Prefabs/OpponentCard");
         var tmpCardInstance = Instantiate(tmpCardObject, tmpCardObject.transform.position, tmpCardObject.transform.rotation);
-        tmpCardInstance.GetComponent<OpponentCardBhv>().SetPrivates(id);
+        tmpCardInstance.GetComponent<OpponentCardBhv>().SetPrivates(id, day);
     }
 
-    public void NewEventCard(int id)
+    public void NewEventCard(int id, int day, MapType mapType)
     {
 
     }
 
-    public void NewBiomeCard(int id)
+    public void NewBiomeCard(int id, int day, int choice, int maxChoice)
     {
-
+        var tmpCardObject = Resources.Load<GameObject>("Prefabs/BiomeCard");
+        var tmpCardInstance = Instantiate(tmpCardObject, tmpCardObject.transform.position, tmpCardObject.transform.rotation);
+        tmpCardInstance.GetComponent<BiomeCardBhv>().SetPrivates(id, day);
+        tmpCardInstance.GetComponent<BiomeCardBhv>().SetChoice(choice, maxChoice);
     }
 
     public static GameObject NewCharacterGameObject(string characterName, bool isPlayer = false, string id = "")

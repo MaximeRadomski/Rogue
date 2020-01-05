@@ -9,5 +9,6 @@ public enum MapType
     Forest,
     Mines,
     Mountains,
-    Plains
+    Plains,
+    Beach
 }

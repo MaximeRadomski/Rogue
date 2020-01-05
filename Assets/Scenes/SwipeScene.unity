@@ -508,6 +508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be28743872a9e44f9ac47db0ba7a714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Disabled: 0
 --- !u!61 &79159562
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1381,6 +1382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be28743872a9e44f9ac47db0ba7a714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Disabled: 0
 --- !u!61 &451804565
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1599,6 +1601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be28743872a9e44f9ac47db0ba7a714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Disabled: 0
 --- !u!61 &533803252
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5634,7 +5637,7 @@ GameObject:
   - component: {fileID: 1551062144}
   - component: {fileID: 1551062145}
   m_Layer: 0
-  m_Name: SwipeTopUI_2
+  m_Name: TopCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

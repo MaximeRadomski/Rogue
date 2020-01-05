@@ -35,14 +35,14 @@ public class InputControlerBhv : MonoBehaviour
                     else if (_currentObject.tag == Constants.TagGrabbableCard)
                     {
                         if (Input.GetTouch(i).phase == TouchPhase.Began)
-                            _currentObject.GetComponent<OpponentCardBhv>().BeginAction(touchPosWorld2D);
+                            _currentObject.GetComponent<CardBhv>().BeginAction(touchPosWorld2D);
                         else if (Input.GetTouch(i).phase == TouchPhase.Ended)
                         {
-                            _currentObject.GetComponent<OpponentCardBhv>().EndAction();
+                            _currentObject.GetComponent<CardBhv>().EndAction();
                             _currentObject = null;
                         }
                         else
-                            _currentObject.GetComponent<OpponentCardBhv>().GrabAction(touchPosWorld2D);
+                            _currentObject.GetComponent<CardBhv>().GrabAction(touchPosWorld2D);
                     }
                     else if (_currentObject.tag == Constants.TagCell)
                     {
@@ -73,7 +73,7 @@ public class InputControlerBhv : MonoBehaviour
                 if (_currentObject.tag == Constants.TagButton)
                     _currentObject.GetComponent<ButtonBhv>().BeginAction();
                 else if (_currentObject.tag == Constants.TagGrabbableCard)
-                    _currentObject.GetComponent<OpponentCardBhv>().BeginAction(touchPosWorld2D);
+                    _currentObject.GetComponent<CardBhv>().BeginAction(touchPosWorld2D);
                 else if (_currentObject.tag == Constants.TagCell)
                     _currentObject.GetComponent<CellBhv>().BeginAction();
             }
@@ -96,7 +96,7 @@ public class InputControlerBhv : MonoBehaviour
                 }
                 else if (_currentObject.tag == Constants.TagGrabbableCard)
                 {
-                    _currentObject.GetComponent<OpponentCardBhv>().EndAction();
+                    _currentObject.GetComponent<CardBhv>().EndAction();
                     _currentObject = null;
                 }
                 else if (_currentObject.tag == Constants.TagCell)
@@ -120,7 +120,7 @@ public class InputControlerBhv : MonoBehaviour
                 if (_currentObject.tag == Constants.TagButton)
                     _currentObject.GetComponent<ButtonBhv>().DoAction();
                 else if (_currentObject.tag == Constants.TagGrabbableCard)
-                    _currentObject.GetComponent<OpponentCardBhv>().GrabAction(touchPosWorld2D);
+                    _currentObject.GetComponent<CardBhv>().GrabAction(touchPosWorld2D);
                 else if (_currentObject.tag == Constants.TagCell)
                     _currentObject.GetComponent<CellBhv>().DoAction();
             }
@@ -142,7 +142,7 @@ public class InputControlerBhv : MonoBehaviour
         }
         else if (_currentObject.tag == Constants.TagGrabbableCard)
         {
-            _currentObject.GetComponent<OpponentCardBhv>().CancelAction();
+            _currentObject.GetComponent<CardBhv>().CancelAction();
             _currentObject = null;
         }
     }
