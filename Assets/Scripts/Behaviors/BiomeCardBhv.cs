@@ -25,7 +25,7 @@ public class BiomeCardBhv : CardBhv
     public void DisplayStats()
     {
         transform.Find("BiomeName").GetComponent<TMPro.TextMeshPro>().text = _biome.Name;
-        transform.Find("BiomePicture").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/" + _biome.MapType + "/BiomePicture");
+        transform.Find("BiomePicture").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/BiomePicture_" + _biome.MapType.GetHashCode());
         transform.Find("Choice").GetComponent<TMPro.TextMeshPro>().text = "Choice:\n" + _choice + "/" + _maxChoice;
         transform.Find("Steps").GetComponent<TMPro.TextMeshPro>().text = "Steps:\n" + _biome.Steps;
         transform.Find("Inn").GetComponent<TMPro.TextMeshPro>().text = "Inn: " + _biome.InnPercent + "%";

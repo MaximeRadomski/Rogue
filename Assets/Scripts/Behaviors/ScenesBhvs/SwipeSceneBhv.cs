@@ -130,7 +130,7 @@ public class SwipeSceneBhv : MonoBehaviour
         float minutes = _journey.Minutes / 60.0f;
         var newRotation = 30.0f * (englishHour + minutes);
         _hoursCircle.GetComponent<HoursCircleBhv>().Rotate(new Vector3(0.0f, 0.0f, newRotation));
-        _biomePicture.sprite = Resources.Load<Sprite>("Sprites/" + _journey.Biome.MapType + "/BiomePicture");
+        _biomePicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/BiomePicture_" + _journey.Biome.MapType.GetHashCode());
         _amPm.text = _journey.Hour > 12 ? "PM" : "AM";
         _day.text = _journey.Day.ToString();
         _dayNight.sprite = _journey.Hour >= 20 || _journey.Hour < 4 ? DayNight[1] : DayNight[0];
