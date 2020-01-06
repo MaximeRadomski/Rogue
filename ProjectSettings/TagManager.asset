@@ -67,6 +67,9 @@ TagManager:
   - name: Card
     uniqueID: 834654313
     locked: 0
+  - name: Menu
+    uniqueID: 2040739685
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
