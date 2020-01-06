@@ -34,10 +34,9 @@ public static class WeaponsData
         Rarity rarity = Rarity.Normal;
         if (!isBase)
         {
-            int rarityPercent = Random.Range(0, 100);
-            if (rarityPercent < RareWeaponAppearancePercent)
+            if (Random.Range(0, 100) < RareWeaponAppearancePercent)
                 rarity = Rarity.Rare;
-            else if (rarityPercent < MagicalWeaponAppearancePercent)
+            else if (Random.Range(0, 100) < MagicalWeaponAppearancePercent)
                 rarity = Rarity.Magical;
         }
         string name = GetWeaponNameFromRarity(type, rarity, isBase);

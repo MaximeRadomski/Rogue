@@ -40,7 +40,7 @@ public static class Constants
     public const int UnlimitedPm = GridMax * GridMax;
     public const int VisitedPmValue = -1;
     public const int VisitedSkillValue = -2;
-    public static Vector2 CardInitialPosition = new Vector2(0.0f, 0.083f);    
+    public static Vector2 CardInitialPosition = new Vector2(0.0f, 0.083f);
 
     //  COLORS  //
     public static Color ColorNormal = new Color(0.83f, 0.83f, 0.83f, 1.0f);     //#d4d4d4
@@ -60,4 +60,14 @@ public static class Constants
 
     // SKIN CONTAINERS Y OFFSET //
     public const float SkinContainerYOffsetHuman = 0.498f;
+
+    // TIPS AND TRICKS //
+    public static string[] TipsAndTricks = {
+        "Never underestimate your opponent. Except Gobelins.",
+        "Size Matters. Women are huge in this world.",
+        "You're nothing without money. Find money.",
+        "Remember to reed tips!",
+        "You look nice today.",
+        "Make war, not love.\n- Famous Orc"
+    };
 }

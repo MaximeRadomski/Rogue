@@ -32,17 +32,16 @@ public class OpponentCardBhv : CardBhv
     {
 
         _opponentCharacters = new List<Character>();
-        int encounterPercent = Random.Range(0, 100);
         var nbOpponents = 1;
-        if (encounterPercent < 1)
+        if (Random.Range(0, 100) < 1)
             nbOpponents = 6;
-        else if (encounterPercent < 10)
+        else if (Random.Range(0, 100) < 10)
             nbOpponents = 5;
-        else if (encounterPercent < 20)
+        else if (Random.Range(0, 100) < 20)
             nbOpponents = 4;
-        else if (encounterPercent < 30)
+        else if (Random.Range(0, 100) < 30)
             nbOpponents = 3;
-        else if (encounterPercent < 40)
+        else if (Random.Range(0, 100) < 40)
             nbOpponents = 2;
         for (int i = 0; i < nbOpponents; ++i)
         {

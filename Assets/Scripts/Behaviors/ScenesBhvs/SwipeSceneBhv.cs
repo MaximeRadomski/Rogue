@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class SwipeSceneBhv : MonoBehaviour
 {
     public Sprite[] DayNight;
+    public bool Paused;
 
     private Character _playerCharacter;
     private Instantiator _instantiator;
@@ -28,6 +29,7 @@ public class SwipeSceneBhv : MonoBehaviour
 
     private int _currentBiomeChoice;
 
+    private PauseMenuBhv _pauseMenu;
     private ButtonBhv _avoidBhv;
     private ButtonBhv _ventureBhv;
 
@@ -39,6 +41,17 @@ public class SwipeSceneBhv : MonoBehaviour
         FirstDisplayJourneyAndCharacterStats();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            if (!Paused)
+                Pause();
+            else
+                Resume();
+        }
+    }
+
     private void SetPrivates()
     {
         _journey = PlayerPrefsHelper.GetJourney();
@@ -48,16 +61,25 @@ public class SwipeSceneBhv : MonoBehaviour
         _currentBiomeChoice = 0;
         _avoidBhv = GameObject.Find("ButtonAvoid").GetComponent<ButtonBhv>();
         _ventureBhv = GameObject.Find("ButtonVenture").GetComponent<ButtonBhv>();
-
+        _pauseMenu = _instantiator.NewPauseMenu();
     }
 
     private void SetButtons()
     {
-        GameObject.Find("ButtonPause").GetComponent<ButtonBhv>().EndActionDelegate = GoToRaceChoiceScene;
+        GameObject.Find("ButtonPause").GetComponent<ButtonBhv>().EndActionDelegate = Pause;
         _instantiator.NewRandomCard(1, _journey.Day, _journey.Biome.MapType);
         _instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType);
         _avoidBhv.EndActionDelegate = GameObject.Find("Card1").GetComponent<CardBhv>().Avoid;
         _ventureBhv.EndActionDelegate = GameObject.Find("Card1").GetComponent<CardBhv>().Venture;
+        _pauseMenu.Buttons[0].EndActionDelegate = Resume;
+        _pauseMenu.TextMeshes[0].text = "Resume";
+        _pauseMenu.Buttons[1].EndActionDelegate = GiveUp;
+        _pauseMenu.TextMeshes[1].text = "Give Up";
+        _pauseMenu.Buttons[2].EndActionDelegate = Settings;
+        _pauseMenu.TextMeshes[2].text = "Settings";
+        _pauseMenu.Buttons[3].EndActionDelegate = Exit;
+        _pauseMenu.TextMeshes[3].text = "Exit";
+        _pauseMenu.Buttons[4].gameObject.SetActive(false);
     }
 
     public void NewCard()
@@ -160,11 +182,6 @@ public class SwipeSceneBhv : MonoBehaviour
         return !_ventureBhv.Disabled;
     }
 
-    public void GoToRaceChoiceScene()
-    {
-        SceneManager.LoadScene(Constants.RaceChoiceScene);
-    }
-
     public void GoToFightScene(List<Character> opponentCharacters)
     {
         for (int i = 0; i < opponentCharacters.Count; ++i)
@@ -174,4 +191,34 @@ public class SwipeSceneBhv : MonoBehaviour
         PlayerPrefs.SetInt(Constants.PpNbOpponents, opponentCharacters.Count);
         SceneManager.LoadScene(Constants.FightScene);
     }
+
+    #region PauseMenu
+
+    public void Pause()
+    {
+        Paused = true;
+        _pauseMenu.Pause();
+    }
+
+    private void Resume()
+    {
+        Paused = false;
+        _pauseMenu.UnPause();
+    }
+
+    private void GiveUp()
+    {
+        SceneManager.LoadScene(Constants.RaceChoiceScene);
+    }
+
+    private void Settings()
+    {
+
+    }
+    private void Exit()
+    {
+        SceneManager.LoadScene(Constants.RaceChoiceScene);
+    }
+
+    #endregion
 }

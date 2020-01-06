@@ -14,6 +14,11 @@ public class PositionBhv : MonoBehaviour
 
     void Start()
     {
+        UpdatePositions();   
+    }
+
+    public void UpdatePositions()
+    {
         if (VerticalSide != CameraVerticalSide.None)
         {
             if (VerticalSide == CameraVerticalSide.MidVertical)
@@ -40,6 +45,7 @@ public class PositionBhv : MonoBehaviour
     private void AdjustHorizontalPosition()
     {
         transform.position = new Vector3((_horizontalMult * Camera.main.orthographicSize * Camera.main.aspect) + XOffset, transform.position.y, 0.0f);
+        transform.position += Camera.main.transform.position;
     }
 }
 

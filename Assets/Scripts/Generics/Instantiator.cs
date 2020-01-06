@@ -13,6 +13,15 @@ public class Instantiator : MonoBehaviour
     {
     }
 
+    public PauseMenuBhv NewPauseMenu()
+    {
+        var tmpPauseMenuObject = Resources.Load<GameObject>("Prefabs/PauseMenu");
+        var tmpPauseMeuInstance = Instantiate(tmpPauseMenuObject, tmpPauseMenuObject.transform.position, tmpPauseMenuObject.transform.rotation);
+        var pauseMenuBhv = tmpPauseMeuInstance.GetComponent<PauseMenuBhv>();
+        pauseMenuBhv.SetPrivates();
+        return pauseMenuBhv;
+    }
+
     public void PopText(string text, Vector2 position, TextType type)
     {
         var tmpPoppingTextObject = Resources.Load<GameObject>("Prefabs/PoppingText");

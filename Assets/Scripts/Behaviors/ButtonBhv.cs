@@ -35,7 +35,7 @@ public class ButtonBhv : MonoBehaviour
         _pressedScale = new Vector3(1.2f, 1.1f, 1.0f);
         _isResetingColor = false;
         _resetedColor = Constants.ColorPlain;
-        _pressedColor = new Color(0.85f, 0.85f, 0.85f, 1.0f);
+        _pressedColor = new Color(0.7f, 0.7f, 0.7f, 1.0f);
     }
 
     public void BeginAction()
