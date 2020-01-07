@@ -40,7 +40,6 @@ public class BiomeCardBhv : CardBhv
         {
             gameObject.name = "CardOld";
             _swipeSceneBhv.NewBiome(_biome);
-            Destroy(gameObject);
         }            
     }
 }

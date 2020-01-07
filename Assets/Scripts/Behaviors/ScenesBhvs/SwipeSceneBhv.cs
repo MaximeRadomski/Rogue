@@ -161,14 +161,21 @@ public class SwipeSceneBhv : MonoBehaviour
 
     public void NewBiome(Biome biome)
     {
+        var remainingCards = GameObject.FindGameObjectsWithTag(Constants.TagGrabbableCard);
+        foreach (var card in remainingCards)
+        {
+            Destroy(card);
+        }
         _avoidBhv.EnableButton();
         _currentBiomeChoice = 0;
         _journey.Step = 1;
         _journey.Biome = biome;
         _instantiator.NewRandomCard(1, _journey.Day, _journey.Biome.MapType);
+        var backCard = GameObject.Find("Card1");
+        //backCard.GetComponent<CardBhv>().BringToFront();
+        _avoidBhv.EndActionDelegate = backCard.GetComponent<CardBhv>().Avoid;
+        _ventureBhv.EndActionDelegate = backCard.GetComponent<CardBhv>().Venture;
         _instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType);
-        _avoidBhv.EndActionDelegate = GameObject.Find("Card1").GetComponent<CardBhv>().Avoid;
-        _ventureBhv.EndActionDelegate = GameObject.Find("Card1").GetComponent<CardBhv>().Venture;
         UpdateDisplayJourneyAndCharacterStats();
     }
 

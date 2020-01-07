@@ -45,13 +45,15 @@ public abstract class CardBhv : MonoBehaviour
         gameObject.name = "Card" + id;
         HandleSortingLayerAndOrder(id);
         _boxColliders2D = gameObject.GetComponents<BoxCollider2D>();
+        transform.localScale = _disabledScale;
         if (id == 0)
         {
             _cacheSpriteRenderer.enabled = true;
             foreach (BoxCollider2D box in _boxColliders2D)
                 box.enabled = false;
-            transform.localScale = _disabledScale;
         }
+        else
+            _isStretching = true;
     }
 
     internal virtual void HandleSortingLayerAndOrder(int id)

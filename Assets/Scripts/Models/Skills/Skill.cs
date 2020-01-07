@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Skill
+public abstract class Skill : InventoryItem
 {
     public string Name;
     public string Description;

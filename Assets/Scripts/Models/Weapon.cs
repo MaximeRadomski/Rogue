@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon
+public class Weapon : InventoryItem
 {
     public string Name;
     public WeaponType Type;
