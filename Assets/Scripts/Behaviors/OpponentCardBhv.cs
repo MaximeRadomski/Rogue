@@ -63,6 +63,7 @@ public class OpponentCardBhv : CardBhv
     public void DisplayCharacterStats(int id)
     {
         transform.Find("OpponentName").GetComponent<TMPro.TextMeshPro>().text = _opponentCharacters[id].Name;
+        transform.Find("OpponentName").GetComponent<ButtonBhv>().EndActionDelegate = Instantiator.EditViaKeyboard;
         transform.Find("OpponentRace").GetComponent<TMPro.TextMeshPro>().text = _opponentCharacters[id].Race.ToString();
         transform.Find("OpponentGender").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsGender_" + _opponentCharacters[id].Gender.GetHashCode());
         transform.Find("OpponentLevel").GetComponent<TMPro.TextMeshPro>().text = _opponentCharacters[id].Level.ToString();

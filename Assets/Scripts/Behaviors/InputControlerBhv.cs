@@ -29,6 +29,7 @@ public class InputControlerBhv : MonoBehaviour
                         else if (Input.GetTouch(i).phase == TouchPhase.Ended)
                         {
                             _currentObject.GetComponent<ButtonBhv>().EndAction();
+                            Constants.LastEndActionClickedName = _currentObject.name;
                             _currentObject = null;
                         }
                         else
@@ -97,6 +98,7 @@ public class InputControlerBhv : MonoBehaviour
                     return;
                 if (_currentObject.tag == Constants.TagButton)
                 {
+                    Constants.LastEndActionClickedName = _currentObject.name;
                     _currentObject.GetComponent<ButtonBhv>().EndAction();
                     _currentObject = null;
                 }

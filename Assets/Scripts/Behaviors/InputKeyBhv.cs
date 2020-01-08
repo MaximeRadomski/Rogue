@@ -64,6 +64,8 @@ public class InputKeyBhv : MonoBehaviour
         {
             _upperCase = " ";
             _lowerCase = " ";
+            _textMeshLower.text = _lowerCase;
+            _textMeshUpper.text = _upperCase;
             _isUpperCase = false;
             UpdateTextMesh();
             _buttonBhv.EndActionDelegate = AddLetter;
@@ -72,6 +74,8 @@ public class InputKeyBhv : MonoBehaviour
         {
             _upperCase = name[CharacterAfterString(name, "Key")].ToString();
             _lowerCase = name[CharacterAfterString(name, "Key") + 1].ToString();
+            _textMeshLower.text = _lowerCase;
+            _textMeshUpper.text = _upperCase;
             _isUpperCase = false;
             UpdateTextMesh();
             _buttonBhv.EndActionDelegate = AddLetter;
@@ -80,8 +84,9 @@ public class InputKeyBhv : MonoBehaviour
 
     #region Layout
 
-    private void ChangeLayout()
+    public void ChangeLayout()
     {
+        PlayerPrefs.SetInt(Constants.PpFavKeyboardLayout, _layoutId);
         for (int i = 0; i < _keyboard.transform.childCount; ++i)
         {
             var inputKeyBhv = _keyboard.transform.GetChild(i).GetComponent<InputKeyBhv>();
@@ -92,7 +97,7 @@ public class InputKeyBhv : MonoBehaviour
 
     public void GoToLayoutPosition(int idLayout)
     {
-        transform.position = LayoutPositions[idLayout];
+        transform.position = LayoutPositions[idLayout] + _keyboard.transform.position;
     }
 
     #endregion
@@ -166,14 +171,18 @@ public class InputKeyBhv : MonoBehaviour
 
     private void UpdateTextMesh()
     {
+        if (_lowerCase == null)
+            return;
         _textMeshUpper.enabled = _isUpperCase;
         _textMeshLower.enabled = !_isUpperCase;
     }
 
     private void AddLetter()
     {
+        if (_lowerCase == " " && _target.text.EndsWith(" "))
+            return;
         _target.text += _isUpperCase ? _upperCase : _lowerCase;
-        if (_target.renderedWidth > _maxWidth)
+        if (_maxWidth > 0 && _target.renderedWidth > _maxWidth)
             Del();
     }
 

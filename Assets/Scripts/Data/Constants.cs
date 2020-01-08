@@ -4,6 +4,8 @@ using UnityEngine;
 
 public static class Constants
 {
+    public const float Pixel = 0.0278f;
+
     //  TAGS  //
     public const string TagCell = "Cell";
     public const string TagButton = "Button";
@@ -24,6 +26,8 @@ public static class Constants
     public const string PpSkill2 = "Skill2";
     public const string PpNbOpponents = "NbOpponents";
     public const string PpSerializeDefault = null;
+    public const string PpFavKeyboardLayout = "FavKeyboard";
+    public const int PpFavKeyboardLayoutDefault = 0;
 
     //  SCENES  //
     public const string RaceChoiceScene = "RaceChoiceScene";
@@ -71,5 +75,7 @@ public static class Constants
         "Make war, not love.\n- Famous Orc"
     };
 
+    // CCHE SAVES
     public static int InputLayer = 0;
+    public static string LastEndActionClickedName = null;
 }

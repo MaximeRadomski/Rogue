@@ -15,23 +15,35 @@ public class Instantiator : MonoBehaviour
     {
     }
 
-    public void ShowKeyboard(TMPro.TextMeshPro target, float maxWidth = -1)
+    public static void EditViaKeyboard()
+    {
+        var target = GameObject.Find(Constants.LastEndActionClickedName);
+        if (target == null)
+            return;
+        ShowKeyboard(target.GetComponent<TMPro.TextMeshPro>(), target.GetComponent<BoxCollider2D>().size.x);
+    }
+
+    public static void ShowKeyboard(TMPro.TextMeshPro target, float maxWidth = -1)
     {
         ++Constants.InputLayer;
         var tmpKeyboardObject = Resources.Load<GameObject>("Prefabs/Keyboard");
-        var tmpKeyboardInstance = Instantiate(tmpKeyboardObject, tmpKeyboardObject.transform);
+        var tmpKeyboardInstance = Instantiate(tmpKeyboardObject, tmpKeyboardObject.transform.position, tmpKeyboardObject.transform.rotation);
         for (int i = 0; i < tmpKeyboardInstance.transform.childCount; ++i)
         {
             var inputKeyBhv = tmpKeyboardInstance.transform.GetChild(i).GetComponent<InputKeyBhv>();
             if (inputKeyBhv != null)
                 inputKeyBhv.SetPrivates(target, maxWidth);
+            var buttonBhv = tmpKeyboardInstance.transform.GetChild(i).GetComponent<ButtonBhv>();
+            if (buttonBhv != null)
+                buttonBhv.Layer = Constants.InputLayer;
         }
+        tmpKeyboardInstance.transform.Find("InputKeyLayout" + PlayerPrefs.GetInt(Constants.PpFavKeyboardLayout, Constants.PpFavKeyboardLayoutDefault)).GetComponent<InputKeyBhv>().ChangeLayout();
     }
 
     public PauseMenuBhv NewPauseMenu()
     {
         var tmpPauseMenuObject = Resources.Load<GameObject>("Prefabs/PauseMenu");
-        var tmpPauseMeuInstance = Instantiate(tmpPauseMenuObject, tmpPauseMenuObject.transform);
+        var tmpPauseMeuInstance = Instantiate(tmpPauseMenuObject, tmpPauseMenuObject.transform.position, tmpPauseMenuObject.transform.rotation);
         var pauseMenuBhv = tmpPauseMeuInstance.GetComponent<PauseMenuBhv>();
         pauseMenuBhv.SetPrivates();
         return pauseMenuBhv;
