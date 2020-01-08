@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Instantiator : MonoBehaviour
 {
+    private InputControlerBhv _inputControler;
+
     void Start()
     {
         SetPrivates();
@@ -13,10 +15,23 @@ public class Instantiator : MonoBehaviour
     {
     }
 
+    public void ShowKeyboard(TMPro.TextMeshPro target, float maxWidth = -1)
+    {
+        ++Constants.InputLayer;
+        var tmpKeyboardObject = Resources.Load<GameObject>("Prefabs/Keyboard");
+        var tmpKeyboardInstance = Instantiate(tmpKeyboardObject, tmpKeyboardObject.transform);
+        for (int i = 0; i < tmpKeyboardInstance.transform.childCount; ++i)
+        {
+            var inputKeyBhv = tmpKeyboardInstance.transform.GetChild(i).GetComponent<InputKeyBhv>();
+            if (inputKeyBhv != null)
+                inputKeyBhv.SetPrivates(target, maxWidth);
+        }
+    }
+
     public PauseMenuBhv NewPauseMenu()
     {
         var tmpPauseMenuObject = Resources.Load<GameObject>("Prefabs/PauseMenu");
-        var tmpPauseMeuInstance = Instantiate(tmpPauseMenuObject, tmpPauseMenuObject.transform.position, tmpPauseMenuObject.transform.rotation);
+        var tmpPauseMeuInstance = Instantiate(tmpPauseMenuObject, tmpPauseMenuObject.transform);
         var pauseMenuBhv = tmpPauseMeuInstance.GetComponent<PauseMenuBhv>();
         pauseMenuBhv.SetPrivates();
         return pauseMenuBhv;

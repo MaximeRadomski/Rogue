@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CellBhv : MonoBehaviour
+public class CellBhv : InputBhv
 {
     public int X;
     public int Y;

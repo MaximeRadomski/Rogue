@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class CardBhv : MonoBehaviour
+public abstract class CardBhv : InputBhv
 {
     internal SoundControlerBhv _soundControler;
     internal SpriteRenderer _spriteRenderer;

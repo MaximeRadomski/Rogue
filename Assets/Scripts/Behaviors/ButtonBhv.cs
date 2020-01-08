@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonBhv : MonoBehaviour
+public class ButtonBhv : InputBhv
 {
     public delegate void ActionDelegate();
     public ActionDelegate BeginActionDelegate;

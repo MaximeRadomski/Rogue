@@ -70,4 +70,6 @@ public static class Constants
         "You look nice today.",
         "Make war, not love.\n- Famous Orc"
     };
+
+    public static int InputLayer = 0;
 }

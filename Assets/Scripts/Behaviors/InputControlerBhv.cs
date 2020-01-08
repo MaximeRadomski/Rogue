@@ -20,6 +20,8 @@ public class InputControlerBhv : MonoBehaviour
                 {
                     CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
                     _currentObject = hitInformation.transform.gameObject;
+                    if (_currentObject.GetComponent<InputBhv>()?.Layer < Constants.InputLayer)
+                        continue;
                     if (_currentObject.tag == Constants.TagButton)
                     {
                         if (Input.GetTouch(i).phase == TouchPhase.Began)
@@ -70,6 +72,8 @@ public class InputControlerBhv : MonoBehaviour
             {
                 CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
                 _currentObject = hitInformation.transform.gameObject;
+                if (_currentObject.GetComponent<InputBhv>()?.Layer < Constants.InputLayer)
+                    return;
                 if (_currentObject.tag == Constants.TagButton)
                     _currentObject.GetComponent<ButtonBhv>().BeginAction();
                 else if (_currentObject.tag == Constants.TagGrabbableCard)
@@ -89,6 +93,8 @@ public class InputControlerBhv : MonoBehaviour
             {
                 CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
                 _currentObject = hitInformation.transform.gameObject;
+                if (_currentObject.GetComponent<InputBhv>()?.Layer < Constants.InputLayer)
+                    return;
                 if (_currentObject.tag == Constants.TagButton)
                 {
                     _currentObject.GetComponent<ButtonBhv>().EndAction();
@@ -117,6 +123,8 @@ public class InputControlerBhv : MonoBehaviour
             {
                 CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
                 _currentObject = hitInformation.transform.gameObject;
+                if (_currentObject.GetComponent<InputBhv>()?.Layer < Constants.InputLayer)
+                    return;
                 if (_currentObject.tag == Constants.TagButton)
                     _currentObject.GetComponent<ButtonBhv>().DoAction();
                 else if (_currentObject.tag == Constants.TagGrabbableCard)
