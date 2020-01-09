@@ -58,14 +58,14 @@ public class CellBhv : InputBhv
         }
     }
 
-    public void BeginAction()
+    public override void BeginAction(Vector2 initialTouchPosition)
     {
         _isStretching = true;
         transform.localScale = _pressedScale;
         _soundControler.PlaySound(_soundControler.ClickIn);
     }
 
-    public void DoAction()
+    public override void DoAction(Vector2 touchPosition)
     {
         if (State == CellState.AttackRange)
         {
@@ -74,7 +74,7 @@ public class CellBhv : InputBhv
         }
     }
 
-    public void EndAction()
+    public override void EndAction(Vector2 lastTouchPosition)
     {
         _soundControler.PlaySound(_soundControler.ClickOut);
         if (State == CellState.None || State == CellState.AttackZone)
@@ -98,6 +98,11 @@ public class CellBhv : InputBhv
         {
             _gridBhv.OnPlayerSkillClick(X, Y);
         }
+    }
+
+    public override void CancelAction()
+    {
+        _isStretching = true;
     }
 
     public void ResetDisplay()

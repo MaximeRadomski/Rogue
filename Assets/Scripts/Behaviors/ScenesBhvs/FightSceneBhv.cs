@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class FightSceneBhv : MonoBehaviour
+public class FightSceneBhv : SceneBhv
 {
     public FightState State;
 
@@ -33,8 +33,9 @@ public class FightSceneBhv : MonoBehaviour
 
     #region Init
 
-    private void SetPrivates()
+    internal override void SetPrivates()
     {
+        base.SetPrivates();
         _gridBhv = GetComponent<GridBhv>();
         _map = MapsData.EasyMaps[Random.Range(0, MapsData.EasyMaps.Count)];
     }

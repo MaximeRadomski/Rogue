@@ -18,6 +18,7 @@ public class InputKeyBhv : MonoBehaviour
     private string _lowerCase;
     private string _upperCase;
     private int _layoutId;
+    private int _pressedDelCount;
     private float _maxWidth;
     private bool _isUpperCase;
 
@@ -46,7 +47,9 @@ public class InputKeyBhv : MonoBehaviour
         }
         else if (name.Contains("Del"))
         {
-            _buttonBhv.EndActionDelegate = Del;
+            _buttonBhv.BeginActionDelegate = BeginDel;
+            _buttonBhv.DoActionDelegate = PressedDel;
+            _buttonBhv.EndActionDelegate = EndDel;
         }
         else if (name.Contains("Close"))
         {
@@ -129,6 +132,27 @@ public class InputKeyBhv : MonoBehaviour
     #endregion
 
     #region Del
+
+    private void BeginDel()
+    {
+        Del();
+        _pressedDelCount = 0;
+    }
+
+    private void PressedDel()
+    {
+        ++_pressedDelCount;
+        if (_pressedDelCount > 30)
+        {
+            Del();
+            _pressedDelCount -= 4;
+        }
+    }
+
+    private void EndDel()
+    {
+        _pressedDelCount = 0;
+    }
 
     private void Del()
     {

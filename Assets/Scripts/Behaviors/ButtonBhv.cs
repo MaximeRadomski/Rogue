@@ -38,7 +38,7 @@ public class ButtonBhv : InputBhv
         _pressedColor = new Color(0.7f, 0.7f, 0.7f, 1.0f);
     }
 
-    public void BeginAction()
+    public override void BeginAction(Vector2 initialTouchPosition)
     {
         _soundControler.PlaySound(_soundControler.ClickIn);
         _isStretching = true;
@@ -49,19 +49,19 @@ public class ButtonBhv : InputBhv
         BeginActionDelegate?.Invoke();
     }
 
-    public void DoAction()
+    public override void DoAction(Vector2 touchPosition)
     {
         DoActionDelegate?.Invoke();
     }
 
-    public void EndAction()
+    public override void EndAction(Vector2 lastTouchPosition)
     {
         _soundControler.PlaySound(_soundControler.ClickOut);
         _isResetingColor = true;
         EndActionDelegate?.Invoke();
     }
 
-    public void CancelAction()
+    public override void CancelAction()
     {
         _isResetingColor = true;
     }

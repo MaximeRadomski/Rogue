@@ -81,7 +81,7 @@ public abstract class CardBhv : InputBhv
         }
     }
 
-    public virtual void BeginAction(Vector2 initialTouchPosition)
+    public override void BeginAction(Vector2 initialTouchPosition)
     {
         _initialTouchPosition = initialTouchPosition;
         _isStretching = true;
@@ -90,7 +90,7 @@ public abstract class CardBhv : InputBhv
         _isReseting = false;
     }
 
-    public virtual void GrabAction(Vector2 touchPosition)
+    public override void DoAction(Vector2 touchPosition)
     {
         if (_initialTouchPosition == _initialPosition)
             return;
@@ -103,7 +103,7 @@ public abstract class CardBhv : InputBhv
         }
     }
 
-    public virtual void EndAction()
+    public override void EndAction(Vector2 lastTouchPosition)
     {
         if (_hasMoved)
         {
@@ -118,7 +118,7 @@ public abstract class CardBhv : InputBhv
         _initialTouchPosition = _initialPosition;
     }
 
-    public void CancelAction()
+    public override void CancelAction()
     {
         _isReseting = true;
     }

@@ -5,155 +5,149 @@ using UnityEngine;
 public class InputControlerBhv : MonoBehaviour
 {
     private Vector3 _touchPosWorld;
-    private GameObject _currentObject;
+    private InputBhv _currentInput;
+    private bool _beginPhase, _doPhase, _endPhase;
 
     void Update()
     {
+        // IF SCREEN TOUCH //
         if (Input.touchCount > 0)
         {
             for (int i = 0; i < Input.touchCount; i++)
             {
                 _touchPosWorld = Camera.main.ScreenToWorldPoint(Input.GetTouch(i).position);
                 Vector2 touchPosWorld2D = new Vector2(_touchPosWorld.x, _touchPosWorld.y);
-                RaycastHit2D hitInformation = Physics2D.Raycast(touchPosWorld2D, Camera.main.transform.forward);
-                if (hitInformation.collider != null)
+                RaycastHit2D[] hitsInformation = Physics2D.RaycastAll(touchPosWorld2D, Camera.main.transform.forward);
+                foreach (var hitInformation in hitsInformation)
                 {
-                    CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
-                    _currentObject = hitInformation.transform.gameObject;
-                    if (_currentObject.GetComponent<InputBhv>()?.Layer < Constants.InputLayer)
-                        continue;
-                    if (_currentObject.tag == Constants.TagButton)
+                    if (hitInformation.collider != null)
                     {
+                        CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
+                        _currentInput = hitInformation.transform.gameObject.GetComponent<InputBhv>();
+                        if (_currentInput?.Layer < Constants.InputLayer)
+                            continue;
                         if (Input.GetTouch(i).phase == TouchPhase.Began)
-                            _currentObject.GetComponent<ButtonBhv>().BeginAction();
+                            _currentInput.BeginAction(touchPosWorld2D);
                         else if (Input.GetTouch(i).phase == TouchPhase.Ended)
                         {
-                            _currentObject.GetComponent<ButtonBhv>().EndAction();
-                            Constants.LastEndActionClickedName = _currentObject.name;
-                            _currentObject = null;
+                            Constants.LastEndActionClickedName = _currentInput.name;
+                            _currentInput.EndAction(touchPosWorld2D);
+                            _currentInput = null;
                         }
                         else
-                            _currentObject.GetComponent<ButtonBhv>().DoAction();
+                            _currentInput.DoAction(touchPosWorld2D);
                     }
-                    else if (_currentObject.tag == Constants.TagGrabbableCard)
-                    {
-                        if (Input.GetTouch(i).phase == TouchPhase.Began)
-                            _currentObject.GetComponent<CardBhv>().BeginAction(touchPosWorld2D);
-                        else if (Input.GetTouch(i).phase == TouchPhase.Ended)
-                        {
-                            _currentObject.GetComponent<CardBhv>().EndAction();
-                            _currentObject = null;
-                        }
-                        else
-                            _currentObject.GetComponent<CardBhv>().GrabAction(touchPosWorld2D);
-                    }
-                    else if (_currentObject.tag == Constants.TagCell)
-                    {
-                        if (Input.GetTouch(i).phase == TouchPhase.Began)
-                            _currentObject.GetComponent<CellBhv>().BeginAction();
-                        else if (Input.GetTouch(i).phase == TouchPhase.Ended)
-                        {
-                            _currentObject.GetComponent<CellBhv>().EndAction();
-                            _currentObject = null;
-                        }
-                        else
-                            _currentObject.GetComponent<CellBhv>().DoAction();
-                    }
-                }
-                else
-                    CancelCurrentObjectIfNewBeforeEnd();
-            }
-        }
-        else if (Input.GetMouseButtonDown(0))
-        {
-            _touchPosWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 touchPosWorld2D = new Vector2(_touchPosWorld.x, _touchPosWorld.y);
-            RaycastHit2D hitInformation = Physics2D.Raycast(touchPosWorld2D, Camera.main.transform.forward);
-            if (hitInformation.collider != null)
-            {
-                CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
-                _currentObject = hitInformation.transform.gameObject;
-                if (_currentObject.GetComponent<InputBhv>()?.Layer < Constants.InputLayer)
-                    return;
-                if (_currentObject.tag == Constants.TagButton)
-                    _currentObject.GetComponent<ButtonBhv>().BeginAction();
-                else if (_currentObject.tag == Constants.TagGrabbableCard)
-                    _currentObject.GetComponent<CardBhv>().BeginAction(touchPosWorld2D);
-                else if (_currentObject.tag == Constants.TagCell)
-                    _currentObject.GetComponent<CellBhv>().BeginAction();
-            }
-            else
-                CancelCurrentObjectIfNewBeforeEnd();
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            _touchPosWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 touchPosWorld2D = new Vector2(_touchPosWorld.x, _touchPosWorld.y);
-            RaycastHit2D hitInformation = Physics2D.Raycast(touchPosWorld2D, Camera.main.transform.forward);
-            if (hitInformation.collider != null)
-            {
-                CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
-                _currentObject = hitInformation.transform.gameObject;
-                if (_currentObject.GetComponent<InputBhv>()?.Layer < Constants.InputLayer)
-                    return;
-                if (_currentObject.tag == Constants.TagButton)
-                {
-                    Constants.LastEndActionClickedName = _currentObject.name;
-                    _currentObject.GetComponent<ButtonBhv>().EndAction();
-                    _currentObject = null;
-                }
-                else if (_currentObject.tag == Constants.TagGrabbableCard)
-                {
-                    _currentObject.GetComponent<CardBhv>().EndAction();
-                    _currentObject = null;
-                }
-                else if (_currentObject.tag == Constants.TagCell)
-                {
-                    _currentObject.GetComponent<CellBhv>().EndAction();
-                    _currentObject = null;
+                    else
+                        CancelCurrentObjectIfNewBeforeEnd();
                 }
             }
-            else
-                CancelCurrentObjectIfNewBeforeEnd();
-        }
-        else if (Input.GetMouseButton(0))
-        {
-            _touchPosWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 touchPosWorld2D = new Vector2(_touchPosWorld.x, _touchPosWorld.y);
-            RaycastHit2D hitInformation = Physics2D.Raycast(touchPosWorld2D, Camera.main.transform.forward);
-            if (hitInformation.collider != null)
-            {
-                CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
-                _currentObject = hitInformation.transform.gameObject;
-                if (_currentObject.GetComponent<InputBhv>()?.Layer < Constants.InputLayer)
-                    return;
-                if (_currentObject.tag == Constants.TagButton)
-                    _currentObject.GetComponent<ButtonBhv>().DoAction();
-                else if (_currentObject.tag == Constants.TagGrabbableCard)
-                    _currentObject.GetComponent<CardBhv>().GrabAction(touchPosWorld2D);
-                else if (_currentObject.tag == Constants.TagCell)
-                    _currentObject.GetComponent<CellBhv>().DoAction();
-            }
-            else
-                CancelCurrentObjectIfNewBeforeEnd();
         }
         else
-            _touchPosWorld = new Vector3(-99,-99,-99);
+        {
+            _beginPhase = _doPhase = _endPhase = false;
+            // IF MOUSE //
+            if ((_beginPhase = Input.GetMouseButtonDown(0))
+                || (_endPhase = Input.GetMouseButtonUp(0))
+                || (_doPhase = Input.GetMouseButton(0)))
+            {
+                _touchPosWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 touchPosWorld2D = new Vector2(_touchPosWorld.x, _touchPosWorld.y);
+                RaycastHit2D[] hitsInformation = Physics2D.RaycastAll(touchPosWorld2D, Camera.main.transform.forward);
+                foreach (var hitInformation in hitsInformation)
+                {
+                    if (hitInformation.collider != null)
+                    {
+                        CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
+                        _currentInput = hitInformation.transform.gameObject.GetComponent<InputBhv>();
+                        if (_currentInput?.Layer < Constants.InputLayer)
+                            continue;
+                        if (_beginPhase)
+                            _currentInput.BeginAction(touchPosWorld2D);
+                        else if (_endPhase)
+                        {
+                            Constants.LastEndActionClickedName = _currentInput.name;
+                            _currentInput.EndAction(touchPosWorld2D);
+                            _currentInput = null;
+                        }
+                        else if (_doPhase)
+                            _currentInput.DoAction(touchPosWorld2D);
+                    }
+                    else
+                        CancelCurrentObjectIfNewBeforeEnd();
+                }
+            }
+            // ELSE //
+            else
+                _touchPosWorld = new Vector3(-99, -99, -99);
+        }
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    _touchPosWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //    Vector2 touchPosWorld2D = new Vector2(_touchPosWorld.x, _touchPosWorld.y);
+        //    RaycastHit2D[] hitsInformation = Physics2D.RaycastAll(touchPosWorld2D, Camera.main.transform.forward);
+        //    foreach (var hitInformation in hitsInformation)
+        //    {
+        //        if (hitInformation.collider != null)
+        //        {
+        //            CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
+        //            _currentInput = hitInformation.transform.gameObject.GetComponent<InputBhv>();
+        //            if (_currentInput?.Layer < Constants.InputLayer)
+        //                continue;
+        //            _currentInput.BeginAction(touchPosWorld2D);
+        //        }
+        //        else
+        //            CancelCurrentObjectIfNewBeforeEnd();
+        //    }
+        //}
+        //else if (Input.GetMouseButtonUp(0))
+        //{
+        //    _touchPosWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //    Vector2 touchPosWorld2D = new Vector2(_touchPosWorld.x, _touchPosWorld.y);
+        //    RaycastHit2D[] hitsInformation = Physics2D.RaycastAll(touchPosWorld2D, Camera.main.transform.forward);
+        //    foreach (var hitInformation in hitsInformation)
+        //    {
+        //        if (hitInformation.collider != null)
+        //        {
+        //            CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
+        //            _currentInput = hitInformation.transform.gameObject.GetComponent<InputBhv>();
+        //            if (_currentInput?.Layer < Constants.InputLayer)
+        //                continue;
+        //            Constants.LastEndActionClickedName = _currentInput.name;
+        //            _currentInput.EndAction(touchPosWorld2D);
+        //            _currentInput = null;
+        //        }
+        //        else
+        //            CancelCurrentObjectIfNewBeforeEnd();
+        //    }
+        //}
+        //else if (Input.GetMouseButton(0))
+        //{
+        //    _touchPosWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //    Vector2 touchPosWorld2D = new Vector2(_touchPosWorld.x, _touchPosWorld.y);
+        //    RaycastHit2D[] hitsInformation = Physics2D.RaycastAll(touchPosWorld2D, Camera.main.transform.forward);
+        //    foreach (var hitInformation in hitsInformation)
+        //    {
+        //        if (hitInformation.collider != null)
+        //        {
+        //            CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
+        //            _currentInput = hitInformation.transform.gameObject.GetComponent<InputBhv>();
+        //            if (_currentInput?.Layer < Constants.InputLayer)
+        //                continue;
+        //            _currentInput.DoAction(touchPosWorld2D);
+        //        }
+        //        else
+        //            CancelCurrentObjectIfNewBeforeEnd();
+        //    }
+        //}
+        //else
+        //    _touchPosWorld = new Vector3(-99,-99,-99);
     }
 
     private void CancelCurrentObjectIfNewBeforeEnd(GameObject touchedGameObject = null)
     {
-        if (_currentObject == null || _currentObject == touchedGameObject)
+        if (_currentInput == null || _currentInput == touchedGameObject)
             return;
-        if (_currentObject.tag == Constants.TagButton)
-        {
-            _currentObject.GetComponent<ButtonBhv>().CancelAction();
-            _currentObject = null;
-        }
-        else if (_currentObject.tag == Constants.TagGrabbableCard)
-        {
-            _currentObject.GetComponent<CardBhv>().CancelAction();
-            _currentObject = null;
-        }
+        _currentInput.CancelAction();
+        _currentInput = null;
     }
 }

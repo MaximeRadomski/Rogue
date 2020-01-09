@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SwipeSceneBhv : MonoBehaviour
+public class SwipeSceneBhv : SceneBhv
 {
     public Sprite[] DayNight;
     public bool Paused;
@@ -35,7 +35,6 @@ public class SwipeSceneBhv : MonoBehaviour
 
     void Start()
     {
-        Application.targetFrameRate = 60;
         SetPrivates();
         SetButtons();
         FirstDisplayJourneyAndCharacterStats();
@@ -52,8 +51,9 @@ public class SwipeSceneBhv : MonoBehaviour
         }
     }
 
-    private void SetPrivates()
+    internal override void SetPrivates()
     {
+        base.SetPrivates();
         _journey = PlayerPrefsHelper.GetJourney();
         _playerCharacter = JsonUtility.FromJson<Character>(PlayerPrefs.GetString(Constants.PpPlayer, Constants.PpSerializeDefault));
         _instantiator = GetComponent<Instantiator>();

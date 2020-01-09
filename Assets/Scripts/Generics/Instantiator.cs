@@ -15,7 +15,7 @@ public class Instantiator : MonoBehaviour
     {
     }
 
-    public static void EditViaKeyboard()
+    public void EditViaKeyboard()
     {
         var target = GameObject.Find(Constants.LastEndActionClickedName);
         if (target == null)
@@ -23,7 +23,7 @@ public class Instantiator : MonoBehaviour
         ShowKeyboard(target.GetComponent<TMPro.TextMeshPro>(), target.GetComponent<BoxCollider2D>().size.x);
     }
 
-    public static void ShowKeyboard(TMPro.TextMeshPro target, float maxWidth = -1)
+    public void ShowKeyboard(TMPro.TextMeshPro target, float maxWidth = -1)
     {
         ++Constants.InputLayer;
         var tmpKeyboardObject = Resources.Load<GameObject>("Prefabs/Keyboard");

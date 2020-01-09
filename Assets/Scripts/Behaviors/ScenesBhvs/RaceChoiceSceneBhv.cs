@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class RaceChoiceSceneBhv : MonoBehaviour
+public class RaceChoiceSceneBhv : SceneBhv
 {
     private Character _playerCharacter;
 
@@ -14,9 +14,9 @@ public class RaceChoiceSceneBhv : MonoBehaviour
         SetButtons();
     }
 
-    private void SetPrivates()
+    internal override void SetPrivates()
     {
-        
+        base.SetPrivates();
     }
 
     private void SetButtons()

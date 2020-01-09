@@ -63,7 +63,7 @@ public class OpponentCardBhv : CardBhv
     public void DisplayCharacterStats(int id)
     {
         transform.Find("OpponentName").GetComponent<TMPro.TextMeshPro>().text = _opponentCharacters[id].Name;
-        transform.Find("OpponentName").GetComponent<ButtonBhv>().EndActionDelegate = Instantiator.EditViaKeyboard;
+        transform.Find("OpponentName").GetComponent<ButtonBhv>().EndActionDelegate = _swipeSceneBhv.gameObject.transform.GetComponent<Instantiator>().EditViaKeyboard;
         transform.Find("OpponentRace").GetComponent<TMPro.TextMeshPro>().text = _opponentCharacters[id].Race.ToString();
         transform.Find("OpponentGender").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsGender_" + _opponentCharacters[id].Gender.GetHashCode());
         transform.Find("OpponentLevel").GetComponent<TMPro.TextMeshPro>().text = _opponentCharacters[id].Level.ToString();
@@ -132,16 +132,16 @@ public class OpponentCardBhv : CardBhv
         base.BeginAction(initialTouchPosition);
     }
 
-    public override void GrabAction(Vector2 touchPosition)
+    public override void DoAction(Vector2 touchPosition)
     {
         EnableFixBox();
-        base.GrabAction(touchPosition);
+        base.DoAction(touchPosition);
     }
 
-    public override void EndAction()
+    public override void EndAction(Vector2 lastTouchPosition)
     {
         ResetFixBox();
-        base.EndAction();
+        base.EndAction(lastTouchPosition);
     }
 
     private void EnableFixBox()
