@@ -144,7 +144,7 @@ public class SwipeSceneBhv : SceneBhv
     {
         _hp.text = _playerCharacter.Hp.ToString();
         _level.text = _playerCharacter.Level.ToString();
-        _xp.text = _playerCharacter.Experience.ToString() + " ®";
+        _xp.text = _playerCharacter.Experience.ToString() + "/" + Helper.XpNeedForLevel(_playerCharacter.Level) + " ®";
         _gold.text = _playerCharacter.Gold.ToString() + " ©";
         _matchPercentage.text = "100%";
         float englishHour = _journey.Hour > 12 ? _journey.Hour - 12 : _journey.Hour;
