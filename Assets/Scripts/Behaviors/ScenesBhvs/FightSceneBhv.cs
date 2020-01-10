@@ -21,7 +21,6 @@ public class FightSceneBhv : SceneBhv
 
     void Start()
     {
-        Application.targetFrameRate = 60;
         State = FightState.Spawn;
         SetPrivates();
         SetButtons();

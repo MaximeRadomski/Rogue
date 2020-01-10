@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 
 public static class Helper
 {
+    public static int CharacterAfterString(string str, string subStr)
+    {
+        return str.IndexOf(subStr) + subStr.Length;
+    }
+
     public static Sprite GetSpriteFromSpriteSheet(string path)
     {
         var separatorId = path.IndexOf('_');

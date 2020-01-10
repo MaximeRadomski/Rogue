@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public static class Constants
@@ -45,6 +47,7 @@ public static class Constants
     public const int VisitedPmValue = -1;
     public const int VisitedSkillValue = -2;
     public static Vector2 CardInitialPosition = new Vector2(0.0f, 0.083f);
+    public const float KeyboardHeight = 3.1f;
 
     //  COLORS  //
     public static Color ColorNormal = new Color(0.83f, 0.83f, 0.83f, 1.0f);     //#d4d4d4
@@ -75,7 +78,18 @@ public static class Constants
         "Make war, not love.\n- Famous Orc"
     };
 
-    // CCHE SAVES
+    // CAHE SAVES
     public static int InputLayer = 0;
+    public static float DecreaseInputLayerDelay = 0.1f;
     public static string LastEndActionClickedName = null;
+
+    public static void IncreaseInputLayer()
+    {
+        ++InputLayer;
+    }
+
+    public static void DecreaseInputLayer()
+    {
+        --InputLayer;
+    }
 }

@@ -3,17 +3,17 @@ guid: 7ec05732c065b6b4980c9f398bac6703
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6088119543128576780
-    second: HumanSkinColors_0
+      213: 5099299526343952619
+    second: HumanSkinColor_0
   - first:
-      213: -1275184801816101406
-    second: HumanSkinColors_1
+      213: 4949592107797809888
+    second: HumanSkinColor_1
   - first:
-      213: -1828972329678366499
-    second: HumanSkinColors_2
+      213: 6313218755436647797
+    second: HumanSkinColor_2
   - first:
-      213: 759598793006230349
-    second: HumanSkinColors_3
+      213: 1897456160157261327
+    second: HumanSkinColor_3
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HumanSkinColors_0
+      name: HumanSkinColor_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ea46735e616df440a89ca8b53d480e8
-      internalID: 6088119543128576780
+      spriteID: 6141ba1db0209ef4f95b27e49aac4205
+      internalID: 5099299526343952619
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HumanSkinColors_1
+      name: HumanSkinColor_1
       rect:
         serializedVersion: 2
         x: 12
@@ -145,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d0e16c3ecb4ff2408d12b2f7dcb95fc
-      internalID: -1275184801816101406
+      spriteID: 24be0ce66f4e483409f43d1b672542b3
+      internalID: 4949592107797809888
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HumanSkinColors_2
+      name: HumanSkinColor_2
       rect:
         serializedVersion: 2
         x: 24
@@ -166,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9a390ebfcd207a1489ec09d066a9d68c
-      internalID: -1828972329678366499
+      spriteID: 249ce2b89040473498e32e9f8861da98
+      internalID: 6313218755436647797
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HumanSkinColors_3
+      name: HumanSkinColor_3
       rect:
         serializedVersion: 2
         x: 36
@@ -187,8 +187,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 718ac9998ae4ff3499e706615f24d4bd
-      internalID: 759598793006230349
+      spriteID: 82c943ed39ac0d94088adc20c35f974d
+      internalID: 1897456160157261327
       vertices: []
       indices: 
       edges: []

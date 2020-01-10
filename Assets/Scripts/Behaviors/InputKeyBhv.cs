@@ -36,7 +36,7 @@ public class InputKeyBhv : MonoBehaviour
         var name = this.gameObject.name;
         if (name.Contains("Layout"))
         {
-            char layoutIdChar = name[CharacterAfterString(name, "Layout")];
+            char layoutIdChar = name[Helper.CharacterAfterString(name, "Layout")];
             string layoutIdStr = layoutIdChar.ToString();
             _layoutId = int.Parse(layoutIdStr);
             _buttonBhv.EndActionDelegate = ChangeLayout;
@@ -75,8 +75,8 @@ public class InputKeyBhv : MonoBehaviour
         }
         else
         {
-            _upperCase = name[CharacterAfterString(name, "Key")].ToString();
-            _lowerCase = name[CharacterAfterString(name, "Key") + 1].ToString();
+            _upperCase = name[Helper.CharacterAfterString(name, "Key")].ToString();
+            _lowerCase = name[Helper.CharacterAfterString(name, "Key") + 1].ToString();
             _textMeshLower.text = _lowerCase;
             _textMeshUpper.text = _upperCase;
             _isUpperCase = false;
@@ -167,7 +167,8 @@ public class InputKeyBhv : MonoBehaviour
     private void Close()
     {
         Destroy(_keyboard.gameObject);
-        --Constants.InputLayer;
+        Constants.DecreaseInputLayer();
+        Camera.main.gameObject.GetComponent<CameraBhv>().Unfocus();
     }
 
     #endregion
@@ -211,9 +212,4 @@ public class InputKeyBhv : MonoBehaviour
     }
 
     #endregion
-
-    private int CharacterAfterString(string str, string subStr)
-    {
-        return str.IndexOf(subStr) + subStr.Length;
-    }
 }

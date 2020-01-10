@@ -10,6 +10,7 @@ public class InputControlerBhv : MonoBehaviour
 
     void Update()
     {
+        var currentFrameInputLayer = Constants.InputLayer;
         // IF SCREEN TOUCH //
         if (Input.touchCount > 0)
         {
@@ -24,7 +25,7 @@ public class InputControlerBhv : MonoBehaviour
                     {
                         CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
                         _currentInput = hitInformation.transform.gameObject.GetComponent<InputBhv>();
-                        if (_currentInput?.Layer < Constants.InputLayer)
+                        if (_currentInput?.Layer < currentFrameInputLayer)
                             continue;
                         if (Input.GetTouch(i).phase == TouchPhase.Began)
                             _currentInput.BeginAction(touchPosWorld2D);
@@ -59,7 +60,7 @@ public class InputControlerBhv : MonoBehaviour
                     {
                         CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
                         _currentInput = hitInformation.transform.gameObject.GetComponent<InputBhv>();
-                        if (_currentInput?.Layer < Constants.InputLayer)
+                        if (_currentInput?.Layer < currentFrameInputLayer)
                             continue;
                         if (_beginPhase)
                             _currentInput.BeginAction(touchPosWorld2D);

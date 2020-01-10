@@ -25,7 +25,7 @@ public class Instantiator : MonoBehaviour
 
     public void ShowKeyboard(TMPro.TextMeshPro target, float maxWidth = -1)
     {
-        ++Constants.InputLayer;
+        Constants.IncreaseInputLayer();
         var tmpKeyboardObject = Resources.Load<GameObject>("Prefabs/Keyboard");
         var tmpKeyboardInstance = Instantiate(tmpKeyboardObject, tmpKeyboardObject.transform.position, tmpKeyboardObject.transform.rotation);
         for (int i = 0; i < tmpKeyboardInstance.transform.childCount; ++i)
@@ -38,6 +38,8 @@ public class Instantiator : MonoBehaviour
                 buttonBhv.Layer = Constants.InputLayer;
         }
         tmpKeyboardInstance.transform.Find("InputKeyLayout" + PlayerPrefs.GetInt(Constants.PpFavKeyboardLayout, Constants.PpFavKeyboardLayoutDefault)).GetComponent<InputKeyBhv>().ChangeLayout();
+        if (target.transform.position.y < -Camera.main.orthographicSize + Constants.KeyboardHeight)
+            Camera.main.gameObject.GetComponent<CameraBhv>().FocusY(target.transform.position.y + (Camera.main.orthographicSize - Constants.KeyboardHeight));
     }
 
     public PauseMenuBhv NewPauseMenu()
@@ -123,15 +125,7 @@ public class Instantiator : MonoBehaviour
             var tmpBodyPart = skinContainer.transform.Find(RacesData.BodyParts[i]);
             if (tmpBodyPart != null)
             {
-                var path = character.BodyParts[i];
-                var separatorId = path.IndexOf('_');
-                var spriteSheetPath = path.Substring(0, separatorId);
-                var spriteSheet = Resources.LoadAll<Sprite>(spriteSheetPath);
-                var spriteId = int.Parse(path.Substring(separatorId + 1));
-                if (spriteId >= spriteSheet.Length)
-                    tmpBodyPart.GetComponent<SpriteRenderer>().sprite = null;
-                else
-                    tmpBodyPart.GetComponent<SpriteRenderer>().sprite = spriteSheet[spriteId];
+                tmpBodyPart.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet(character.BodyParts[i]);
             }
                 
         }
