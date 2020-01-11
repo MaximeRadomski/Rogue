@@ -66,11 +66,7 @@ public static class RacesData
             gender = CharacterGender.Transgender;
             nameGender = (CharacterGender)Random.Range(0, 2);
         }
-        string name;
-        if (nameGender == CharacterGender.Male)
-            name = MaleCharacterRaceNames[race.GetHashCode()][Random.Range(0, MaleCharacterRaceNames[race.GetHashCode()].Length)];
-        else
-            name = FemaleCharacterRaceNames[race.GetHashCode()][Random.Range(0, FemaleCharacterRaceNames[race.GetHashCode()].Length)];
+        string name = GetRandomNameFromRaceAndGender(race, nameGender);
         Character tmpCharacter = null;
         switch (race)
         {
@@ -103,6 +99,14 @@ public static class RacesData
         tmpCharacter.Experience = 0;
         tmpCharacter.Hp = tmpCharacter.HpMax;
         return tmpCharacter;
+    }
+
+    public static string GetRandomNameFromRaceAndGender(CharacterRace race, CharacterGender nameGender)
+    {
+        if (nameGender == CharacterGender.Male)
+            return MaleCharacterRaceNames[race.GetHashCode()][Random.Range(0, MaleCharacterRaceNames[race.GetHashCode()].Length)];
+        else
+            return FemaleCharacterRaceNames[race.GetHashCode()][Random.Range(0, FemaleCharacterRaceNames[race.GetHashCode()].Length)];
     }
 
     //  HUMAN  //

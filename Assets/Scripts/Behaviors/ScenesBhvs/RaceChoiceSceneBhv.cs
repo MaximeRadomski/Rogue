@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class RaceChoiceSceneBhv : SceneBhv
 {
+    private TMPro.TextMeshPro _characterName;
     private Character _playerCharacter;
     private GameObject _skinContainer;
     private Instantiator _instantiator;
@@ -24,6 +25,7 @@ public class RaceChoiceSceneBhv : SceneBhv
     internal override void SetPrivates()
     {
         base.SetPrivates();
+        _characterName = GameObject.Find("CharacterName").GetComponent<TMPro.TextMeshPro>();
         _skinContainer = GameObject.Find("SkinContainer");
         _instantiator = GetComponent<Instantiator>();
         _raceTextMesh = GameObject.Find("RaceText").GetComponent<TMPro.TextMeshPro>();
@@ -43,13 +45,59 @@ public class RaceChoiceSceneBhv : SceneBhv
 
     private void SetButtons()
     {
-        GameObject.Find("CharacterName").GetComponent<ButtonBhv>().EndActionDelegate = _instantiator.EditViaKeyboard;
+        _characterName.gameObject.GetComponent<ButtonBhv>().EndActionDelegate = _instantiator.EditViaKeyboard;
         GameObject.Find("ButtonStart").GetComponent<ButtonBhv>().EndActionDelegate = GoToSwipeScene;
+        GameObject.Find("ButtonRandomAll").GetComponent<ButtonBhv>().EndActionDelegate = RandomizeAll;
+        GameObject.Find("ButtonRandomSkin").GetComponent<ButtonBhv>().EndActionDelegate = RandomizeSkin;
         foreach (var button in _rightButtons)
             button.EndActionDelegate = LeftRight;
         foreach (var button in _leftButtons)
             button.EndActionDelegate = LeftRight;
         UpdateButtons();
+    }
+
+    private void RandomizeAll()
+    {
+        foreach (var button in _leftButtons)
+        {
+            if (!IsTopButtons(button.name))
+                continue;
+            int maxRand = RacesData.NbSkinTemplates;
+            if (button.gameObject.name.Contains("Gender"))
+                maxRand = 2;
+            else if (button.gameObject.name.Contains("Race"))
+                maxRand = Helper.EnumCount<CharacterRace>();
+
+            var max = Random.Range(0, maxRand);
+            for (int i = 0; i < max; ++i)
+            {
+                Constants.LastEndActionClickedName = button.name;
+                button.EndActionDelegate.Invoke();
+            }
+        }
+        _characterName.text = RacesData.GetRandomNameFromRaceAndGender(_race, _gender);
+        RandomizeSkin();
+    }
+
+    private void RandomizeSkin()
+    {
+        foreach (var button in _leftButtons)
+        {
+            if (IsTopButtons(button.name))
+                continue;
+            int maxRand = RacesData.NbBodyTemplates;
+            if (button.gameObject.name.Contains("Hair"))
+            {
+                maxRand = RacesData.NbHairTemplates;
+            }
+
+            var max = Random.Range(0, maxRand);
+            for (int i = 0; i < max; ++i)
+            {
+                Constants.LastEndActionClickedName = button.name;
+                button.EndActionDelegate.Invoke();
+            }
+        }
     }
 
     private void UpdateButtons()
@@ -59,6 +107,13 @@ public class RaceChoiceSceneBhv : SceneBhv
             Constants.LastEndActionClickedName = button.transform.parent.name;
             button.EndActionDelegate.Invoke();
         }
+    }
+
+    private bool IsTopButtons(string name)
+    {
+        return name.Contains("SkinColor")
+            || name.Contains("Gender")
+            || name.Contains("Race");
     }
 
     private void LeftRight()
@@ -98,7 +153,7 @@ public class RaceChoiceSceneBhv : SceneBhv
         }
         int id = 0;
         if (spriteRenderer.sprite != null)
-            id = int.Parse(spriteRenderer.sprite.name[spriteRenderer.sprite.name.Length - 1].ToString());
+            id = int.Parse(spriteRenderer.sprite.name.Substring(Helper.CharacterAfterString(spriteRenderer.sprite.name, "_")));
         if (Constants.LastEndActionClickedName.Contains("Right"))
             ++id;
         else if (Constants.LastEndActionClickedName.Contains("Left"))
@@ -120,6 +175,9 @@ public class RaceChoiceSceneBhv : SceneBhv
             if (id < 0) id = RacesData.NbBodyTemplates - 1;
             else if (id >= RacesData.NbBodyTemplates) id = 0;
         }
+        var idMesh = GameObject.Find("Id" + bodyPart);
+        if (idMesh != null)
+            idMesh.GetComponent<TMPro.TextMeshPro>().text = (id + 1).ToString();
         var customPart = "";
         if (bodyPart.Contains("Arm") || bodyPart.Contains("Hand"))
             customPart = "Front";
@@ -154,9 +212,23 @@ public class RaceChoiceSceneBhv : SceneBhv
 
     public void GoToSwipeScene()
     {
-        _playerCharacter = RacesData.GetCharacterFromRaceAndLevel(CharacterRace.Human, 1, true);
-        if (_playerCharacter == null)
-            return;
+        var tmpRace = "Human";
+        _playerCharacter = RacesData.GetCharacterFromRaceAndLevel(_race, 1, true);
+        _playerCharacter.Gender = _gender;
+        _playerCharacter.Name = _characterName.text;
+        for (int i = 0; i < _skinContainer.transform.childCount; ++i)
+        {
+            var child = _skinContainer.transform.GetChild(i);
+            var childSpriteRenderer = child.GetComponent<SpriteRenderer>();
+            for (int y = 0; y < _playerCharacter.BodyParts.Count; ++y)
+            {
+                if (RacesData.BodyParts[y].Contains(child.name))
+                {
+                    var skinPath = "Sprites/" + tmpRace + "/" + childSpriteRenderer.sprite.name;
+                    _playerCharacter.BodyParts[y] = skinPath;
+                }
+            }
+        }
         var journey = new Journey(_playerCharacter);
         PlayerPrefsHelper.SaveJourney(journey);
         PlayerPrefsHelper.SaveCharacter(Constants.PpPlayer, _playerCharacter);

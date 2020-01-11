@@ -4,7 +4,25 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: 3528178131315039288
-    second: HumanHead_0
+    second: HumanHead_7
+  - first:
+      213: -4091518022458941950
+    second: HumanHead_7
+  - first:
+      213: 4324513547558293314
+    second: HumanHead_7
+  - first:
+      213: 7982349437335735837
+    second: HumanHead_7
+  - first:
+      213: 6213750124230912244
+    second: HumanHead_7
+  - first:
+      213: 4626420244163437996
+    second: HumanHead_7
+  - first:
+      213: 2898679523226810576
+    second: HumanHead_7
   - first:
       213: -4091518022458941950
     second: HumanHead_1
@@ -23,6 +41,9 @@ TextureImporter:
   - first:
       213: 2898679523226810576
     second: HumanHead_6
+  - first:
+      213: 3528178131315039288
+    second: HumanHead_0
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -119,27 +140,6 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HumanHead_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 17
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f4cb96ea4f9c8184aaf38be22003d3dd
-      internalID: 3528178131315039288
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: HumanHead_1
       rect:
         serializedVersion: 2
@@ -154,7 +154,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 42aadec99be9c7e47ae0ca56ded5c84b
+      spriteID: 820566c9381efaf46941877a716ade69
       internalID: -4091518022458941950
       vertices: []
       indices: 
@@ -175,7 +175,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e63064bd3cc12243b13a62be9e01c2a
+      spriteID: 98efd8c58c8587f47bd7653c78f00f75
       internalID: 4324513547558293314
       vertices: []
       indices: 
@@ -196,7 +196,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0cd64a2de18b1224b8ed8acb53f5b09a
+      spriteID: c02f98c5f31bcd64da45fd16af7e7cdf
       internalID: 7982349437335735837
       vertices: []
       indices: 
@@ -217,7 +217,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f106213d00a741844b3491626f028504
+      spriteID: 30b188a21b424244eb06b3c78f35eff0
       internalID: 6213750124230912244
       vertices: []
       indices: 
@@ -238,7 +238,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4d079cbbb6bf32f4a89856eb7a15020b
+      spriteID: e82ffd95089e1724abd5028f188c2d18
       internalID: 4626420244163437996
       vertices: []
       indices: 
@@ -259,8 +259,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e3eb133a04865ef48944aedc42a01ed7
+      spriteID: 13ffe8f9120694e49a471b4eed9d6f91
       internalID: 2898679523226810576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanHead_7
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e3014f518efe104bbea06496286a71c
+      internalID: 3528178131315039288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HumanHead_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 271a926c996923142acc578c794f0038
+      internalID: 3528178131315039288
       vertices: []
       indices: 
       edges: []
