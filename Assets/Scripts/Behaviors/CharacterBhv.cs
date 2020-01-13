@@ -27,7 +27,7 @@ public class CharacterBhv : MonoBehaviour
     private int _cellToReachY;
     private List<Vector2> _pathfindingSteps = new List<Vector2>();
     private List<RangePos> _pathfindingPos = new List<RangePos>();
-    private SpriteRenderer _spriteRenderer;
+    private SkinContainerBhv _skinContainer;
     private CharacterBhv _attackedOpponent;
 
     public delegate void ActionDelegate();
@@ -54,7 +54,7 @@ public class CharacterBhv : MonoBehaviour
         }
             
         Instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<Instantiator>();
-        _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        _skinContainer = transform.Find("SkinContainer").GetComponent<SkinContainerBhv>();
         for (int i = 0; i < Character.Skills.Count; ++i)
         {
             if (Character.Skills[i] != null)
@@ -272,7 +272,7 @@ public class CharacterBhv : MonoBehaviour
         transform.position = Vector2.Lerp(transform.position, _pathfindingSteps[0], 0.7f);
         if ((Vector2)transform.position == _pathfindingSteps[0])
         {
-            _spriteRenderer.sortingOrder = Constants.GridMax - _pathfindingPos[0].Y;
+            _skinContainer.SetSkinContainerSortingLayerOrder(Constants.GridMax - _pathfindingPos[0].Y);
             IsMovingFirstPathStep = false;
             X = _pathfindingPos[0].X;
             Y = _pathfindingPos[0].Y;
@@ -286,7 +286,7 @@ public class CharacterBhv : MonoBehaviour
         transform.position = Vector2.Lerp(transform.position, _pathfindingSteps[0], 0.7f);
         if ((Vector2)transform.position == _pathfindingSteps[0])
         {
-            _spriteRenderer.sortingOrder = Constants.GridMax - _pathfindingPos[0].Y;
+            _skinContainer.SetSkinContainerSortingLayerOrder(Constants.GridMax - _pathfindingPos[0].Y);
             _pathfindingPos.RemoveAt(0);
             _pathfindingSteps.RemoveAt(0);
             if (_pathfindingSteps.Count == 0)
@@ -308,7 +308,7 @@ public class CharacterBhv : MonoBehaviour
     {
         X = x;
         Y = y;
-        _spriteRenderer.sortingOrder = Constants.GridMax - y;
+        _skinContainer.SetSkinContainerSortingLayerOrder(Constants.GridMax - y);
         transform.position = _gridBhv.Cells[x, y].transform.position;
     }
 }

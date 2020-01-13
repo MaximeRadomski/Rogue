@@ -30,6 +30,15 @@ public class SkinContainerBhv : MonoBehaviour
         }
     }
 
+    public int GetSkinContainerSortingLayerOrder()
+    {
+        var spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        var currentOrder = spriteRenderer.sortingOrder;
+        int toSubstract = currentOrder / 100;
+        int decimals = currentOrder - (toSubstract * 100);
+        return decimals;
+    }
+
     public void SetSkinContainerMaskInteraction(SpriteMaskInteraction maskInteraction)
     {
         for (int i = 0; i < transform.childCount; ++i)

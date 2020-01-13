@@ -66,7 +66,6 @@ public class SwipeSceneBhv : SceneBhv
 
     private void SetButtons()
     {
-        GameObject.Find("CharacterName").GetComponent<ButtonBhv>().EndActionDelegate = _instantiator.EditViaKeyboard;
         GameObject.Find("ButtonPause").GetComponent<ButtonBhv>().EndActionDelegate = Pause;
         _instantiator.NewRandomCard(1, _journey.Day, _journey.Biome.MapType);
         _instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType);

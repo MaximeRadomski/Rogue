@@ -33,15 +33,11 @@ public class OpponentCardBhv : CardBhv
 
         _opponentCharacters = new List<Character>();
         var nbOpponents = 1;
-        if (Random.Range(0, 100) < 1)
-            nbOpponents = 6;
-        else if (Random.Range(0, 100) < 10)
-            nbOpponents = 5;
-        else if (Random.Range(0, 100) < 20)
+        if (Random.Range(0, 100) < 5)
             nbOpponents = 4;
-        else if (Random.Range(0, 100) < 30)
+        else if (Random.Range(0, 100) < 15)
             nbOpponents = 3;
-        else if (Random.Range(0, 100) < 40)
+        else if (Random.Range(0, 100) < 30)
             nbOpponents = 2;
         for (int i = 0; i < nbOpponents; ++i)
         {
@@ -63,7 +59,6 @@ public class OpponentCardBhv : CardBhv
     public void DisplayCharacterStats(int id)
     {
         transform.Find("OpponentName").GetComponent<TMPro.TextMeshPro>().text = _opponentCharacters[id].Name;
-        transform.Find("OpponentName").GetComponent<ButtonBhv>().EndActionDelegate = _swipeSceneBhv.gameObject.transform.GetComponent<Instantiator>().EditViaKeyboard;
         transform.Find("OpponentRace").GetComponent<TMPro.TextMeshPro>().text = _opponentCharacters[id].Race.ToString();
         transform.Find("OpponentGender").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsGender_" + _opponentCharacters[id].Gender.GetHashCode());
         transform.Find("OpponentLevel").GetComponent<TMPro.TextMeshPro>().text = _opponentCharacters[id].Level.ToString();
