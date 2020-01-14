@@ -14,7 +14,7 @@ public class PopupCharacterStatsBhv : MonoBehaviour
     {
         _currentTab = 0;
         _resetTabPosition = new Vector3(-10.0f, 10.0f, 0.0f);
-        _currentTabPosition = new Vector3(0.0f, 0.0f, 0.0f);
+        _currentTabPosition = transform.position;
         _tabs = new List<GameObject>();
         _buttonsTabs = new List<ButtonBhv>();
         for (int i = 0; i < 5; ++i)
