@@ -16,6 +16,7 @@ public static class Constants
     public const string TagPoppingText = "PoppingText";
 
     //  PLAYER PREFS  //
+    public const string PpScenePath = "ScenePath";
     public const string PpAudioLevel = "AudioLevel";
     public const float PpAudioLevelDefault = 1;
     public const string PpJourney = "Journey";
@@ -80,16 +81,22 @@ public static class Constants
 
     // CAHE SAVES
     public static int InputLayer = 0;
-    public static float DecreaseInputLayerDelay = 0.1f;
     public static string LastEndActionClickedName = null;
+    public static List<string> InputTopLayerNames = null;
 
-    public static void IncreaseInputLayer()
+    public static void IncreaseInputLayer(string name)
     {
         ++InputLayer;
+        if (InputTopLayerNames == null)
+            InputTopLayerNames = new List<string>();
+        InputTopLayerNames.Add(name);
     }
 
     public static void DecreaseInputLayer()
     {
         --InputLayer;
+        if (InputTopLayerNames == null)
+            return;
+        InputTopLayerNames.RemoveAt(InputTopLayerNames.Count - 1);
     }
 }

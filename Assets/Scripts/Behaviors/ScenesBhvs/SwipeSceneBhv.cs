@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class SwipeSceneBhv : SceneBhv
 {
     public Sprite[] DayNight;
-    public bool Paused;
 
     private Character _playerCharacter;
     private Instantiator _instantiator;
@@ -29,7 +28,6 @@ public class SwipeSceneBhv : SceneBhv
 
     private int _currentBiomeChoice;
 
-    private PauseMenuBhv _pauseMenu;
     private ButtonBhv _avoidBhv;
     private ButtonBhv _ventureBhv;
 
@@ -40,18 +38,7 @@ public class SwipeSceneBhv : SceneBhv
         FirstDisplayJourneyAndCharacterStats();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {
-            if (!Paused)
-                Pause();
-            else
-                Resume();
-        }
-    }
-
-    internal override void SetPrivates()
+    protected override void SetPrivates()
     {
         base.SetPrivates();
         _journey = PlayerPrefsHelper.GetJourney();
@@ -61,25 +48,26 @@ public class SwipeSceneBhv : SceneBhv
         _currentBiomeChoice = 0;
         _avoidBhv = GameObject.Find("ButtonAvoid").GetComponent<ButtonBhv>();
         _ventureBhv = GameObject.Find("ButtonVenture").GetComponent<ButtonBhv>();
-        _pauseMenu = _instantiator.NewPauseMenu();
+        PauseMenu = _instantiator.NewPauseMenu();
     }
 
     private void SetButtons()
     {
         GameObject.Find("ButtonPause").GetComponent<ButtonBhv>().EndActionDelegate = Pause;
+        GameObject.Find("CharacterButton").GetComponent<ButtonBhv>().EndActionDelegate = ShowCharacterStats;
         _instantiator.NewRandomCard(1, _journey.Day, _journey.Biome.MapType);
         _instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType);
         _avoidBhv.EndActionDelegate = GameObject.Find("Card1").GetComponent<CardBhv>().Avoid;
         _ventureBhv.EndActionDelegate = GameObject.Find("Card1").GetComponent<CardBhv>().Venture;
-        _pauseMenu.Buttons[0].EndActionDelegate = Resume;
-        _pauseMenu.TextMeshes[0].text = "Resume";
-        _pauseMenu.Buttons[1].EndActionDelegate = GiveUp;
-        _pauseMenu.TextMeshes[1].text = "Give Up";
-        _pauseMenu.Buttons[2].EndActionDelegate = Settings;
-        _pauseMenu.TextMeshes[2].text = "Settings";
-        _pauseMenu.Buttons[3].EndActionDelegate = Exit;
-        _pauseMenu.TextMeshes[3].text = "Exit";
-        _pauseMenu.Buttons[4].gameObject.SetActive(false);
+        PauseMenu.Buttons[0].EndActionDelegate = Resume;
+        PauseMenu.TextMeshes[0].text = "Resume";
+        PauseMenu.Buttons[1].EndActionDelegate = GiveUp;
+        PauseMenu.TextMeshes[1].text = "Give Up";
+        PauseMenu.Buttons[2].EndActionDelegate = Settings;
+        PauseMenu.TextMeshes[2].text = "Settings";
+        PauseMenu.Buttons[3].EndActionDelegate = Exit;
+        PauseMenu.TextMeshes[3].text = "Exit";
+        PauseMenu.Buttons[4].gameObject.SetActive(false);
     }
 
     public void NewCard()
@@ -196,26 +184,19 @@ public class SwipeSceneBhv : SceneBhv
             PlayerPrefsHelper.SaveCharacter(Constants.PpOpponent + i, opponentCharacters[i]);
         }
         PlayerPrefs.SetInt(Constants.PpNbOpponents, opponentCharacters.Count);
-        SceneManager.LoadScene(Constants.FightScene);
+        NavigationService.LoadNextScene(Constants.FightScene);
+    }
+
+    private void ShowCharacterStats()
+    {
+        _instantiator.NewPopupCharacterStats(_playerCharacter);
     }
 
     #region PauseMenu
 
-    public void Pause()
-    {
-        Paused = true;
-        _pauseMenu.Pause();
-    }
-
-    private void Resume()
-    {
-        Paused = false;
-        _pauseMenu.UnPause();
-    }
-
     private void GiveUp()
     {
-        SceneManager.LoadScene(Constants.RaceChoiceScene);
+        NavigationService.LoadPreviousScene();
     }
 
     private void Settings()
@@ -224,7 +205,7 @@ public class SwipeSceneBhv : SceneBhv
     }
     private void Exit()
     {
-        SceneManager.LoadScene(Constants.RaceChoiceScene);
+        NavigationService.LoadPreviousScene();
     }
 
     #endregion

@@ -7,9 +7,50 @@ public class InputControlerBhv : MonoBehaviour
     private Vector3 _touchPosWorld;
     private InputBhv _currentInput;
     private bool _beginPhase, _doPhase, _endPhase;
+    private SceneBhv _currentScene;
+    private SoundControlerBhv _soundControler;
+
+    private void Start()
+    {
+        _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
+    }
 
     void Update()
     {
+        // IF BACK BUTTON //
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            _soundControler.PlaySound(_soundControler.ClickIn);
+        }
+        else if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            _soundControler.PlaySound(_soundControler.ClickOut);
+            if (Constants.InputLayer > 0)
+            {
+                var gameObjectToDestroy = GameObject.Find(Constants.InputTopLayerNames[Constants.InputTopLayerNames.Count - 1]);
+                Camera.main.gameObject.GetComponent<CameraBhv>().Unfocus();
+                Constants.DecreaseInputLayer();
+                Destroy(gameObjectToDestroy);
+            }
+            else
+            {
+                if (_currentScene == null)
+                    _currentScene = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
+                if (_currentScene.PauseMenu != null)
+                {
+                    if (!_currentScene.Paused)
+                        _currentScene.Pause();
+                    else
+                        _currentScene.Resume();
+                }
+                else
+                {
+                    Debug.Log("    [DEBUG]    Back");
+                    NavigationService.LoadPreviousScene();
+                }
+            }
+            return;
+        }
         var currentFrameInputLayer = Constants.InputLayer;
         // IF SCREEN TOUCH //
         if (Input.touchCount > 0)

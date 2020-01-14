@@ -22,7 +22,7 @@ public class RaceChoiceSceneBhv : SceneBhv
         SetButtons();
     }
 
-    internal override void SetPrivates()
+    protected override void SetPrivates()
     {
         base.SetPrivates();
         _characterName = GameObject.Find("CharacterName").GetComponent<TMPro.TextMeshPro>();
@@ -232,6 +232,6 @@ public class RaceChoiceSceneBhv : SceneBhv
         var journey = new Journey(_playerCharacter);
         PlayerPrefsHelper.SaveJourney(journey);
         PlayerPrefsHelper.SaveCharacter(Constants.PpPlayer, _playerCharacter);
-        SceneManager.LoadScene(Constants.SwipeScene);
+        NavigationService.LoadNextScene(Constants.SwipeScene);
     }
 }

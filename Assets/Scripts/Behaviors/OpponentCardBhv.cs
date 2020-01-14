@@ -49,7 +49,7 @@ public class OpponentCardBhv : CardBhv
             
     }
 
-    internal override void HandleSortingLayerAndOrder(int id)
+    protected override void HandleSortingLayerAndOrder(int id)
     {
         _skinContainerBhv.SetSkinContainerSortingLayer(Constants.SortingLayerCard);
         _skinContainerBhv.SetSkinContainerSortingLayerOrder(id);

@@ -1,16 +1,22 @@
 fileFormatVersion: 2
-guid: 6fd79209eb61a5c41ab68bc7943a777a
+guid: 26baffee82d171f49904ef2d8bf45f0b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4249241447528113216
-    second: PopupCharacterStats_0
+      213: 1593100916024091988
+    second: ButtonsTabs_0
   - first:
-      213: -8231951745732199608
-    second: PopupCharacterStats_1
+      213: -4028394422846150720
+    second: ButtonsTabs_1
   - first:
-      213: 5217307186341332914
-    second: PopupCharacterStats_2
+      213: 4259961556720289921
+    second: ButtonsTabs_2
+  - first:
+      213: -7282094196281010489
+    second: ButtonsTabs_3
+  - first:
+      213: -4100262720629207606
+    second: ButtonsTabs_4
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -69,7 +75,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -81,7 +87,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 512
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -93,7 +99,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 512
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -107,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PopupCharacterStats_0
+      name: ButtonsTabs_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 142
-        height: 253
+        width: 24
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,20 +127,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3871b64d06c526d43935cfcb401f6973
-      internalID: 4249241447528113216
+      spriteID: 121e81b44a62a8640b1ce14e2e37d661
+      internalID: 1593100916024091988
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PopupCharacterStats_1
+      name: ButtonsTabs_1
       rect:
         serializedVersion: 2
-        x: 142
+        x: 24
         y: 0
-        width: 142
-        height: 253
+        width: 24
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,20 +148,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fb40578c60b44a04e9410f3ddce2c513
-      internalID: -8231951745732199608
+      spriteID: 400900c30741f7c4685e0d1ceaf0ffb6
+      internalID: -4028394422846150720
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PopupCharacterStats_2
+      name: ButtonsTabs_2
       rect:
         serializedVersion: 2
-        x: 284
+        x: 48
         y: 0
-        width: 142
-        height: 253
+        width: 24
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,8 +169,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c67372f5e0321764ca03f28b0d30c535
-      internalID: 5217307186341332914
+      spriteID: e7f7ca84314c53342bf94484eda2341b
+      internalID: 4259961556720289921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ButtonsTabs_3
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 0
+        width: 24
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bab17ff285debf4891a2a2afc02d5f0
+      internalID: -7282094196281010489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ButtonsTabs_4
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 24
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3b94468011dd06418f5de43e266b952
+      internalID: -4100262720629207606
       vertices: []
       indices: 
       edges: []

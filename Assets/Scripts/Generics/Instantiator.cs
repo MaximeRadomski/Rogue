@@ -25,9 +25,9 @@ public class Instantiator : MonoBehaviour
 
     public void ShowKeyboard(TMPro.TextMeshPro target, float maxWidth = -1)
     {
-        Constants.IncreaseInputLayer();
         var tmpKeyboardObject = Resources.Load<GameObject>("Prefabs/Keyboard");
         var tmpKeyboardInstance = Instantiate(tmpKeyboardObject, tmpKeyboardObject.transform.position, tmpKeyboardObject.transform.rotation);
+        Constants.IncreaseInputLayer(tmpKeyboardInstance.name);
         for (int i = 0; i < tmpKeyboardInstance.transform.childCount; ++i)
         {
             var inputKeyBhv = tmpKeyboardInstance.transform.GetChild(i).GetComponent<InputKeyBhv>();
@@ -40,6 +40,20 @@ public class Instantiator : MonoBehaviour
         tmpKeyboardInstance.transform.Find("InputKeyLayout" + PlayerPrefs.GetInt(Constants.PpFavKeyboardLayout, Constants.PpFavKeyboardLayoutDefault)).GetComponent<InputKeyBhv>().ChangeLayout();
         if (target.transform.position.y < -Camera.main.orthographicSize + Constants.KeyboardHeight)
             Camera.main.gameObject.GetComponent<CameraBhv>().FocusY(target.transform.position.y + (Camera.main.orthographicSize - Constants.KeyboardHeight));
+    }
+
+    public void NewPopupCharacterStats(Character character)
+    {
+        var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupCharacterStats");
+        var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
+        Constants.IncreaseInputLayer(tmpPopupInstance.name);
+        for (int i = 0; i < tmpPopupInstance.transform.childCount; ++i)
+        {
+            var buttonBhv = tmpPopupInstance.transform.GetChild(i).GetComponent<ButtonBhv>();
+            if (buttonBhv != null)
+                buttonBhv.Layer = Constants.InputLayer;
+        }
+        tmpPopupInstance.GetComponent<PopupCharacterStatsBhv>().SetPrivates();
     }
 
     public PauseMenuBhv NewPauseMenu()

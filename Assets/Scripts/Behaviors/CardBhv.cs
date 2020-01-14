@@ -4,24 +4,24 @@ using UnityEngine;
 
 public abstract class CardBhv : InputBhv
 {
-    internal SoundControlerBhv _soundControler;
-    internal SpriteRenderer _spriteRenderer;
-    internal SpriteRenderer _cacheSpriteRenderer;
-    internal SwipeSceneBhv _swipeSceneBhv;
-    internal BoxCollider2D[] _boxColliders2D;
+    protected SoundControlerBhv _soundControler;
+    protected SpriteRenderer _spriteRenderer;
+    protected SpriteRenderer _cacheSpriteRenderer;
+    protected SwipeSceneBhv _swipeSceneBhv;
+    protected BoxCollider2D[] _boxColliders2D;
 
-    internal Vector2 _initialTouchPosition;
-    internal Vector2 _initialPosition;
-    internal Vector2 _likePosition;
-    internal Vector2 _dislikePosition;
-    internal CardState _state;
-    internal float _rotateAngle;
-    internal bool _isReseting;
-    internal bool _hasMoved;
-    internal bool _isStretching;
-    internal Vector3 _resetedScale;
-    internal Vector3 _pressedScale;
-    internal Vector3 _disabledScale;
+    protected Vector2 _initialTouchPosition;
+    protected Vector2 _initialPosition;
+    protected Vector2 _likePosition;
+    protected Vector2 _dislikePosition;
+    protected CardState _state;
+    protected float _rotateAngle;
+    protected bool _isReseting;
+    protected bool _hasMoved;
+    protected bool _isStretching;
+    protected Vector3 _resetedScale;
+    protected Vector3 _pressedScale;
+    protected Vector3 _disabledScale;
 
     public virtual void SetPrivates(int id, int day)
     {
@@ -56,7 +56,7 @@ public abstract class CardBhv : InputBhv
             _isStretching = true;
     }
 
-    internal virtual void HandleSortingLayerAndOrder(int id)
+    protected virtual void HandleSortingLayerAndOrder(int id)
     {
         _spriteRenderer.sortingOrder = id * 99;
         for (int i = 0; i < transform.childCount; ++i)

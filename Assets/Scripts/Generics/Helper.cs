@@ -183,6 +183,6 @@ public static class Helper
 
     public static void ReloadScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        NavigationService.ReloadScene();
     }
 }

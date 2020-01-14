@@ -6663,10 +6663,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e04a25c70a4463b4188b42a4f63111b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Paused: 0
+  PauseMenu: {fileID: 0}
   DayNight:
   - {fileID: -1108182313213868328, guid: 044d0aae61fe9e446989d7d9f667ad88, type: 3}
   - {fileID: 5867741536060620524, guid: 044d0aae61fe9e446989d7d9f667ad88, type: 3}
-  Paused: 0
 --- !u!114 &1766291745
 MonoBehaviour:
   m_ObjectHideFlags: 0

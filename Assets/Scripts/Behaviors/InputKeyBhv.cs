@@ -166,9 +166,9 @@ public class InputKeyBhv : MonoBehaviour
 
     private void Close()
     {
-        Destroy(_keyboard.gameObject);
-        Constants.DecreaseInputLayer();
         Camera.main.gameObject.GetComponent<CameraBhv>().Unfocus();
+        Constants.DecreaseInputLayer();
+        Destroy(_keyboard.gameObject);
     }
 
     #endregion

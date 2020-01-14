@@ -32,7 +32,7 @@ public class FightSceneBhv : SceneBhv
 
     #region Init
 
-    internal override void SetPrivates()
+    protected override void SetPrivates()
     {
         base.SetPrivates();
         _gridBhv = GetComponent<GridBhv>();
@@ -318,7 +318,7 @@ public class FightSceneBhv : SceneBhv
 
     public static void GoToSwipe()
     {
-        SceneManager.LoadScene(Constants.SwipeScene);
+        NavigationService.LoadPreviousScene();
     }
 
     #endregion
