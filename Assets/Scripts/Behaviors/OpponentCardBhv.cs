@@ -5,7 +5,7 @@ public class OpponentCardBhv : CardBhv
 {
     private SkinContainerBhv _skinContainerBhv;
     private List<Character> _opponentCharacters;
-
+    private Instantiator _instantiator;
     private List<BoxCollider2D> _opponentsBox;
     private BoxCollider2D _fixBox;
     private float _originalFixBoxY;
@@ -17,6 +17,7 @@ public class OpponentCardBhv : CardBhv
         _originalFixBoxY = _fixBox.size.y;
         _customFixBoxY = 1.3f;
         _skinContainerBhv = transform.Find("SkinContainer").GetComponent<SkinContainerBhv>();
+        _instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator;
         base.SetPrivates(id, day);              
         InitOpponent(day);
         _boxColliders2D = gameObject.GetComponents<BoxCollider2D>();
@@ -104,7 +105,7 @@ public class OpponentCardBhv : CardBhv
                 transform.Find("SelectedSprite").transform.position = transform.Find("OpponentNb" + (i + 1) + "Back").transform.position;
         }
 
-        Instantiator.LoadCharacterSkin(_opponentCharacters[id], _skinContainerBhv.gameObject);
+        _instantiator.LoadCharacterSkin(_opponentCharacters[id], _skinContainerBhv.gameObject);
     }
 
     public void SelectOpponent1() { DisplayCharacterStats(0); }

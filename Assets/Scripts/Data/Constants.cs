@@ -76,7 +76,8 @@ public static class Constants
         "You're nothing without money. Find money.",
         "Remember to reed tips!",
         "You look nice today.",
-        "Make war, not love.\n- Famous Orc"
+        "Make war, not love.\n- Famous Orc",
+        "Orcs names are not gendered."
     };
 
     // CAHE SAVES

@@ -53,7 +53,7 @@ public class CharacterBhv : MonoBehaviour
             Ai.SetPrivates();
         }
             
-        Instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<Instantiator>();
+        Instantiator = _fightSceneBhv.Instantiator;
         _skinContainer = transform.Find("SkinContainer").GetComponent<SkinContainerBhv>();
         for (int i = 0; i < Character.Skills.Count; ++i)
         {

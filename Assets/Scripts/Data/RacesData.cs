@@ -5,19 +5,19 @@ using UnityEngine;
 public static class RacesData
 {
     //  RACES  //
+    public static string[] OrcNames = { "Mnorg", "Mator", "Grapt", "Zogg" };
+
     public static string[] MaleHumanNames = { "Jean", "Pierre", "Paul", "Jacques" };
     public static string[] MaleGoblinNames = { "Gnarf", "Gerf", "Eritoff", "Pif" };
     public static string[] MaleElfNames = { "Liuv", "Mesenir", "Phalafel", "Gadriel" };
     public static string[] MaleDwarfNames = { "Fluktur", "Parcastre", "Merkandriar", "Jeff" };
-    public static string[] MaleOrcNames = { "Mnorg", "Mator", "Grapt", "Zogg" };
-    public static string[][] MaleCharacterRaceNames = { MaleHumanNames, MaleGoblinNames, MaleElfNames, MaleDwarfNames, MaleOrcNames };
+    public static string[][] MaleCharacterRaceNames = { MaleHumanNames, MaleGoblinNames, MaleElfNames, MaleDwarfNames, OrcNames };
 
     public static string[] FemaleHumanNames = { "Juliette", "Sophie", "Carmen", "Jacqueline" };
     public static string[] FemaleGoblinNames = { "Gnirf", "Gerurf", "Waganama", "Pliaf" };
     public static string[] FemaleElfNames = { "Liuv", "Mesenir", "Phalafel", "Gadriel" };
     public static string[] FemaleDwarfNames = { "Fluktur", "Parcastre", "Merkandriar", "Jeff" };
-    public static string[] FemaleOrcNames = { "Mnorg", "Mator", "Grapt", "Zogg" };
-    public static string[][] FemaleCharacterRaceNames = { FemaleHumanNames, FemaleGoblinNames, FemaleElfNames, FemaleDwarfNames, FemaleOrcNames };
+    public static string[][] FemaleCharacterRaceNames = { FemaleHumanNames, FemaleGoblinNames, FemaleElfNames, FemaleDwarfNames, OrcNames };
 
     // BODY PARTS ///
     public const string Head = "Head";

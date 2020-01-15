@@ -53,7 +53,7 @@ public class Instantiator : MonoBehaviour
             if (buttonBhv != null)
                 buttonBhv.Layer = Constants.InputLayer;
         }
-        tmpPopupInstance.GetComponent<PopupCharacterStatsBhv>().SetPrivates();
+        tmpPopupInstance.GetComponent<PopupCharacterStatsBhv>().SetPrivates(character);
     }
 
     public PauseMenuBhv NewPauseMenu()
@@ -111,7 +111,7 @@ public class Instantiator : MonoBehaviour
         tmpCardInstance.GetComponent<BiomeCardBhv>().SetChoice(choice, maxChoice);
     }
 
-    public static GameObject NewCharacterGameObject(string characterName, bool isPlayer = false, string id = "")
+    public GameObject NewCharacterGameObject(string characterName, bool isPlayer = false, string id = "")
     {
         var character = PlayerPrefsHelper.GetCharacter(characterName);
         var characterObject = Resources.Load<GameObject>("Prefabs/" + CharacterRace.Human + "Character");
@@ -132,7 +132,7 @@ public class Instantiator : MonoBehaviour
         return characterInstance;
     }
 
-    public static void LoadCharacterSkin(Character character, GameObject skinContainer)
+    public void LoadCharacterSkin(Character character, GameObject skinContainer)
     {
         for (int i = 0; i < character.BodyParts.Count; ++i)
         {
@@ -145,7 +145,7 @@ public class Instantiator : MonoBehaviour
         }
     }
 
-    public static GameObject NewCell(int x, int y, char c, Grid grid)
+    public GameObject NewCell(int x, int y, char c, Grid grid)
     {
         var cellGameObject = Resources.Load<GameObject>("Prefabs/TemplateCell");
         var cellInstance = Instantiate(cellGameObject, cellGameObject.transform.position, cellGameObject.transform.rotation);

@@ -36,7 +36,7 @@ public class GridBhv : MonoBehaviour
 
     private void InitCell(int x, int y, char c)
     {
-        var cellInstance = Instantiator.NewCell(x, y, c, _grid);
+        var cellInstance = _fightSceneBhv.Instantiator.NewCell(x, y, c, _grid);
         Cells[x, y] = cellInstance;
     }
 

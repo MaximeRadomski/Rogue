@@ -8,7 +8,6 @@ public class SwipeSceneBhv : SceneBhv
     public Sprite[] DayNight;
 
     private Character _playerCharacter;
-    private Instantiator _instantiator;
     private Journey _journey;
 
     private GameObject _characterSkinContainer;
@@ -43,20 +42,20 @@ public class SwipeSceneBhv : SceneBhv
         base.SetPrivates();
         _journey = PlayerPrefsHelper.GetJourney();
         _playerCharacter = JsonUtility.FromJson<Character>(PlayerPrefs.GetString(Constants.PpPlayer, Constants.PpSerializeDefault));
-        _instantiator = GetComponent<Instantiator>();
-        _instantiator.SetPrivates();
+        Instantiator = GetComponent<Instantiator>();
+        Instantiator.SetPrivates();
         _currentBiomeChoice = 0;
         _avoidBhv = GameObject.Find("ButtonAvoid").GetComponent<ButtonBhv>();
         _ventureBhv = GameObject.Find("ButtonVenture").GetComponent<ButtonBhv>();
-        PauseMenu = _instantiator.NewPauseMenu();
+        PauseMenu = Instantiator.NewPauseMenu();
     }
 
     private void SetButtons()
     {
         GameObject.Find("ButtonPause").GetComponent<ButtonBhv>().EndActionDelegate = Pause;
         GameObject.Find("CharacterButton").GetComponent<ButtonBhv>().EndActionDelegate = ShowCharacterStats;
-        _instantiator.NewRandomCard(1, _journey.Day, _journey.Biome.MapType);
-        _instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType);
+        Instantiator.NewRandomCard(1, _journey.Day, _journey.Biome.MapType);
+        Instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType);
         _avoidBhv.EndActionDelegate = GameObject.Find("Card1").GetComponent<CardBhv>().Avoid;
         _ventureBhv.EndActionDelegate = GameObject.Find("Card1").GetComponent<CardBhv>().Venture;
         PauseMenu.Buttons[0].EndActionDelegate = Resume;
@@ -92,12 +91,12 @@ public class SwipeSceneBhv : SceneBhv
         _ventureBhv.EndActionDelegate = backCard.GetComponent<CardBhv>().Venture;
         if (_journey.Step < _journey.Biome.Steps) //Just '<' because it instantiates one in advance
         {
-            _instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType);
+            Instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType);
         }            
         else if (_currentBiomeChoice < _journey.Biome.Destinations)
         {
             ++_currentBiomeChoice;
-            _instantiator.NewBiomeCard(0, _journey.Day, _currentBiomeChoice, _journey.Biome.Destinations);
+            Instantiator.NewBiomeCard(0, _journey.Day, _currentBiomeChoice, _journey.Biome.Destinations);
         }
         else
         {
@@ -158,12 +157,12 @@ public class SwipeSceneBhv : SceneBhv
         _currentBiomeChoice = 0;
         _journey.Step = 1;
         _journey.Biome = biome;
-        _instantiator.NewRandomCard(1, _journey.Day, _journey.Biome.MapType);
+        Instantiator.NewRandomCard(1, _journey.Day, _journey.Biome.MapType);
         var backCard = GameObject.Find("Card1");
         //backCard.GetComponent<CardBhv>().BringToFront();
         _avoidBhv.EndActionDelegate = backCard.GetComponent<CardBhv>().Avoid;
         _ventureBhv.EndActionDelegate = backCard.GetComponent<CardBhv>().Venture;
-        _instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType);
+        Instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType);
         UpdateDisplayJourneyAndCharacterStats();
     }
 
@@ -189,7 +188,7 @@ public class SwipeSceneBhv : SceneBhv
 
     private void ShowCharacterStats()
     {
-        _instantiator.NewPopupCharacterStats(_playerCharacter);
+        Instantiator.NewPopupCharacterStats(_playerCharacter);
     }
 
     #region PauseMenu
