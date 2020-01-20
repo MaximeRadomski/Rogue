@@ -58,16 +58,34 @@ public class PopupCharacterStatsBhv : MonoBehaviour
         _tabs[0].transform.Find("Hp").GetComponent<TMPro.TextMeshPro>().text = _character.Hp.ToString();
         _tabs[0].transform.Find("HpMax").GetComponent<TMPro.TextMeshPro>().text = _character.HpMax.ToString();
         _tabs[0].transform.Find("Pa").GetComponent<TMPro.TextMeshPro>().text = _character.PaMax.ToString();
-        _tabs[0].transform.Find("PaMax").GetComponent<TMPro.TextMeshPro>().text = _character.PaMax.ToString();
         _tabs[0].transform.Find("Pm").GetComponent<TMPro.TextMeshPro>().text = _character.PmMax.ToString();
-        _tabs[0].transform.Find("PmMax").GetComponent<TMPro.TextMeshPro>().text = _character.PmMax.ToString();
-        //_tabs[0].transform.Find("StatsList").GetComponent<TMPro.TextMeshPro>().text = GenerateStatsList();
+        GameObject.Find("StatsList" + 0).GetComponent<TMPro.TextMeshProUGUI>().text = GenerateStatsListCharacter();
     }
 
-    private string GenerateStatsList()
+    private string GenerateStatsListCharacter()
     {
         string statsList = "";
+        statsList += MakeTitle("Racial Characteristics");
+        statsList += MakeContent("Strong Against: ", _character.StrongAgainst.ToString());
+        statsList += MakeContent("Strong In: ", _character.StrongIn.ToString());
+        statsList += MakeContent("Fav Weapons: ", _character.FavWeapons[0] + ", " + _character.FavWeapons[1]);
+        statsList += MakeContent("Leveling Health: ", _character.LevelingHealthPercent + "%");
+        statsList += MakeContent("Leveling Damages: ", _character.LevelingDamagePercent + "%");
+
+        statsList += MakeTitle("Gender Characteristics");
+        statsList += MakeContent("Damages: ", _character.Gender == CharacterGender.Female ? "95%" : "105%");
+        statsList += MakeContent("Critical Damages: ", _character.Gender == CharacterGender.Male ? "85%" : "115%");
         return statsList;
+    }
+
+    private string MakeTitle(string title)
+    {
+        return "<align=\"center\"><material=\"LongYellow\">" + title + "</material></align>\n";
+    }
+
+    private string MakeContent(string libelle, string content)
+    {
+        return "<material=\"LongGreyish\">" + libelle + "</material>" + content + "\n";
     }
 
     private void ChangeTab()
