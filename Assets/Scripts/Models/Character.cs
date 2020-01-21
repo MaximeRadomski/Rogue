@@ -29,4 +29,7 @@ public class Character
     public int WeightLimit;
 
     public List<string> BodyParts;
+
+    public int RaceWeaponDamagePercent; //To Add
+    public int NotRaceWeaponDamagePercent; //To Substract
 }

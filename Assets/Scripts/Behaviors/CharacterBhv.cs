@@ -144,8 +144,12 @@ public class CharacterBhv : MonoBehaviour
         var tmpWeapon = Character.Weapons[weaponId];
 
         float baseDamages = tmpWeapon.BaseDamage * Helper.MultiplierFromPercent(1, Random.Range(-tmpWeapon.DamageRangePercentage, tmpWeapon.DamageRangePercentage + 1));
+
+        float weaponHandlingMultiplier = 1.0f;
         if (tmpWeapon.Type != Character.FavWeapons[0] && tmpWeapon.Type != Character.FavWeapons[1])
-            baseDamages = baseDamages * Helper.MultiplierFromPercent(0, RacesData.NotRaceWeaponDamagePercent);
+            weaponHandlingMultiplier = Helper.MultiplierFromPercent(weaponHandlingMultiplier, - (RacesData.NotRaceWeaponDamagePercent + Character.NotRaceWeaponDamagePercent));
+        else
+            weaponHandlingMultiplier = Helper.MultiplierFromPercent(weaponHandlingMultiplier, Character.RaceWeaponDamagePercent);
 
         float raceGenderMultiplier = 1.0f;
         if (opponentBhv != null && opponentBhv.Character.Race == Character.StrongAgainst)
@@ -175,7 +179,7 @@ public class CharacterBhv : MonoBehaviour
                 criticalMultiplier = Helper.MultiplierFromPercent(criticalMultiplier, RacesData.GenderCritical);
         }
 
-        int resultInt = (int)(baseDamages * raceGenderMultiplier * skillMultiplier * criticalMultiplier);
+        int resultInt = (int)(baseDamages * weaponHandlingMultiplier * raceGenderMultiplier * skillMultiplier * criticalMultiplier);
         //Debug.Log("Final Damages = " + resultInt);
         if (usePa)
         {

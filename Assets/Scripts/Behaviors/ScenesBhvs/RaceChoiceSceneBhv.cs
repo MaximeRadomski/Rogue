@@ -214,7 +214,8 @@ public class RaceChoiceSceneBhv : SceneBhv
     {
         var tmpRace = "Human";
         _playerCharacter = RacesData.GetCharacterFromRaceAndLevel(_race, 1, true);
-        _playerCharacter.Gender = _gender;
+        if (_playerCharacter.Gender != CharacterGender.Transgender)
+            _playerCharacter.Gender = _gender;
         _playerCharacter.Name = _characterName.text;
         for (int i = 0; i < _skinContainer.transform.childCount; ++i)
         {

@@ -17,4 +17,5 @@ public class Weapon : InventoryItem
     public int MaxRange;
     public List<int> RangePositions;
     public List<RangeDirection> RangeZones;
+    public int NbSkinParts;
 }

@@ -38,7 +38,8 @@ public class PopupCharacterStatsBhv : MonoBehaviour
         }
         _skinContainerBhv = _tabs[0].transform.Find("SkinContainer").GetComponent<SkinContainerBhv>();
         SetButtons();
-        DisplayStats();
+        DisplayStatsCharacter();
+        DisplayStatsWeapon(1, 0);
     }
 
     private void SetButtons()
@@ -49,7 +50,7 @@ public class PopupCharacterStatsBhv : MonoBehaviour
         }
     }
 
-    private void DisplayStats()
+    private void DisplayStatsCharacter()
     {
         _instantiator.LoadCharacterSkin(_character, _skinContainerBhv.gameObject);
         _tabs[0].transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = _character.Name;
@@ -59,23 +60,43 @@ public class PopupCharacterStatsBhv : MonoBehaviour
         _tabs[0].transform.Find("HpMax").GetComponent<TMPro.TextMeshPro>().text = _character.HpMax.ToString();
         _tabs[0].transform.Find("Pa").GetComponent<TMPro.TextMeshPro>().text = _character.PaMax.ToString();
         _tabs[0].transform.Find("Pm").GetComponent<TMPro.TextMeshPro>().text = _character.PmMax.ToString();
-        GameObject.Find("StatsList" + 0).GetComponent<TMPro.TextMeshProUGUI>().text = GenerateStatsListCharacter();
+        var statsList = GameObject.Find("StatsList" + 0);
+        var statsListText = statsList.GetComponent<TMPro.TextMeshProUGUI>();
+        statsListText.text = GenerateStatsListCharacter();
+        var textHeight = statsListText.preferredHeight;
+        statsList.GetComponent<RectTransform>().sizeDelta += new Vector2(0.0f, textHeight);
+        var parent = statsList.transform.parent.GetComponent<UnityEngine.UI.ScrollRect>();
+        parent.normalizedPosition = new Vector2(0.0f, 1.0f);
     }
 
     private string GenerateStatsListCharacter()
     {
         string statsList = "";
         statsList += MakeTitle("Racial Characteristics");
-        statsList += MakeContent("Strong Against: ", _character.StrongAgainst.ToString());
-        statsList += MakeContent("Strong In: ", _character.StrongIn.ToString());
+        statsList += MakeContent("Strong Against: ", _character.StrongAgainst + " +" + RacesData.StrongAgainstDamagePercent + "%");
+        statsList += MakeContent("Strong In: ", _character.StrongIn + " +" + RacesData.StrongInDamagePercent + "%");
         statsList += MakeContent("Fav Weapons: ", _character.FavWeapons[0] + ", " + _character.FavWeapons[1]);
-        statsList += MakeContent("Leveling Health: ", _character.LevelingHealthPercent + "%");
-        statsList += MakeContent("Leveling Damages: ", _character.LevelingDamagePercent + "%");
+        statsList += MakeContent("Leveling Health: ", "+" + _character.LevelingHealthPercent + "%");
+        statsList += MakeContent("Leveling Damages: ", "+" + _character.LevelingDamagePercent + "%");
 
         statsList += MakeTitle("Gender Characteristics");
-        statsList += MakeContent("Damages: ", _character.Gender == CharacterGender.Female ? "95%" : "105%");
-        statsList += MakeContent("Critical Damages: ", _character.Gender == CharacterGender.Male ? "85%" : "115%");
+        statsList += MakeContent("Weapons Damages: ", _character.Gender == CharacterGender.Female ? "-" + RacesData.GenderDamage + "%" : "+" + RacesData.GenderDamage + "%");
+        statsList += MakeContent("Critical Damages: ", _character.Gender == CharacterGender.Male ? "-" + RacesData.GenderCritical + "%" : "+" + RacesData.GenderCritical + "%");
+
+        statsList += MakeTitle("Weapons Handling");
+        statsList += MakeContent("Fav Weapons Damages: ", "+0%");
+        statsList += MakeContent("Other Weapons Damages: ", "-" + RacesData.NotRaceWeaponDamagePercent + "%");
         return statsList;
+    }
+
+    private void DisplayStatsWeapon(int tabId, int weaponId)
+    {
+
+    }
+
+    private void DisplayStatsSkill(int tabId, int skillId)
+    {
+
     }
 
     private string MakeTitle(string title)

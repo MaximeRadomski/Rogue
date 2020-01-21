@@ -128,7 +128,8 @@ public static class WeaponsData
             MinRange = 1,
             MaxRange = 1,
             RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
-            RangeZones = null
+            RangeZones = null,
+            NbSkinParts = 4
         };
     }
 
