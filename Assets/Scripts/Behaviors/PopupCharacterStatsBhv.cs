@@ -39,7 +39,8 @@ public class PopupCharacterStatsBhv : MonoBehaviour
         _skinContainerBhv = _tabs[0].transform.Find("SkinContainer").GetComponent<SkinContainerBhv>();
         SetButtons();
         DisplayStatsCharacter();
-        DisplayStatsWeapon(1, 0);
+        DisplayStatsWeapon(1, _character.Weapons[0]);
+        DisplayStatsWeapon(2, _character.Weapons[1]);
     }
 
     private void SetButtons()
@@ -48,6 +49,17 @@ public class PopupCharacterStatsBhv : MonoBehaviour
         {
             button.EndActionDelegate = ChangeTab;
         }
+    }
+
+    private void PopulateStatsList(string name, System.Func<object, string> generator, object parameter)
+    {
+        var statsList = GameObject.Find(name);
+        var statsListText = statsList.GetComponent<TMPro.TextMeshProUGUI>();
+        statsListText.text = generator(parameter);
+        var textHeight = statsListText.preferredHeight;
+        statsList.GetComponent<RectTransform>().sizeDelta += new Vector2(0.0f, textHeight);
+        var parent = statsList.transform.parent.GetComponent<UnityEngine.UI.ScrollRect>();
+        parent.normalizedPosition = new Vector2(0.0f, 1.0f);
     }
 
     private void DisplayStatsCharacter()
@@ -60,16 +72,10 @@ public class PopupCharacterStatsBhv : MonoBehaviour
         _tabs[0].transform.Find("HpMax").GetComponent<TMPro.TextMeshPro>().text = _character.HpMax.ToString();
         _tabs[0].transform.Find("Pa").GetComponent<TMPro.TextMeshPro>().text = _character.PaMax.ToString();
         _tabs[0].transform.Find("Pm").GetComponent<TMPro.TextMeshPro>().text = _character.PmMax.ToString();
-        var statsList = GameObject.Find("StatsList" + 0);
-        var statsListText = statsList.GetComponent<TMPro.TextMeshProUGUI>();
-        statsListText.text = GenerateStatsListCharacter();
-        var textHeight = statsListText.preferredHeight;
-        statsList.GetComponent<RectTransform>().sizeDelta += new Vector2(0.0f, textHeight);
-        var parent = statsList.transform.parent.GetComponent<UnityEngine.UI.ScrollRect>();
-        parent.normalizedPosition = new Vector2(0.0f, 1.0f);
+        PopulateStatsList("StatsList" + 0, GenerateStatsListCharacter, null);
     }
 
-    private string GenerateStatsListCharacter()
+    private string GenerateStatsListCharacter(object parameter)
     {
         string statsList = "";
         statsList += MakeTitle("Racial Characteristics");
@@ -89,9 +95,29 @@ public class PopupCharacterStatsBhv : MonoBehaviour
         return statsList;
     }
 
-    private void DisplayStatsWeapon(int tabId, int weaponId)
+    private void DisplayStatsWeapon(int tabId, Weapon weapon)
     {
+        _instantiator.LoadWeaponSkin(weapon, _tabs[tabId].transform.Find("SkinContainerWeapon").gameObject);
+        var weaponTag = "";
+        if (weapon.Rarity == Rarity.Magical) weaponTag = "<material=\"LongBlue\">";
+        else if (weapon.Rarity == Rarity.Rare) weaponTag = "<material=\"LongYellow\">";
+        _tabs[tabId].transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = weaponTag + weapon.Name;
+        _tabs[tabId].transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsWeapon_" + weapon.Type.GetHashCode());
+        _tabs[tabId].transform.Find("Damages").GetComponent<TMPro.TextMeshPro>().text = weapon.BaseDamage.ToString();
+        _tabs[tabId].transform.Find("Pa").GetComponent<TMPro.TextMeshPro>().text = weapon.PaNeeded.ToString();
+        _tabs[tabId].transform.Find("Range").GetComponent<TMPro.TextMeshPro>().text = weapon.MinRange + "-" + weapon.MaxRange;
+        PopulateStatsList("StatsList" + tabId, GenerateStatsListWeapon, weapon);
+    }
 
+    private string GenerateStatsListWeapon(object parameter)
+    {
+        var weapon = (Weapon)parameter;
+        string statsList = "";
+        statsList += MakeTitle(weapon.Type + " Characteristics");
+        statsList += MakeContent("Damage Range: ", weapon.DamageRangePercentage + "%");
+        statsList += MakeContent("Critical Chance: ", weapon.CritChancePercent + "%");
+        statsList += MakeContent("Critical Multiplier: ", weapon.CritMultiplierPercent + "%");
+        return statsList;
     }
 
     private void DisplayStatsSkill(int tabId, int skillId)

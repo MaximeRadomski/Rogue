@@ -140,8 +140,24 @@ public class Instantiator : MonoBehaviour
             if (tmpBodyPart != null)
             {
                 tmpBodyPart.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet(character.BodyParts[i]);
+            }       
+        }
+    }
+
+    public void LoadWeaponSkin(Weapon weapon, GameObject skinContainer)
+    {
+        for (int i = 0; i < 5; ++i)
+        {
+            var tmpWeaponPart = skinContainer.transform.Find("WeaponPart"+i);
+            var tmpWeaponPartShadow = skinContainer.transform.Find("WeaponPart" + i + "Shadow");
+            if (i >= weapon.NbSkinParts)
+            {
+                tmpWeaponPart.GetComponent<SpriteRenderer>().enabled = false;
+                tmpWeaponPartShadow.GetComponent<SpriteRenderer>().enabled = false;
+                continue;
             }
-                
+            tmpWeaponPart.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet(weapon.WeaponParts[i]);
+            tmpWeaponPartShadow.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet(weapon.WeaponParts[i]);
         }
     }
 

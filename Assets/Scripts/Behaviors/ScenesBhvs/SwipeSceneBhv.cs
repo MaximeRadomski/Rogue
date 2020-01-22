@@ -41,7 +41,7 @@ public class SwipeSceneBhv : SceneBhv
     {
         base.SetPrivates();
         _journey = PlayerPrefsHelper.GetJourney();
-        _playerCharacter = JsonUtility.FromJson<Character>(PlayerPrefs.GetString(Constants.PpPlayer, Constants.PpSerializeDefault));
+        _playerCharacter = PlayerPrefsHelper.GetCharacter(Constants.PpPlayer);
         Instantiator = GetComponent<Instantiator>();
         Instantiator.SetPrivates();
         _currentBiomeChoice = 0;

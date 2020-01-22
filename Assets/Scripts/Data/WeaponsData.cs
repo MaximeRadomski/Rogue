@@ -39,7 +39,8 @@ public static class WeaponsData
             else if (Random.Range(0, 100) < MagicalWeaponAppearancePercent)
                 rarity = Rarity.Magical;
         }
-        string name = GetWeaponNameFromRarity(type, rarity, isBase);
+        var subType = Random.Range(0, WeaponTypeNames[type.GetHashCode()].Length);
+        string name = GetWeaponNameFromRarity(type.GetHashCode(), subType, rarity, isBase);
         Weapon tmpWeapon = null;
         switch (type)
         {
@@ -88,12 +89,13 @@ public static class WeaponsData
         tmpWeapon.Rarity = rarity;
         var baseDamageFloat = tmpWeapon.BaseDamage * Helper.MultiplierFromPercent(1, Random.Range(-BaseInitDamageRangePercentage, BaseInitDamageRangePercentage + 1));
         tmpWeapon.BaseDamage = (int)baseDamageFloat;
+        tmpWeapon.WeaponParts = CreateWeaponPartsFromTypeSubType(type, subType, tmpWeapon.NbSkinParts);
         return tmpWeapon;
     }
 
-    private static string GetWeaponNameFromRarity(WeaponType type, Rarity rarity, bool isBase = false)
+    private static string GetWeaponNameFromRarity(int type, int subType, Rarity rarity, bool isBase = false)
     {
-        var weaponTypeName = WeaponTypeNames[type.GetHashCode()][Random.Range(0, WeaponTypeNames[type.GetHashCode()].Length)];
+        var weaponTypeName = WeaponTypeNames[type][subType];
         if (isBase)
             return weaponTypeName;
         switch (rarity)
@@ -112,6 +114,18 @@ public static class WeaponsData
                 return RareNames[rareNameId] + " " + tmpName;
         }
         return weaponTypeName;
+    }
+
+    public static List<string> CreateWeaponPartsFromTypeSubType(WeaponType type, int subType, int nbSkinParts)
+    {
+        List<string> weaponParts = new List<string>();
+        for (int i = 0; i < nbSkinParts; ++i)
+        {
+            //         (    subTypeTripleLine    ) + (               line            ) + (column)
+            var rand = (subType * nbSkinParts * 3) + (Random.Range(0, 3) * nbSkinParts + i);
+            weaponParts.Add("Sprites/Weapons/" + type + "_" + rand);
+        }
+        return weaponParts;
     }
 
     //  SWORD  //
@@ -147,7 +161,8 @@ public static class WeaponsData
             MinRange = 2,
             MaxRange = 2,
             RangePositions = new List<int> { 0,2, 2,0, 0,-2, -2,0 },
-            RangeZones = null
+            RangeZones = null,
+            NbSkinParts = 4
         };
     }
 
@@ -165,7 +180,8 @@ public static class WeaponsData
             MinRange = 1,
             MaxRange = 1,
             RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
-            RangeZones = new List<RangeDirection> { RangeDirection.Up }
+            RangeZones = new List<RangeDirection> { RangeDirection.Up },
+            NbSkinParts = 4
         };
     }
 
@@ -183,7 +199,8 @@ public static class WeaponsData
             MinRange = 2,
             MaxRange = 2,
             RangePositions = new List<int> { -1,1, 1,1, 1,-1, -1,-1 },
-            RangeZones = null
+            RangeZones = null,
+            NbSkinParts = 4
         };
     }
 
@@ -208,7 +225,8 @@ public static class WeaponsData
                                              -1,-2, -1,-3, -1,-4, -2,-2, -2,-3, -3,-2, -2,-1, -3,-1, -4,-1,
                                              /*-2,0,*/ -3,0, -4,0, -5,0,
                                              -2,1, -3,1, -4,1, 2,-2, 2,-3, 3,-2, -1,2, -1,3, -1,4, },
-            RangeZones = null
+            RangeZones = null,
+            NbSkinParts = 3
         };
     }
 
@@ -226,7 +244,8 @@ public static class WeaponsData
             MinRange = 1,
             MaxRange = 1,
             RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
-            RangeZones = null
+            RangeZones = null,
+            NbSkinParts = 4
         };
     }
 
@@ -244,7 +263,8 @@ public static class WeaponsData
             MinRange = 1,
             MaxRange = 1,
             RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
-            RangeZones = new List<RangeDirection> { RangeDirection.Left, RangeDirection.Right }
+            RangeZones = new List<RangeDirection> { RangeDirection.Left, RangeDirection.Right },
+            NbSkinParts = 5
         };
     }
 
@@ -262,7 +282,8 @@ public static class WeaponsData
             MinRange = 1,
             MaxRange = 1,
             RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
-            RangeZones = null
+            RangeZones = null,
+            NbSkinParts = 5
         };
     }
 
@@ -280,7 +301,8 @@ public static class WeaponsData
             MinRange = 1,
             MaxRange = 1,
             RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
-            RangeZones = new List<RangeDirection> { RangeDirection.Up, RangeDirection.Left, RangeDirection.Right, RangeDirection.DiagonalLeft, RangeDirection.DiagonalRight }
+            RangeZones = new List<RangeDirection> { RangeDirection.Up, RangeDirection.Left, RangeDirection.Right, RangeDirection.DiagonalLeft, RangeDirection.DiagonalRight },
+            NbSkinParts = 5
         };
     }
 
@@ -298,7 +320,8 @@ public static class WeaponsData
             MinRange = 2,
             MaxRange = 2,
             RangePositions = new List<int> { -1,1, 1,1, 1,-1, -1,-1 },
-            RangeZones = null
+            RangeZones = null,
+            NbSkinParts = 2
         };
     }
 }
