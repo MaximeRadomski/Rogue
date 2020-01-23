@@ -20,6 +20,8 @@ public class SkillAvarice : Skill
         MaxRange = 0;
         RangeType = RangeType.NoRange;
         IconId = 3;
+
+        Description = "Steal <material=\"LongGold\">Gold</material> on each hit";
     }
 
     public override void OnEndAttack(int damages, CharacterBhv opponentBhv)

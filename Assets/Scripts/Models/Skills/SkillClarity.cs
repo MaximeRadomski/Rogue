@@ -20,6 +20,8 @@ public class SkillClarity : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 };
         IconId = 13;
+
+        Description = "Clear all positive and negative effects";
     }
 
     public override void Activate(int x, int y)

@@ -20,6 +20,8 @@ public class SkillGreatHeal : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,0 };
         IconId = 15;
+
+        Description = "Heal the user for <material=\"LongRed\">100 HP</material> + 25% per user levels";
     }
 
     public override void Activate(int x, int y)

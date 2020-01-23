@@ -17,6 +17,9 @@ TextureImporter:
   - first:
       213: 1010866109750772050
     second: IconsStats_4
+  - first:
+      213: 1301234614070667193
+    second: IconsStats_5
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -75,7 +78,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 64
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -87,7 +90,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 64
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -99,7 +102,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 64
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -127,7 +130,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 61c069e8a9797284cb2bf4046fe9bd69
+      spriteID: e5e608d8eb9e1454aa67ebfd6c78b860
       internalID: 6798959695090547200
       vertices: []
       indices: 
@@ -148,7 +151,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e5174f95a0890da4897193d012fc9acd
+      spriteID: 5e614b3f7cc3bba4b9b523891201706b
       internalID: -1842160680521692033
       vertices: []
       indices: 
@@ -169,7 +172,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 29192973ab12bc740915d5b0b6afa6dd
+      spriteID: 9536e9f03dc629149871109b514db396
       internalID: -8688812041344666843
       vertices: []
       indices: 
@@ -190,7 +193,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3e56f46b13480e046bd19d3b1fd0791f
+      spriteID: 15004817064398a43b1b192b91bfd3d3
       internalID: -6193952368939026451
       vertices: []
       indices: 
@@ -211,8 +214,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1f931e5f0d59ba14e9ddbf1cf8aeb3fc
+      spriteID: e2febddadaccb3f459154f61fd338c4c
       internalID: 1010866109750772050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconsStats_5
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 0
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70fb1bacad0c63a438c1d7b2321967ad
+      internalID: 1301234614070667193
       vertices: []
       indices: 
       edges: []

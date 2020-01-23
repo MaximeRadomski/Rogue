@@ -21,6 +21,8 @@ public class SkillShield : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,0 };
         IconId = 0;
+
+        Description = "Block the first next turn hit";
     }
 
     public override void Activate(int x, int y)

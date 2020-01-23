@@ -19,6 +19,8 @@ public class SkillTeleportation : Skill
         MaxRange = 99;
         RangeType = RangeType.FullRange;
         IconId = 10;
+
+        Description = "Teleport on any cell on the map";
     }
 
     public override void OnClick()

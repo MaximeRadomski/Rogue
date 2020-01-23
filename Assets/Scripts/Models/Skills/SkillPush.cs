@@ -20,6 +20,8 @@ public class SkillPush : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 };
         IconId = 11;
+
+        Description = "Push your opponent of one cell";
     }
 
     private CharacterBhv _pushedOpponentBhv;

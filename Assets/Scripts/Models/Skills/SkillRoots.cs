@@ -20,6 +20,8 @@ public class SkillRoots : Skill
         MaxRange = 0;
         RangeType = RangeType.NoRange;
         IconId = 8;
+
+        Description = "Adds a chance to remove <material=\"LongGreen\">0</material> to <material=\"LongGreen\">3 MP</material> each hit";
     }
 
     public override void OnEndAttack(int damages, CharacterBhv opponentBhv)

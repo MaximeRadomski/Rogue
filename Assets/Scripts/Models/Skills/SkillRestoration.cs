@@ -20,6 +20,8 @@ public class SkillRestoration : Skill
         MaxRange = 0;
         RangeType = RangeType.NoRange;
         IconId = 9;
+
+        Description = "Restore <material=\"LongRed\">10%</material> of your maximum health each turn";
     }
 
     public override void OnStartTurn()

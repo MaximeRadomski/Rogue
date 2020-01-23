@@ -22,6 +22,8 @@ public class SkillDoubleEdged : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,0 };
         IconId = 5;
+
+        Description = "Make and receive double damages until your next turn";
     }
 
     public override void Activate(int x, int y)

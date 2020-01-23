@@ -135,7 +135,7 @@ public class PopupCharacterStatsBhv : MonoBehaviour
         statsList += MakeContent("Critical Chance: ", weapon.CritChancePercent + "%");
         statsList += MakeContent("Critical Multiplier: ", "+" + weapon.CritMultiplierPercent + "%");
 
-        if (weapon.Specificity != null)
+        if (weapon.Specificity != null && weapon.Specificity != string.Empty)
         {
             statsList += MakeTitle(weapon.Type.GetDescription() + " Specificity");
             statsList += MakeContent("", weapon.Specificity);
@@ -143,7 +143,7 @@ public class PopupCharacterStatsBhv : MonoBehaviour
 
         if (weapon.RangeZones != null && weapon.RangeZones.Count > 0)
         {
-            statsList += MakeTitle(weapon.Type.GetDescription() + "Area Of Effect");
+            statsList += MakeTitle(weapon.Type.GetDescription() + " Area Of Effect");
             var zones = "";
             foreach (var zone in weapon.RangeZones)
                 zones += (zones != "" ? ", " : "") + zone.GetDescription();
@@ -156,7 +156,7 @@ public class PopupCharacterStatsBhv : MonoBehaviour
     {
         _instantiator.LoadSkillSkin(skill, _tabs[tabId].transform.Find("SkinContainerSkill" + (tabId - 3)).gameObject);
         _tabs[tabId].transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = skill.Name;
-        _tabs[tabId].transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsSkills_" + skill.IconId);
+        _tabs[tabId].transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsSkill_" + skill.IconId);
         _tabs[tabId].transform.Find("Cooldown").GetComponent<TMPro.TextMeshPro>().text = skill.CooldownType == CooldownType.Normal ? skill.CooldownMax.ToString() : "-";
         _tabs[tabId].transform.Find("Pa").GetComponent<TMPro.TextMeshPro>().text = skill.PaNeeded.ToString();
         _tabs[tabId].transform.Find("Range").GetComponent<TMPro.TextMeshPro>().text = skill.MinRange + (skill.MaxRange != skill.MinRange ? "-" + skill.MaxRange : "");
