@@ -15,6 +15,7 @@ public class Weapon : InventoryItem
     public int PaNeeded;
     public int MinRange;
     public int MaxRange;
+    public string Specificity;
     public List<int> RangePositions;
     public List<RangeDirection> RangeZones;
 

@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -37,6 +40,28 @@ public static class Helper
     public static int EnumCount<EnumType>()
     {
         return System.Enum.GetNames(typeof(EnumType)).Length;
+    }
+
+    public static string GetDescription(this Enum value)
+    {
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value));
+        }
+
+        var description = value.ToString();
+        var fieldInfo = value.GetType().GetRuntimeField(description);
+
+        if (fieldInfo == null)
+            return string.Empty;
+        var attributes = (DescriptionAttribute[])fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+        if (attributes.Length > 0)
+        {
+            description = attributes[0].Description;
+        }
+
+        return description;
     }
 
     public static int XpNeedForLevel(int level)

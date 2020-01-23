@@ -25,8 +25,9 @@ public class ButtonBhv : InputBhv
         SetPrivates();
     }
 
-    private void SetPrivates()
+    public override void SetPrivates()
     {
+        base.SetPrivates();
         _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
 

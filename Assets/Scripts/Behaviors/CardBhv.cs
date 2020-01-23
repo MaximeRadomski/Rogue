@@ -25,6 +25,7 @@ public abstract class CardBhv : InputBhv
 
     public virtual void SetPrivates(int id, int day)
     {
+        SetPrivates();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _cacheSpriteRenderer = transform.Find("Cache")?.GetComponent<SpriteRenderer>();

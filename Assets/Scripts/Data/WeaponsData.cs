@@ -40,7 +40,7 @@ public static class WeaponsData
                 rarity = Rarity.Magical;
         }
         var subType = Random.Range(0, WeaponTypeNames[type.GetHashCode()].Length);
-        string name = GetWeaponNameFromRarity(type.GetHashCode(), subType, rarity, isBase);
+        string name = GetWeaponNameFromRarity(type.GetHashCode(), subType, rarity/*, isBase*/);
         Weapon tmpWeapon = null;
         switch (type)
         {
@@ -162,7 +162,8 @@ public static class WeaponsData
             MaxRange = 2,
             RangePositions = new List<int> { 0,2, 2,0, 0,-2, -2,0 },
             RangeZones = null,
-            NbSkinParts = 4
+            NbSkinParts = 4,
+            Specificity = "Only in line"
         };
     }
 
@@ -264,7 +265,8 @@ public static class WeaponsData
             MaxRange = 1,
             RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
             RangeZones = new List<RangeDirection> { RangeDirection.Left, RangeDirection.Right },
-            NbSkinParts = 5
+            NbSkinParts = 5,
+            Specificity = "Dwarf craftsmanship, fixed Damage Range"
         };
     }
 
@@ -283,11 +285,12 @@ public static class WeaponsData
             MaxRange = 1,
             RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
             RangeZones = null,
-            NbSkinParts = 5
+            NbSkinParts = 5,
+            Specificity = "Dwarf craftsmanship, fixed Damage Range"
         };
     }
 
-    //  LONG SWORD  //
+    //  GREAT SWORD  //
     public static int[] GreatSwordDamage = { 170, 280, 390, 500 };
     public static Weapon GetBaseGreatSword()
     {
@@ -321,7 +324,8 @@ public static class WeaponsData
             MaxRange = 2,
             RangePositions = new List<int> { -1,1, 1,1, 1,-1, -1,-1 },
             RangeZones = null,
-            NbSkinParts = 2
+            NbSkinParts = 2,
+            Specificity = "Only diagonally"
         };
     }
 }

@@ -20,13 +20,17 @@ public class SkillHeal : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,0 };
         IconId = 12;
+
+        _floatHealAmount = 50.0f * Helper.MultiplierFromPercent(1, 10 * (CharacterBhv.Character.Level - 1));
+        Description = "Heal the user for a total of <material=\"LongRed\">" + _floatHealAmount + " HP</material>";
     }
+
+    private float _floatHealAmount;
 
     public override void Activate(int x, int y)
     {
         base.Activate(x, y);
-        var floatAmount = 50.0f * Helper.MultiplierFromPercent(1, 10 * (CharacterBhv.Character.Level - 1));
-        CharacterBhv.GainHp((int)floatAmount);
+        CharacterBhv.GainHp((int)_floatHealAmount);
         AfterActivation();
     }
 }

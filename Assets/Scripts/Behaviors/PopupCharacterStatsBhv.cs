@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public class PopupCharacterStatsBhv : MonoBehaviour
@@ -41,6 +42,8 @@ public class PopupCharacterStatsBhv : MonoBehaviour
         DisplayStatsCharacter();
         DisplayStatsWeapon(1, _character.Weapons[0]);
         DisplayStatsWeapon(2, _character.Weapons[1]);
+        DisplayStatsSkill(3, _character.Skills[0]);
+        DisplayStatsSkill(4, _character.Skills[1]);
     }
 
     private void SetButtons()
@@ -49,6 +52,17 @@ public class PopupCharacterStatsBhv : MonoBehaviour
         {
             button.EndActionDelegate = ChangeTab;
         }
+        transform.Find("ExitButton").GetComponent<ButtonBhv>().EndActionDelegate = ExitPopup;
+        _tabs[1].transform.Find("SkinContainerWeapon0").GetComponent<ButtonBhv>().EndActionDelegate = RandomizeWeapon;
+        _tabs[2].transform.Find("SkinContainerWeapon1").GetComponent<ButtonBhv>().EndActionDelegate = RandomizeWeapon;
+    }
+
+    private void RandomizeWeapon()
+    {
+        var idWeapon = Constants.LastEndActionClickedName.Contains("0") ? 0 : 1;
+        var weapon = _character.Weapons[idWeapon];
+        weapon.WeaponParts = WeaponsData.CreateWeaponPartsFromTypeSubType(weapon.Type, Random.Range(0, WeaponsData.WeaponTypeNames[weapon.Type.GetHashCode()].Length), weapon.NbSkinParts);
+        _instantiator.LoadWeaponSkin(weapon, _tabs[idWeapon + 1].transform.Find("SkinContainerWeapon" + idWeapon).gameObject);
     }
 
     private void PopulateStatsList(string name, System.Func<object, string> generator, object parameter)
@@ -57,8 +71,11 @@ public class PopupCharacterStatsBhv : MonoBehaviour
         var statsListText = statsList.GetComponent<TMPro.TextMeshProUGUI>();
         statsListText.text = generator(parameter);
         var textHeight = statsListText.preferredHeight;
-        statsList.GetComponent<RectTransform>().sizeDelta += new Vector2(0.0f, textHeight);
         var parent = statsList.transform.parent.GetComponent<UnityEngine.UI.ScrollRect>();
+        var parentSizeY = parent.GetComponent<RectTransform>().sizeDelta.y;
+        if (textHeight < parentSizeY)
+            textHeight = parentSizeY;
+        statsList.GetComponent<RectTransform>().sizeDelta += new Vector2(0.0f, textHeight);        
         parent.normalizedPosition = new Vector2(0.0f, 1.0f);
     }
 
@@ -97,7 +114,7 @@ public class PopupCharacterStatsBhv : MonoBehaviour
 
     private void DisplayStatsWeapon(int tabId, Weapon weapon)
     {
-        _instantiator.LoadWeaponSkin(weapon, _tabs[tabId].transform.Find("SkinContainerWeapon").gameObject);
+        _instantiator.LoadWeaponSkin(weapon, _tabs[tabId].transform.Find("SkinContainerWeapon" + (tabId - 1)).gameObject);
         var weaponTag = "";
         if (weapon.Rarity == Rarity.Magical) weaponTag = "<material=\"LongBlue\">";
         else if (weapon.Rarity == Rarity.Rare) weaponTag = "<material=\"LongYellow\">";
@@ -105,7 +122,7 @@ public class PopupCharacterStatsBhv : MonoBehaviour
         _tabs[tabId].transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsWeapon_" + weapon.Type.GetHashCode());
         _tabs[tabId].transform.Find("Damages").GetComponent<TMPro.TextMeshPro>().text = weapon.BaseDamage.ToString();
         _tabs[tabId].transform.Find("Pa").GetComponent<TMPro.TextMeshPro>().text = weapon.PaNeeded.ToString();
-        _tabs[tabId].transform.Find("Range").GetComponent<TMPro.TextMeshPro>().text = weapon.MinRange + "-" + weapon.MaxRange;
+        _tabs[tabId].transform.Find("Range").GetComponent<TMPro.TextMeshPro>().text = weapon.MinRange + (weapon.MaxRange != weapon.MinRange ? "-" + weapon.MaxRange : "");
         PopulateStatsList("StatsList" + tabId, GenerateStatsListWeapon, weapon);
     }
 
@@ -113,16 +130,46 @@ public class PopupCharacterStatsBhv : MonoBehaviour
     {
         var weapon = (Weapon)parameter;
         string statsList = "";
-        statsList += MakeTitle(weapon.Type + " Characteristics");
-        statsList += MakeContent("Damage Range: ", weapon.DamageRangePercentage + "%");
+        statsList += MakeTitle(weapon.Type.GetDescription() + " Characteristics");
+        statsList += MakeContent("Damage Range: ", "+/- " + weapon.DamageRangePercentage + "%");
         statsList += MakeContent("Critical Chance: ", weapon.CritChancePercent + "%");
-        statsList += MakeContent("Critical Multiplier: ", weapon.CritMultiplierPercent + "%");
+        statsList += MakeContent("Critical Multiplier: ", "+" + weapon.CritMultiplierPercent + "%");
+
+        if (weapon.Specificity != null)
+        {
+            statsList += MakeTitle(weapon.Type.GetDescription() + " Specificity");
+            statsList += MakeContent("", weapon.Specificity);
+        }
+
+        if (weapon.RangeZones != null && weapon.RangeZones.Count > 0)
+        {
+            statsList += MakeTitle(weapon.Type.GetDescription() + "Area Of Effect");
+            var zones = "";
+            foreach (var zone in weapon.RangeZones)
+                zones += (zones != "" ? ", " : "") + zone.GetDescription();
+            statsList += MakeContent("Zones: ", zones);
+        }
         return statsList;
     }
 
-    private void DisplayStatsSkill(int tabId, int skillId)
+    private void DisplayStatsSkill(int tabId, Skill skill)
     {
+        _instantiator.LoadSkillSkin(skill, _tabs[tabId].transform.Find("SkinContainerSkill" + (tabId - 3)).gameObject);
+        _tabs[tabId].transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = skill.Name;
+        _tabs[tabId].transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsSkills_" + skill.IconId);
+        _tabs[tabId].transform.Find("Cooldown").GetComponent<TMPro.TextMeshPro>().text = skill.CooldownType == CooldownType.Normal ? skill.CooldownMax.ToString() : "-";
+        _tabs[tabId].transform.Find("Pa").GetComponent<TMPro.TextMeshPro>().text = skill.PaNeeded.ToString();
+        _tabs[tabId].transform.Find("Range").GetComponent<TMPro.TextMeshPro>().text = skill.MinRange + (skill.MaxRange != skill.MinRange ? "-" + skill.MaxRange : "");
+        PopulateStatsList("StatsList" + tabId, GenerateStatsListSkill, skill);
+    }
 
+    private string GenerateStatsListSkill(object parameter)
+    {
+        var skill = (Skill)parameter;
+        string statsList = "";
+        statsList += MakeTitle("Description");
+        statsList += MakeContent("", skill.Description);
+        return statsList;
     }
 
     private string MakeTitle(string title)

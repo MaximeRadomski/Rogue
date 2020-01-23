@@ -20,11 +20,15 @@ public class SkillVampire : Skill
         MaxRange = 0;
         RangeType = RangeType.NoRange;
         IconId = 2;
+
+        Description = "Steal <material=\"LongRed\">" + _percentToSteal + "%</material> of the damages done as <material=\"LongRed\">HP</material>";
     }
+
+    private int _percentToSteal = 20;
 
     public override void OnEndAttack(int damages, CharacterBhv opponentBhv)
     {
-        float damagesToSteal = damages * 0.2f;
+        float damagesToSteal = damages * Helper.MultiplierFromPercent(0, _percentToSteal);
         CharacterBhv.GainHp((int)damagesToSteal);
         //CharacterBhv.GainHp((int)damagesToSteal);
         //CharacterBhv.GainHp((int)damagesToSteal);

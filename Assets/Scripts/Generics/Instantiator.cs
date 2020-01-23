@@ -33,9 +33,6 @@ public class Instantiator : MonoBehaviour
             var inputKeyBhv = tmpKeyboardInstance.transform.GetChild(i).GetComponent<InputKeyBhv>();
             if (inputKeyBhv != null)
                 inputKeyBhv.SetPrivates(target, maxWidth);
-            var buttonBhv = tmpKeyboardInstance.transform.GetChild(i).GetComponent<ButtonBhv>();
-            if (buttonBhv != null)
-                buttonBhv.Layer = Constants.InputLayer;
         }
         tmpKeyboardInstance.transform.Find("InputKeyLayout" + PlayerPrefs.GetInt(Constants.PpFavKeyboardLayout, Constants.PpFavKeyboardLayoutDefault)).GetComponent<InputKeyBhv>().ChangeLayout();
         if (target.transform.position.y < -Camera.main.orthographicSize + Constants.KeyboardHeight)
@@ -47,12 +44,6 @@ public class Instantiator : MonoBehaviour
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupCharacterStats");
         var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpPopupInstance.name);
-        for (int i = 0; i < tmpPopupInstance.transform.childCount; ++i)
-        {
-            var buttonBhv = tmpPopupInstance.transform.GetChild(i).GetComponent<ButtonBhv>();
-            if (buttonBhv != null)
-                buttonBhv.Layer = Constants.InputLayer;
-        }
         tmpPopupInstance.GetComponent<PopupCharacterStatsBhv>().SetPrivates(character);
     }
 
@@ -159,6 +150,11 @@ public class Instantiator : MonoBehaviour
             tmpWeaponPart.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet(weapon.WeaponParts[i]);
             tmpWeaponPartShadow.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet(weapon.WeaponParts[i]);
         }
+    }
+
+    public void LoadSkillSkin(Skill skill, GameObject skinContainer)
+    {
+        skinContainer.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Skills/Skills_" + skill.IconId);
     }
 
     public GameObject NewCell(int x, int y, char c, Grid grid)

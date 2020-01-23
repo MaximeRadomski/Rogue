@@ -6,6 +6,11 @@ public abstract class InputBhv : MonoBehaviour
 {
     public int Layer = 0;
 
+    public virtual void SetPrivates()
+    {
+        Layer = Constants.InputLayer;
+    }
+
     public abstract void BeginAction(Vector2 initialTouchPosition);
     public abstract void DoAction(Vector2 touchPosition);
     public abstract void EndAction(Vector2 lastTouchPosition);

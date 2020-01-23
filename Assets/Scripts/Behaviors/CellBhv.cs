@@ -23,8 +23,9 @@ public class CellBhv : InputBhv
         SetStartVisuals();
     }
 
-    private void SetPrivates()
+    public override void SetPrivates()
     {
+        base.SetPrivates();
         _gridBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GridBhv>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _isStretching = false;

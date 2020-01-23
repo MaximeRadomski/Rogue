@@ -6665,6 +6665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Paused: 0
   PauseMenu: {fileID: 0}
+  Instantiator: {fileID: 0}
   DayNight:
   - {fileID: -1108182313213868328, guid: 044d0aae61fe9e446989d7d9f667ad88, type: 3}
   - {fileID: 5867741536060620524, guid: 044d0aae61fe9e446989d7d9f667ad88, type: 3}
