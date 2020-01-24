@@ -25,6 +25,20 @@ public class PlayerPrefsHelper : MonoBehaviour
         PlayerPrefs.SetString(characterName + Constants.PpWeapon2, JsonUtility.ToJson(character.Weapons[1]));
         PlayerPrefs.SetString(characterName + Constants.PpSkill1, character.Skills != null && character.Skills.Count >= 1 ? character.Skills[0].Name : null);
         PlayerPrefs.SetString(characterName + Constants.PpSkill2, character.Skills != null && character.Skills.Count >= 2 ? character.Skills[1].Name : null);
+        // Inventory
+        for (int i = 0; i < character.InventoryPlace; ++i)
+        {
+            if (character.Inventory == null || i >= character.Inventory.Count)
+            {
+                PlayerPrefs.SetString(characterName + Constants.PpInventoryItem + i, null);
+                continue;
+            }
+            if (character.Inventory[i].InventoryItemType == InventoryItemType.Skill)
+                PlayerPrefs.SetString(characterName + Constants.PpInventoryItem + i, character.Inventory[i].Name);
+            else
+                PlayerPrefs.SetString(characterName + Constants.PpInventoryItem + i, JsonUtility.ToJson(character.Inventory[i]));
+            PlayerPrefs.SetInt(characterName + Constants.PpInventoryItem + i + "Type", character.Inventory[i].InventoryItemType.GetHashCode());
+        }
         Debug.Log("Pp" + characterName + " :\n" + PlayerPrefs.GetString(characterName) + "\n\n" +
             "Pp" + characterName + Constants.PpWeapon1 + " :\n" + PlayerPrefs.GetString(characterName + Constants.PpWeapon1) + "\n\n" +
             "Pp" + characterName + Constants.PpWeapon2 + " :\n" + PlayerPrefs.GetString(characterName + Constants.PpWeapon2) + "\n\n" +
@@ -41,6 +55,20 @@ public class PlayerPrefsHelper : MonoBehaviour
         character.Skills = new List<Skill>();
         character.Skills.Add(RacesData.SkillsData.GetSkillFromName(PlayerPrefs.GetString(characterName + Constants.PpSkill1, Constants.PpSerializeDefault)));
         character.Skills.Add(RacesData.SkillsData.GetSkillFromName(PlayerPrefs.GetString(characterName + Constants.PpSkill2, Constants.PpSerializeDefault)));
+        character.Inventory = new List<InventoryItem>();
+        for (int i = 0; i < character.InventoryPlace; ++i)
+        {
+            var serialized = PlayerPrefs.GetString(characterName + Constants.PpInventoryItem + i, Constants.PpSerializeDefault);
+            if (string.IsNullOrEmpty(serialized))
+                continue;
+            var typeId = PlayerPrefs.GetInt(characterName + Constants.PpInventoryItem + i + "Type");
+            if (typeId == InventoryItemType.Weapon.GetHashCode())
+                character.Inventory.Add(JsonUtility.FromJson<Weapon>(serialized));
+            else if (typeId == InventoryItemType.Skill.GetHashCode())
+                character.Inventory.Add(RacesData.SkillsData.GetSkillFromName(serialized));
+            else
+                character.Inventory.Add(JsonUtility.FromJson<Consumable>(serialized));
+        }
         return character;
     }
 }

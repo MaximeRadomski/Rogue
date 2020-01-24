@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class Weapon : InventoryItem
 {
-    public string Name;
     public WeaponType Type;
-    public Rarity Rarity;
     public int BaseDamage;
     public int DamageRangePercentage;
     public int CritChancePercent;
@@ -21,4 +19,9 @@ public class Weapon : InventoryItem
 
     public int NbSkinParts;
     public List<string> WeaponParts;
+
+    public Weapon()
+    {
+        InventoryItemType = InventoryItemType.Weapon;
+    }
 }

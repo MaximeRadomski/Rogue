@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class Consumable : InventoryItem
 {
-
+    public Consumable()
+    {
+        Name = "Basic Name";
+        InventoryItemType = InventoryItemType.Consumable;
+    }
 }

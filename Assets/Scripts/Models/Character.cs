@@ -32,4 +32,18 @@ public class Character
 
     public int RaceWeaponDamagePercent; //To Add
     public int NotRaceWeaponDamagePercent; //To Substract
+
+    public int GetCurrentInventoryWeight()
+    {
+        int weight = 0;
+        if (Inventory == null || Inventory.Count == 0)
+            return weight;
+        foreach (var item in Inventory)
+        {
+            if (item == null)
+                continue;
+            weight += item.Weight;
+        }
+        return weight;
+    }
 }

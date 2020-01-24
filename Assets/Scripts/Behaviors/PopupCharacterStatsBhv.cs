@@ -109,16 +109,25 @@ public class PopupCharacterStatsBhv : MonoBehaviour
         statsList += MakeTitle("Weapons Handling");
         statsList += MakeContent("Fav Weapons Damages: ", "+0%");
         statsList += MakeContent("Other Weapons Damages: ", "-" + RacesData.NotRaceWeaponDamagePercent + "%");
+
+        statsList += MakeTitle("Inventory: <material=\"LongWhite\">" + _character.GetCurrentInventoryWeight() + "/" + _character.WeightLimit + " " + Constants.UnitWeight + "</material>");
+        for (int i = 0; i < _character.InventoryPlace; ++i)
+        {
+            if (i >= _character.Inventory.Count)
+            {
+                statsList += MakeContent((i + 1) + ". ", "Empty\n<material=\"LongGreyish\">     -</material>");
+                continue;
+            }                
+            var item = _character.Inventory[i];
+            statsList += MakeContent((i + 1) + ". ", item.GetNameWithColor() + "\n     <material=\"LongGreyish\">" + item.InventoryItemType + " - " + item.Weight + " " + Constants.UnitWeight + "</material>");                
+        }
         return statsList;
     }
 
     private void DisplayStatsWeapon(int tabId, Weapon weapon)
     {
-        _instantiator.LoadWeaponSkin(weapon, _tabs[tabId].transform.Find("SkinContainerWeapon" + (tabId - 1)).gameObject);
-        var weaponTag = "";
-        if (weapon.Rarity == Rarity.Magical) weaponTag = "<material=\"LongBlue\">";
-        else if (weapon.Rarity == Rarity.Rare) weaponTag = "<material=\"LongYellow\">";
-        _tabs[tabId].transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = weaponTag + weapon.Name;
+        _instantiator.LoadWeaponSkin(weapon, _tabs[tabId].transform.Find("SkinContainerWeapon" + (tabId - 1)).gameObject);        
+        _tabs[tabId].transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = weapon.GetNameWithColor();
         _tabs[tabId].transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsWeapon_" + weapon.Type.GetHashCode());
         _tabs[tabId].transform.Find("Damages").GetComponent<TMPro.TextMeshPro>().text = weapon.BaseDamage.ToString();
         _tabs[tabId].transform.Find("Pa").GetComponent<TMPro.TextMeshPro>().text = weapon.PaNeeded.ToString();
@@ -134,6 +143,7 @@ public class PopupCharacterStatsBhv : MonoBehaviour
         statsList += MakeContent("Damage Range: ", "+/- " + weapon.DamageRangePercentage + "%");
         statsList += MakeContent("Critical Chance: ", weapon.CritChancePercent + "%");
         statsList += MakeContent("Critical Multiplier: ", "+" + weapon.CritMultiplierPercent + "%");
+        statsList += MakeContent("Weight: ", weapon.Weight + " " + Constants.UnitWeight);
 
         if (weapon.Specificity != null && weapon.Specificity != string.Empty)
         {
@@ -169,6 +179,9 @@ public class PopupCharacterStatsBhv : MonoBehaviour
         string statsList = "";
         statsList += MakeTitle("Description");
         statsList += MakeContent("", skill.Description);
+
+        statsList += MakeTitle("Skill Characteristics");
+        statsList += MakeContent("Weight: ", skill.Weight + " " + Constants.UnitWeight);
         return statsList;
     }
 

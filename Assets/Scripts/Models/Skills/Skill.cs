@@ -4,13 +4,11 @@ using UnityEngine;
 
 public abstract class Skill : InventoryItem
 {
-    public string Name;
     public string Description;
     public SkillType Type;
     public SkillNature Nature;
     public SkillEffect Effect;
     public CharacterRace Race;
-    public Rarity Rarity;
     public CooldownType CooldownType;
     public int CooldownMax;
     public int Cooldown;
@@ -29,6 +27,12 @@ public abstract class Skill : InventoryItem
     public int Id;
 
     private bool _isDebuffed;
+
+    public Skill()
+    {
+        InventoryItemType = InventoryItemType.Skill;
+        Weight = 1;
+    }
 
     public bool IsApplyingEffect()
     {

@@ -15,6 +15,9 @@ public static class Constants
     public const string TagSoundControler = "SoundControler";
     public const string TagPoppingText = "PoppingText";
 
+    // UNITS OF MEASURE //
+    public const string UnitWeight = "kg";
+
     //  PLAYER PREFS  //
     public const string PpScenePath = "ScenePath";
     public const string PpAudioLevel = "AudioLevel";
@@ -27,6 +30,7 @@ public static class Constants
     public const string PpWeapon2 = "Weapon2";
     public const string PpSkill1 = "Skill1";
     public const string PpSkill2 = "Skill2";
+    public const string PpInventoryItem = "InventoryItem";
     public const string PpNbOpponents = "NbOpponents";
     public const string PpSerializeDefault = null;
     public const string PpFavKeyboardLayout = "FavKeyboard";
