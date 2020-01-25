@@ -14,6 +14,18 @@ TextureImporter:
   - first:
       213: -3850410073261188009
     second: PopupCharacterStats_3
+  - first:
+      213: -2295199105892967749
+    second: PopupCharacterStats_4
+  - first:
+      213: -8655121119863384364
+    second: PopupCharacterStats_5
+  - first:
+      213: 8203880934323940204
+    second: PopupCharacterStats_6
+  - first:
+      213: -1777601791411636835
+    second: PopupCharacterStats_7
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -114,6 +126,90 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 253
+        width: 142
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b2cbba488aa940418dfd0e13535f13d
+      internalID: 4249241447528113216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PopupCharacterStats_1
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 253
+        width: 142
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c470e04f8d3fab44aee1eb5ed31199a
+      internalID: -8231951745732199608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PopupCharacterStats_2
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 253
+        width: 142
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f75ae08f51436b42a080c8f9c804402
+      internalID: 5217307186341332914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PopupCharacterStats_3
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 253
+        width: 142
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7570914900651d740a34c82222c7d1e9
+      internalID: -3850410073261188009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PopupCharacterStats_4
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 0
         width: 142
         height: 253
@@ -124,14 +220,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8deb3724b306a1c42b0ad0488dbe25c2
-      internalID: 4249241447528113216
+      spriteID: c1b7b211acf5c5744b3abbaeaf95edba
+      internalID: -2295199105892967749
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PopupCharacterStats_1
+      name: PopupCharacterStats_5
       rect:
         serializedVersion: 2
         x: 142
@@ -145,14 +241,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32e0209ba4d1e9140823dfdc8a3fdf9b
-      internalID: -8231951745732199608
+      spriteID: 094132cae6760a3478c40e38e28ec4d6
+      internalID: -8655121119863384364
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PopupCharacterStats_2
+      name: PopupCharacterStats_6
       rect:
         serializedVersion: 2
         x: 284
@@ -166,14 +262,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a49003aec19449d4bac92394748254ee
-      internalID: 5217307186341332914
+      spriteID: 5655d0193e05b8540b34f7cb037a3735
+      internalID: 8203880934323940204
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PopupCharacterStats_3
+      name: PopupCharacterStats_7
       rect:
         serializedVersion: 2
         x: 426
@@ -187,8 +283,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ebaeb81355c3ab44a9157782ebb04565
-      internalID: -3850410073261188009
+      spriteID: f65525e781ee3254da2f2855ca1daeb5
+      internalID: -1777601791411636835
       vertices: []
       indices: 
       edges: []

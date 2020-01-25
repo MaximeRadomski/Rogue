@@ -192,7 +192,7 @@ public class PopupCharacterStatsBhv : MonoBehaviour
 
     private string MakeContent(string libelle, string content)
     {
-        return "<material=\"LongGreyish\">" + libelle + "</material>" + content + "\n";
+        return "<material=\"LongGreyish\">" + libelle + "</material><material=\"LongWhite\">" + content + "</material>\n";
     }
 
     private void ChangeTab()
