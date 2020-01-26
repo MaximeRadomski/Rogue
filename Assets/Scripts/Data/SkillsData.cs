@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -46,38 +47,40 @@ public class SkillsData
             return null;
         Type thisType = GetType();
         //Debug.Log("Get" + name.Replace(" ", ""));
-        System.Reflection.MethodInfo theMethod = thisType.GetMethod("Get" + name.Replace(" ", ""));
-        return (Skill)theMethod.Invoke(this, null);
+        //System.Reflection.MethodInfo theMethod = thisType.GetMethod("Get" + name.Replace(" ", ""));
+        var instance = Activator.CreateInstance(Type.GetType("Skill" + name.Replace(" ", "")));
+        return (Skill)instance;
+        //return (Skill)theMethod.Invoke(this, null);
     }
 
     // RACIAL SKILLS
-    public Skill GetShield() { return new SkillShield(); }
-    public Skill GetJump() { return new SkillJump(); }
+    //public Skill GetShield() { return new SkillShield(); }
+    //public Skill GetJump() { return new SkillJump(); }
 
-    public Skill GetVampire() { return new SkillVampire(); }
-    public Skill GetAvarice() { return new SkillAvarice(); }
+    //public Skill GetVampire() { return new SkillVampire(); }
+    //public Skill GetAvarice() { return new SkillAvarice(); }
 
-    public Skill GetDash() { return new SkillDash(); }
-    public Skill GetDoubleEdged() { return new SkillDoubleEdged(); }
+    //public Skill GetDash() { return new SkillDash(); }
+    //public Skill GetDoubleEdged() { return new SkillDoubleEdged(); }
 
-    public Skill GetForge() { return new SkillForge(); }
-    public Skill GetGrapplingHook() { return new SkillGrapplingHook(); }
+    //public Skill GetForge() { return new SkillForge(); }
+    //public Skill GetGrapplingHook() { return new SkillGrapplingHook(); }
 
-    public Skill GetRoots() { return new SkillRoots(); }
-    public Skill GetRestoration() { return new SkillRestoration(); }
+    //public Skill GetRoots() { return new SkillRoots(); }
+    //public Skill GetRestoration() { return new SkillRestoration(); }
 
 
     // NORMAL SKILLS
-    public Skill GetTeleportation() { return new SkillTeleportation(); }
-    public Skill GetPush() { return new SkillPush(); }
-    public Skill GetHeal() { return new SkillHeal(); }
+    //public Skill GetTeleportation() { return new SkillTeleportation(); }
+    //public Skill GetPush() { return new SkillPush(); }
+    //public Skill GetHeal() { return new SkillHeal(); }
 
-    public Skill GetClarity() { return new SkillClarity(); }
+    //public Skill GetClarity() { return new SkillClarity(); }
 
     // MAGICAL SKILLS
-    public Skill GetSmite() { return new SkillSmite(); }
-    public Skill GetGreatHeal() { return new SkillGreatHeal(); }
+    //public Skill GetSmite() { return new SkillSmite(); }
+    //public Skill GetGreatHeal() { return new SkillGreatHeal(); }
 
     // RARE SKILLS
-    public Skill GetTripleEdged() { return new SkillTripleEdged(); }
+    //public Skill GetTripleEdged() { return new SkillTripleEdged(); }
 }

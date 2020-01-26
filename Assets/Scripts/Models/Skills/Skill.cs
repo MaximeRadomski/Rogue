@@ -4,7 +4,6 @@ using UnityEngine;
 
 public abstract class Skill : InventoryItem
 {
-    public string Description;
     public SkillType Type;
     public SkillNature Nature;
     public SkillEffect Effect;

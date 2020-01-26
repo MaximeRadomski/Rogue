@@ -8,6 +8,7 @@ public abstract class InventoryItem
     public InventoryItemType InventoryItemType;
     public int Weight;
     public Rarity Rarity;
+    public string Description;
 
     public virtual string GetNameWithColor()
     {

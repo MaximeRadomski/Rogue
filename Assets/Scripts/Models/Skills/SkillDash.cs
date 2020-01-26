@@ -23,7 +23,7 @@ public class SkillDash : Skill
         RangePositions = new List<int> { 0,1, 1,1, 1,0, 1,-1, 0,-1, -1,-1, -1,0, -1,1 };
         IconId = 4;
 
-        Description = "Avoid the first next turn hit";
+        Description = "taAvoid the first next turn hit";
     }
 
     private int _currentTargetX;
