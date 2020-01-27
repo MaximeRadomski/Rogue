@@ -16,7 +16,7 @@ public class StatsDisplayerBhv : MonoBehaviour
         var parentSizeY = parent.GetComponent<RectTransform>().sizeDelta.y;
         if (textHeight < parentSizeY)
             textHeight = parentSizeY;
-        statsList.GetComponent<RectTransform>().sizeDelta += new Vector2(0.0f, textHeight);
+        statsList.GetComponent<RectTransform>().sizeDelta = new Vector2(statsList.GetComponent<RectTransform>().sizeDelta.x, textHeight);
         parent.normalizedPosition = new Vector2(0.0f, 1.0f);
     }
 
@@ -85,7 +85,7 @@ public class StatsDisplayerBhv : MonoBehaviour
     {
         _instantiator.LoadConsumableSkin(consumable, container.transform.Find(skinContainerName).gameObject);
         container.transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = consumable.Name;
-        container.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsSkill_" + consumable.IconId);
+        container.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsConsumable_" + consumable.IconId);
         container.transform.Find("Cooldown").GetComponent<TMPro.TextMeshPro>().text = consumable.MinutesNeeded + "m";
         PopulateStatsList(statsListName, GenerateStatsListConsumable, consumable);
     }
