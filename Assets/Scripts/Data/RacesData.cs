@@ -54,8 +54,6 @@ public static class RacesData
     public static int InitiativeSkill = 50;
     public static int InitiativeStrongIn = 25;
 
-    public static SkillsData SkillsData = new SkillsData();
-
     public static Character GetCharacterFromRaceAndLevel(CharacterRace race, int level, bool isPlayer = false)
     {
         CharacterGender gender = (CharacterGender)Random.Range(0, 2);
@@ -129,7 +127,7 @@ public static class RacesData
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.HumanSkillsNames[0]) :
                                                                  SkillsData.GetSkillFromName(SkillsData.HumanSkillsNames[1])},
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
-            Inventory = new List<InventoryItem> { new Consumable(),
+            Inventory = new List<InventoryItem> { ConsumablesData.GetRandomConsumable(),
                                                   WeaponsData.GetWeaponFromType(WeaponType.GreatSword),
                                                   SkillsData.GetSkillFromName(SkillsData.RareSkillsNames[0]) },
             InventoryPlace = 4,
@@ -157,7 +155,7 @@ public static class RacesData
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.GoblinSkillsNames[0]) :
                                                                  SkillsData.GetSkillFromName(SkillsData.GoblinSkillsNames[1])},
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
-            Inventory = new List<InventoryItem> { new Consumable() },
+            Inventory = new List<InventoryItem> { ConsumablesData.GetRandomConsumable() },
             InventoryPlace = 6,
             WeightLimit = 20
         };
@@ -183,7 +181,7 @@ public static class RacesData
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.ElfSkillsNames[0]) :
                                                                  SkillsData.GetSkillFromName(SkillsData.ElfSkillsNames[1])},
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
-            Inventory = new List<InventoryItem> { new Consumable() },
+            Inventory = new List<InventoryItem> { ConsumablesData.GetRandomConsumable() },
             InventoryPlace = 2,
             WeightLimit = 20
         };
@@ -210,7 +208,7 @@ public static class RacesData
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.DwarfSkillsNames[0]) :
                                                                  SkillsData.GetSkillFromName(SkillsData.DwarfSkillsNames[1])},
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
-            Inventory = new List<InventoryItem> { new Consumable() },
+            Inventory = new List<InventoryItem> { ConsumablesData.GetRandomConsumable() },
             InventoryPlace = 3,
             WeightLimit = 60
         };
@@ -237,7 +235,7 @@ public static class RacesData
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.OrcSkillsNames[0]) :
                                                                  SkillsData.GetSkillFromName(SkillsData.OrcSkillsNames[1])},
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
-            Inventory = new List<InventoryItem> { new Consumable() },
+            Inventory = new List<InventoryItem> { ConsumablesData.GetRandomConsumable() },
             InventoryPlace = 3,
             WeightLimit = 80
         };

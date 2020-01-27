@@ -6,7 +6,7 @@ public class SkillShield : Skill
 {
     public SkillShield()
     {
-        Name = RacesData.SkillsData.HumanSkillsNames[0];
+        Name = SkillsData.HumanSkillsNames[0];
         Type = SkillType.Racial;
         Nature = SkillNature.Defensive;
         Effect = SkillEffect.Immuned;

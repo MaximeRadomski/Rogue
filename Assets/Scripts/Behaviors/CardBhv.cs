@@ -23,6 +23,9 @@ public abstract class CardBhv : InputBhv
     protected Vector3 _pressedScale;
     protected Vector3 _disabledScale;
 
+    protected int _minutesNeededAvoid;
+    protected int _minutesNeededVenture;
+
     public virtual void SetPrivates(int id, int day)
     {
         SetPrivates();
@@ -185,7 +188,7 @@ public abstract class CardBhv : InputBhv
         transform.position = Vector2.Lerp(transform.position, _dislikePosition, 0.1f);
         transform.eulerAngles = new Vector3(0.0f, 0.0f, _rotateAngle * (transform.position.x / 2));
         if (Helper.FloatEqualsPrecision(transform.position.x, _dislikePosition.x, 1.0f))
-            _swipeSceneBhv.NewCard();
+            _swipeSceneBhv.NewCard(_minutesNeededAvoid);
     }
 }
 

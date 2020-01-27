@@ -6,7 +6,7 @@ public class SkillTripleEdged : Skill
 {
     public SkillTripleEdged()
     {
-        Name = RacesData.SkillsData.RareSkillsNames[0];
+        Name = SkillsData.RareSkillsNames[0];
         Type = SkillType.NotRatial;
         Nature = SkillNature.Buff;
         Effect = SkillEffect.AttackUp;

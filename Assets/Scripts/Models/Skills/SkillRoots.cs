@@ -6,7 +6,7 @@ public class SkillRoots : Skill
 {
     public SkillRoots()
     {
-        Name = RacesData.SkillsData.OrcSkillsNames[0];
+        Name = SkillsData.OrcSkillsNames[0];
         Type = SkillType.Racial;
         Nature = SkillNature.Debuff;
         Effect = SkillEffect.None;

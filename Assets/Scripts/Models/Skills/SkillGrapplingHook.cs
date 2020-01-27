@@ -6,7 +6,7 @@ public class SkillGrapplingHook : Skill
 {
     public SkillGrapplingHook()
     {
-        Name = RacesData.SkillsData.DwarfSkillsNames[1];
+        Name = SkillsData.DwarfSkillsNames[1];
         Type = SkillType.Racial;
         Nature = SkillNature.Offensive;
         Effect = SkillEffect.None;

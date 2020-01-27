@@ -47,6 +47,14 @@ public class Instantiator : MonoBehaviour
         tmpPopupInstance.GetComponent<PopupCharacterStatsBhv>().SetPrivates(character);
     }
 
+    public void NewPopupInventory(Character character)
+    {
+        var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupInventory");
+        var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
+        Constants.IncreaseInputLayer(tmpPopupInstance.name);
+        tmpPopupInstance.GetComponent<PopupCharacterStatsBhv>().SetPrivates(character);
+    }
+
     public PauseMenuBhv NewPauseMenu()
     {
         var tmpPauseMenuObject = Resources.Load<GameObject>("Prefabs/PauseMenu");
@@ -155,6 +163,11 @@ public class Instantiator : MonoBehaviour
     public void LoadSkillSkin(Skill skill, GameObject skinContainer)
     {
         skinContainer.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Skills/Skills_" + skill.IconId);
+    }
+
+    public void LoadConsumableSkin(Consumable consumable, GameObject skinContainer)
+    {
+        skinContainer.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Consumables/Consumables_" + consumable.IconId);
     }
 
     public GameObject NewCell(int x, int y, char c, Grid grid)

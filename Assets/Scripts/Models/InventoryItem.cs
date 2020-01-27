@@ -12,11 +12,11 @@ public abstract class InventoryItem
 
     public virtual string GetNameWithColor()
     {
-        var weaponTag = "<material=\"LongWhite\">";
+        var nameTag = "<material=\"LongWhite\">";
         if (Rarity == Rarity.Magical)
-            weaponTag = "<material=\"LongBlue\">";
+            nameTag = "<material=\"LongBlue\">";
         else if (Rarity == Rarity.Rare)
-            weaponTag = "<material=\"LongYellow\">";
-        return weaponTag + Name + "</material>";
+            nameTag = "<material=\"LongYellow\">";
+        return nameTag + Name + "</material>";
     }
 }

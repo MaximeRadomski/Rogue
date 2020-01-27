@@ -6,7 +6,7 @@ public class SkillAvarice : Skill
 {
     public SkillAvarice()
     {
-        Name = RacesData.SkillsData.GoblinSkillsNames[1];
+        Name = SkillsData.GoblinSkillsNames[1];
         Type = SkillType.Racial;
         Nature = SkillNature.Buff;
         Effect = SkillEffect.None;

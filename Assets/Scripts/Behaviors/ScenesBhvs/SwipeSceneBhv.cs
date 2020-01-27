@@ -54,6 +54,7 @@ public class SwipeSceneBhv : SceneBhv
     {
         GameObject.Find("ButtonPause").GetComponent<ButtonBhv>().EndActionDelegate = Pause;
         GameObject.Find("CharacterButton").GetComponent<ButtonBhv>().EndActionDelegate = ShowCharacterStats;
+        GameObject.Find("ButtonInventory").GetComponent<ButtonBhv>().EndActionDelegate = ShowInventory;
         Instantiator.NewRandomCard(1, _journey.Day, _journey.Biome.MapType);
         Instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType);
         _avoidBhv.EndActionDelegate = GameObject.Find("Card1").GetComponent<CardBhv>().Avoid;
@@ -69,9 +70,8 @@ public class SwipeSceneBhv : SceneBhv
         PauseMenu.Buttons[4].gameObject.SetActive(false);
     }
 
-    public void NewCard()
+    public void NewCard(int minutesPassed)
     {
-        var minutesPassed = Random.Range(20, 61);
         _journey.Minutes += minutesPassed;
         if (_journey.Minutes >= 60)
         {
@@ -81,6 +81,7 @@ public class SwipeSceneBhv : SceneBhv
         if (_journey.Hour >= 24)
         {
             _journey.Hour -= 24;
+            ++_journey.Day;
         }
         //Debug.Log("Minutes Passed = " + minutesPassed + "\t|\t\tHours = " + _journey.Hour + "h" + _journey.Minutes);
         ++_journey.Step;
@@ -189,6 +190,11 @@ public class SwipeSceneBhv : SceneBhv
     private void ShowCharacterStats()
     {
         Instantiator.NewPopupCharacterStats(_playerCharacter);
+    }
+
+    private void ShowInventory()
+    {
+        Instantiator.NewPopupInventory(_playerCharacter);
     }
 
     #region PauseMenu

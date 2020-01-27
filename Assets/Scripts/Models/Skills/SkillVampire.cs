@@ -6,7 +6,7 @@ public class SkillVampire : Skill
 {
     public SkillVampire()
     {
-        Name = RacesData.SkillsData.GoblinSkillsNames[0];
+        Name = SkillsData.GoblinSkillsNames[0];
         Type = SkillType.Racial;
         Nature = SkillNature.Buff;
         Effect = SkillEffect.None;

@@ -6,7 +6,7 @@ public class SkillPush : Skill
 {
     public SkillPush()
     {
-        Name = RacesData.SkillsData.NormalSkillsNames[1];
+        Name = SkillsData.NormalSkillsNames[1];
         Type = SkillType.NotRatial;
         Nature = SkillNature.Offensive;
         Effect = SkillEffect.None;

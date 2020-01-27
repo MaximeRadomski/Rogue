@@ -6,7 +6,7 @@ public class SkillRestoration : Skill
 {
     public SkillRestoration()
     {
-        Name = RacesData.SkillsData.OrcSkillsNames[1];
+        Name = SkillsData.OrcSkillsNames[1];
         Type = SkillType.Racial;
         Nature = SkillNature.Buff;
         Effect = SkillEffect.None;

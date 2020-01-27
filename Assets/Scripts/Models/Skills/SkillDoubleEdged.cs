@@ -6,7 +6,7 @@ public class SkillDoubleEdged : Skill
 {
     public SkillDoubleEdged()
     {
-        Name = RacesData.SkillsData.ElfSkillsNames[1];
+        Name = SkillsData.ElfSkillsNames[1];
         Type = SkillType.Racial;
         Nature = SkillNature.Buff;
         Effect = SkillEffect.AttackUp;

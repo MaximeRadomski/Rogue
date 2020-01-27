@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class Consumable : InventoryItem
 {
+    public int IconId;
+    public int MinutesNeeded;
+
     public Consumable()
     {
-        Name = "Basic Name";
         InventoryItemType = InventoryItemType.Consumable;
+    }
+
+    public virtual void OnUse(object target)
+    {
+        
     }
 }

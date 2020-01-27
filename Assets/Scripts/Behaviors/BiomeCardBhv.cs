@@ -11,6 +11,8 @@ public class BiomeCardBhv : CardBhv
     public override void SetPrivates(int id, int day)
     {
         base.SetPrivates(id, day);
+        _minutesNeededAvoid = 0;
+        _minutesNeededVenture = 0;
         _biome = BiomesData.GetRandomBiome();
     }
 

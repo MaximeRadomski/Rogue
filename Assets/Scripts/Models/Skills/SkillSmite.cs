@@ -6,7 +6,7 @@ public class SkillSmite : Skill
 {
     public SkillSmite()
     {
-        Name = RacesData.SkillsData.MagicalSkillsNames[0];
+        Name = SkillsData.MagicalSkillsNames[0];
         Type = SkillType.NotRatial;
         Nature = SkillNature.Offensive;
         Effect = SkillEffect.None;

@@ -5,22 +5,22 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-public class SkillsData
+public static class SkillsData
 {
-    public string[] HumanSkillsNames = { "Shield", "Jump" };
-    public string[] GoblinSkillsNames = { "Vampire", "Avarice" };
-    public string[] ElfSkillsNames = { "Dash", "Double Edged" };
-    public string[] DwarfSkillsNames = { "Forge", "Grappling Hook" };
-    public string[] OrcSkillsNames = { "Roots", "Restoration" };
+    public static string[] HumanSkillsNames = { "Shield", "Jump" };
+    public static string[] GoblinSkillsNames = { "Vampire", "Avarice" };
+    public static string[] ElfSkillsNames = { "Dash", "Double Edged" };
+    public static string[] DwarfSkillsNames = { "Forge", "Grappling Hook" };
+    public static string[] OrcSkillsNames = { "Roots", "Restoration" };
 
-    public string[] NormalSkillsNames = { "Teleportation", "Push", "Heal", "Clarity" };
-    public string[] MagicalSkillsNames = { "Smite", "Great Heal" };
-    public string[] RareSkillsNames = { "TripleEdged" };
+    public static string[] NormalSkillsNames = { "Teleportation", "Push", "Heal", "Clarity" };
+    public static string[] MagicalSkillsNames = { "Smite", "Great Heal" };
+    public static string[] RareSkillsNames = { "TripleEdged" };
 
     public static int RareSkillAppearancePercent = 5;
     public static int MagicalSkillAppearancePercent = 15;
 
-    public Skill GetRandomSkill(bool isPlayer = false)
+    public static Skill GetRandomSkill(bool isPlayer = false)
     {
         if (isPlayer)
             return GetRandomSkillFromRarity(Rarity.Normal);
@@ -32,7 +32,7 @@ public class SkillsData
         return GetRandomSkillFromRarity(Rarity.Normal);
     }
 
-    public Skill GetRandomSkillFromRarity(Rarity rarity)
+    public static Skill GetRandomSkillFromRarity(Rarity rarity)
     {
         if (rarity == Rarity.Rare)
             return GetSkillFromName(RareSkillsNames[UnityEngine.Random.Range(0, RareSkillsNames.Length)]);
@@ -41,11 +41,10 @@ public class SkillsData
         return GetSkillFromName(NormalSkillsNames[UnityEngine.Random.Range(0, NormalSkillsNames.Length)]);
     }
 
-    public Skill GetSkillFromName(string name)
+    public static Skill GetSkillFromName(string name)
     {
         if (string.IsNullOrEmpty(name))
             return null;
-        Type thisType = GetType();
         //Debug.Log("Get" + name.Replace(" ", ""));
         //System.Reflection.MethodInfo theMethod = thisType.GetMethod("Get" + name.Replace(" ", ""));
         var instance = Activator.CreateInstance(Type.GetType("Skill" + name.Replace(" ", "")));

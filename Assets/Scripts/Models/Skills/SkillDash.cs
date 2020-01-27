@@ -6,7 +6,7 @@ public class SkillDash : Skill
 {
     public SkillDash()
     {
-        Name = RacesData.SkillsData.ElfSkillsNames[0];
+        Name = SkillsData.ElfSkillsNames[0];
         Type = SkillType.Racial;
         Nature = SkillNature.Defensive;
         Effect = SkillEffect.Immuned;

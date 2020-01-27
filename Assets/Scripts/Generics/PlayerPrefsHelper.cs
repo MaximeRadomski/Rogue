@@ -53,8 +53,8 @@ public class PlayerPrefsHelper : MonoBehaviour
         character.Weapons.Add(JsonUtility.FromJson<Weapon>(PlayerPrefs.GetString(characterName + Constants.PpWeapon1, Constants.PpSerializeDefault)));
         character.Weapons.Add(JsonUtility.FromJson<Weapon>(PlayerPrefs.GetString(characterName + Constants.PpWeapon2, Constants.PpSerializeDefault)));
         character.Skills = new List<Skill>();
-        character.Skills.Add(RacesData.SkillsData.GetSkillFromName(PlayerPrefs.GetString(characterName + Constants.PpSkill1, Constants.PpSerializeDefault)));
-        character.Skills.Add(RacesData.SkillsData.GetSkillFromName(PlayerPrefs.GetString(characterName + Constants.PpSkill2, Constants.PpSerializeDefault)));
+        character.Skills.Add(SkillsData.GetSkillFromName(PlayerPrefs.GetString(characterName + Constants.PpSkill1, Constants.PpSerializeDefault)));
+        character.Skills.Add(SkillsData.GetSkillFromName(PlayerPrefs.GetString(characterName + Constants.PpSkill2, Constants.PpSerializeDefault)));
         character.Inventory = new List<InventoryItem>();
         for (int i = 0; i < character.InventoryPlace; ++i)
         {
@@ -65,7 +65,7 @@ public class PlayerPrefsHelper : MonoBehaviour
             if (typeId == InventoryItemType.Weapon.GetHashCode())
                 character.Inventory.Add(JsonUtility.FromJson<Weapon>(serialized));
             else if (typeId == InventoryItemType.Skill.GetHashCode())
-                character.Inventory.Add(RacesData.SkillsData.GetSkillFromName(serialized));
+                character.Inventory.Add(SkillsData.GetSkillFromName(serialized));
             else
                 character.Inventory.Add(JsonUtility.FromJson<Consumable>(serialized));
         }

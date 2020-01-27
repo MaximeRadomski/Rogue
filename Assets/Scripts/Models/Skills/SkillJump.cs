@@ -6,7 +6,7 @@ public class SkillJump : Skill
 {
     public SkillJump()
     {
-        Name = RacesData.SkillsData.HumanSkillsNames[1];
+        Name = SkillsData.HumanSkillsNames[1];
         Type = SkillType.Racial;
         Nature = SkillNature.Movement;
         Effect = SkillEffect.None;

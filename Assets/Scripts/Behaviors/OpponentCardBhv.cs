@@ -13,6 +13,8 @@ public class OpponentCardBhv : CardBhv
 
     public override void SetPrivates(int id, int day)
     {
+        _minutesNeededAvoid = Random.Range(20, 60 + 1);
+        _minutesNeededVenture = Random.Range(60, 90 + 1);
         _fixBox = gameObject.GetComponents<BoxCollider2D>()[1];
         _originalFixBoxY = _fixBox.size.y;
         _customFixBoxY = 1.3f;

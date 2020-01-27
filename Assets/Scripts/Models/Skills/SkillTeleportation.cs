@@ -6,7 +6,7 @@ public class SkillTeleportation : Skill
 {
     public SkillTeleportation()
     {
-        Name = RacesData.SkillsData.NormalSkillsNames[0];
+        Name = SkillsData.NormalSkillsNames[0];
         Type = SkillType.NotRatial;
         Nature = SkillNature.Movement;
         Effect = SkillEffect.None;

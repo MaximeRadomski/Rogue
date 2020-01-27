@@ -6,7 +6,7 @@ public class SkillForge : Skill
 {
     public SkillForge()
     {
-        Name = RacesData.SkillsData.DwarfSkillsNames[0];
+        Name = SkillsData.DwarfSkillsNames[0];
         Type = SkillType.Racial;
         Nature = SkillNature.Buff;
         Effect = SkillEffect.AttackUp;

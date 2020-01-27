@@ -74,22 +74,12 @@ public class CharacterBhv : MonoBehaviour
 
     public void TakeDamages(int damages)
     {
-        foreach (var skill in Character.Skills)
-        {
-            if (skill != null)
-                damages = skill.OnTakeDamage(damages);
-        }
-        Character.Hp -= damages;
-        Instantiator.PopText("-" + damages.ToString(), transform.position, TextType.Hp);
+        Instantiator.PopText("-" + Character.TakeDamages(damages).ToString(), transform.position, TextType.Hp);
     }
 
     public void GainHp(int amount)
     {
-        int amountToAdd = amount;
-        if (Character.Hp + amountToAdd > Character.HpMax)
-            amountToAdd = Character.HpMax - Character.Hp;
-        Character.Hp += amountToAdd;
-        Instantiator.PopText("+" + amountToAdd.ToString(), transform.position, TextType.Hp);
+        Instantiator.PopText("+" + Character.GainHp(amount).ToString(), transform.position, TextType.Hp);
     }
 
     public void LosePa(int amount)

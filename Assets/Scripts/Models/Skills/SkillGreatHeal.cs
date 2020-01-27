@@ -6,7 +6,7 @@ public class SkillGreatHeal : Skill
 {
     public SkillGreatHeal()
     {
-        Name = RacesData.SkillsData.MagicalSkillsNames[1];
+        Name = SkillsData.MagicalSkillsNames[1];
         Type = SkillType.NotRatial;
         Nature = SkillNature.Defensive;
         Effect = SkillEffect.None;

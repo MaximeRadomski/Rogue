@@ -46,4 +46,49 @@ public class Character
         }
         return weight;
     }
+
+    public int GetCurrentWeaponsWeight()
+    {
+        int weight = 0;
+        weight += Weapons[0].Weight;
+        weight += Weapons[1].Weight;
+        return weight;
+    }
+
+    public int GetCurrentSkillsWeight()
+    {
+        int weight = 0;
+        weight += Skills[0].Weight;
+        weight += Skills[1].Weight;
+        return weight;
+    }
+
+    public int GetTotalWeight()
+    {
+        int weight = 0;
+        weight += GetCurrentInventoryWeight();
+        weight += GetCurrentWeaponsWeight();
+        weight += GetCurrentSkillsWeight();
+        return weight;
+    }
+
+    public int TakeDamages(int damages)
+    {
+        foreach (var skill in Skills)
+        {
+            if (skill != null)
+                damages = skill.OnTakeDamage(damages);
+        }
+        Hp -= damages;
+        return damages;
+    }
+
+    public int GainHp(int amount)
+    {
+        int amountToAdd = amount;
+        if (Hp + amountToAdd > HpMax)
+            amountToAdd = HpMax - Hp;
+        Hp += amountToAdd;
+        return amountToAdd;
+    }
 }

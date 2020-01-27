@@ -6,7 +6,7 @@ public class SkillHeal : Skill
 {
     public SkillHeal()
     {
-        Name = RacesData.SkillsData.NormalSkillsNames[2];
+        Name = SkillsData.NormalSkillsNames[2];
         Type = SkillType.NotRatial;
         Nature = SkillNature.Defensive;
         Effect = SkillEffect.None;
