@@ -5,11 +5,14 @@ using UnityEngine;
 public class SpriteOrderBhv : MonoBehaviour
 {
     private SpriteRenderer _spriteRenderer;
+    private TMPro.TextMeshPro _textMesh;
 
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         SetSpriteSortingLayerOrder(Constants.InputLayer);
+        _textMesh = GetComponent<TMPro.TextMeshPro>();
+        SetTextSortingLayerOrder(Constants.InputLayer);
     }
 
     private void SetSpriteSortingLayerOrder(int hundred)
@@ -20,6 +23,17 @@ public class SpriteOrderBhv : MonoBehaviour
             int toSubstract = currentOrder / 100;
             int decimals = currentOrder - (toSubstract * 100);
             _spriteRenderer.sortingOrder = (hundred * 100) + decimals;
+        }
+    }
+
+    private void SetTextSortingLayerOrder(int hundred)
+    {
+        if (_textMesh != null)
+        {
+            var currentOrder = _textMesh.sortingOrder;
+            int toSubstract = currentOrder / 100;
+            int decimals = currentOrder - (toSubstract * 100);
+            _textMesh.sortingOrder = (hundred * 100) + decimals;
         }
     }
 }

@@ -201,7 +201,18 @@ public class SwipeSceneBhv : SceneBhv
 
     private void GiveUp()
     {
-        NavigationService.LoadPreviousScene();
+        Instantiator.NewPopupYesNo(Constants.YesNoTitle,
+            "You wont be able to recover your progress if you give up now!"
+            , Constants.Cancel, Constants.Proceed, OnGiveUp);
+    }
+
+    private object OnGiveUp(bool result)
+    {
+        if (result)
+        {
+            NavigationService.LoadPreviousScene();
+        }
+        return result;
     }
 
     private void Settings()

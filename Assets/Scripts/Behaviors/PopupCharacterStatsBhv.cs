@@ -9,12 +9,14 @@ public class PopupCharacterStatsBhv : StatsDisplayerBhv
     private SkinContainerBhv _skinContainerBhv;
     private List<GameObject> _tabs;
     private List<ButtonBhv> _buttonsTabs;
+    private TMPro.TextMeshPro _title;
     private int _currentTab;
     private Vector3 _resetTabPosition;
     private Vector3 _currentTabPosition;
 
     public void SetPrivates(Character character)
     {
+        _title = transform.Find("Title").GetComponent<TMPro.TextMeshPro>();
         _character = character;
         _currentTab = 0;
         _resetTabPosition = new Vector3(-10.0f, 10.0f, 0.0f);
@@ -118,6 +120,10 @@ public class PopupCharacterStatsBhv : StatsDisplayerBhv
         var newTab = int.Parse(Constants.LastEndActionClickedName.Substring(Helper.CharacterAfterString(Constants.LastEndActionClickedName, "Tab")));
         if (newTab == _currentTab)
             return;
+        if (newTab == 0)
+            _title.text = "Character";
+        else
+            _title.text = "Equipment";
         _currentTab = newTab;
         for (int i = 0; i < _buttonsTabs.Count; ++i)
         {

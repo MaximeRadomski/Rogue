@@ -76,6 +76,15 @@ public class StatsDisplayerBhv : MonoBehaviour
         statsList += MakeTitle("Description");
         statsList += MakeContent("", skill.Description);
 
+        if (skill.CooldownType != CooldownType.Normal)
+        {
+            statsList += MakeTitle("Specificity");
+            if (skill.CooldownType == CooldownType.OnceAFight)
+                statsList += MakeContent("", "This Skill can only be used once a fight");
+            else
+                statsList += MakeContent("", "This Skill is a passive effect");
+        }
+
         statsList += MakeTitle("Skill Characteristics");
         statsList += MakeContent("Weight: ", skill.Weight + " " + Constants.UnitWeight);
         return statsList;
@@ -96,6 +105,7 @@ public class StatsDisplayerBhv : MonoBehaviour
         string statsList = "";
         statsList += MakeTitle("Description");
         statsList += MakeContent("", consumable.Description);
+        statsList += MakeContent(consumable.Story, "");
 
         statsList += MakeTitle("Consumable Characteristics");
         statsList += MakeContent("Weight: ", consumable.Weight + " " + Constants.UnitWeight);

@@ -6,6 +6,7 @@ public class InputControlerBhv : MonoBehaviour
 {
     private Vector3 _touchPosWorld;
     private InputBhv _currentInput;
+    private InputBhv _lastDownInput;
     private bool _beginPhase, _doPhase, _endPhase;
     private SceneBhv _currentScene;
     private SoundControlerBhv _soundControler;
@@ -25,17 +26,18 @@ public class InputControlerBhv : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.Escape))
         {
             _soundControler.PlaySound(_soundControler.ClickOut);
+            if (_currentScene == null)
+                _currentScene = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
             if (Constants.InputLayer > 0)
             {
                 var gameObjectToDestroy = GameObject.Find(Constants.InputTopLayerNames[Constants.InputTopLayerNames.Count - 1]);
-                Camera.main.gameObject.GetComponent<CameraBhv>().Unfocus();
+                if (!_currentScene.Paused)
+                    Camera.main.gameObject.GetComponent<CameraBhv>().Unfocus();
                 Constants.DecreaseInputLayer();
                 Destroy(gameObjectToDestroy);
             }
             else
             {
-                if (_currentScene == null)
-                    _currentScene = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
                 if (_currentScene.PauseMenu != null)
                 {
                     if (!_currentScene.Paused)
@@ -69,12 +71,16 @@ public class InputControlerBhv : MonoBehaviour
                         if (_currentInput?.Layer < currentFrameInputLayer)
                             continue;
                         if (Input.GetTouch(i).phase == TouchPhase.Began)
+                        {
+                            _lastDownInput = _currentInput;
                             _currentInput.BeginAction(touchPosWorld2D);
-                        else if (Input.GetTouch(i).phase == TouchPhase.Ended)
+                        }                            
+                        else if (Input.GetTouch(i).phase == TouchPhase.Ended && _lastDownInput?.name == _currentInput.name)
                         {
                             Constants.LastEndActionClickedName = _currentInput.name;
                             _currentInput.EndAction(touchPosWorld2D);
                             _currentInput = null;
+                            _lastDownInput = null;
                         }
                         else
                             _currentInput.DoAction(touchPosWorld2D);
@@ -104,12 +110,16 @@ public class InputControlerBhv : MonoBehaviour
                         if (_currentInput?.Layer < currentFrameInputLayer)
                             continue;
                         if (_beginPhase)
+                        {
+                            _lastDownInput = _currentInput;
                             _currentInput.BeginAction(touchPosWorld2D);
-                        else if (_endPhase)
+                        }                            
+                        else if (_endPhase && _lastDownInput?.name == _currentInput.name)
                         {
                             Constants.LastEndActionClickedName = _currentInput.name;
                             _currentInput.EndAction(touchPosWorld2D);
                             _currentInput = null;
+                            _lastDownInput = null;
                         }
                         else if (_doPhase)
                             _currentInput.DoAction(touchPosWorld2D);
@@ -130,5 +140,6 @@ public class InputControlerBhv : MonoBehaviour
             return;
         _currentInput.CancelAction();
         _currentInput = null;
+        //_lastDownInput = null; Not Sure
     }
 }

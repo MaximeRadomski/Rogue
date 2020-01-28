@@ -9,6 +9,9 @@ public abstract class InventoryItem
     public int Weight;
     public Rarity Rarity;
     public string Description;
+    public string Story;
+    public string PositiveAction = Constants.InventoryItemPositiveAction;
+    public string NegativeAction = Constants.InventoryItemNegativeAction;
 
     public virtual string GetNameWithColor()
     {

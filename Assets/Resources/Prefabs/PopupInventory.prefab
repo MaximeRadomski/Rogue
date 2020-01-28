@@ -298,7 +298,7 @@ GameObject:
   - component: {fileID: 6052902354764071567}
   - component: {fileID: 212601548318751154}
   m_Layer: 0
-  m_Name: ButtonVenture
+  m_Name: ButtonNegative
   m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -357,7 +357,7 @@ SpriteRenderer:
   m_SortingLayerID: 546830283
   m_SortingLayer: 1
   m_SortingOrder: 5
-  m_Sprite: {fileID: 8981390681453791117, guid: 1220f4cb5288c8d41a45242400662272,
+  m_Sprite: {fileID: 2628145549724880017, guid: 1220f4cb5288c8d41a45242400662272,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -644,7 +644,7 @@ GameObject:
   - component: {fileID: 2397699812042840345}
   - component: {fileID: 3040721222957041991}
   m_Layer: 0
-  m_Name: ButtonAvoid
+  m_Name: ButtonPositive
   m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -703,7 +703,7 @@ SpriteRenderer:
   m_SortingLayerID: 546830283
   m_SortingLayer: 1
   m_SortingOrder: 5
-  m_Sprite: {fileID: -1716706789911083232, guid: 1220f4cb5288c8d41a45242400662272,
+  m_Sprite: {fileID: 5274877973771605853, guid: 1220f4cb5288c8d41a45242400662272,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6230,7 +6230,7 @@ PrefabInstance:
     - target: {fileID: 434119521052424437, guid: f708d7ee52051c144a07111a8491be28,
         type: 3}
       propertyPath: m_Name
-      value: ButtonAvoidText
+      value: ButtonPositiveText
       objectReference: {fileID: 0}
     - target: {fileID: 944019512307197496, guid: f708d7ee52051c144a07111a8491be28,
         type: 3}
@@ -6845,7 +6845,7 @@ PrefabInstance:
     - target: {fileID: 434119521052424437, guid: f708d7ee52051c144a07111a8491be28,
         type: 3}
       propertyPath: m_Name
-      value: ButtonAvoidText
+      value: ButtonNegativeText
       objectReference: {fileID: 0}
     - target: {fileID: 944019512307197496, guid: f708d7ee52051c144a07111a8491be28,
         type: 3}

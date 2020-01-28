@@ -6,14 +6,19 @@ public class PopupInventoryBhv : StatsDisplayerBhv
 {
     private Character _character;
     private List<GameObject> _tabs;
+    private List<GameObject> _buttons;
+    private GameObject _selectedSprite;
     private int _selectedItem;
     private Vector3 _resetTabPosition;
     private Vector3 _currentTabPosition;
+    private List<Vector3> _buttonsPosition;
+    private List<TMPro.TextMeshPro> _buttonsText;
 
     public void SetPrivates(Character character)
     {
         _character = character;
         _selectedItem = 0;
+        _selectedSprite = transform.Find("SelectedSprite").gameObject;
         _resetTabPosition = new Vector3(-10.0f, -10.0f, 0.0f);
         _currentTabPosition = transform.position;
         _tabs = new List<GameObject>();
@@ -22,12 +27,23 @@ public class PopupInventoryBhv : StatsDisplayerBhv
         {
             _tabs.Add(transform.Find("Tab" + ((InventoryItemType)i).ToString()).gameObject);
         }
+        _buttons = new List<GameObject>();
+        _buttons.Add(transform.Find("ButtonPositive").GetComponent<ButtonBhv>().gameObject);
+        _buttons.Add(transform.Find("ButtonNegative").GetComponent<ButtonBhv>().gameObject);
+        _buttonsText = new List<TMPro.TextMeshPro>();
+        _buttonsText.Add(_buttons[0].transform.GetChild(0).GetComponent<TMPro.TextMeshPro>());
+        _buttonsText.Add(_buttons[1].transform.GetChild(0).GetComponent<TMPro.TextMeshPro>());
+        _buttonsPosition = new List<Vector3>();
+        _buttonsPosition.Add(_buttons[0].transform.position);
+        _buttonsPosition.Add(_buttons[1].transform.position);
         SetButtons();
     }
 
     private void SetButtons()
     {
         transform.Find("ExitButton").GetComponent<ButtonBhv>().EndActionDelegate = ExitPopup;
+        _buttons[0].GetComponent<ButtonBhv>().EndActionDelegate = PositiveAction;
+        _buttons[1].GetComponent<ButtonBhv>().EndActionDelegate = NegativeAction;
         for (int i = 0; i < 6; ++i)
         {
             var slotBack = transform.Find("SlotBack" + i).gameObject;
@@ -51,49 +67,85 @@ public class PopupInventoryBhv : StatsDisplayerBhv
             }
             else if (i < _character.InventoryPlace) //Empty
             {
+                slotBack.GetComponent<ButtonBhv>().EndActionDelegate = null;
                 //slotBack.GetComponent<BoxCollider2D>().enabled = false;
                 slotIcon.GetComponent<SpriteRenderer>().sprite = null;
             }
             else //Out of range
             {
+                slotBack.GetComponent<ButtonBhv>().EndActionDelegate = null;
                 slotBack.GetComponent<BoxCollider2D>().enabled = false;
                 slotBack.GetComponent<SpriteRenderer>().color = Constants.ColorPlainSemiTransparent;
                 slotIcon.GetComponent<SpriteRenderer>().sprite = null;
             }
         }
-        Constants.LastEndActionClickedName = "SlotBack0";
+        Constants.LastEndActionClickedName = "SlotBack" + _selectedItem;
         UpdateView();
     }
 
     private void UpdateView()
     {
-        var id = int.Parse(Constants.LastEndActionClickedName[Helper.CharacterAfterString(Constants.LastEndActionClickedName, "SlotBack")].ToString());
-        _selectedItem = id;
-        transform.Find("SelectedSprite").transform.position = transform.Find("SlotBack" + _selectedItem).transform.position;
-        var item = _character.Inventory[id];
         foreach (var tab in _tabs)
         {
             tab.transform.position = _resetTabPosition;
         }
-        switch (item.InventoryItemType)
+        if (_character.Inventory.Count > 0)
         {
-            case InventoryItemType.Weapon:
-                DisplayStatsWeapon(_tabs[0], (Weapon)item, "SkinContainerWeapon", "StatsListWeapon");
-                _tabs[0].transform.position = _currentTabPosition;
-                break;
-            case InventoryItemType.Skill:
-                DisplayStatsSkill(_tabs[1], (Skill)item, "SkinContainerSkill", "StatsListSkill");
-                _tabs[1].transform.position = _currentTabPosition;
-                break;
-            case InventoryItemType.Consumable:
-                DisplayStatsConsumable(_tabs[2], (Consumable)item, "SkinContainerConsumable", "StatsListConsumable");
-                _tabs[2].transform.position = _currentTabPosition;
-                break;
+            var id = int.Parse(Constants.LastEndActionClickedName[Helper.CharacterAfterString(Constants.LastEndActionClickedName, "SlotBack")].ToString());
+            _selectedItem = id < _character.Inventory.Count ? id : _character.Inventory.Count - 1;
+            _selectedSprite.transform.position = transform.Find("SlotBack" + _selectedItem).transform.position;
+            var item = _character.Inventory[_selectedItem];
+            switch (item.InventoryItemType)
+            {
+                case InventoryItemType.Weapon:
+                    DisplayStatsWeapon(_tabs[0], (Weapon)item, "SkinContainerWeapon", "StatsListWeapon");
+                    _tabs[0].transform.position = _currentTabPosition;
+                    break;
+                case InventoryItemType.Skill:
+                    DisplayStatsSkill(_tabs[1], (Skill)item, "SkinContainerSkill", "StatsListSkill");
+                    _tabs[1].transform.position = _currentTabPosition;
+                    break;
+                case InventoryItemType.Consumable:
+                    DisplayStatsConsumable(_tabs[2], (Consumable)item, "SkinContainerConsumable", "StatsListConsumable");
+                    _tabs[2].transform.position = _currentTabPosition;
+                    break;
+            }
+            _buttons[0].transform.position = _buttonsPosition[0];
+            _buttons[1].transform.position = _buttonsPosition[1];
+            _buttonsText[0].text = item.PositiveAction;
+            _buttonsText[1].text = item.NegativeAction;
         }
+        else //Inventory Empty
+        {
+            _buttons[0].transform.position = _resetTabPosition;
+            _buttons[1].transform.position = _resetTabPosition;
+            _selectedSprite.transform.position = _resetTabPosition;
+        }
+        
         transform.Find("Weight").GetComponent<TMPro.TextMeshPro>().text = _character.GetTotalWeight() + "/" + _character.WeightLimit;
     }
 
-    public void ExitPopup()
+    private void NegativeAction()
+    {
+        _instantiator.NewPopupYesNo(Constants.YesNoTitle, Constants.YesNoContent, Constants.Cancel, Constants.Proceed, OnDiscard);
+    }
+
+    private object OnDiscard(bool result = false)
+    {
+        if (result)
+        {
+            _character.Inventory.RemoveAt(_selectedItem);
+            SetButtons();
+        }
+        return result;
+    }
+
+    private void PositiveAction()
+    {
+
+    }
+
+    private void ExitPopup()
     {
         Constants.DecreaseInputLayer();
         Destroy(gameObject);

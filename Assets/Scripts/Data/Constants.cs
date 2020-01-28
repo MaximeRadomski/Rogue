@@ -18,6 +18,14 @@ public static class Constants
     // UNITS OF MEASURE //
     public const string UnitWeight = "kg";
 
+    // TEXTS //
+    public const string YesNoTitle = "Caution!";
+    public const string YesNoContent = "Are you sure you want to do this action?\nIt's Repercussions are irreversible!";
+    public const string Cancel = "Cancel";
+    public const string Proceed = "Proceed";
+    public const string InventoryItemPositiveAction = "Switch";
+    public const string InventoryItemNegativeAction = "Discard";
+
     //  PLAYER PREFS  //
     public const string PpScenePath = "ScenePath";
     public const string PpAudioLevel = "AudioLevel";
@@ -84,7 +92,7 @@ public static class Constants
         "Orcs names are not gendered."
     };
 
-    // CAHE SAVES
+    // CACHE SAVES
     public static int InputLayer = 0;
     public static string LastEndActionClickedName = null;
     public static List<string> InputTopLayerNames = null;
