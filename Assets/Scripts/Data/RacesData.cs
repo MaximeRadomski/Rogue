@@ -155,7 +155,12 @@ public static class RacesData
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.GoblinSkillsNames[0]) :
                                                                  SkillsData.GetSkillFromName(SkillsData.GoblinSkillsNames[1])},
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
-            Inventory = new List<InventoryItem> { ConsumablesData.GetRandomConsumable() },
+            Inventory = new List<InventoryItem> { ConsumablesData.GetRandomConsumable(),
+                                                  WeaponsData.GetWeaponFromType(WeaponType.Daggers),
+                                                  WeaponsData.GetWeaponFromType((WeaponType)Random.Range(0, Helper.EnumCount<WeaponType>())),
+                                                  WeaponsData.GetWeaponFromType((WeaponType)Random.Range(0, Helper.EnumCount<WeaponType>())),
+                                                  SkillsData.GetSkillFromName(SkillsData.HumanSkillsNames[0]),
+                                                  SkillsData.GetSkillFromName(SkillsData.MagicalSkillsNames[Random.Range(0, SkillsData.MagicalSkillsNames.Length)])},
             InventoryPlace = 6,
             WeightLimit = 20
         };

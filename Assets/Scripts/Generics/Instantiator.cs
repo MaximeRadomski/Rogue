@@ -44,7 +44,7 @@ public class Instantiator : MonoBehaviour
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupCharacterStats");
         var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpPopupInstance.name);
-        tmpPopupInstance.GetComponent<PopupCharacterStatsBhv>().SetPrivates(character);
+        tmpPopupInstance.GetComponent<PopupCharacterStatsBhv>().SetPrivates(character, isInventoryAvailable:true);
     }
 
     public void NewPopupInventory(Character character)
@@ -71,6 +71,13 @@ public class Instantiator : MonoBehaviour
         var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpPopupInstance.name);
         tmpPopupInstance.GetComponent<PopupSwitchBhv>().SetPrivates(item, itemId, character, resultAction);
+    }
+
+    public void NewSnack(string content, float duration = 2.0f)
+    {
+        var tmpSnackObject = Resources.Load<GameObject>("Prefabs/Snack");
+        var tmpSnackInstance = Instantiate(tmpSnackObject, tmpSnackObject.transform.position, tmpSnackObject.transform.rotation);
+        tmpSnackInstance.GetComponent<SnackBhv>().SetPrivates(content, duration);
     }
 
     public PauseMenuBhv NewPauseMenu()
@@ -173,6 +180,8 @@ public class Instantiator : MonoBehaviour
                 tmpWeaponPartShadow.GetComponent<SpriteRenderer>().enabled = false;
                 continue;
             }
+            tmpWeaponPart.GetComponent<SpriteRenderer>().enabled = true;
+            tmpWeaponPartShadow.GetComponent<SpriteRenderer>().enabled = true;
             tmpWeaponPart.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet(weapon.WeaponParts[i]);
             tmpWeaponPartShadow.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet(weapon.WeaponParts[i]);
         }

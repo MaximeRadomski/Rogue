@@ -14,7 +14,7 @@ public class PopupCharacterStatsBhv : StatsDisplayerBhv
     private Vector3 _resetTabPosition;
     private Vector3 _currentTabPosition;
 
-    public void SetPrivates(Character character)
+    public void SetPrivates(Character character, bool isInventoryAvailable = false)
     {
         _title = transform.Find("Title").GetComponent<TMPro.TextMeshPro>();
         _character = character;
@@ -39,7 +39,7 @@ public class PopupCharacterStatsBhv : StatsDisplayerBhv
             }
         }
         _skinContainerBhv = _tabs[0].transform.Find("SkinContainer").GetComponent<SkinContainerBhv>();
-        SetButtons();
+        SetButtons(isInventoryAvailable);
         DisplayStatsCharacter();
         DisplayStatsWeapon(_tabs[1], _character.Weapons[0], "SkinContainerWeapon0", "StatsList1");
         DisplayStatsWeapon(_tabs[2], _character.Weapons[1], "SkinContainerWeapon1", "StatsList2");
@@ -47,14 +47,18 @@ public class PopupCharacterStatsBhv : StatsDisplayerBhv
         DisplayStatsSkill(_tabs[4], _character.Skills[1], "SkinContainerSkill1", "StatsList4");
     }
 
-    private void SetButtons()
+    private void SetButtons(bool isInventoryAvailable)
     {
         foreach (var button in _buttonsTabs)
         {
             button.EndActionDelegate = ChangeTab;
         }
         transform.Find("ExitButton").GetComponent<ButtonBhv>().EndActionDelegate = ExitPopup;
-        transform.Find("InventoryButton").GetComponent<ButtonBhv>().EndActionDelegate = SwitchToInventory;
+        var inventoryButton = transform.Find("InventoryButton");
+        if (isInventoryAvailable)
+            inventoryButton.GetComponent<ButtonBhv>().EndActionDelegate = SwitchToInventory;
+        else
+            inventoryButton.gameObject.SetActive(false);
         _tabs[1].transform.Find("SkinContainerWeapon0").GetComponent<ButtonBhv>().BeginActionDelegate = RandomizeWeapon;
         _tabs[2].transform.Find("SkinContainerWeapon1").GetComponent<ButtonBhv>().BeginActionDelegate = RandomizeWeapon;
     }

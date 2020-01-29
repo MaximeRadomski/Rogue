@@ -20,7 +20,7 @@ public class StatsDisplayerBhv : MonoBehaviour
         parent.normalizedPosition = new Vector2(0.0f, 1.0f);
     }
 
-    protected void DisplayStatsWeapon(GameObject container, Weapon weapon, string skinContainerName, string statsListName)
+    protected void DisplayStatsWeapon(GameObject container, Weapon weapon, string skinContainerName, string statsListName, bool displayList = true)
     {
         _instantiator.LoadWeaponSkin(weapon, container.transform.Find(skinContainerName).gameObject);
         container.transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = weapon.GetNameWithColor();
@@ -28,7 +28,8 @@ public class StatsDisplayerBhv : MonoBehaviour
         container.transform.Find("Damages").GetComponent<TMPro.TextMeshPro>().text = weapon.BaseDamage.ToString();
         container.transform.Find("Pa").GetComponent<TMPro.TextMeshPro>().text = weapon.PaNeeded.ToString();
         container.transform.Find("Range").GetComponent<TMPro.TextMeshPro>().text = weapon.MinRange + (weapon.MaxRange != weapon.MinRange ? "-" + weapon.MaxRange : "");
-        PopulateStatsList(statsListName, GenerateStatsListWeapon, weapon);
+        if (displayList)
+            PopulateStatsList(statsListName, GenerateStatsListWeapon, weapon);
     }
 
     private string GenerateStatsListWeapon(object parameter)
@@ -58,7 +59,7 @@ public class StatsDisplayerBhv : MonoBehaviour
         return statsList;
     }
 
-    protected void DisplayStatsSkill(GameObject container, Skill skill, string skinContainerName, string statsListName)
+    protected void DisplayStatsSkill(GameObject container, Skill skill, string skinContainerName, string statsListName, bool displayList = true)
     {
         _instantiator.LoadSkillSkin(skill, container.transform.Find(skinContainerName).gameObject);
         container.transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = skill.GetNameWithColor();
@@ -66,7 +67,8 @@ public class StatsDisplayerBhv : MonoBehaviour
         container.transform.Find("Cooldown").GetComponent<TMPro.TextMeshPro>().text = skill.CooldownType == CooldownType.Normal ? skill.CooldownMax.ToString() : "-";
         container.transform.Find("Pa").GetComponent<TMPro.TextMeshPro>().text = skill.PaNeeded.ToString();
         container.transform.Find("Range").GetComponent<TMPro.TextMeshPro>().text = skill.MinRange + (skill.MaxRange != skill.MinRange ? "-" + skill.MaxRange : "");
-        PopulateStatsList(statsListName, GenerateStatsListSkill, skill);
+        if (displayList)
+            PopulateStatsList(statsListName, GenerateStatsListSkill, skill);
     }
 
     private string GenerateStatsListSkill(object parameter)
@@ -76,11 +78,25 @@ public class StatsDisplayerBhv : MonoBehaviour
         statsList += MakeTitle("Description");
         statsList += MakeContent("", skill.Description);
 
+        bool hasSpecificityTitle = false;
+
+        if (skill.Type == SkillType.Racial)
+        {
+            if (!hasSpecificityTitle)
+            {
+                statsList += MakeTitle("Specificity");
+                hasSpecificityTitle = true;
+            }
+            statsList += MakeContent("Racial: ", skill.Race + "s only");
+        }
+
         if (skill.CooldownType != CooldownType.Normal)
         {
-            statsList += MakeTitle("Specificity");
-            if (skill.Type == SkillType.Racial)
-                statsList += MakeContent("Racial: ", skill.Race + "s only");
+            if (!hasSpecificityTitle)
+            {
+                statsList += MakeTitle("Specificity");
+                hasSpecificityTitle = true;
+            }
             if (skill.CooldownType == CooldownType.OnceAFight)
                 statsList += MakeContent("", "This Skill can only be used once a fight");
             else

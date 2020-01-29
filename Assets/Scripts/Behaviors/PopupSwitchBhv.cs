@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PopupSwitchBhv : MonoBehaviour
+public class PopupSwitchBhv : StatsDisplayerBhv
 {
+    public Sprite[] _backgrounds;
+
     private System.Func<bool, object> _resultAction;
 
     private int _mainItemId;
     private InventoryItem _mainItem;
     private Character _character;
-    private Instantiator _instantiator;
     private GameObject _selectedSprite;
     private List<GameObject> _weaponContainers;
     private List<GameObject> _skillContainers;
-    private List<Vector3> _containersPositions;
     private Vector3 _resetContainerPosition;
     private int _selectedItem;
     private InventoryItemType _itemType;
@@ -31,15 +31,13 @@ public class PopupSwitchBhv : MonoBehaviour
         transform.position = Camera.main.transform.position;
         _itemType = item.InventoryItemType == InventoryItemType.Weapon ? InventoryItemType.Weapon : InventoryItemType.Skill;
         transform.Find("Title").GetComponent<TMPro.TextMeshPro>().text = "Switch " + (_itemType == InventoryItemType.Weapon ? "Weapon" : "Switch");
+        GetComponent<SpriteRenderer>().sprite = _itemType == InventoryItemType.Weapon ? _backgrounds[0] : _backgrounds[1];
         _weaponContainers = new List<GameObject>();
-        _weaponContainers.Add(transform.Find("SkinContainerWeapon" + 0).gameObject);
-        _weaponContainers.Add(transform.Find("SkinContainerWeapon" + 1).gameObject);
+        _weaponContainers.Add(transform.Find("Weapon" + 0).gameObject);
+        _weaponContainers.Add(transform.Find("Weapon" + 1).gameObject);
         _skillContainers = new List<GameObject>();
-        _skillContainers.Add(transform.Find("SkinContainerSkill" + 0).gameObject);
-        _skillContainers.Add(transform.Find("SkinContainerSkill" + 1).gameObject);
-        _containersPositions = new List<Vector3>();
-        _containersPositions.Add(_weaponContainers[0].transform.position);
-        _containersPositions.Add(_weaponContainers[1].transform.position);
+        _skillContainers.Add(transform.Find("Skill" + 0).gameObject);
+        _skillContainers.Add(transform.Find("Skill" + 1).gameObject);
         _resetContainerPosition = new Vector3(-10.0f, -10.0f, 0.0f);
         SetButtons();
     }
@@ -84,16 +82,14 @@ public class PopupSwitchBhv : MonoBehaviour
         switch (item.InventoryItemType)
         {
             case InventoryItemType.Weapon:
-                transform.Find("Icon" + id).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsWeapon_" + ((Weapon)item).Type.GetHashCode());
-                _instantiator.LoadWeaponSkin((Weapon)item, _weaponContainers[id]);
-                _weaponContainers[id].transform.position = _containersPositions[id];
-                _skillContainers[id].transform.position = _resetContainerPosition;
+                _weaponContainers[id].SetActive(true);
+                _skillContainers[id].SetActive(false);
+                DisplayStatsWeapon(_weaponContainers[id], (Weapon)item, "SkinContainerWeapon", null, false);                
                 break;
             case InventoryItemType.Skill:
-                transform.Find("Icon" + id).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsSkill_" + ((Skill)item).IconId);
-                _instantiator.LoadSkillSkin((Skill)item, _skillContainers[id]);
-                _skillContainers[id].transform.position = _containersPositions[id];
-                _weaponContainers[id].transform.position = _resetContainerPosition;
+                _skillContainers[id].SetActive(true);
+                _weaponContainers[id].SetActive(false);
+                DisplayStatsSkill(_skillContainers[id], (Skill)item, "SkinContainerSkill", null, false);
                 break;
         }
     }
@@ -108,7 +104,8 @@ public class PopupSwitchBhv : MonoBehaviour
             var skill = (Skill)_mainItem;
             if (skill.Type == SkillType.Racial && _character.Race != skill.Race)
             {
-                //TODO SNACK :D
+                _instantiator.NewSnack("You do not have the proper race to use this skill");
+                NegativeDelegate();
                 return;
             }
             _character.Skills[_selectedItem] = skill;

@@ -20,9 +20,10 @@ public class SpriteOrderBhv : MonoBehaviour
         if (_spriteRenderer != null)
         {
             var currentOrder = _spriteRenderer.sortingOrder;
-            int toSubstract = currentOrder / 100;
-            int decimals = currentOrder - (toSubstract * 100);
-            _spriteRenderer.sortingOrder = (hundred * 100) + decimals;
+            //int toSubstract = currentOrder / 100;
+            //int decimals = currentOrder - (toSubstract * 100);
+            //_spriteRenderer.sortingOrder = (hundred * 100) + decimals;
+            _spriteRenderer.sortingOrder = currentOrder + (hundred * 1000);
         }
     }
 
@@ -31,9 +32,10 @@ public class SpriteOrderBhv : MonoBehaviour
         if (_textMesh != null)
         {
             var currentOrder = _textMesh.sortingOrder;
-            int toSubstract = currentOrder / 100;
-            int decimals = currentOrder - (toSubstract * 100);
-            _textMesh.sortingOrder = (hundred * 100) + decimals;
+            //int toSubstract = currentOrder / 100;
+            //int decimals = currentOrder - (toSubstract * 100);
+            //_textMesh.sortingOrder = (hundred * 100) + decimals;
+            _textMesh.sortingOrder = currentOrder + (hundred * 1000);
         }
     }
 }

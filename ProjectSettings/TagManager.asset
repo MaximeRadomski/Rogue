@@ -76,6 +76,9 @@ TagManager:
   - name: Popup
     uniqueID: 546830283
     locked: 0
+  - name: Snack
+    uniqueID: 2908997519
+    locked: 0
   - name: Keyboard
     uniqueID: 2904493163
     locked: 0
