@@ -64,6 +64,15 @@ public class Instantiator : MonoBehaviour
         tmpPopupInstance.GetComponent<PopupYesNoBhv>().SetPrivates(title, content, negative, positive, resultAction);
     }
 
+    public void NewPopupSwitch(InventoryItem item, int itemId, Character character,
+        System.Func<bool, object> resultAction)
+    {
+        var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupSwitch");
+        var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
+        Constants.IncreaseInputLayer(tmpPopupInstance.name);
+        tmpPopupInstance.GetComponent<PopupSwitchBhv>().SetPrivates(item, itemId, character, resultAction);
+    }
+
     public PauseMenuBhv NewPauseMenu()
     {
         var tmpPauseMenuObject = Resources.Load<GameObject>("Prefabs/PauseMenu");

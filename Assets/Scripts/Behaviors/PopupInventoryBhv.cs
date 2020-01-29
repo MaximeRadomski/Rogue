@@ -42,6 +42,7 @@ public class PopupInventoryBhv : StatsDisplayerBhv
     private void SetButtons()
     {
         transform.Find("ExitButton").GetComponent<ButtonBhv>().EndActionDelegate = ExitPopup;
+        transform.Find("StatsButton").GetComponent<ButtonBhv>().EndActionDelegate = SwitchToStats;
         _buttons[0].GetComponent<ButtonBhv>().EndActionDelegate = PositiveAction;
         _buttons[1].GetComponent<ButtonBhv>().EndActionDelegate = NegativeAction;
         for (int i = 0; i < 6; ++i)
@@ -142,7 +143,30 @@ public class PopupInventoryBhv : StatsDisplayerBhv
 
     private void PositiveAction()
     {
+        if (_character.Inventory[_selectedItem].InventoryItemType == InventoryItemType.Consumable)
+        {
+            ((Consumable)_character.Inventory[_selectedItem]).OnUse(_character);
+        }
+        else
+        {
+            _instantiator.NewPopupSwitch(_character.Inventory[_selectedItem], _selectedItem, _character, OnPositiveAction);
+        }
+    }
 
+    private object OnPositiveAction(bool result)
+    {
+        if (result)
+        {
+            SetButtons();
+        }
+        return result;
+    }
+
+    private void SwitchToStats()
+    {
+        Constants.DecreaseInputLayer();
+        _instantiator.NewPopupCharacterStats(_character);
+        Destroy(gameObject);
     }
 
     private void ExitPopup()

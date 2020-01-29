@@ -61,7 +61,7 @@ public class StatsDisplayerBhv : MonoBehaviour
     protected void DisplayStatsSkill(GameObject container, Skill skill, string skinContainerName, string statsListName)
     {
         _instantiator.LoadSkillSkin(skill, container.transform.Find(skinContainerName).gameObject);
-        container.transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = skill.Name;
+        container.transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = skill.GetNameWithColor();
         container.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsSkill_" + skill.IconId);
         container.transform.Find("Cooldown").GetComponent<TMPro.TextMeshPro>().text = skill.CooldownType == CooldownType.Normal ? skill.CooldownMax.ToString() : "-";
         container.transform.Find("Pa").GetComponent<TMPro.TextMeshPro>().text = skill.PaNeeded.ToString();
@@ -79,6 +79,8 @@ public class StatsDisplayerBhv : MonoBehaviour
         if (skill.CooldownType != CooldownType.Normal)
         {
             statsList += MakeTitle("Specificity");
+            if (skill.Type == SkillType.Racial)
+                statsList += MakeContent("Racial: ", skill.Race + "s only");
             if (skill.CooldownType == CooldownType.OnceAFight)
                 statsList += MakeContent("", "This Skill can only be used once a fight");
             else
@@ -93,7 +95,7 @@ public class StatsDisplayerBhv : MonoBehaviour
     protected void DisplayStatsConsumable(GameObject container, Consumable consumable, string skinContainerName, string statsListName)
     {
         _instantiator.LoadConsumableSkin(consumable, container.transform.Find(skinContainerName).gameObject);
-        container.transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = consumable.Name;
+        container.transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = consumable.GetNameWithColor();
         container.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsConsumable_" + consumable.IconId);
         container.transform.Find("Cooldown").GetComponent<TMPro.TextMeshPro>().text = consumable.MinutesNeeded + "m";
         PopulateStatsList(statsListName, GenerateStatsListConsumable, consumable);

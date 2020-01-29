@@ -54,6 +54,7 @@ public class PopupCharacterStatsBhv : StatsDisplayerBhv
             button.EndActionDelegate = ChangeTab;
         }
         transform.Find("ExitButton").GetComponent<ButtonBhv>().EndActionDelegate = ExitPopup;
+        transform.Find("InventoryButton").GetComponent<ButtonBhv>().EndActionDelegate = SwitchToInventory;
         _tabs[1].transform.Find("SkinContainerWeapon0").GetComponent<ButtonBhv>().BeginActionDelegate = RandomizeWeapon;
         _tabs[2].transform.Find("SkinContainerWeapon1").GetComponent<ButtonBhv>().BeginActionDelegate = RandomizeWeapon;
     }
@@ -160,6 +161,13 @@ public class PopupCharacterStatsBhv : StatsDisplayerBhv
     private void BringTabBack(GameObject tab, int id)
     {
         tab.transform.position = _resetTabPosition + new Vector3(0.5f * (float)id, -1.0f * (float)id, 0.0f);
+    }
+
+    private void SwitchToInventory()
+    {
+        Constants.DecreaseInputLayer();
+        _instantiator.NewPopupInventory(_character);
+        Destroy(gameObject);
     }
 
     public void ExitPopup()
