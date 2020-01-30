@@ -14,7 +14,6 @@ public class PopupSwitchBhv : StatsDisplayerBhv
     private GameObject _selectedSprite;
     private List<GameObject> _weaponContainers;
     private List<GameObject> _skillContainers;
-    private Vector3 _resetContainerPosition;
     private int _selectedItem;
     private InventoryItemType _itemType;
 
@@ -29,16 +28,27 @@ public class PopupSwitchBhv : StatsDisplayerBhv
         _selectedSprite = transform.Find("SelectedSprite").gameObject;
         _instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator;
         transform.position = Camera.main.transform.position;
-        _itemType = item.InventoryItemType == InventoryItemType.Weapon ? InventoryItemType.Weapon : InventoryItemType.Skill;
-        transform.Find("Title").GetComponent<TMPro.TextMeshPro>().text = "Switch " + (_itemType == InventoryItemType.Weapon ? "Weapon" : "Switch");
-        GetComponent<SpriteRenderer>().sprite = _itemType == InventoryItemType.Weapon ? _backgrounds[0] : _backgrounds[1];
         _weaponContainers = new List<GameObject>();
         _weaponContainers.Add(transform.Find("Weapon" + 0).gameObject);
         _weaponContainers.Add(transform.Find("Weapon" + 1).gameObject);
         _skillContainers = new List<GameObject>();
         _skillContainers.Add(transform.Find("Skill" + 0).gameObject);
         _skillContainers.Add(transform.Find("Skill" + 1).gameObject);
-        _resetContainerPosition = new Vector3(-10.0f, -10.0f, 0.0f);
+        _itemType = item.InventoryItemType == InventoryItemType.Weapon ? InventoryItemType.Weapon : InventoryItemType.Skill;
+        if (_itemType == InventoryItemType.Weapon)
+        {
+            _skillContainers[0].SetActive(false);
+            _skillContainers[1].SetActive(false);
+            transform.Find("Title").GetComponent<TMPro.TextMeshPro>().text = "Switch Weapon";
+            GetComponent<SpriteRenderer>().sprite = _backgrounds[0];
+        }
+        else
+        {
+            _weaponContainers[0].SetActive(false);
+            _weaponContainers[1].SetActive(false);
+            transform.Find("Title").GetComponent<TMPro.TextMeshPro>().text = "Switch Skill";
+            GetComponent<SpriteRenderer>().sprite = _backgrounds[1];
+        }
         SetButtons();
     }
 
@@ -82,13 +92,9 @@ public class PopupSwitchBhv : StatsDisplayerBhv
         switch (item.InventoryItemType)
         {
             case InventoryItemType.Weapon:
-                _weaponContainers[id].SetActive(true);
-                _skillContainers[id].SetActive(false);
                 DisplayStatsWeapon(_weaponContainers[id], (Weapon)item, "SkinContainerWeapon", null, false);                
                 break;
             case InventoryItemType.Skill:
-                _skillContainers[id].SetActive(true);
-                _weaponContainers[id].SetActive(false);
                 DisplayStatsSkill(_skillContainers[id], (Skill)item, "SkinContainerSkill", null, false);
                 break;
         }
