@@ -16,4 +16,21 @@ public class Journey
         Biome = BiomesData.GetBiomeFromType(MapType.Mountains);//Biome = BiomesData.GetBiomeFromType(character.StrongIn);
         Step = 1;
     }
+
+    public void UpdateTime(int minutesPassed)
+    {
+        Minutes += Helper.TimeFromMinutes(minutesPassed, TimeUnit.Minute);
+        if (Minutes >= 60)
+        {
+            Minutes -= 60;
+            ++Hour;
+        }
+        Hour += Helper.TimeFromMinutes(minutesPassed, TimeUnit.Hour);
+        if (Hour >= 24)
+        {
+            Hour -= 24;
+            ++Day;
+        }
+        Day += Helper.TimeFromMinutes(minutesPassed, TimeUnit.Day);
+    }
 }

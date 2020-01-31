@@ -113,7 +113,7 @@ public class StatsDisplayerBhv : MonoBehaviour
         _instantiator.LoadConsumableSkin(consumable, container.transform.Find(skinContainerName).gameObject);
         container.transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = consumable.GetNameWithColor();
         container.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsConsumable_" + consumable.IconId);
-        container.transform.Find("Cooldown").GetComponent<TMPro.TextMeshPro>().text = consumable.MinutesNeeded + "m";
+        container.transform.Find("Cooldown").GetComponent<TMPro.TextMeshPro>().text = Helper.TimeFromMinutes(consumable.MinutesNeeded);
         PopulateStatsList(statsListName, GenerateStatsListConsumable, consumable);
     }
 

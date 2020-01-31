@@ -9,6 +9,28 @@ using UnityEngine.SceneManagement;
 
 public static class Helper
 {
+    public static string TimeFromMinutes(int amount)
+    {
+        var hours = amount % Constants.DayInMinutes;
+        var minutes = hours % Constants.HourInMinutes;
+        var days = (amount - hours) / Constants.DayInMinutes;
+        hours = (hours - minutes) / Constants.HourInMinutes;
+        return (days + "d " + hours + "h " + minutes + "m");
+    }
+
+    public static int TimeFromMinutes(int amount, TimeUnit unit)
+    {
+        var hours = amount % Constants.DayInMinutes;
+        var minutes = hours % Constants.HourInMinutes;
+        var days = (amount - hours) / Constants.DayInMinutes;
+        hours = (hours - minutes) / Constants.HourInMinutes;
+        if (unit == TimeUnit.Day)
+            return days;
+        else if (unit == TimeUnit.Hour)
+            return hours;
+        return minutes;
+    }
+
     public static int CharacterAfterString(string str, string subStr)
     {
         return str.IndexOf(subStr) + subStr.Length;

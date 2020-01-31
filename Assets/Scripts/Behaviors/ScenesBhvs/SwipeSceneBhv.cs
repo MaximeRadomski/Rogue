@@ -72,17 +72,7 @@ public class SwipeSceneBhv : SceneBhv
 
     public void NewCard(int minutesPassed)
     {
-        _journey.Minutes += minutesPassed;
-        if (_journey.Minutes >= 60)
-        {
-            _journey.Minutes -= 60;
-            ++_journey.Hour;
-        }
-        if (_journey.Hour >= 24)
-        {
-            _journey.Hour -= 24;
-            ++_journey.Day;
-        }
+        _journey.UpdateTime(minutesPassed);
         //Debug.Log("Minutes Passed = " + minutesPassed + "\t|\t\tHours = " + _journey.Hour + "h" + _journey.Minutes);
         ++_journey.Step;
         Destroy(GameObject.Find("Card1"));
@@ -147,8 +137,9 @@ public class SwipeSceneBhv : SceneBhv
         _biomeSteps.text = (_journey.Step <= _journey.Biome.Steps ? _journey.Step : _journey.Biome.Steps) + "-" + _journey.Biome.Steps;
     }
 
-    public void NewBiome(Biome biome)
+    public void NewBiome(Biome biome, int minutesPassed)
     {
+        _journey.UpdateTime(minutesPassed);
         var remainingCards = GameObject.FindGameObjectsWithTag(Constants.TagGrabbableCard);
         foreach (var card in remainingCards)
         {

@@ -12,6 +12,7 @@ public class PopupSwitchBhv : StatsDisplayerBhv
     private InventoryItem _mainItem;
     private Character _character;
     private GameObject _selectedSprite;
+    private GameObject _positiveButton;
     private List<GameObject> _weaponContainers;
     private List<GameObject> _skillContainers;
     private int _selectedItem;
@@ -54,7 +55,7 @@ public class PopupSwitchBhv : StatsDisplayerBhv
 
     private void SetButtons()
     {
-        transform.Find("ButtonPositive").GetComponent<ButtonBhv>().EndActionDelegate = PositiveDelegate;
+        (_positiveButton = transform.Find("ButtonPositive").gameObject).GetComponent<ButtonBhv>().EndActionDelegate = PositiveDelegate;
         transform.Find("ButtonNegative").GetComponent<ButtonBhv>().EndActionDelegate = NegativeDelegate;
         for (int i = 0; i < 2; ++i)
         {
@@ -104,7 +105,10 @@ public class PopupSwitchBhv : StatsDisplayerBhv
     {
         InventoryItem tmpItem = _itemType == InventoryItemType.Weapon ? _character.Weapons[_selectedItem] : (InventoryItem)_character.Skills[_selectedItem];
         if (_itemType == InventoryItemType.Weapon)
+        {
             _character.Weapons[_selectedItem] = (Weapon)_mainItem;
+            DisplayItem(_character.Weapons[_selectedItem]);
+        }
         else
         {
             var skill = (Skill)_mainItem;
@@ -115,10 +119,16 @@ public class PopupSwitchBhv : StatsDisplayerBhv
                 return;
             }
             _character.Skills[_selectedItem] = skill;
-        }            
-
+            DisplayItem(_character.Skills[_selectedItem]);
+        }
         _character.Inventory[_mainItemId] = tmpItem;
+        DisplayItem(_character.Inventory[_mainItemId], true);
+        _positiveButton.GetComponent<BoxCollider2D>().enabled = false;
+        Invoke(nameof(AfterSwitch), 0.5f);
+    }
 
+    private void AfterSwitch()
+    {
         Constants.DecreaseInputLayer();
         _resultAction(true);
         Destroy(gameObject);

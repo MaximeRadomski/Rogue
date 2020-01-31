@@ -11,8 +11,8 @@ public class BiomeCardBhv : CardBhv
     public override void SetPrivates(int id, int day)
     {
         base.SetPrivates(id, day);
-        _minutesNeededAvoid = 0;
-        _minutesNeededVenture = 0;
+        _minutesNeededAvoid = 60;
+        _minutesNeededVenture = 60;
         _biome = BiomesData.GetRandomBiome();
     }
 
@@ -41,7 +41,7 @@ public class BiomeCardBhv : CardBhv
         if (Helper.FloatEqualsPrecision(transform.position.x, _likePosition.x, 0.1f))
         {
             gameObject.name = "CardOld";
-            _swipeSceneBhv.NewBiome(_biome);
+            _swipeSceneBhv.NewBiome(_biome, _minutesNeededVenture);
         }            
     }
 }

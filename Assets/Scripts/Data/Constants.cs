@@ -17,6 +17,8 @@ public static class Constants
 
     // UNITS OF MEASURE //
     public const string UnitWeight = "kg";
+    public const int HourInMinutes = 60;
+    public const int DayInMinutes = 1440;
 
     // TEXTS //
     public const string YesNoTitle = "Caution!";
