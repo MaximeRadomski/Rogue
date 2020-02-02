@@ -117,7 +117,7 @@ public class Instantiator : MonoBehaviour
 
     public void NewOpponentCard(int id, int day, MapType mapType)
     {
-        var tmpCardObject = Resources.Load<GameObject>("Prefabs/OpponentCard");
+        var tmpCardObject = Resources.Load<GameObject>("Prefabs/CardOpponent");
         var tmpCardInstance = Instantiate(tmpCardObject, tmpCardObject.transform.position, tmpCardObject.transform.rotation);
         tmpCardInstance.GetComponent<OpponentCardBhv>().SetPrivates(id, day);
     }
@@ -129,7 +129,7 @@ public class Instantiator : MonoBehaviour
 
     public void NewBiomeCard(int id, int day, int choice, int maxChoice)
     {
-        var tmpCardObject = Resources.Load<GameObject>("Prefabs/BiomeCard");
+        var tmpCardObject = Resources.Load<GameObject>("Prefabs/CardBiome");
         var tmpCardInstance = Instantiate(tmpCardObject, tmpCardObject.transform.position, tmpCardObject.transform.rotation);
         tmpCardInstance.GetComponent<BiomeCardBhv>().SetPrivates(id, day);
         tmpCardInstance.GetComponent<BiomeCardBhv>().SetChoice(choice, maxChoice);

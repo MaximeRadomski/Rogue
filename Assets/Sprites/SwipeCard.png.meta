@@ -11,6 +11,9 @@ TextureImporter:
   - first:
       213: 8797870387001168904
     second: SwipeCard_2
+  - first:
+      213: -6491173968732493645
+    second: SwipeCard_3
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -121,7 +124,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bb0dc520228f79341af55f0556579ef3
+      spriteID: 2e19ff0488824c846b301207fa678ee5
       internalID: -2659244955995682118
       vertices: []
       indices: 
@@ -142,7 +145,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 56174601f51b848479c029f9d966b980
+      spriteID: 740fa905502e4af4ea5b2f99898a94f3
       internalID: -7368705246773432081
       vertices: []
       indices: 
@@ -163,8 +166,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ab68c1418f996c4d8998472c15f2dc6
+      spriteID: cd205a8a14993ff49b0a015b441a4022
       internalID: 8797870387001168904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SwipeCard_3
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 0
+        width: 142
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f2c28ce2c855c242bf01173c0f3b9b4
+      internalID: -6491173968732493645
       vertices: []
       indices: 
       edges: []
