@@ -12,3 +12,9 @@ public enum TextType
     Pa = 5,
     Pm = 6
 }
+
+public enum TextThickness
+{
+    Long,
+    Thick
+}

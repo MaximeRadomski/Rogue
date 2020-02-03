@@ -15,7 +15,9 @@ public static class Helper
         var minutes = hours % Constants.HourInMinutes;
         var days = (amount - hours) / Constants.DayInMinutes;
         hours = (hours - minutes) / Constants.HourInMinutes;
-        return (days + "d " + hours + "h " + minutes + "m");
+        return (days > 0 ? days + "d " : "")
+            + (hours > 0 ? hours + "h " : "")
+            + (minutes > 0 ? minutes + "m" : "");
     }
 
     public static int TimeFromMinutes(int amount, TimeUnit unit)
@@ -29,6 +31,12 @@ public static class Helper
         else if (unit == TimeUnit.Hour)
             return hours;
         return minutes;
+    }
+
+    public static int RandomIntMultipleOf(int min, int max, int multiple)
+    {
+        var unRoundedMinutes = UnityEngine.Random.Range(min, max + 1);
+        return unRoundedMinutes - unRoundedMinutes % multiple;
     }
 
     public static int CharacterAfterString(string str, string subStr)
@@ -226,6 +234,29 @@ public static class Helper
                 return Constants.ColorPm;
         }
         return Constants.ColorTransparent;
+    }
+
+    public static string MaterialFromTextType(int id, TextThickness thickness)
+    {
+        TextType tmpType = (TextType)id;
+        switch (tmpType)
+        {
+            case TextType.Normal:
+                return thickness + "White";
+            case TextType.Magical:
+                return thickness + "Blue";
+            case TextType.Rare:
+                return thickness + "Yellow";
+            case TextType.Legendary:
+                return thickness + "Brown";
+            case TextType.Hp:
+                return thickness + "Red";
+            case TextType.Pa:
+                return thickness + "Blue";
+            case TextType.Pm:
+                return thickness + "Green";
+        }
+        return thickness + "White";
     }
 
     public static void ReloadScene()

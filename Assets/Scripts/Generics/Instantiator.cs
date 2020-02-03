@@ -89,30 +89,30 @@ public class Instantiator : MonoBehaviour
         return pauseMenuBhv;
     }
 
-    public void PopText(string text, Vector2 position, TextType type)
+    public void PopText(string text, Vector2 position, TextType type, TextThickness thickness = TextThickness.Thick)
     {
         var tmpPoppingTextObject = Resources.Load<GameObject>("Prefabs/PoppingText");
 
-        var tmpTexts = GameObject.FindGameObjectsWithTag(Constants.TagPoppingText);
-        var nbTextsOnThisPosition = 0;
-        foreach (var tmpText in tmpTexts)
-        {
-            if (Helper.FloatEqualsPrecision(tmpText.transform.position.x, position.x, 0.1f) &&
-                Helper.FloatEqualsPrecision(tmpText.transform.position.y, position.y, 1f))
-                ++nbTextsOnThisPosition;
-        }
+        //var tmpTexts = GameObject.FindGameObjectsWithTag(Constants.TagPoppingText);
+        //var nbTextsOnThisPosition = 0;
+        //foreach (var tmpText in tmpTexts)
+        //{
+        //    if (Helper.FloatEqualsPrecision(tmpText.transform.position.x, position.x, 0.1f) &&
+        //        Helper.FloatEqualsPrecision(tmpText.transform.position.y, position.y, 1f))
+        //        ++nbTextsOnThisPosition;
+        //}
 
         var tmpPoppingTextInstance = Instantiate(tmpPoppingTextObject, position, tmpPoppingTextObject.transform.rotation);
-        tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().SetPrivates(text, position + new Vector2(0.0f, -0.2f * nbTextsOnThisPosition), type);
+        tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().SetPrivates(text, position/* + new Vector2(0.0f, -0.2f * nbTextsOnThisPosition)*/, type, thickness);
     }
 
     public void NewRandomCard(int id, int day, MapType mapType)
     {
-        var rand = Random.Range(0, 2);
-        //if (rand == 0)
+        var rand = Random.Range(0, 5);
+        if (rand == 0)
+            NewJourneyEventCard(id, day, mapType);
+        else
             NewOpponentCard(id, day, mapType);
-        //else
-        //    NewEventCard(id, day, mapType);
     }
 
     public void NewOpponentCard(int id, int day, MapType mapType)
@@ -122,9 +122,11 @@ public class Instantiator : MonoBehaviour
         tmpCardInstance.GetComponent<OpponentCardBhv>().SetPrivates(id, day);
     }
 
-    public void NewEventCard(int id, int day, MapType mapType)
+    public void NewJourneyEventCard(int id, int day, MapType mapType)
     {
-
+        var tmpCardObject = Resources.Load<GameObject>("Prefabs/JourneyEventCard");
+        var tmpCardInstance = Instantiate(tmpCardObject, tmpCardObject.transform.position, tmpCardObject.transform.rotation);
+        tmpCardInstance.GetComponent<JourneyEventCardBhv>().SetPrivates(id, day);
     }
 
     public void NewBiomeCard(int id, int day, int choice, int maxChoice)

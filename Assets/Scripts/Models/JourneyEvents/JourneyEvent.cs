@@ -1,13 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public abstract class JourneyEvent
+public class JourneyEvent
 {
-    public string Name;
-    public string Content;
-    public int PositiveOutcomePercent;
+    protected string _name;
+    protected string _content;
+    protected int _positiveOutcomePercent;
 
     protected virtual void NegativeOutcome()
     {

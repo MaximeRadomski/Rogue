@@ -33,7 +33,7 @@ public static class BiomesData
             InnPercent = Random.Range(10, 16),
             MerchantPercent = Random.Range(10, 16),
             Destinations = 2,
-            Steps = Random.Range(7, 20 + 1)
+            Steps = MaxStepFromMapType(type)
         };
     }
 
@@ -46,11 +46,15 @@ public static class BiomesData
             case MapType.Sewers:
                 return Random.Range(5, 7 + 1);
             case MapType.Forest:
-                return Random.Range(7, 20 + 1);
+                return Random.Range(7, 10 + 1);
             case MapType.Mines:
-                return Random.Range(3, 15 + 1);
+                return Random.Range(5, 7 + 1);
             case MapType.Mountains:
-                return Random.Range(7, 20 + 1);
+                return Random.Range(7, 10 + 1);
+            case MapType.Plains:
+                return Random.Range(10, 13 + 1);
+            case MapType.Beach:
+                return Random.Range(5, 7 + 1);
         }
         return 1;
     }

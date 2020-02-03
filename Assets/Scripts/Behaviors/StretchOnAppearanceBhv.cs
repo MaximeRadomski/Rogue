@@ -35,7 +35,7 @@ public class StretchOnAppearanceBhv : MonoBehaviour
 
     private void StretchOnBegin()
     {
-        transform.localScale = Vector3.Lerp(transform.localScale, _resetedScale, 0.2f);
+        transform.localScale = Vector3.Lerp(transform.localScale, _resetedScale, 0.4f);
         if (transform.localScale == _resetedScale)
             _isStretching = false;
     }

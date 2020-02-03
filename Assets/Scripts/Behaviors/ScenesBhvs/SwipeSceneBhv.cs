@@ -73,6 +73,7 @@ public class SwipeSceneBhv : SceneBhv
     public void NewCard(int minutesPassed)
     {
         _journey.UpdateTime(minutesPassed);
+        Instantiator.PopText(Helper.TimeFromMinutes(minutesPassed), new Vector2(0.0f, 1.8f), TextType.Normal);
         //Debug.Log("Minutes Passed = " + minutesPassed + "\t|\t\tHours = " + _journey.Hour + "h" + _journey.Minutes);
         ++_journey.Step;
         Destroy(GameObject.Find("Card1"));
@@ -140,6 +141,7 @@ public class SwipeSceneBhv : SceneBhv
     public void NewBiome(Biome biome, int minutesPassed)
     {
         _journey.UpdateTime(minutesPassed);
+        Instantiator.PopText(Helper.TimeFromMinutes(minutesPassed), new Vector2(0.0f, 1.8f), TextType.Normal);
         var remainingCards = GameObject.FindGameObjectsWithTag(Constants.TagGrabbableCard);
         foreach (var card in remainingCards)
         {

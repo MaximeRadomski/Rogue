@@ -23,8 +23,11 @@ public abstract class CardBhv : InputBhv
     protected Vector3 _pressedScale;
     protected Vector3 _disabledScale;
 
-    protected int _minutesNeededAvoid;
-    protected int _minutesNeededVenture;
+    protected int _minutesNeededAvoid = 60;
+    protected int _minutesNeededVenturePositive;
+    protected int _minutesNeededVentureNegative;
+    protected string _namePositiveAction = Constants.CardPositiveAction;
+    protected int _matchPercent;
 
     public virtual void SetPrivates(int id, int day)
     {

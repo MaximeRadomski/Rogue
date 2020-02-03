@@ -13,8 +13,8 @@ public class OpponentCardBhv : CardBhv
 
     public override void SetPrivates(int id, int day)
     {
-        _minutesNeededAvoid = Random.Range(20, 60 + 1);
-        _minutesNeededVenture = Random.Range(60, 90 + 1);
+        _minutesNeededVenturePositive = Helper.RandomIntMultipleOf(10, 30, 5);
+        _minutesNeededVentureNegative = _minutesNeededVenturePositive * 2;
         _fixBox = gameObject.GetComponents<BoxCollider2D>()[1];
         _originalFixBoxY = _fixBox.size.y;
         _customFixBoxY = 1.3f;
@@ -22,6 +22,7 @@ public class OpponentCardBhv : CardBhv
         _instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator;
         base.SetPrivates(id, day);              
         InitOpponent(day);
+        _minutesNeededAvoid = _opponentCharacters.Count * 10 + 20;
         _boxColliders2D = gameObject.GetComponents<BoxCollider2D>();
         if (id == 0)
         {

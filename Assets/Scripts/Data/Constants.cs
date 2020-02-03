@@ -27,6 +27,7 @@ public static class Constants
     public const string Proceed = "Proceed";
     public const string InventoryItemPositiveAction = "Switch";
     public const string InventoryItemNegativeAction = "Discard";
+    public const string CardPositiveAction = "Venture";
 
     //  PLAYER PREFS  //
     public const string PpScenePath = "ScenePath";

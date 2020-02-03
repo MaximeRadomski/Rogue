@@ -4,24 +4,22 @@ using UnityEngine;
 
 public class PoppingTextBhv : MonoBehaviour
 {
-    private UnityEngine.UI.Text _text;
+    private TMPro.TextMeshPro _text;
+    private string _material;
     private bool _isMoving;
     private Vector2 _positionToReach;
     private Color _colorToFade;
     private Color _shadowColorToFade;
-    private UnityEngine.UI.Shadow _textShadow;
 
 
-    public void SetPrivates(string text, Vector2 startingPosition, TextType type)
+    public void SetPrivates(string text, Vector2 startingPosition, TextType type, TextThickness thickness)
     {
         transform.position = new Vector2(startingPosition.x, startingPosition.y + 0.6f);
         _positionToReach = new Vector2(startingPosition.x, startingPosition.y + 1.1f);
-        _text = GetComponent<UnityEngine.UI.Text>();
-        _text.color = Helper.ColorFromTextType(type.GetHashCode());
-        _text.text = text;
-        _textShadow = GetComponent<UnityEngine.UI.Shadow>();
+        _text = GetComponent<TMPro.TextMeshPro>();
+        _material = Helper.MaterialFromTextType(type.GetHashCode(), thickness);
+        _text.text = "<material=\"" + _material + "\">" + text + "</material>";
         _colorToFade = new Color(_text.color.r, _text.color.g, _text.color.b, 0.0f);
-        _shadowColorToFade = Helper.ColorFromTextType(-1);
         _isMoving = true;
     }
 
@@ -38,7 +36,6 @@ public class PoppingTextBhv : MonoBehaviour
         {
             tag = Constants.TagCell;
             _text.color = Color.Lerp(_text.color, _colorToFade, 0.1f);
-            _textShadow.effectColor = Color.Lerp(_textShadow.effectColor, _shadowColorToFade, 0.1f);
             if (_text.color == _colorToFade)
             {
                 _isMoving = false;
