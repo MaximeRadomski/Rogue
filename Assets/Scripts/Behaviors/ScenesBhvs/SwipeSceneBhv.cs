@@ -18,6 +18,7 @@ public class SwipeSceneBhv : SceneBhv
     private TMPro.TextMeshPro _gold;
     private TMPro.TextMeshPro _matchPercentage;
 
+    private GameObject _currentCard;
     private GameObject _hoursCircle;
     private SpriteRenderer _biomePicture;
     private SpriteRenderer _dayNight;
@@ -55,10 +56,11 @@ public class SwipeSceneBhv : SceneBhv
         GameObject.Find("ButtonPause").GetComponent<ButtonBhv>().EndActionDelegate = Pause;
         GameObject.Find("CharacterButton").GetComponent<ButtonBhv>().EndActionDelegate = ShowCharacterStats;
         GameObject.Find("ButtonInventory").GetComponent<ButtonBhv>().EndActionDelegate = ShowInventory;
-        Instantiator.NewRandomCard(1, _journey.Day, _journey.Biome.MapType);
-        Instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType);
-        _avoidBhv.EndActionDelegate = GameObject.Find("Card1").GetComponent<CardBhv>().Avoid;
-        _ventureBhv.EndActionDelegate = GameObject.Find("Card1").GetComponent<CardBhv>().Venture;
+        Instantiator.NewRandomCard(1, _journey.Day, _journey.Biome.MapType, _playerCharacter);
+        Instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType, _playerCharacter);
+        _currentCard = GameObject.Find("Card1");
+        _avoidBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Avoid;
+        _ventureBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Venture;
         PauseMenu.Buttons[0].EndActionDelegate = Resume;
         PauseMenu.TextMeshes[0].text = "Resume";
         PauseMenu.Buttons[1].EndActionDelegate = GiveUp;
@@ -77,18 +79,18 @@ public class SwipeSceneBhv : SceneBhv
         //Debug.Log("Minutes Passed = " + minutesPassed + "\t|\t\tHours = " + _journey.Hour + "h" + _journey.Minutes);
         ++_journey.Step;
         Destroy(GameObject.Find("Card1"));
-        var backCard = GameObject.Find("Card0");
-        backCard.GetComponent<CardBhv>().BringToFront();
-        _avoidBhv.EndActionDelegate = backCard.GetComponent<CardBhv>().Avoid;
-        _ventureBhv.EndActionDelegate = backCard.GetComponent<CardBhv>().Venture;
+        _currentCard = GameObject.Find("Card0");
+        _currentCard.GetComponent<CardBhv>().BringToFront();
+        _avoidBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Avoid;
+        _ventureBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Venture;
         if (_journey.Step < _journey.Biome.Steps) //Just '<' because it instantiates one in advance
         {
-            Instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType);
+            Instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType, _playerCharacter);
         }            
         else if (_currentBiomeChoice < _journey.Biome.Destinations)
         {
             ++_currentBiomeChoice;
-            Instantiator.NewBiomeCard(0, _journey.Day, _currentBiomeChoice, _journey.Biome.Destinations);
+            Instantiator.NewCardBiome(0, _journey.Day, _journey.Biome.MapType, _currentBiomeChoice, _journey.Biome.Destinations, _playerCharacter);
         }
         else
         {
@@ -125,7 +127,7 @@ public class SwipeSceneBhv : SceneBhv
         _level.text = _playerCharacter.Level.ToString();
         _xp.text = _playerCharacter.Experience.ToString() + "/" + Helper.XpNeedForLevel(_playerCharacter.Level) + " ®";
         _gold.text = _playerCharacter.Gold.ToString() + " ©";
-        _matchPercentage.text = "100%";
+        _matchPercentage.text = _currentCard.GetComponent<CardBhv>().PositiveOutcomePercent + "%";
         float englishHour = _journey.Hour > 12 ? _journey.Hour - 12 : _journey.Hour;
         if (_journey.Hour == 24 || _journey.Hour == 12) englishHour = 0;
         float minutes = _journey.Minutes / 60.0f;
@@ -151,12 +153,12 @@ public class SwipeSceneBhv : SceneBhv
         _currentBiomeChoice = 0;
         _journey.Step = 1;
         _journey.Biome = biome;
-        Instantiator.NewRandomCard(1, _journey.Day, _journey.Biome.MapType);
-        var backCard = GameObject.Find("Card1");
+        Instantiator.NewRandomCard(1, _journey.Day, _journey.Biome.MapType, _playerCharacter);
+        _currentCard = GameObject.Find("Card1");
         //backCard.GetComponent<CardBhv>().BringToFront();
-        _avoidBhv.EndActionDelegate = backCard.GetComponent<CardBhv>().Avoid;
-        _ventureBhv.EndActionDelegate = backCard.GetComponent<CardBhv>().Venture;
-        Instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType);
+        _avoidBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Avoid;
+        _ventureBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Venture;
+        Instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType, _playerCharacter);
         UpdateDisplayJourneyAndCharacterStats();
     }
 

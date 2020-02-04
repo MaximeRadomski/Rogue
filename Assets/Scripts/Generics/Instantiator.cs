@@ -106,35 +106,36 @@ public class Instantiator : MonoBehaviour
         tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().SetPrivates(text, position/* + new Vector2(0.0f, -0.2f * nbTextsOnThisPosition)*/, type, thickness);
     }
 
-    public void NewRandomCard(int id, int day, MapType mapType)
+    public void NewRandomCard(int id, int day, MapType mapType, Character character)
     {
-        var rand = Random.Range(0, 5);
+        var rand = Random.Range(0, 2);
         if (rand == 0)
-            NewJourneyEventCard(id, day, mapType);
+            NewCardJourneyEvent(id, day, mapType, character);
         else
-            NewOpponentCard(id, day, mapType);
+            NewCardOpponent(id, day, mapType, character);
     }
 
-    public void NewOpponentCard(int id, int day, MapType mapType)
+    public void NewCardOpponent(int id, int day, MapType mapType, Character character)
     {
         var tmpCardObject = Resources.Load<GameObject>("Prefabs/CardOpponent");
         var tmpCardInstance = Instantiate(tmpCardObject, tmpCardObject.transform.position, tmpCardObject.transform.rotation);
-        tmpCardInstance.GetComponent<OpponentCardBhv>().SetPrivates(id, day);
+        tmpCardInstance.GetComponent<CardOpponentBhv>().SetPrivates(id, day, mapType, character, this);
     }
 
-    public void NewJourneyEventCard(int id, int day, MapType mapType)
+    public void NewCardJourneyEvent(int id, int day, MapType mapType, Character character)
     {
-        var tmpCardObject = Resources.Load<GameObject>("Prefabs/JourneyEventCard");
+        var tmpCardObject = Resources.Load<GameObject>("Prefabs/CardJourneyEvent");
         var tmpCardInstance = Instantiate(tmpCardObject, tmpCardObject.transform.position, tmpCardObject.transform.rotation);
-        tmpCardInstance.GetComponent<JourneyEventCardBhv>().SetPrivates(id, day);
+        tmpCardInstance.GetComponent<CardJourneyEventBhv>().SetPrivates(id, day, mapType, character, this);
+
     }
 
-    public void NewBiomeCard(int id, int day, int choice, int maxChoice)
+    public void NewCardBiome(int id, int day, MapType mapType, int choice, int maxChoice, Character character)
     {
         var tmpCardObject = Resources.Load<GameObject>("Prefabs/CardBiome");
         var tmpCardInstance = Instantiate(tmpCardObject, tmpCardObject.transform.position, tmpCardObject.transform.rotation);
-        tmpCardInstance.GetComponent<BiomeCardBhv>().SetPrivates(id, day);
-        tmpCardInstance.GetComponent<BiomeCardBhv>().SetChoice(choice, maxChoice);
+        tmpCardInstance.GetComponent<CardBiomeBhv>().SetPrivates(id, day, mapType, character, this);
+        tmpCardInstance.GetComponent<CardBiomeBhv>().SetChoice(choice, maxChoice);
     }
 
     public GameObject NewCharacterGameObject(string characterName, bool isPlayer = false, string id = "")

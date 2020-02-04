@@ -4,11 +4,15 @@ using UnityEngine;
 
 public abstract class CardBhv : InputBhv
 {
+    public int PositiveOutcomePercent = 100;
+
     protected SoundControlerBhv _soundControler;
     protected SpriteRenderer _spriteRenderer;
     protected SpriteRenderer _cacheSpriteRenderer;
     protected SwipeSceneBhv _swipeSceneBhv;
     protected BoxCollider2D[] _boxColliders2D;
+    protected Instantiator _instantiator;
+    protected Character _character;
 
     protected Vector2 _initialTouchPosition;
     protected Vector2 _initialPosition;
@@ -27,14 +31,15 @@ public abstract class CardBhv : InputBhv
     protected int _minutesNeededVenturePositive;
     protected int _minutesNeededVentureNegative;
     protected string _namePositiveAction = Constants.CardPositiveAction;
-    protected int _matchPercent;
 
-    public virtual void SetPrivates(int id, int day)
+    public virtual void SetPrivates(int id, int day, MapType mapType, Character character, Instantiator instantiator)
     {
         SetPrivates();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _cacheSpriteRenderer = transform.Find("Cache")?.GetComponent<SpriteRenderer>();
+        _instantiator = instantiator;
+        _character = character;
         _swipeSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SwipeSceneBhv>();
 
         _initialPosition = Constants.CardInitialPosition;
@@ -199,5 +204,6 @@ public enum CardState
 {
     Active,
     Ventured,
-    Avoided
+    Avoided,
+    Off
 }

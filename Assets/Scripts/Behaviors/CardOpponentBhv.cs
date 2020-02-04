@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class OpponentCardBhv : CardBhv
+public class CardOpponentBhv : CardBhv
 {
     private SkinContainerBhv _skinContainerBhv;
     private List<Character> _opponentCharacters;
@@ -11,7 +11,7 @@ public class OpponentCardBhv : CardBhv
     private float _originalFixBoxY;
     private float _customFixBoxY;
 
-    public override void SetPrivates(int id, int day)
+    public override void SetPrivates(int id, int day, MapType mapType, Character character, Instantiator instantiator)
     {
         _minutesNeededVenturePositive = Helper.RandomIntMultipleOf(10, 30, 5);
         _minutesNeededVentureNegative = _minutesNeededVenturePositive * 2;
@@ -20,7 +20,7 @@ public class OpponentCardBhv : CardBhv
         _customFixBoxY = 1.3f;
         _skinContainerBhv = transform.Find("SkinContainer").GetComponent<SkinContainerBhv>();
         _instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator;
-        base.SetPrivates(id, day);              
+        base.SetPrivates(id, day, mapType, character, instantiator);
         InitOpponent(day);
         _minutesNeededAvoid = _opponentCharacters.Count * 10 + 20;
         _boxColliders2D = gameObject.GetComponents<BoxCollider2D>();
@@ -30,6 +30,12 @@ public class OpponentCardBhv : CardBhv
                 box.enabled = false;
             transform.localScale = _disabledScale;
         }
+        PositiveOutcomePercent = CalculateMatchPercent();
+    }
+
+    private int CalculateMatchPercent()
+    {
+        return 100;
     }
 
     private void InitOpponent(int day)

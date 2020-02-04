@@ -248,7 +248,7 @@ public static class Helper
             case TextType.Rare:
                 return thickness + "Yellow";
             case TextType.Legendary:
-                return thickness + "Brown";
+                return thickness + "Orange";
             case TextType.Hp:
                 return thickness + "Red";
             case TextType.Pa:

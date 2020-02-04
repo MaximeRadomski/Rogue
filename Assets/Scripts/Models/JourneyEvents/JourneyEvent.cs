@@ -4,16 +4,30 @@ using UnityEngine;
 
 public class JourneyEvent
 {
-    protected string _name;
-    protected string _content;
-    protected int _positiveOutcomePercent;
+    public string Name;
+    public string Content;
+    public int PositiveOutcomePercent;
+    public int MinutesNeededAvoid;
+    public int MinutesNeededVenturePositive;
+    public int MinutesNeededVentureNegative;
 
-    protected virtual void NegativeOutcome()
+    protected Instantiator _instantiator;
+    protected Character _character;
+    protected SwipeSceneBhv _swipeSceneBhv;
+
+    public virtual void SetPrivates(Instantiator instantiator, Character character, SwipeSceneBhv swipeSceneBhv)
+    {
+        _instantiator = instantiator;
+        _character = character;
+        _swipeSceneBhv = swipeSceneBhv;
+    }
+
+    public virtual void NegativeOutcome()
     {
 
     }
 
-    protected virtual void PositiveOutcome()
+    public virtual void PositiveOutcome()
     {
 
     }

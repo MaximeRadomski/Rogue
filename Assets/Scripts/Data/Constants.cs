@@ -56,6 +56,7 @@ public static class Constants
     public const string GoSceneBhvName = "SceneBhv";
     public const string GoPlayerName = "Player";
     public const string GoOpponentName = "Opponent";
+    public const string GoMatchPercentage = "MatchPercentage";
 
     //  GAMEOBJECTS VALUES  //
     public const int GridMax = 7;

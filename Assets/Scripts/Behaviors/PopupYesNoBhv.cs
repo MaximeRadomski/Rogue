@@ -17,10 +17,14 @@ public class PopupYesNoBhv : MonoBehaviour
         var buttonPositive = transform.Find("ButtonPositive");
         buttonPositive.GetComponent<ButtonBhv>().EndActionDelegate = PositiveDelegate;
         buttonPositive.transform.Find("ButtonPositiveText").GetComponent<TMPro.TextMeshPro>().text = positive;
+        if (string.IsNullOrEmpty(negative))
+            buttonPositive.transform.position = new Vector3(0.0f, buttonPositive.transform.position.y, 0.0f);
 
         var buttonNegative = transform.Find("ButtonNegative");
         buttonNegative.GetComponent<ButtonBhv>().EndActionDelegate = NegativeDelegate;
         buttonNegative.transform.Find("ButtonNegativeText").GetComponent<TMPro.TextMeshPro>().text = negative;
+        if (string.IsNullOrEmpty(negative))
+            buttonNegative.gameObject.SetActive(false);
     }
 
     private void PositiveDelegate()

@@ -91,4 +91,21 @@ public class Character
         Hp += amountToAdd;
         return amountToAdd;
     }
+
+    public int GainXp(int amount)
+    {
+        int amountToAdd = amount;
+        var needed = Helper.XpNeedForLevel(Level);
+        if (Experience + amountToAdd > needed)
+        {
+            int reserve = Experience + amountToAdd - needed;
+            ++Level;
+            Experience = reserve;
+        }
+        else
+        {
+            Experience += amountToAdd;
+        }
+        return amountToAdd;
+    }
 }

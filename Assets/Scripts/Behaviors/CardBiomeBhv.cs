@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BiomeCardBhv : CardBhv
+public class CardBiomeBhv : CardBhv
 {
     private Biome _biome;
     private int _choice;
     private int _maxChoice;
 
-    public override void SetPrivates(int id, int day)
+    public override void SetPrivates(int id, int day, MapType mapType, Character character, Instantiator instantiator)
     {
-        base.SetPrivates(id, day);
+        base.SetPrivates(id, day, mapType, character, instantiator);
         _minutesNeededAvoid = 60;
         _minutesNeededVenturePositive = 60;
         _biome = BiomesData.GetRandomBiome();
