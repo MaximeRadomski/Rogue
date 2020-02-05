@@ -42,7 +42,7 @@ public class SkillSmite : Skill
     {
         if (smitedOpponentBhv == null)
             return;
-        var floatAmount = 100.0f * Helper.MultiplierFromPercent(1, CharacterBhv.Character.LevelingDamagePercent * (CharacterBhv.Character.Level - 1));
+        var floatAmount = 100.0f * CharacterBhv.Character.GetDamageMultiplier();
         smitedOpponentBhv.TakeDamages((int)floatAmount);
     }
 }

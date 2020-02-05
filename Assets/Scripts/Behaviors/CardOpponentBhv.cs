@@ -5,7 +5,6 @@ public class CardOpponentBhv : CardBhv
 {
     private SkinContainerBhv _skinContainerBhv;
     private List<Character> _opponentCharacters;
-    private Instantiator _instantiator;
     private List<BoxCollider2D> _opponentsBox;
     private BoxCollider2D _fixBox;
     private float _originalFixBoxY;
@@ -19,7 +18,7 @@ public class CardOpponentBhv : CardBhv
         _originalFixBoxY = _fixBox.size.y;
         _customFixBoxY = 1.3f;
         _skinContainerBhv = transform.Find("SkinContainer").GetComponent<SkinContainerBhv>();
-        _instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator;
+        _instantiator = instantiator;
         base.SetPrivates(id, day, mapType, character, instantiator);
         InitOpponent(day);
         _minutesNeededAvoid = _opponentCharacters.Count * 10 + 20;

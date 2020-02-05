@@ -26,8 +26,7 @@ public class InputControlerBhv : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.Escape))
         {
             _soundControler.PlaySound(_soundControler.ClickOut);
-            if (_currentScene == null)
-                _currentScene = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
+            _currentScene = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>();
             if (Constants.InputLayer > 0)
             {
                 var gameObjectToDestroy = GameObject.Find(Constants.InputTopLayerNames[Constants.InputTopLayerNames.Count - 1]);
@@ -47,8 +46,7 @@ public class InputControlerBhv : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("    [DEBUG]    Back");
-                    NavigationService.LoadPreviousScene();
+                    NavigationService.LoadPreviousScene(_currentScene.OnRootPreviousScene);
                 }
             }
             return;

@@ -6,6 +6,7 @@ public abstract class SceneBhv : MonoBehaviour
     public bool Paused;
     public PauseMenuBhv PauseMenu;
     public Instantiator Instantiator;
+    public string OnRootPreviousScene = null;
 
     protected virtual void SetPrivates()
     {

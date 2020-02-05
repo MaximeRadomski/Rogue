@@ -35,6 +35,7 @@ public class FightSceneBhv : SceneBhv
     protected override void SetPrivates()
     {
         base.SetPrivates();
+        OnRootPreviousScene = Constants.SwipeScene;
         _gridBhv = GetComponent<GridBhv>();
         _map = MapsData.EasyMaps[Random.Range(0, MapsData.EasyMaps.Count)];
     }
@@ -316,9 +317,9 @@ public class FightSceneBhv : SceneBhv
 
     #region exit
 
-    public static void GoToSwipe()
+    public void GoToSwipe()
     {
-        NavigationService.LoadPreviousScene();
+        NavigationService.LoadPreviousScene(OnRootPreviousScene);
     }
 
     #endregion

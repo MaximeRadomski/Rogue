@@ -14,14 +14,14 @@ public class JourneyEventMonkeyBridge : JourneyEvent
         MinutesNeededAvoid = 90;
         MinutesNeededVenturePositive = 5;
         MinutesNeededVentureNegative = 15;
-        Content = "You find a shortcut!\nThe problem is that it is a monkey bridge. The ropes seem old enough to alter your heights appreciation...";
+        Content = "You find a shortcut in a canyon! But it is a monkey bridge. The ropes seem old enough to alter your heights appreciation...";
     }
 
     public override void SetPrivates(Instantiator instantiator, Character character, SwipeSceneBhv swipeSceneBhv)
     {
         base.SetPrivates(instantiator, character, swipeSceneBhv);
-        _xpGained = (int)(Helper.XpNeedForLevel(_character.Level) * 0.1f);
-        _hpLost = (int)(_character.HpMax * 0.05f);
+        _xpGained = (int)(Helper.XpNeedForLevel(_character.Level) * 0.2f);
+        _hpLost = (int)(_character.HpMax * 0.15f);
     }
 
     public override void PositiveOutcome()
@@ -47,8 +47,8 @@ public class JourneyEventMonkeyBridge : JourneyEvent
 
     private object OnNegativeOutcome(bool result)
     {
-        _character.GainXp(_hpLost);
-        _swipeSceneBhv.NewCard(MinutesNeededVentureNegative);
+        _character.TakeDamages(_hpLost);
+        _swipeSceneBhv.NewCard(MinutesNeededVentureNegative, false);
         return result;
     }
 }

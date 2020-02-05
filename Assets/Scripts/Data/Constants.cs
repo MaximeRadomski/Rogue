@@ -19,6 +19,8 @@ public static class Constants
     public const string UnitWeight = "kg";
     public const int HourInMinutes = 60;
     public const int DayInMinutes = 1440;
+    public const int RegenerationHp = 1;
+    public const int RegenerationTimeLaps = 5;
 
     // TEXTS //
     public const string YesNoTitle = "Caution!";

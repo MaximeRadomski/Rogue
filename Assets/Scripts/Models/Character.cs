@@ -92,20 +92,54 @@ public class Character
         return amountToAdd;
     }
 
+    public void RegenerationFromMinutes(int minutesPassed)
+    {
+        var test = (minutesPassed / Constants.RegenerationTimeLaps) * Constants.RegenerationHp;
+        GainHp(test);
+    }
+
     public int GainXp(int amount)
     {
         int amountToAdd = amount;
         var needed = Helper.XpNeedForLevel(Level);
-        if (Experience + amountToAdd > needed)
+        if (Experience + amountToAdd >= needed)
         {
-            int reserve = Experience + amountToAdd - needed;
-            ++Level;
-            Experience = reserve;
+            while (Experience + amountToAdd >= needed)
+            {
+                int reserve = Experience + amountToAdd - needed;
+                LevelUp();
+                needed = Helper.XpNeedForLevel(Level);
+                if (reserve >= needed)
+                {
+                    Experience = 0;
+                    amountToAdd = reserve;
+                }
+                else
+                {
+                    Experience = reserve;
+                    amountToAdd = 0;
+                }
+            }
         }
         else
         {
             Experience += amountToAdd;
         }
         return amountToAdd;
+    }
+
+    private void LevelUp()
+    {
+        ++Level;
+        Hp = (int)(Hp * Helper.MultiplierFromPercent(1, LevelingHealthPercent));
+        HpMax = (int)(HpMax * Helper.MultiplierFromPercent(1, LevelingHealthPercent));
+        if (HpMax - Hp > 0) //Bonus de vie par niveau
+            GainHp((int)(HpMax * Helper.MultiplierFromPercent(0, LevelingHealthPercent)));
+
+    }
+
+    public float GetDamageMultiplier()
+    {
+        return Helper.MultiplierFromPercent(1, LevelingDamagePercent * (Level - 1));
     }
 }

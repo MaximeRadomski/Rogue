@@ -11,7 +11,7 @@ public class SwipeSceneBhv : SceneBhv
     private Journey _journey;
 
     private GameObject _characterSkinContainer;
-    private TMPro.TextMeshPro _hp;
+    private OrbBhv _orbLife;
     private TMPro.TextMeshPro _characterName;
     private TMPro.TextMeshPro _level;
     private TMPro.TextMeshPro _xp;
@@ -41,6 +41,7 @@ public class SwipeSceneBhv : SceneBhv
     protected override void SetPrivates()
     {
         base.SetPrivates();
+        OnRootPreviousScene = Constants.RaceChoiceScene;
         _journey = PlayerPrefsHelper.GetJourney();
         _playerCharacter = PlayerPrefsHelper.GetCharacter(Constants.PpPlayer);
         Instantiator = GetComponent<Instantiator>();
@@ -72,9 +73,11 @@ public class SwipeSceneBhv : SceneBhv
         PauseMenu.Buttons[4].gameObject.SetActive(false);
     }
 
-    public void NewCard(int minutesPassed)
+    public void NewCard(int minutesPassed, bool regenerate = true)
     {
         _journey.UpdateTime(minutesPassed);
+        if (regenerate)
+            _playerCharacter.RegenerationFromMinutes(minutesPassed);
         Instantiator.PopText(Helper.TimeFromMinutes(minutesPassed), new Vector2(0.0f, 1.8f), TextType.Normal);
         //Debug.Log("Minutes Passed = " + minutesPassed + "\t|\t\tHours = " + _journey.Hour + "h" + _journey.Minutes);
         ++_journey.Step;
@@ -103,7 +106,7 @@ public class SwipeSceneBhv : SceneBhv
     {
         _characterSkinContainer = GameObject.Find("CharacterSkinContainer");
         _characterName = GameObject.Find("CharacterName").GetComponent<TMPro.TextMeshPro>();
-        _hp = GameObject.Find("HpText").GetComponent<TMPro.TextMeshPro>();
+        _orbLife = GameObject.Find("Hp").GetComponent<OrbBhv>();
         _level = GameObject.Find("LevelText").GetComponent<TMPro.TextMeshPro>();
         _xp = GameObject.Find("Xp").GetComponent<TMPro.TextMeshPro>();
         _gold = GameObject.Find("Gold").GetComponent<TMPro.TextMeshPro>();
@@ -123,7 +126,7 @@ public class SwipeSceneBhv : SceneBhv
 
     private void UpdateDisplayJourneyAndCharacterStats()
     {
-        _hp.text = _playerCharacter.Hp.ToString();
+        _orbLife.UpdateContent(_playerCharacter.Hp, _playerCharacter.HpMax);
         _level.text = _playerCharacter.Level.ToString();
         _xp.text = _playerCharacter.Experience.ToString() + "/" + Helper.XpNeedForLevel(_playerCharacter.Level) + " ®";
         _gold.text = _playerCharacter.Gold.ToString() + " ©";
@@ -143,6 +146,7 @@ public class SwipeSceneBhv : SceneBhv
     public void NewBiome(Biome biome, int minutesPassed)
     {
         _journey.UpdateTime(minutesPassed);
+        _playerCharacter.RegenerationFromMinutes(minutesPassed);
         Instantiator.PopText(Helper.TimeFromMinutes(minutesPassed), new Vector2(0.0f, 1.8f), TextType.Normal);
         var remainingCards = GameObject.FindGameObjectsWithTag(Constants.TagGrabbableCard);
         foreach (var card in remainingCards)
@@ -205,7 +209,7 @@ public class SwipeSceneBhv : SceneBhv
     {
         if (result)
         {
-            NavigationService.LoadPreviousScene();
+            NavigationService.LoadPreviousScene(OnRootPreviousScene);
         }
         return result;
     }
@@ -216,7 +220,7 @@ public class SwipeSceneBhv : SceneBhv
     }
     private void Exit()
     {
-        NavigationService.LoadPreviousScene();
+        NavigationService.LoadPreviousScene(OnRootPreviousScene);
     }
 
     #endregion

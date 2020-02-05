@@ -134,6 +134,7 @@ public class CharacterBhv : MonoBehaviour
         var tmpWeapon = Character.Weapons[weaponId];
 
         float baseDamages = tmpWeapon.BaseDamage * Helper.MultiplierFromPercent(1, Random.Range(-tmpWeapon.DamageRangePercentage, tmpWeapon.DamageRangePercentage + 1));
+        baseDamages *= Character.GetDamageMultiplier();
 
         float weaponHandlingMultiplier = 1.0f;
         if (tmpWeapon.Type != Character.FavWeapons[0] && tmpWeapon.Type != Character.FavWeapons[1])

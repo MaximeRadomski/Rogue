@@ -47,7 +47,7 @@ public class SkillPush : Skill
             if (Helper.IsPosValid(_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y)
                 && GridBhv.Cells[_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y].GetComponent<CellBhv>().Type == CellType.Off)
             {
-                var floatAmount = 30.0f * Helper.MultiplierFromPercent(1, CharacterBhv.Character.LevelingDamagePercent * (CharacterBhv.Character.Level - 1));
+                var floatAmount = 30.0f * CharacterBhv.Character.GetDamageMultiplier();
                 pushedOpponentBhv.TakeDamages((int)floatAmount);
             }
             else if (!Helper.IsPosValid(_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y)
