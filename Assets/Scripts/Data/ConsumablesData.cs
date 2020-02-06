@@ -10,7 +10,7 @@ public static class ConsumablesData
 
     public static string[] NormalConsumablesNames = { "Health Potion" };
     public static string[] MagicalConsumablesNames = { "Health Potion" }; //TODO
-    public static string[] RareConsumablesNames = { "Health Potion" }; //TODO
+    public static string[] RareConsumablesNames = { "Edelweiss Potion" };
 
     public static Consumable GetRandomConsumable(bool isPlayer = false)
     {

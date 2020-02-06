@@ -13,14 +13,21 @@
     public override void PositiveOutcome()
     {
         _instantiator.NewPopupYesNo("Succes!",
-            //"You made it to the other side of the bridge. You gain confidence, and some experience!\nYou gain <material=\"LongOrange\">" + _xpGained + " ®</material>",
-            "You gather enough flowers to craft a potion.\n+1 Edelweiss Potion",
+            "It took you a long amount of time, but you gathered enough flowers to craft a potion out of it. <material=\"LongYellow\">+1 Edelweiss Potion</material>",
             string.Empty, "Ok", OnPositiveOutcome);
     }
 
     private object OnPositiveOutcome(bool result)
     {
-        _character.GainXp(_xpGained);
+        _character.AddToInventory(new System.Collections.Generic.List<InventoryItem>
+        {
+            new ConsumableEdelweissPotion()
+        }, OnInventoryWork);
+        return result;
+    }
+
+    private object OnInventoryWork(bool result)
+    {
         _swipeSceneBhv.NewCard(MinutesNeededVenturePositive);
         return result;
     }
@@ -28,13 +35,12 @@
     public override void NegativeOutcome()
     {
         _instantiator.NewPopupYesNo("Fail...",
-            "The bridge breaks! You however manage to climb up by hanging on to it's remaining half. But you lose <material=\"LongRed\">" + _hpLost + " HP</material> in the process...",
+            "You waisted your time looking for some Edelweiss, but couldn't find enough to make a potion out of it..",
             string.Empty, "Damn", OnNegativeOutcome);
     }
 
     private object OnNegativeOutcome(bool result)
     {
-        _character.TakeDamages(_hpLost);
         _swipeSceneBhv.NewCard(MinutesNeededVentureNegative, false);
         return result;
     }

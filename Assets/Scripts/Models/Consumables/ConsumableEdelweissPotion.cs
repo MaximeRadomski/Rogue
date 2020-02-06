@@ -1,28 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ConsumableHealthPotion : Consumable
+public class ConsumableEdelweissPotion : Consumable
 {
-    public ConsumableHealthPotion()
+    public ConsumableEdelweissPotion()
     {
-        Name = ConsumablesData.NormalConsumablesNames[0];
-        Description = "Heal <material=\"LongRed\">" + _hp + " HP</material>";
-        Story = "Made with plants, river water and bat blood, this potion taste is dreadful. And the purpose of the plants is only aromatic...";
-        Weight = 2;
-        Rarity = Rarity.Normal;
-        IconId = 0;
-        MinutesNeeded = 15;
+        Name = ConsumablesData.RareConsumablesNames[0];
+        Description = "Recover <material=\"LongRed\">+15%</material> of your max <material=\"LongRed\">HP</material>";
+        Story = "This potion is made from rare Edelweiss. It is said your experience alter its effects a lot.";
+        Weight = 1;
+        Rarity = Rarity.Rare;
+        IconId = 1;
+        MinutesNeeded = 10;
         PositiveAction = "Drink";
     }
-
-    private int _hp = 75;
 
     public override void OnUse(Character character, int id, System.Func<bool, object> resultAction)
     {
         if (character.Hp < character.HpMax)
         {
-            character.GainHp(_hp);
+            character.GainHp((int)(character.HpMax * 0.15f));
             character.Inventory.RemoveAt(id);
             resultAction(true);
         }

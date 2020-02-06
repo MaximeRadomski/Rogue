@@ -142,4 +142,67 @@ public class Character
     {
         return Helper.MultiplierFromPercent(1, LevelingDamagePercent * (Level - 1));
     }
+
+    public void AddToInventory(List<InventoryItem> items, System.Func<bool, object> afterInventoryWork)
+    {
+        int invId = Inventory.Count;
+        List<InventoryItem> discardedItems = new List<InventoryItem>();
+        for (int i = 0; i < items.Count; ++i)
+        {
+            if (invId < InventoryPlace)
+            {
+                Inventory.Add(items[i]);
+            }
+            else
+            {
+                discardedItems.Add(items[i]);
+            }
+            ++invId;
+        }
+        if (discardedItems.Count > 0)
+        {
+            var instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator;
+            LoopDiscarded(instantiator, discardedItems, 0, afterInventoryWork);
+        }
+        else
+        {
+            afterInventoryWork(true);
+        }
+    }
+
+    private void LoopDiscarded(Instantiator instantiator, List<InventoryItem> discardedItems, int id, System.Func<bool, object> afterInventoryWork)
+    {
+        if (id >= discardedItems.Count)
+        {
+            afterInventoryWork(true);
+            return;
+        }
+            
+        instantiator.NewPopupYesNo("Full Inventory",
+                "Your inventory is full. Do you wish to discard an item in order to make some place for:\n" + discardedItems[id].GetNameWithColor(),
+                "No", "Yes", OnAcceptDiscard);
+
+        object OnAcceptDiscard(bool result)
+        {
+            if (result)
+            {
+                instantiator.NewPopupInventory(this, OnDiscard);
+                return true;
+            }
+            LoopDiscarded(instantiator, discardedItems, id + 1, afterInventoryWork);
+            return false;
+        }
+
+        object OnDiscard(bool result)
+        {
+            if (result)
+            {
+                Inventory.Add(discardedItems[id]);
+                LoopDiscarded(instantiator, discardedItems, id + 1, afterInventoryWork);
+                return true;
+            }
+            LoopDiscarded(instantiator, discardedItems, id + 1, afterInventoryWork);
+            return false;
+        }
+    }
 }

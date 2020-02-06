@@ -24,7 +24,7 @@ public static class Constants
 
     // TEXTS //
     public const string YesNoTitle = "Caution!";
-    public const string YesNoContent = "Are you sure you want to do this action?\nIt's Repercussions are irreversible!";
+    public const string YesNoContent = "Are you sure you want to do this action? It's Repercussions are irreversible!";
     public const string Cancel = "Cancel";
     public const string Proceed = "Proceed";
     public const string InventoryItemPositiveAction = "Switch";

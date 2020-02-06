@@ -15,7 +15,7 @@ public abstract class InventoryItem
 
     public virtual string GetNameWithColor()
     {
-        var nameTag = "<material=\"LongWhite\">";
+        var nameTag = "<material=\"LongGreyish\">";
         if (Rarity == Rarity.Magical)
             nameTag = "<material=\"LongBlue\">";
         else if (Rarity == Rarity.Rare)

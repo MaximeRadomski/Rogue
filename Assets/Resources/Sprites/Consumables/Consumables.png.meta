@@ -5,6 +5,9 @@ TextureImporter:
   - first:
       213: 1458253429931614191
     second: Consumables_0
+  - first:
+      213: -7526724144147813300
+    second: Consumables_1
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -105,6 +108,27 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 30
+        width: 110
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21b78739169dc8044adcb2d917952ae5
+      internalID: 1458253429931614191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Consumables_1
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 0
         width: 110
         height: 30
@@ -115,8 +139,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eb5bfa1527178ec4db70680a9ab302e7
-      internalID: 1458253429931614191
+      spriteID: 3d08fda638700b442a8f90a8f124ada6
+      internalID: -7526724144147813300
       vertices: []
       indices: 
       edges: []
