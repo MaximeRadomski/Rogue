@@ -39,20 +39,20 @@ public class Instantiator : MonoBehaviour
             Camera.main.gameObject.GetComponent<CameraBhv>().FocusY(target.transform.position.y + (Camera.main.orthographicSize - Constants.KeyboardHeight));
     }
 
-    public void NewPopupCharacterStats(Character character)
+    public void NewPopupCharacterStats(Character character, System.Func<bool> sceneUpdateAction, bool isInventoryAvailable = false)
     {
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupCharacterStats");
         var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpPopupInstance.name);
-        tmpPopupInstance.GetComponent<PopupCharacterStatsBhv>().SetPrivates(character, isInventoryAvailable:true);
+        tmpPopupInstance.GetComponent<PopupCharacterStatsBhv>().SetPrivates(character, sceneUpdateAction, isInventoryAvailable);
     }
 
-    public void NewPopupInventory(Character character, System.Func<bool, object> resultAction = null)
+    public void NewPopupInventory(Character character, System.Func<bool> updateAction, System.Func<bool, object> resultAction = null)
     {
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupInventory");
         var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpPopupInstance.name);
-        tmpPopupInstance.GetComponent<PopupInventoryBhv>().SetPrivates(character, resultAction);
+        tmpPopupInstance.GetComponent<PopupInventoryBhv>().SetPrivates(character, updateAction, resultAction);
     }
 
     public void NewPopupYesNo(string title, string content, string negative, string positive,

@@ -186,7 +186,7 @@ public class Character
         {
             if (result)
             {
-                instantiator.NewPopupInventory(this, OnDiscard);
+                instantiator.NewPopupInventory(this, null, OnDiscard);
                 return true;
             }
             LoopDiscarded(instantiator, discardedItems, id + 1, afterInventoryWork);

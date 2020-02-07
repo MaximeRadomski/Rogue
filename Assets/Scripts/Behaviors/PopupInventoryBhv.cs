@@ -15,10 +15,12 @@ public class PopupInventoryBhv : StatsDisplayerBhv
     private List<TMPro.TextMeshPro> _buttonsText;
 
     private System.Func<bool, object> _forceDiscardAction;
+    private System.Func<bool> _sceneUpdateAction;
 
-    public void SetPrivates(Character character, System.Func<bool, object> forceDiscardAction)
+    public void SetPrivates(Character character, System.Func<bool> sceneUpdateAction, System.Func<bool, object> forceDiscardAction)
     {
         _character = character;
+        _sceneUpdateAction = sceneUpdateAction;
         _forceDiscardAction = forceDiscardAction;
         _selectedItem = 0;
         _selectedSprite = transform.Find("SelectedSprite").gameObject;
@@ -181,6 +183,7 @@ public class PopupInventoryBhv : StatsDisplayerBhv
         if (result)
         {
             SetButtons();
+            _sceneUpdateAction();
         }
         return result;
     }
@@ -188,7 +191,7 @@ public class PopupInventoryBhv : StatsDisplayerBhv
     private void SwitchToStats()
     {
         Constants.DecreaseInputLayer();
-        _instantiator.NewPopupCharacterStats(_character);
+        _instantiator.NewPopupCharacterStats(_character, _sceneUpdateAction, isInventoryAvailable:true);
         Destroy(gameObject);
     }
 

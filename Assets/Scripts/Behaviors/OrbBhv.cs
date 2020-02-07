@@ -31,6 +31,8 @@ public class OrbBhv : MonoBehaviour
     {
         _textMesh.text = current.ToString();
         float ratio = (float)current / max;
-        _content.transform.position = _originalPosition + new Vector3(0.0f, (_height * ratio) - _height, 0.0f);
+        _content.transform.position = new Vector3(_content.transform.position.x,
+            transform.position.y + (_height * ratio) - _height,
+            0.0f);
     }
 }

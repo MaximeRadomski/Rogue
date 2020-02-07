@@ -78,12 +78,12 @@ public class SwipeSceneBhv : SceneBhv
         _journey.UpdateTime(minutesPassed);
         if (regenerate)
             _playerCharacter.RegenerationFromMinutes(minutesPassed);
-        Instantiator.PopText(Helper.TimeFromMinutes(minutesPassed), new Vector2(0.0f, 1.8f), TextType.Normal);
         //Debug.Log("Minutes Passed = " + minutesPassed + "\t|\t\tHours = " + _journey.Hour + "h" + _journey.Minutes);
         ++_journey.Step;
         Destroy(GameObject.Find("Card1"));
         _currentCard = GameObject.Find("Card0");
         _currentCard.GetComponent<CardBhv>().BringToFront();
+        Instantiator.PopText(Helper.TimeFromMinutes(minutesPassed), (Vector2)_currentCard.transform.position + new Vector2(0.0f, 1f), TextType.Normal);
         _avoidBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Avoid;
         _ventureBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Venture;
         if (_journey.Step < _journey.Biome.Steps) //Just '<' because it instantiates one in advance
@@ -147,7 +147,6 @@ public class SwipeSceneBhv : SceneBhv
     {
         _journey.UpdateTime(minutesPassed);
         _playerCharacter.RegenerationFromMinutes(minutesPassed);
-        Instantiator.PopText(Helper.TimeFromMinutes(minutesPassed), new Vector2(0.0f, 1.8f), TextType.Normal);
         var remainingCards = GameObject.FindGameObjectsWithTag(Constants.TagGrabbableCard);
         foreach (var card in remainingCards)
         {
@@ -159,6 +158,7 @@ public class SwipeSceneBhv : SceneBhv
         _journey.Biome = biome;
         Instantiator.NewRandomCard(1, _journey.Day, _journey.Biome.MapType, _playerCharacter);
         _currentCard = GameObject.Find("Card1");
+        Instantiator.PopText(Helper.TimeFromMinutes(minutesPassed), (Vector2)_currentCard.transform.position + new Vector2(0.0f, 1f), TextType.Normal);
         //backCard.GetComponent<CardBhv>().BringToFront();
         _avoidBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Avoid;
         _ventureBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Venture;
@@ -188,12 +188,18 @@ public class SwipeSceneBhv : SceneBhv
 
     private void ShowCharacterStats()
     {
-        Instantiator.NewPopupCharacterStats(_playerCharacter);
+        Instantiator.NewPopupCharacterStats(_playerCharacter, OnCallUpdate, isInventoryAvailable:true);
     }
 
     private void ShowInventory()
     {
-        Instantiator.NewPopupInventory(_playerCharacter);
+        Instantiator.NewPopupInventory(_playerCharacter, OnCallUpdate);
+    }
+
+    private bool OnCallUpdate()
+    {
+        UpdateDisplayJourneyAndCharacterStats();
+        return true;
     }
 
     #region PauseMenu

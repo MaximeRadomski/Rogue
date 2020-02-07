@@ -36,7 +36,7 @@ public class PoppingTextBhv : MonoBehaviour
         {
             tag = Constants.TagCell;
             _text.color = Color.Lerp(_text.color, _colorToFade, 0.1f);
-            if (_text.color == _colorToFade)
+            if (_text.color.a <= 0.01)
             {
                 _isMoving = false;
                 Destroy(gameObject);

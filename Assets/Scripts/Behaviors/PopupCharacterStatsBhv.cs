@@ -14,10 +14,13 @@ public class PopupCharacterStatsBhv : StatsDisplayerBhv
     private Vector3 _resetTabPosition;
     private Vector3 _currentTabPosition;
 
-    public void SetPrivates(Character character, bool isInventoryAvailable = false)
+    private System.Func<bool> _sceneUpdateAction;
+
+    public void SetPrivates(Character character, System.Func<bool> sceneUpdateAction, bool isInventoryAvailable)
     {
         _title = transform.Find("Title").GetComponent<TMPro.TextMeshPro>();
         _character = character;
+        _sceneUpdateAction = sceneUpdateAction;
         _currentTab = 0;
         _resetTabPosition = new Vector3(-10.0f, 10.0f, 0.0f);
         _currentTabPosition = transform.position;
@@ -170,7 +173,7 @@ public class PopupCharacterStatsBhv : StatsDisplayerBhv
     private void SwitchToInventory()
     {
         Constants.DecreaseInputLayer();
-        _instantiator.NewPopupInventory(_character);
+        _instantiator.NewPopupInventory(_character, _sceneUpdateAction);
         Destroy(gameObject);
     }
 
