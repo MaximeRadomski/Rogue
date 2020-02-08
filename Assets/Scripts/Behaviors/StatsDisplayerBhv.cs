@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatsDisplayerBhv : MonoBehaviour
+public class StatsDisplayerBhv : PopupBhv
 {
     protected Instantiator _instantiator;
 

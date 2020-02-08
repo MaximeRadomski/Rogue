@@ -13,6 +13,7 @@ public class PopupInventoryBhv : StatsDisplayerBhv
     private Vector3 _currentTabPosition;
     private List<Vector3> _buttonsPosition;
     private List<TMPro.TextMeshPro> _buttonsText;
+    private TMPro.TextMeshPro _weightText;
 
     private System.Func<bool, object> _forceDiscardAction;
     private System.Func<bool> _sceneUpdateAction;
@@ -38,6 +39,7 @@ public class PopupInventoryBhv : StatsDisplayerBhv
         _buttonsText = new List<TMPro.TextMeshPro>();
         _buttonsText.Add(_buttons[0].transform.GetChild(0).GetComponent<TMPro.TextMeshPro>());
         _buttonsText.Add(_buttons[1].transform.GetChild(0).GetComponent<TMPro.TextMeshPro>());
+        _weightText = transform.Find("Weight").GetComponent<TMPro.TextMeshPro>();
         _buttonsPosition = new List<Vector3>();
         _buttonsPosition.Add(_buttons[0].transform.position);
         _buttonsPosition.Add(_buttons[1].transform.position);
@@ -46,10 +48,17 @@ public class PopupInventoryBhv : StatsDisplayerBhv
 
     private void SetButtons()
     {
-        transform.Find("ExitButton").GetComponent<ButtonBhv>().EndActionDelegate = ExitPopup;
-        transform.Find("StatsButton").GetComponent<ButtonBhv>().EndActionDelegate = SwitchToStats;
+        if (_forceDiscardAction == null)
+            transform.Find("ExitButton").GetComponent<ButtonBhv>().EndActionDelegate = ExitPopup;
+        else
+            transform.Find("ExitButton").gameObject.SetActive(false);
+        if (_forceDiscardAction == null)
+            transform.Find("StatsButton").GetComponent<ButtonBhv>().EndActionDelegate = SwitchToStats;
+        else
+            transform.Find("StatsButton").gameObject.SetActive(false);
         _buttons[0].GetComponent<ButtonBhv>().EndActionDelegate = PositiveAction;
         _buttons[1].GetComponent<ButtonBhv>().EndActionDelegate = NegativeAction;
+        _weightText.gameObject.GetComponent<ButtonBhv>().EndActionDelegate = WeightAction;
         for (int i = 0; i < 6; ++i)
         {
             var slotBack = transform.Find("SlotBack" + i).gameObject;
@@ -128,7 +137,11 @@ public class PopupInventoryBhv : StatsDisplayerBhv
             _selectedSprite.transform.position = _resetTabPosition;
         }
         
-        transform.Find("Weight").GetComponent<TMPro.TextMeshPro>().text = _character.GetTotalWeight() + "/" + _character.WeightLimit;
+        var content = _character.GetTotalWeight() + "/" + _character.WeightLimit;
+        if (_character.GetTotalWeight() <= _character.WeightLimit)
+            _weightText.text = "<material=\"LongWhite\">" + content + "</material>";
+        else
+            _weightText.text = "<material=\"LongRed\">" + content + "</material>";
     }
 
     private void NegativeAction()
@@ -188,6 +201,19 @@ public class PopupInventoryBhv : StatsDisplayerBhv
         return result;
     }
 
+    private void WeightAction()
+    {
+        bool overweight = _character.GetTotalWeight() > _character.WeightLimit;
+        var content = "You can carry up to " + _character.WeightLimit + " " + Constants.UnitWeight + " worth of items.";
+        var positive = "Ok";
+        if (overweight)
+        {
+            content = "You are in overweight. Any action will take two times more time.";
+            positive = "Damn";
+        }
+        _instantiator.NewPopupYesNo("Weight", content, string.Empty, positive, null);
+    }
+
     private void SwitchToStats()
     {
         Constants.DecreaseInputLayer();
@@ -195,9 +221,9 @@ public class PopupInventoryBhv : StatsDisplayerBhv
         Destroy(gameObject);
     }
 
-    private void ExitPopup()
+    public override void ExitPopup()
     {
-        Constants.DecreaseInputLayer();
-        Destroy(gameObject);
+        _forceDiscardAction?.Invoke(false);
+        base.ExitPopup();
     }
 }

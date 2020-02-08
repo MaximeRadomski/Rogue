@@ -140,4 +140,10 @@ public class PopupSwitchBhv : StatsDisplayerBhv
         _resultAction(false);
         Destroy(gameObject);
     }
+
+    public override void ExitPopup()
+    {
+        _resultAction(false);
+        base.ExitPopup();
+    }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PopupYesNoBhv : MonoBehaviour
+public class PopupYesNoBhv : PopupBhv
 {
     private System.Func<bool, object> _resultAction;
 
@@ -30,14 +30,20 @@ public class PopupYesNoBhv : MonoBehaviour
     private void PositiveDelegate()
     {
         Constants.DecreaseInputLayer();
-        _resultAction(true);
+        _resultAction?.Invoke(true);
         Destroy(gameObject);
     }
 
     private void NegativeDelegate()
     {
         Constants.DecreaseInputLayer();
-        _resultAction(false);
+        _resultAction?.Invoke(false);
         Destroy(gameObject);
+    }
+
+    public override void ExitPopup()
+    {
+        _resultAction?.Invoke(false);
+        base.ExitPopup();
     }
 }

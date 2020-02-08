@@ -75,6 +75,8 @@ public class SwipeSceneBhv : SceneBhv
 
     public void NewCard(int minutesPassed, bool regenerate = true)
     {
+        if (_playerCharacter.GetTotalWeight() > _playerCharacter.WeightLimit)
+            minutesPassed *= 2;
         _journey.UpdateTime(minutesPassed);
         if (regenerate)
             _playerCharacter.RegenerationFromMinutes(minutesPassed);
@@ -145,6 +147,8 @@ public class SwipeSceneBhv : SceneBhv
 
     public void NewBiome(Biome biome, int minutesPassed)
     {
+        if (_playerCharacter.GetTotalWeight() > _playerCharacter.WeightLimit)
+            minutesPassed *= 2;
         _journey.UpdateTime(minutesPassed);
         _playerCharacter.RegenerationFromMinutes(minutesPassed);
         var remainingCards = GameObject.FindGameObjectsWithTag(Constants.TagGrabbableCard);

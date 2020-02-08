@@ -48,6 +48,8 @@ public class CardOpponentBhv : CardBhv
             nbOpponents = 3;
         else if (Random.Range(0, 100) < 30)
             nbOpponents = 2;
+        if (nbOpponents == 1)
+            transform.Find("Opponents").GetComponent<TMPro.TextMeshPro>().text = "Opponent";
         for (int i = 0; i < nbOpponents; ++i)
         {
             _opponentCharacters.Add(RacesData.GetCharacterFromRaceAndLevel(

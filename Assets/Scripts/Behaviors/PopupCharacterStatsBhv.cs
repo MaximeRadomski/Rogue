@@ -176,10 +176,4 @@ public class PopupCharacterStatsBhv : StatsDisplayerBhv
         _instantiator.NewPopupInventory(_character, _sceneUpdateAction);
         Destroy(gameObject);
     }
-
-    public void ExitPopup()
-    {
-        Constants.DecreaseInputLayer();
-        Destroy(gameObject);
-    }
 }
