@@ -9,7 +9,7 @@ public static class ConsumablesData
     public static int MagicalConsumableAppearancePercent = 30;
 
     public static string[] NormalConsumablesNames = { "Health Potion" };
-    public static string[] MagicalConsumablesNames = { "Health Potion" }; //TODO
+    public static string[] MagicalConsumablesNames = { "Health Potion" };
     public static string[] RareConsumablesNames = { "Edelweiss Potion" };
 
     public static Consumable GetRandomConsumable(bool isPlayer = false)
