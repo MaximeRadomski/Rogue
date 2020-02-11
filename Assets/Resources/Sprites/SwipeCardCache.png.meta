@@ -1,19 +1,31 @@
 fileFormatVersion: 2
-guid: a1d1df166ebc47b48a8f26c10a94f595
+guid: f3bbcfb297a74bd45ae6a8e926224f44
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2659244955995682118
-    second: SwipeCard_0
+      213: 1029832997890638384
+    second: SwipeCardCache_0
   - first:
-      213: -7368705246773432081
-    second: SwipeCard_1
+      213: -6543346207801186951
+    second: SwipeCardCache_1
   - first:
-      213: 8797870387001168904
-    second: SwipeCard_2
+      213: 8460077410414221259
+    second: SwipeCardCache_2
   - first:
-      213: -6491173968732493645
-    second: SwipeCard_3
+      213: -2664082295037261604
+    second: SwipeCardCache_3
+  - first:
+      213: 2992281864232443421
+    second: SwipeCardCache_4
+  - first:
+      213: 4510826206900580128
+    second: SwipeCardCache_5
+  - first:
+      213: 6556421506189337513
+    second: SwipeCardCache_6
+  - first:
+      213: -7688233922493616990
+    second: SwipeCardCache_7
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -110,7 +122,91 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SwipeCard_0
+      name: SwipeCardCache_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 142
+        width: 142
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b62da0574b037ee4e8329ef70a9da417
+      internalID: 1029832997890638384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SwipeCardCache_1
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 142
+        width: 142
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9723fbbcc1144c4885a908e314bb114
+      internalID: -6543346207801186951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SwipeCardCache_2
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 142
+        width: 142
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f5ec5d8fc034774c9916ba8f38e29a0
+      internalID: 8460077410414221259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SwipeCardCache_3
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 142
+        width: 142
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23494453719bc804a8686df1bf5c099d
+      internalID: -2664082295037261604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SwipeCardCache_4
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +220,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5bcd236a069243949bf49e1840886d79
-      internalID: -2659244955995682118
+      spriteID: 60864f03f4154eb44bf1f868b7db8050
+      internalID: 2992281864232443421
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SwipeCard_1
+      name: SwipeCardCache_5
       rect:
         serializedVersion: 2
         x: 142
@@ -145,14 +241,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3dda840485412934b823a581bb3aa0cd
-      internalID: -7368705246773432081
+      spriteID: d1fef4d4a341c554a92201183012953c
+      internalID: 4510826206900580128
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SwipeCard_2
+      name: SwipeCardCache_6
       rect:
         serializedVersion: 2
         x: 284
@@ -166,8 +262,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e4c116d15699fe0458beb11526a75aed
-      internalID: 8797870387001168904
+      spriteID: f2b645d68112bec4198111621bf10405
+      internalID: 6556421506189337513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SwipeCardCache_7
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 0
+        width: 142
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5aa7ac553308ec6448aa18b073055432
+      internalID: -7688233922493616990
       vertices: []
       indices: 
       edges: []

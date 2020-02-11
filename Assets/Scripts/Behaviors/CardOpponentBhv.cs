@@ -20,7 +20,7 @@ public class CardOpponentBhv : CardBhv
         _skinContainerBhv = transform.Find("SkinContainer").GetComponent<SkinContainerBhv>();
         _instantiator = instantiator;
         base.SetPrivates(id, day, mapType, character, instantiator);
-        _cacheSpriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/BiomeCache_" + mapType.GetHashCode());
+        _cacheSpriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/SwipeCardCache_" + mapType.GetHashCode());
         InitOpponent(day);
         _minutesNeededAvoid = _opponentCharacters.Count * 10 + 20;
         _boxColliders2D = gameObject.GetComponents<BoxCollider2D>();

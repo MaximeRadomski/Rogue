@@ -151,7 +151,7 @@ public abstract class CardBhv : InputBhv
     {
         transform.localScale = Vector3.Lerp(transform.localScale, _resetedScale, 0.1f);
         if (_cacheSpriteRenderer != null && _cacheSpriteRenderer.color != Constants.ColorPlainTransparent)
-            _cacheSpriteRenderer.color = Color.Lerp(_cacheSpriteRenderer.color, Constants.ColorPlainTransparent, 0.1f);
+            _cacheSpriteRenderer.color = Color.Lerp(_cacheSpriteRenderer.color, Constants.ColorPlainTransparent, 0.05f);
         if (transform.localScale == _resetedScale)
             _isStretching = false;
     }

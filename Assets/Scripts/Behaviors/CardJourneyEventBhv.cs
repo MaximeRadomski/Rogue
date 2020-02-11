@@ -7,6 +7,7 @@ public class CardJourneyEventBhv : CardBhv
     public override void SetPrivates(int id, int day, MapType mapType, Character character, Instantiator instantiator)
     {
         base.SetPrivates(id, day, mapType, character, instantiator);
+        _cacheSpriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/SwipeCardCache_" + mapType.GetHashCode());
         JourneyEvent = JourneyEventsData.GetRandomJourneyEventFromBiome(mapType);
         _minutesNeededAvoid = JourneyEvent.MinutesNeededAvoid;
         _minutesNeededVenturePositive = JourneyEvent.MinutesNeededVenturePositive;
