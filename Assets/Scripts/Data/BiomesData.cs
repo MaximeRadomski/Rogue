@@ -13,6 +13,10 @@ public static class BiomesData
     public static string[] BeachNames = { "Plastic", "Hideo Kojima's", "Smelly", "Dumb" };
     public static string[][] BiomesNames = { CityNames, SewersNames, ForestNames, MinesNames, MountainsNames, PlainsNames, BeachNames};
 
+    public static string[] InnNames = { "That Crow Tavern", "The Drunk Melody", "The Not Alive Rat", "Cultist Tavern", "The Failed Reich", "Guineff Tavern", "The Galway Gurl",
+        "At Deadpool's Wife's", "The Duss Inn", "The Spoon Shaker", "The Irish Coffee", "The Poisonous Venom", "At DOUG's Gate", "The Misty Skull", "The Illusory Wall",
+        "Robinson's Inn", "The Return Of The Prince", "The Prince Of Dankness", "The Sleep Inn", "The Gag Ball"};
+
     public static Biome GetRandomBiome()
     {
         return GetBiomeFromType((MapType)Random.Range(0, Helper.EnumCount<MapType>()));
