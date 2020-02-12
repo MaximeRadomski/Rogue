@@ -14,3 +14,13 @@ public class Biome
     public bool EncounteredInn;
     public bool EncounteredMerchant;
 }
+
+/*
+ * INN Ideas
+- Harpe - Guiness
+- Talon - Galeway Hooker
+- Faux - Mort
+- Duff - Duss
+- Martini - James Bond (Spoon Shaker)
+- Trefle - Leprechaun
+ */
