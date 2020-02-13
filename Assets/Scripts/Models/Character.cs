@@ -27,6 +27,8 @@ public class Character
     public List<InventoryItem> Inventory;
     public int InventoryPlace;
     public int WeightLimit;
+    public int SleepHoursNeeded;
+    public int SleepRestorationPercent;
 
     public List<string> BodyParts;
 

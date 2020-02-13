@@ -15,7 +15,11 @@ public static class BiomesData
 
     public static string[] InnNames = { "That Crow Tavern", "The Drunk Melody", "The Not Alive Rat", "Cultist Tavern", "The Failed Reich", "Guineff Tavern", "The Galway Gurl",
         "At Deadpool's Wife's", "The Duss Inn", "The Spoon Shaker", "The Irish Coffee", "The Poisonous Venom", "At DOUG's Gate", "The Misty Skull", "The Illusory Wall",
-        "Robinson's Inn", "The Return Of The Prince", "The Prince Of Dankness", "The Sleep Inn", "The Gag Ball"};
+        "Robinson's Inn", "The Return Of The Prince", "The Prince Of Dankness", "The Sleep Inn", "The Gag Ball", "The Magic Wand", "The Spartan", "The Arrow In The Knee",
+        "The Gates Of Hell", "El Famoso Taüf", "The Feathers", "Last Calibur", "The Acid Knife", "The Good Boy", "The Unique Horn"};
+
+    public static int InnSleepBonusPercent = 25;
+    public static int MerchentPriceBonusPercent = 15;
 
     public static Biome GetRandomBiome()
     {
@@ -35,6 +39,8 @@ public static class BiomesData
             Name = BiomesNames[type.GetHashCode()][Random.Range(0, BiomesNames[type.GetHashCode()].Length)] + " " + type,
             MapType = type,
             InnPercent = Random.Range(10, 16),
+            GoodInnPercentage = 15,
+            MediocreInnPercentage = 5,
             MerchantPercent = Random.Range(10, 16),
             Destinations = 2,
             Steps = MaxStepFromMapType(type)

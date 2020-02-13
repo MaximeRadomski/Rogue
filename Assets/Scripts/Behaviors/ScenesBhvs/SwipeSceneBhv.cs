@@ -57,8 +57,8 @@ public class SwipeSceneBhv : SceneBhv
         GameObject.Find("ButtonPause").GetComponent<ButtonBhv>().EndActionDelegate = Pause;
         GameObject.Find("CharacterButton").GetComponent<ButtonBhv>().EndActionDelegate = ShowCharacterStats;
         GameObject.Find("ButtonInventory").GetComponent<ButtonBhv>().EndActionDelegate = ShowInventory;
-        Instantiator.NewRandomCard(1, _journey.Day, _journey.Biome.MapType, _playerCharacter);
-        Instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType, _playerCharacter);
+        Instantiator.NewRandomCard(1, _journey.Day, _journey.Biome, _playerCharacter);
+        Instantiator.NewRandomCard(0, _journey.Day, _journey.Biome, _playerCharacter);
         _currentCard = GameObject.Find("Card1");
         _avoidBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Avoid;
         _ventureBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Venture;
@@ -90,12 +90,12 @@ public class SwipeSceneBhv : SceneBhv
         _ventureBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Venture;
         if (_journey.Step < _journey.Biome.Steps) //Just '<' because it instantiates one in advance
         {
-            Instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType, _playerCharacter);
+            Instantiator.NewRandomCard(0, _journey.Day, _journey.Biome, _playerCharacter);
         }            
         else if (_currentBiomeChoice < _journey.Biome.Destinations)
         {
             ++_currentBiomeChoice;
-            Instantiator.NewCardBiome(0, _journey.Day, _journey.Biome.MapType, _currentBiomeChoice, _journey.Biome.Destinations, _playerCharacter);
+            Instantiator.NewCardBiome(0, _journey.Day, _journey.Biome, _currentBiomeChoice, _journey.Biome.Destinations, _playerCharacter);
         }
         else
         {
@@ -160,13 +160,13 @@ public class SwipeSceneBhv : SceneBhv
         _currentBiomeChoice = 0;
         _journey.Step = 1;
         _journey.Biome = biome;
-        Instantiator.NewRandomCard(1, _journey.Day, _journey.Biome.MapType, _playerCharacter);
+        Instantiator.NewRandomCard(1, _journey.Day, _journey.Biome, _playerCharacter);
         _currentCard = GameObject.Find("Card1");
         Instantiator.PopText(Helper.TimeFromMinutes(minutesPassed), (Vector2)_currentCard.transform.position + new Vector2(0.0f, 1f), TextType.Normal);
         //backCard.GetComponent<CardBhv>().BringToFront();
         _avoidBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Avoid;
         _ventureBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Venture;
-        Instantiator.NewRandomCard(0, _journey.Day, _journey.Biome.MapType, _playerCharacter);
+        Instantiator.NewRandomCard(0, _journey.Day, _journey.Biome, _playerCharacter);
         UpdateDisplayJourneyAndCharacterStats();
     }
 

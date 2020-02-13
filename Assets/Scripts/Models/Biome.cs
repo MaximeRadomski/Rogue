@@ -6,21 +6,16 @@ public class Biome
 {
     public string Name;
     public MapType MapType;
-    public int InnPercent;
-    public int MerchantPercent;
     public int Destinations;
     public int Steps;
 
     public bool EncounteredInn;
-    public bool EncounteredMerchant;
-}
+    public int InnPercent;
+    public int GoodInnPercentage;
+    public int MediocreInnPercentage;
 
-/*
- * INN Ideas
-- Harpe - Guiness
-- Talon - Galeway Hooker
-- Faux - Mort
-- Duff - Duss
-- Martini - James Bond (Spoon Shaker)
-- Trefle - Leprechaun
- */
+    public bool EncounteredMerchant;
+    public int MerchantPercent;
+    public int HonestMerchantPercentage;
+    public int FraudulentMerchantPercentage;
+}

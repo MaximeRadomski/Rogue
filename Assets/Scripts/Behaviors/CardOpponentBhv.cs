@@ -10,7 +10,7 @@ public class CardOpponentBhv : CardBhv
     private float _originalFixBoxY;
     private float _customFixBoxY;
 
-    public override void SetPrivates(int id, int day, MapType mapType, Character character, Instantiator instantiator)
+    public override void SetPrivates(int id, int day, Biome biome, Character character, Instantiator instantiator)
     {
         _minutesNeededVenturePositive = Helper.RandomIntMultipleOf(10, 30, 5);
         _minutesNeededVentureNegative = _minutesNeededVenturePositive * 2;
@@ -19,8 +19,8 @@ public class CardOpponentBhv : CardBhv
         _customFixBoxY = 1.3f;
         _skinContainerBhv = transform.Find("SkinContainer").GetComponent<SkinContainerBhv>();
         _instantiator = instantiator;
-        base.SetPrivates(id, day, mapType, character, instantiator);
-        _cacheSpriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/SwipeCardCache_" + mapType.GetHashCode());
+        base.SetPrivates(id, day, biome, character, instantiator);
+        _cacheSpriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/SwipeCardCache_" + biome.MapType.GetHashCode());
         InitOpponent(day);
         _minutesNeededAvoid = _opponentCharacters.Count * 10 + 20;
         _boxColliders2D = gameObject.GetComponents<BoxCollider2D>();

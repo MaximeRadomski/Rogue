@@ -8,9 +8,9 @@ public class CardBiomeBhv : CardBhv
     private int _choice;
     private int _maxChoice;
 
-    public override void SetPrivates(int id, int day, MapType mapType, Character character, Instantiator instantiator)
+    public override void SetPrivates(int id, int day, Biome biome, Character character, Instantiator instantiator)
     {
-        base.SetPrivates(id, day, mapType, character, instantiator);
+        base.SetPrivates(id, day, biome, character, instantiator);
         _minutesNeededAvoid = 60;
         _minutesNeededVenturePositive = 60;
         _biome = BiomesData.GetRandomBiome();

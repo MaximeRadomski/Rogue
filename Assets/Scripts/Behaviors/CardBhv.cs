@@ -32,7 +32,7 @@ public abstract class CardBhv : InputBhv
     protected int _minutesNeededVentureNegative;
     protected string _namePositiveAction = Constants.CardPositiveAction;
 
-    public virtual void SetPrivates(int id, int day, MapType mapType, Character character, Instantiator instantiator)
+    public virtual void SetPrivates(int id, int day, Biome biome, Character character, Instantiator instantiator)
     {
         SetPrivates();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();

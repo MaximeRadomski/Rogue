@@ -131,7 +131,9 @@ public static class RacesData
                                                   WeaponsData.GetWeaponFromType(WeaponType.GreatSword),
                                                   SkillsData.GetSkillFromName(SkillsData.RareSkillsNames[0]) },
             InventoryPlace = 4,
-            WeightLimit = 40
+            WeightLimit = 40,
+            SleepHoursNeeded = 8,
+            SleepRestorationPercent = 50
         };
     }
 
@@ -162,7 +164,9 @@ public static class RacesData
                                                   SkillsData.GetSkillFromName(SkillsData.HumanSkillsNames[0]),
                                                   SkillsData.GetSkillFromName(SkillsData.MagicalSkillsNames[Random.Range(0, SkillsData.MagicalSkillsNames.Length)])},
             InventoryPlace = 6,
-            WeightLimit = 20
+            WeightLimit = 20,
+            SleepHoursNeeded = 2,
+            SleepRestorationPercent = 25
         };
     }
 
@@ -188,7 +192,9 @@ public static class RacesData
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
             Inventory = new List<InventoryItem> { ConsumablesData.GetRandomConsumable() },
             InventoryPlace = 2,
-            WeightLimit = 20
+            WeightLimit = 20,
+            SleepHoursNeeded = 10,
+            SleepRestorationPercent = 25
         };
     }
 
@@ -215,7 +221,9 @@ public static class RacesData
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
             Inventory = new List<InventoryItem> { ConsumablesData.GetRandomConsumable() },
             InventoryPlace = 3,
-            WeightLimit = 60
+            WeightLimit = 60,
+            SleepHoursNeeded = 7,
+            SleepRestorationPercent = 75
         };
     }
 
@@ -242,7 +250,9 @@ public static class RacesData
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
             Inventory = new List<InventoryItem> { ConsumablesData.GetRandomConsumable() },
             InventoryPlace = 3,
-            WeightLimit = 80
+            WeightLimit = 80,
+            SleepHoursNeeded = 12,
+            SleepRestorationPercent = 100
         };
     }
 
