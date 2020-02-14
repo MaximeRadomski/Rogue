@@ -11,6 +11,7 @@ public class CardInnBhv : CardBhv
     public override void SetPrivates(int id, int day, Biome biome, Character character, Instantiator instantiator)
     {
         base.SetPrivates(id, day, biome, character, instantiator);
+        _cacheSpriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/SwipeCardCache_" + biome.MapType.GetHashCode());
         _innId = Random.Range(0, BiomesData.InnNames.Length);
         _alignmentInn = AlignmentInn.Classic;
         if (Random.Range(0, 100) < biome.MediocreInnPercentage)
@@ -19,6 +20,7 @@ public class CardInnBhv : CardBhv
             _alignmentInn = AlignmentInn.Good;
         _minutesNeededAvoid = 60;
         _minutesNeededVenturePositive = (character.SleepHoursNeeded * 60) + (character.SleepHoursNeeded * BiomesData.InnSleepBonusPercent * _alignmentInn.GetHashCode());
+        DisplayStats();
     }
 
 

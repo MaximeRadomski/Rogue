@@ -108,6 +108,17 @@ public class Instantiator : MonoBehaviour
 
     public void NewRandomCard(int id, int day, Biome biome, Character character)
     {
+        if (!biome.EncounteredInn)
+        {
+            var inn = Random.Range(0, 100);
+            if (inn < biome.InnPercent)
+            {
+                biome.EncounteredInn = true;
+                NewCardInn(id, day, biome, character);
+                return;
+            }
+        }
+
         var rand = Random.Range(0, 2);
         if (rand == 0)
             NewCardJourneyEvent(id, day, biome, character);
@@ -128,6 +139,13 @@ public class Instantiator : MonoBehaviour
         var tmpCardInstance = Instantiate(tmpCardObject, tmpCardObject.transform.position, tmpCardObject.transform.rotation);
         tmpCardInstance.GetComponent<CardJourneyEventBhv>().SetPrivates(id, day, biome, character, this);
 
+    }
+
+    public void NewCardInn(int id, int day, Biome biome, Character character)
+    {
+        var tmpCardObject = Resources.Load<GameObject>("Prefabs/CardInn");
+        var tmpCardInstance = Instantiate(tmpCardObject, tmpCardObject.transform.position, tmpCardObject.transform.rotation);
+        tmpCardInstance.GetComponent<CardInnBhv>().SetPrivates(id, day, biome, character, this);
     }
 
     public void NewCardBiome(int id, int day, Biome biome, int choice, int maxChoice, Character character)
