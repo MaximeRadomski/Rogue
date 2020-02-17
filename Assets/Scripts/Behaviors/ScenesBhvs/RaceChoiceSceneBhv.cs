@@ -212,6 +212,11 @@ public class RaceChoiceSceneBhv : SceneBhv
 
     public void GoToSwipeScene()
     {
+        _instantiator.NewOverBlend(OverBlendType.StartActionEnd, "YOUR JOURNEY BEGINS", 5.0f, OnToSwipeScene);
+    }
+
+    public object OnToSwipeScene(bool result)
+    {
         var tmpRace = "Human";
         _playerCharacter = RacesData.GetCharacterFromRaceAndLevel(_race, 1, true);
         if (_playerCharacter.Gender != CharacterGender.Transgender)
@@ -234,5 +239,6 @@ public class RaceChoiceSceneBhv : SceneBhv
         PlayerPrefsHelper.SaveJourney(journey);
         PlayerPrefsHelper.SaveCharacter(Constants.PpPlayer, _playerCharacter);
         NavigationService.LoadNextScene(Constants.SwipeScene);
+        return result;
     }
 }

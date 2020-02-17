@@ -31,7 +31,7 @@ public static class NavigationService
         var lastSeparator = _path.LastIndexOf('/');
         if (string.IsNullOrEmpty(_path) || lastSeparator == 0)
         {
-            if (onRootPreviousScene != null)
+            if (!string.IsNullOrEmpty(onRootPreviousScene))
                 NewRootScene(onRootPreviousScene);
             else
                 Debug.Log("    [DEBUG]    Root");

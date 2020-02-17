@@ -20,7 +20,7 @@ public class CardInnBhv : CardBhv
         else if (Random.Range(0, 100) < biome.GoodInnPercentage)
             _alignmentInn = AlignmentInn.Good;
         _minutesNeededAvoid = 60;
-        _minutesNeededVenturePositive = (character.SleepHoursNeeded * 60) + (character.SleepHoursNeeded * BiomesData.InnSleepBonusPercent * _alignmentInn.GetHashCode());
+        _minutesNeededVenturePositive = (character.SleepHoursNeeded * 60) + (int)(character.SleepHoursNeeded * 60 * Helper.MultiplierFromPercent(0.0f, BiomesData.InnSleepBonusPercent) * _alignmentInn.GetHashCode());
         _hpRecovered = (int)(_character.Hp * Helper.MultiplierFromPercent(1, _character.SleepRestorationPercent));
         DisplayStats();
     }
@@ -46,11 +46,17 @@ public class CardInnBhv : CardBhv
     {
         _state = CardState.Off;
         _instantiator.NewPopupYesNo("Inn",
-            MakeContent(_alignmentInn + " Inn: ", "Sleep Time " + (_alignmentInn != AlignmentInn.Mediocre ? "+" : "") + (_alignmentInn.GetHashCode() * BiomesData.InnSleepBonusPercent) + "%")
-            + MakeContent("Sleep Time: ", Helper.TimeFromMinutes(_character.SleepHoursNeeded * 60))
+            MakeContent(_alignmentInn + " Inn: ", "Sleep Time " + (_alignmentInn != AlignmentInn.Good ? "+" : "") + (_alignmentInn.GetHashCode() * BiomesData.InnSleepBonusPercent) + "%")
+            + MakeContent("Race Sleep Time: ", Helper.TimeFromMinutes(_character.SleepHoursNeeded * 60))
             + MakeContent("Race HP Restoration: ", "+" + _character.SleepRestorationPercent + "%")
             + MakeContent("", "You recover <material=\"LongRed\">" + _hpRecovered + " HP</material>."),
-            string.Empty, "Zzz", AfterSleep);
+            string.Empty, "Zzz", AfterVenture);
+    }
+
+    private object AfterVenture(bool result)
+    {
+        _instantiator.NewOverBlend(OverBlendType.StartEndAction, "SLEEPING LIKE A COFFIN", 1.0f, AfterSleep);
+        return result;
     }
 
     private object AfterSleep(bool result)

@@ -99,6 +99,7 @@ public static class Constants
     };
 
     // CACHE SAVES
+    public static bool InputLocked = false;
     public static int InputLayer = 0;
     public static string LastEndActionClickedName = null;
     public static List<string> InputTopLayerNames = null;

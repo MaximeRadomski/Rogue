@@ -9,14 +9,14 @@ namespace Assets.Scripts.Models
     public enum AlignmentInn
     {
         Classic = 0,
-        Good = 1,
-        Mediocre = -1
+        Good = -1,
+        Mediocre = 1
     }
 
     public enum AlignmentMerchant
     {
         Normal = 0,
-        Honest = 1,
-        Fraudulent = -1
+        Honest = -1,
+        Fraudulent = 1
     }
 }

@@ -73,6 +73,15 @@ public class Instantiator : MonoBehaviour
         tmpPopupInstance.GetComponent<PopupSwitchBhv>().SetPrivates(item, itemId, character, resultAction);
     }
 
+    public void NewOverBlend(OverBlendType overBlendType, string message, float? constantLoadingSpeed,
+        System.Func<bool, object> resultAction, bool reverse = false)
+    {
+        var tmpOverBlendObject = Resources.Load<GameObject>("Prefabs/OverBlend");
+        var tmpOverBlendInstance = Instantiate(tmpOverBlendObject, tmpOverBlendObject.transform.position, tmpOverBlendObject.transform.rotation);
+        Constants.InputLocked = true;
+        tmpOverBlendInstance.GetComponent<OverBlendBhv>().SetPrivates(overBlendType, message, constantLoadingSpeed, resultAction, reverse);
+    }
+
     public void NewSnack(string content, float duration = 2.0f)
     {
         var tmpSnackObject = Resources.Load<GameObject>("Prefabs/Snack");

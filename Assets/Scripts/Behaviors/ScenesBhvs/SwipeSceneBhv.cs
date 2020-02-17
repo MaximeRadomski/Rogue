@@ -212,14 +212,20 @@ public class SwipeSceneBhv : SceneBhv
     {
         Instantiator.NewPopupYesNo(Constants.YesNoTitle,
             "You wont be able to recover your progress if you give up now!"
-            , Constants.Cancel, Constants.Proceed, OnGiveUp);
+            , Constants.Cancel, Constants.Proceed, OnAcceptGiveUp);
     }
 
-    private object OnGiveUp(bool result)
+    private object OnAcceptGiveUp(bool result)
     {
         if (result)
         {
-            NavigationService.LoadPreviousScene(OnRootPreviousScene);
+            Camera.main.gameObject.GetComponent<CameraBhv>().Unfocus();
+            Instantiator.NewOverBlend(OverBlendType.StartActionEnd, "YOU COULDN'T MAKE IT", 100.0f, TransitionGiveUp, reverse: true);
+            object TransitionGiveUp(bool transResult)
+            {
+                NavigationService.LoadPreviousScene(OnRootPreviousScene);
+                return transResult;
+            }
         }
         return result;
     }

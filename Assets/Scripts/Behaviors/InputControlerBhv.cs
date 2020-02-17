@@ -18,6 +18,8 @@ public class InputControlerBhv : MonoBehaviour
 
     void Update()
     {
+        if (Constants.InputLocked)
+            return;
         // IF BACK BUTTON //
         if (Input.GetKeyDown(KeyCode.Escape))
         {

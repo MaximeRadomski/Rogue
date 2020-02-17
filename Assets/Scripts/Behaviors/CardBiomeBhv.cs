@@ -40,8 +40,15 @@ public class CardBiomeBhv : CardBhv
         base.Venture();
         if (Helper.FloatEqualsPrecision(transform.position.x, _likePosition.x, 0.1f))
         {
-            gameObject.name = "CardOld";
-            _swipeSceneBhv.NewBiome(_biome, _minutesNeededVenturePositive);
+            _state = CardState.Off;
+            _instantiator.NewOverBlend(OverBlendType.StartActionEnd, _biome.Name.ToUpper(), 2.0f, VentureBiome);
         }            
+    }
+
+    private object VentureBiome(bool result)
+    {
+        gameObject.name = "CardOld";
+        _swipeSceneBhv.NewBiome(_biome, _minutesNeededVenturePositive);
+        return result;
     }
 }
