@@ -7,6 +7,7 @@ public class CardInnBhv : CardBhv
 {
     private AlignmentInn _alignmentInn;
     private int _innId;
+    private int _hpRecovered;
 
     public override void SetPrivates(int id, int day, Biome biome, Character character, Instantiator instantiator)
     {
@@ -20,6 +21,7 @@ public class CardInnBhv : CardBhv
             _alignmentInn = AlignmentInn.Good;
         _minutesNeededAvoid = 60;
         _minutesNeededVenturePositive = (character.SleepHoursNeeded * 60) + (character.SleepHoursNeeded * BiomesData.InnSleepBonusPercent * _alignmentInn.GetHashCode());
+        _hpRecovered = (int)(_character.Hp * Helper.MultiplierFromPercent(1, _character.SleepRestorationPercent));
         DisplayStats();
     }
 
@@ -44,15 +46,16 @@ public class CardInnBhv : CardBhv
     {
         _state = CardState.Off;
         _instantiator.NewPopupYesNo("Inn",
-            MakeContent(_alignmentInn + ": ", "Sleep Time " + (_alignmentInn != AlignmentInn.Mediocre ? "+" : "") + (_alignmentInn.GetHashCode() * BiomesData.InnSleepBonusPercent) + "%")
+            MakeContent(_alignmentInn + " Inn: ", "Sleep Time " + (_alignmentInn != AlignmentInn.Mediocre ? "+" : "") + (_alignmentInn.GetHashCode() * BiomesData.InnSleepBonusPercent) + "%")
             + MakeContent("Sleep Time: ", Helper.TimeFromMinutes(_character.SleepHoursNeeded * 60))
-            + MakeContent("Race HP Restoration: ", "+" + _character.SleepRestorationPercent + "%"),
+            + MakeContent("Race HP Restoration: ", "+" + _character.SleepRestorationPercent + "%")
+            + MakeContent("", "You recover <material=\"LongRed\">" + _hpRecovered + " HP</material>."),
             string.Empty, "Zzz", AfterSleep);
     }
 
     private object AfterSleep(bool result)
     {
-        _character.GainHp((int)(_character.Hp * Helper.MultiplierFromPercent(1, _character.SleepRestorationPercent)));
+        _character.GainHp(_hpRecovered);
         _swipeSceneBhv.NewCard(_minutesNeededVenturePositive);
         return result;
     }
