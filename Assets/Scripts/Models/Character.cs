@@ -35,6 +35,23 @@ public class Character
     public int RaceWeaponDamagePercent; //To Add
     public int NotRaceWeaponDamagePercent; //To Substract
 
+    private Instantiator _instantiator;
+    private OrbBhv _orbHp;
+    private TMPro.TextMeshPro _level;
+    private TMPro.TextMeshPro _xp;
+    private TMPro.TextMeshPro _gold;
+    private Vector2 _ressourcePopPosition;
+
+    private void GetPrivates()
+    {
+        _instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator;
+        _orbHp = GameObject.Find("Hp").GetComponent<OrbBhv>();
+        _level = GameObject.Find("LevelText").GetComponent<TMPro.TextMeshPro>();
+        _xp = GameObject.Find("Xp").GetComponent<TMPro.TextMeshPro>();
+        _gold = GameObject.Find("Gold").GetComponent<TMPro.TextMeshPro>();
+        _ressourcePopPosition = new Vector2(0.0f, -3.5f);
+    }
+
     public int GetCurrentInventoryWeight()
     {
         int weight = 0;
@@ -82,6 +99,8 @@ public class Character
                 damages = skill.OnTakeDamage(damages);
         }
         Hp -= damages;
+        if (_orbHp == null) GetPrivates();
+        _orbHp?.UpdateContent(Hp, HpMax, _instantiator, -damages);
         return damages;
     }
 
@@ -91,6 +110,29 @@ public class Character
         if (Hp + amountToAdd > HpMax)
             amountToAdd = HpMax - Hp;
         Hp += amountToAdd;
+        if (_orbHp == null) GetPrivates();
+        _orbHp?.UpdateContent(Hp, HpMax, _instantiator, amountToAdd);
+        return amountToAdd;
+    }
+
+    public int LooseGold(int amount)
+    {
+        if (Gold - amount < 0)
+            amount = Gold;
+        Gold -= amount;
+        if (_instantiator == null) GetPrivates();
+        _instantiator.PopText("-" + amount + " " + Constants.UnitGold, _ressourcePopPosition, TextType.Gold, TextThickness.Long);
+        return amount;
+    }
+
+    public int GainGold(int amount)
+    {
+        int amountToAdd = amount;
+        if (Gold + amountToAdd > Constants.MaxGold)
+            amountToAdd = Constants.MaxGold - Gold;
+        Gold += amountToAdd;
+        if (_instantiator == null) GetPrivates();
+        _instantiator.PopText("+" + amountToAdd + " " + Constants.UnitGold, _ressourcePopPosition, TextType.Gold, TextThickness.Long);
         return amountToAdd;
     }
 
@@ -103,6 +145,7 @@ public class Character
     public int GainXp(int amount)
     {
         int amountToAdd = amount;
+        _instantiator.PopText("+" + amountToAdd + " " + Constants.UnitXp, _ressourcePopPosition, TextType.Xp, TextThickness.Long);
         var needed = Helper.XpNeedForLevel(Level);
         if (Experience + amountToAdd >= needed)
         {
@@ -122,6 +165,7 @@ public class Character
                     amountToAdd = 0;
                 }
             }
+            _instantiator.PopText("LEVEL " + Level, _ressourcePopPosition, TextType.Magical);
         }
         else
         {
@@ -163,8 +207,8 @@ public class Character
         }
         if (discardedItems.Count > 0)
         {
-            var instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator;
-            LoopDiscarded(instantiator, discardedItems, 0, afterInventoryWork);
+            if (_instantiator == null) GetPrivates();
+            LoopDiscarded(_instantiator, discardedItems, 0, afterInventoryWork);
         }
         else
         {

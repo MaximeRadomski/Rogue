@@ -35,7 +35,7 @@ public static class Helper
 
     public static int RandomIntMultipleOf(int min, int max, int multiple)
     {
-        var unRoundedMinutes = UnityEngine.Random.Range(min, max + 1);
+        var unRoundedMinutes = UnityEngine.Random.Range(min, max + multiple);
         return unRoundedMinutes - unRoundedMinutes % multiple;
     }
 
@@ -255,6 +255,10 @@ public static class Helper
                 return thickness + "Blue";
             case TextType.Pm:
                 return thickness + "Green";
+            case TextType.Gold:
+                return thickness + "Gold";
+            case TextType.Xp:
+                return thickness + "Orange";
         }
         return thickness + "White";
     }

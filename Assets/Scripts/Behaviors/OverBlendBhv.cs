@@ -11,10 +11,11 @@ public class OverBlendBhv : MonoBehaviour
     private Vector3 _sourcePosition;
     private Vector3 _endPosition;
     private Vector3 _activePosition;
-    private int _state; // 0:Source | 1:Active | 2: EndActive | 3:End
+    private int _state; // 0:Start | 1:LoadingStart | 2: LoadingEnd | 3:End
     private float? _constantLoadingSpeed;
     private float _loadPercent;
     private float _halfSpriteSize;
+    private bool _midActionDone;
 
     public void SetPrivates(OverBlendType overBlendType, string message, float? constantLoadingSpeed, System.Func<bool, object> resultAction, bool reverse)
     {
@@ -37,6 +38,7 @@ public class OverBlendBhv : MonoBehaviour
         AddLoadingPercent(0.0f);
         _message = transform.Find("Message").GetComponent<TMPro.TextMeshPro>();
         _message.text = message;
+        _midActionDone = false;
         transform.position = _sourcePosition;
     }
 
@@ -52,6 +54,8 @@ public class OverBlendBhv : MonoBehaviour
                 transform.position = _activePosition;
                 _spriteRenderer.color = Constants.ColorPlain;
                 _state = 1;
+                if (_overBlendType == OverBlendType.StartActionLoadingEnd)
+                    _resultAction?.Invoke(true);
             }
         }
         else if (_state == 1)
@@ -72,7 +76,7 @@ public class OverBlendBhv : MonoBehaviour
         }
         else if (_state == 3)
         {
-            if (_overBlendType == OverBlendType.StartEndAction)
+            if (_overBlendType == OverBlendType.StartLoadingEndAction)
                 _resultAction?.Invoke(true);
             ExitOverBlend();
         }
@@ -85,12 +89,17 @@ public class OverBlendBhv : MonoBehaviour
         _loading.transform.position = new Vector3((_loading.transform.localScale.x * _halfSpriteSize) - _halfSpriteSize, _loading.transform.position.y, 0.0f);
         if (percentToAdd > 0.0f && (int)_loadPercent >= 100)
             EndPercent();
+        else if (_overBlendType == OverBlendType.StartLoadMidActionEnd && !_midActionDone && _loadPercent >= 50.0f)
+        {
+            _midActionDone = true;
+            _resultAction?.Invoke(true);
+        }
     }
 
     public void EndPercent()
     {
         _state = 2;
-        if (_overBlendType == OverBlendType.StartActionEnd)
+        if (_overBlendType == OverBlendType.StartLoadingActionEnd)
             _resultAction?.Invoke(true);
     }
 

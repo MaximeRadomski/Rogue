@@ -212,7 +212,7 @@ public class RaceChoiceSceneBhv : SceneBhv
 
     public void GoToSwipeScene()
     {
-        _instantiator.NewOverBlend(OverBlendType.StartActionEnd, "YOUR JOURNEY BEGINS", 5.0f, OnToSwipeScene);
+        _instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "YOUR JOURNEY BEGINS", 2.0f, OnToSwipeScene);
     }
 
     public object OnToSwipeScene(bool result)

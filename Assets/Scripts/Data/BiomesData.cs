@@ -39,8 +39,8 @@ public static class BiomesData
             Name = BiomesNames[type.GetHashCode()][Random.Range(0, BiomesNames[type.GetHashCode()].Length)] + " " + type,
             MapType = type,
             InnPercent = Random.Range(10, 16),
-            GoodInnPercentage = 15,
-            MediocreInnPercentage = 5,
+            GoodInnPercentage = 20,
+            MediocreInnPercentage = 20,
             MerchantPercent = Random.Range(10, 16),
             Destinations = 2,
             Steps = MaxStepFromMapType(type)

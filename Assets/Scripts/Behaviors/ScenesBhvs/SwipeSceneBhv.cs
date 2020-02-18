@@ -128,10 +128,10 @@ public class SwipeSceneBhv : SceneBhv
 
     private void UpdateDisplayJourneyAndCharacterStats()
     {
-        _orbLife.UpdateContent(_playerCharacter.Hp, _playerCharacter.HpMax);
+        _orbLife.UpdateContent(_playerCharacter.Hp, _playerCharacter.HpMax, Instantiator);
         _level.text = _playerCharacter.Level.ToString();
-        _xp.text = _playerCharacter.Experience.ToString() + "/" + Helper.XpNeedForLevel(_playerCharacter.Level) + " ®";
-        _gold.text = _playerCharacter.Gold.ToString() + " ©";
+        _xp.text = _playerCharacter.Experience.ToString() + "/" + Helper.XpNeedForLevel(_playerCharacter.Level) + " " + Constants.UnitXp;
+        _gold.text = _playerCharacter.Gold.ToString() + " " + Constants.UnitGold;
         _matchPercentage.text = _currentCard.GetComponent<CardBhv>().PositiveOutcomePercent + "%";
         float englishHour = _journey.Hour > 12 ? _journey.Hour - 12 : _journey.Hour;
         if (_journey.Hour == 24 || _journey.Hour == 12) englishHour = 0;
@@ -220,7 +220,7 @@ public class SwipeSceneBhv : SceneBhv
         if (result)
         {
             Camera.main.gameObject.GetComponent<CameraBhv>().Unfocus();
-            Instantiator.NewOverBlend(OverBlendType.StartActionEnd, "YOU COULDN'T MAKE IT", 100.0f, TransitionGiveUp, reverse: true);
+            Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "GAME OVER", 10.0f, TransitionGiveUp, reverse: true);
             object TransitionGiveUp(bool transResult)
             {
                 NavigationService.LoadPreviousScene(OnRootPreviousScene);
@@ -236,7 +236,18 @@ public class SwipeSceneBhv : SceneBhv
     }
     private void Exit()
     {
-        NavigationService.LoadPreviousScene(OnRootPreviousScene);
+        Instantiator.NewPopupYesNo(Constants.YesNoTitle,
+            "You wont be able to recover your progress if you give up now!"
+            , Constants.Cancel, Constants.Proceed, OnAcceptExit);
+    }
+
+    private object OnAcceptExit(bool result)
+    {
+        if (result)
+        {
+            Application.Quit();
+        }
+        return result;
     }
 
     #endregion

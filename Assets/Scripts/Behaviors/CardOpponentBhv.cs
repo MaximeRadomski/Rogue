@@ -82,7 +82,7 @@ public class CardOpponentBhv : CardBhv
         transform.Find("OpponentSkill1Rarity").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsRarity_" + _opponentCharacters[id].Skills[0].Rarity.GetHashCode());
         transform.Find("OpponentSkill2Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsSkill_" + _opponentCharacters[id].Skills[1].IconId);
         transform.Find("OpponentSkill2Rarity").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsRarity_" + _opponentCharacters[id].Skills[1].Rarity.GetHashCode());
-        transform.Find("OpponentGold").GetComponent<TMPro.TextMeshPro>().text = _opponentCharacters[id].Gold + " ©";
+        transform.Find("OpponentGold").GetComponent<TMPro.TextMeshPro>().text = _opponentCharacters[id].Gold + " " + Constants.UnitGold;
 
         if (_opponentsBox == null)
             _opponentsBox = new List<BoxCollider2D>();

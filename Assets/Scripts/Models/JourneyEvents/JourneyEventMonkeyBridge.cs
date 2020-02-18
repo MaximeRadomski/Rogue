@@ -27,7 +27,7 @@ public class JourneyEventMonkeyBridge : JourneyEvent
     public override void PositiveOutcome()
     {
         _instantiator.NewPopupYesNo("Succes!",
-            "You made it to the other side of the bridge. You gain confidence, and some experience!\nYou gain <material=\"LongOrange\">" + _xpGained + " ®</material>",
+            "You made it to the other side of the bridge. You gain confidence, and some experience!\nYou gain <material=\"LongOrange\">" + _xpGained + " " + Constants.UnitXp + "</material>",
             string.Empty, "Ok", OnPositiveOutcome);
     }
 

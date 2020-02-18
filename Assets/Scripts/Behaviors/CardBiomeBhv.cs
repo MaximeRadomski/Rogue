@@ -41,7 +41,7 @@ public class CardBiomeBhv : CardBhv
         if (Helper.FloatEqualsPrecision(transform.position.x, _likePosition.x, 0.1f))
         {
             _state = CardState.Off;
-            _instantiator.NewOverBlend(OverBlendType.StartActionEnd, _biome.Name.ToUpper(), 2.0f, VentureBiome);
+            _instantiator.NewOverBlend(OverBlendType.StartLoadingActionEnd, _biome.Name.ToUpper(), 1.0f, VentureBiome);
         }            
     }
 

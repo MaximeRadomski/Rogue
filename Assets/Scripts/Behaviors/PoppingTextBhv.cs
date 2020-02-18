@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PoppingTextBhv : MonoBehaviour
 {
+    public TMPro.TMP_FontAsset[] Fonts;
+
     private TMPro.TextMeshPro _text;
     private string _material;
     private bool _isMoving;
@@ -17,6 +19,7 @@ public class PoppingTextBhv : MonoBehaviour
         transform.position = new Vector2(startingPosition.x, startingPosition.y + 0.6f);
         _positionToReach = new Vector2(startingPosition.x, startingPosition.y + 1.1f);
         _text = GetComponent<TMPro.TextMeshPro>();
+        _text.font = thickness == TextThickness.Thick ? Fonts[0] : Fonts[1];
         _material = Helper.MaterialFromTextType(type.GetHashCode(), thickness);
         _text.text = "<material=\"" + _material + "\">" + text + "</material>";
         _colorToFade = new Color(_text.color.r, _text.color.g, _text.color.b, 0.0f);

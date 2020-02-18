@@ -1,5 +1,7 @@
 ﻿public enum OverBlendType
 {
-    StartEndAction = 0,
-    StartActionEnd = 1
+    StartLoadingEndAction = 0,
+    StartLoadingActionEnd = 1,
+    StartActionLoadingEnd = 2,
+    StartLoadMidActionEnd = 3
 }

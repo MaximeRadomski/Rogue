@@ -10,7 +10,9 @@ public enum TextType
     Legendary = 3,
     Hp = 4,
     Pa = 5,
-    Pm = 6
+    Pm = 6,
+    Gold = 7,
+    Xp = 8
 }
 
 public enum TextThickness
