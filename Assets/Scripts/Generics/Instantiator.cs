@@ -102,17 +102,16 @@ public class Instantiator : MonoBehaviour
     {
         var tmpPoppingTextObject = Resources.Load<GameObject>("Prefabs/PoppingText");
 
-        //var tmpTexts = GameObject.FindGameObjectsWithTag(Constants.TagPoppingText);
-        //var nbTextsOnThisPosition = 0;
-        //foreach (var tmpText in tmpTexts)
-        //{
-        //    if (Helper.FloatEqualsPrecision(tmpText.transform.position.x, position.x, 0.1f) &&
-        //        Helper.FloatEqualsPrecision(tmpText.transform.position.y, position.y, 1f))
-        //        ++nbTextsOnThisPosition;
-        //}
+        var tmpTexts = GameObject.FindGameObjectsWithTag(Constants.TagPoppingText);
+        var nbTextsOnThisPosition = 0;
+        foreach (var tmpText in tmpTexts)
+        {
+            if (tmpText.GetComponent<PoppingTextBhv>().StartingPosition == position)
+                ++nbTextsOnThisPosition;
+        }
 
         var tmpPoppingTextInstance = Instantiate(tmpPoppingTextObject, position, tmpPoppingTextObject.transform.rotation);
-        tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().SetPrivates(text, position/* + new Vector2(0.0f, -0.2f * nbTextsOnThisPosition)*/, type, thickness);
+        tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().SetPrivates(text, position + new Vector2(0.0f, -0.3f * nbTextsOnThisPosition), type, thickness);
     }
 
     public void NewRandomCard(int id, int day, Biome biome, Character character)

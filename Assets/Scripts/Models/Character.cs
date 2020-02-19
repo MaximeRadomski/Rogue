@@ -49,7 +49,7 @@ public class Character
         _level = GameObject.Find("LevelText").GetComponent<TMPro.TextMeshPro>();
         _xp = GameObject.Find("Xp").GetComponent<TMPro.TextMeshPro>();
         _gold = GameObject.Find("Gold").GetComponent<TMPro.TextMeshPro>();
-        _ressourcePopPosition = new Vector2(0.0f, -3.5f);
+        _ressourcePopPosition = new Vector2(0.0f, -2.6f);
     }
 
     public int GetCurrentInventoryWeight()
@@ -122,6 +122,7 @@ public class Character
         Gold -= amount;
         if (_instantiator == null) GetPrivates();
         _instantiator.PopText("-" + amount + " " + Constants.UnitGold, _ressourcePopPosition, TextType.Gold, TextThickness.Long);
+        if (_gold != null) _gold.text = Gold.ToString() + " " + Constants.UnitGold;
         return amount;
     }
 
@@ -133,6 +134,7 @@ public class Character
         Gold += amountToAdd;
         if (_instantiator == null) GetPrivates();
         _instantiator.PopText("+" + amountToAdd + " " + Constants.UnitGold, _ressourcePopPosition, TextType.Gold, TextThickness.Long);
+        if (_gold != null) _gold.text = Gold.ToString() + " " + Constants.UnitGold;
         return amountToAdd;
     }
 
@@ -145,7 +147,9 @@ public class Character
     public int GainXp(int amount)
     {
         int amountToAdd = amount;
+        if (_instantiator == null) GetPrivates();
         _instantiator.PopText("+" + amountToAdd + " " + Constants.UnitXp, _ressourcePopPosition, TextType.Xp, TextThickness.Long);
+        if (_xp != null) _xp.text = Experience.ToString() + "/" + Helper.XpNeedForLevel(Level) + " " + Constants.UnitXp;
         var needed = Helper.XpNeedForLevel(Level);
         if (Experience + amountToAdd >= needed)
         {
@@ -165,7 +169,9 @@ public class Character
                     amountToAdd = 0;
                 }
             }
+            if (_instantiator == null) GetPrivates();
             _instantiator.PopText("LEVEL " + Level, _ressourcePopPosition, TextType.Magical);
+            if (_level != null) _level.text = Level.ToString();
         }
         else
         {

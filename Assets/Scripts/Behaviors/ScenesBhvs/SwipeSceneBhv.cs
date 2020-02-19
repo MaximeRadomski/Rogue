@@ -85,7 +85,7 @@ public class SwipeSceneBhv : SceneBhv
         Destroy(GameObject.Find("Card1"));
         _currentCard = GameObject.Find("Card0");
         _currentCard.GetComponent<CardBhv>().BringToFront();
-        Instantiator.PopText(Helper.TimeFromMinutes(minutesPassed), (Vector2)_currentCard.transform.position + new Vector2(0.0f, 1f), TextType.Normal);
+        Instantiator.PopText(Helper.TimeFromMinutes(minutesPassed), (Vector2)_currentCard.transform.position + new Vector2(0.0f, 1.6f), TextType.Normal);
         _avoidBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Avoid;
         _ventureBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Venture;
         if (_journey.Step < _journey.Biome.Steps) //Just '<' because it instantiates one in advance
@@ -162,7 +162,7 @@ public class SwipeSceneBhv : SceneBhv
         _journey.Biome = biome;
         Instantiator.NewRandomCard(1, _journey.Day, _journey.Biome, _playerCharacter);
         _currentCard = GameObject.Find("Card1");
-        Instantiator.PopText(Helper.TimeFromMinutes(minutesPassed), (Vector2)_currentCard.transform.position + new Vector2(0.0f, 1f), TextType.Normal);
+        Instantiator.PopText(Helper.TimeFromMinutes(minutesPassed), (Vector2)_currentCard.transform.position + new Vector2(0.0f, 1.6f), TextType.Normal);
         //backCard.GetComponent<CardBhv>().BringToFront();
         _avoidBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Avoid;
         _ventureBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Venture;

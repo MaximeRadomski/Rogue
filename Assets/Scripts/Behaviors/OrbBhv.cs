@@ -29,7 +29,7 @@ public class OrbBhv : MonoBehaviour
     {
         if (amount != null && amount != 0)
         {
-            instantiator.PopText((amount >= 0 ? "+" : "") + amount, transform.position, TextType.Hp);
+            instantiator.PopText((amount >= 0 ? "+" : "") + amount, transform.position + new Vector3(0.0f, 0.5f, 0.0f), TextType.Hp);
         }
         _textMesh.text = current.ToString();
         float ratio = (float)current / max;

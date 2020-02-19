@@ -148,7 +148,6 @@ public class PopupInventoryBhv : StatsDisplayerBhv
     {
         if (_forceDiscardAction != null)
         {
-            _forceDiscardAction(false);
             ExitPopup();
         }
         else
@@ -188,6 +187,7 @@ public class PopupInventoryBhv : StatsDisplayerBhv
     private void OnForceDiscardAction()
     {
         _forceDiscardAction(true);
+        _forceDiscardAction = null;
         ExitPopup();
     }
 

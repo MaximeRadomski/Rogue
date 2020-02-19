@@ -41,7 +41,7 @@
 
     private object OnNegativeOutcome(bool result)
     {
-        _swipeSceneBhv.NewCard(MinutesNeededVentureNegative, false);
+        _swipeSceneBhv.NewCard(MinutesNeededVentureNegative);
         return result;
     }
 }

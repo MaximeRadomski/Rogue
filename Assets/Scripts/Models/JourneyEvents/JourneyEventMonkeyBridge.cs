@@ -41,7 +41,7 @@ public class JourneyEventMonkeyBridge : JourneyEvent
     public override void NegativeOutcome()
     {
         _instantiator.NewPopupYesNo("Fail...",
-            "The bridge breaks! You however manage to climb up by hanging on to it's remaining half. But you lose <material=\"LongRed\">" + _hpLost + " HP</material> in the process...",
+            "The bridge breaks! You however manage to climb up by hanging on to its remaining half. But you lose <material=\"LongRed\">" + _hpLost + " HP</material> in the process...",
             string.Empty, "Damn", OnNegativeOutcome);
     }
 

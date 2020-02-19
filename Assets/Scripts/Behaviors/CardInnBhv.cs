@@ -23,7 +23,7 @@ public class CardInnBhv : CardBhv
             _alignmentInn = AlignmentInn.Good;
         _minutesNeededAvoid = 60;
         _minutesNeededVenturePositive = (character.SleepHoursNeeded * 60) + (int)(character.SleepHoursNeeded * 60 * Helper.MultiplierFromPercent(0.0f, BiomesData.InnSleepBonusPercent) * _alignmentInn.GetHashCode());
-        _hpRecovered = (int)(_character.Hp * Helper.MultiplierFromPercent(1, _character.SleepRestorationPercent));
+        _hpRecovered = (int)(_character.HpMax * Helper.MultiplierFromPercent(0, _character.SleepRestorationPercent));
         DisplayStats();
     }
 
@@ -77,7 +77,7 @@ public class CardInnBhv : CardBhv
 
     private void OnVentureNegative()
     {
-        _instantiator.NewPopupYesNo("Inn", "The innkeeper throw you out of his establishment when he realise you do not have enough <material=\"LongGold\">"
+        _instantiator.NewPopupYesNo("Inn", "The innkeeper throw you out of his establishment when he realises you do not have enough <material=\"LongGold\">"
             + Constants.UnitGold + "</material> to rent a room.",
             string.Empty, "Damn", AfterVentureNegative);
     }
