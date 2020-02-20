@@ -15,7 +15,7 @@ namespace Assets.Scripts.Models
 
     public enum AlignmentMerchant
     {
-        Normal = 0,
+        Classic = 0,
         Honest = -1,
         Fraudulent = 1
     }

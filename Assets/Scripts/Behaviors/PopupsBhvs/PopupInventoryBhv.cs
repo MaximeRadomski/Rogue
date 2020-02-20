@@ -15,14 +15,14 @@ public class PopupInventoryBhv : StatsDisplayerBhv
     private List<TMPro.TextMeshPro> _buttonsText;
     private TMPro.TextMeshPro _weightText;
 
-    private System.Func<bool, object> _forceDiscardAction;
+    private System.Func<bool, object> _afterManageAction;
     private System.Func<bool> _sceneUpdateAction;
 
-    public void SetPrivates(Character character, System.Func<bool> sceneUpdateAction, System.Func<bool, object> forceDiscardAction)
+    public void SetPrivates(Character character, System.Func<bool> sceneUpdateAction, System.Func<bool, object> afterManageAction)
     {
         _character = character;
         _sceneUpdateAction = sceneUpdateAction;
-        _forceDiscardAction = forceDiscardAction;
+        _afterManageAction = afterManageAction;
         _selectedItem = 0;
         _selectedSprite = transform.Find("SelectedSprite").gameObject;
         _resetTabPosition = new Vector3(-10.0f, -10.0f, 0.0f);
@@ -48,11 +48,8 @@ public class PopupInventoryBhv : StatsDisplayerBhv
 
     private void SetButtons()
     {
-        if (_forceDiscardAction == null)
-            transform.Find("ExitButton").GetComponent<ButtonBhv>().EndActionDelegate = ExitPopup;
-        else
-            transform.Find("ExitButton").gameObject.SetActive(false);
-        if (_forceDiscardAction == null)
+        transform.Find("ExitButton").GetComponent<ButtonBhv>().EndActionDelegate = ExitPopup;
+        if (_afterManageAction == null)
             transform.Find("StatsButton").GetComponent<ButtonBhv>().EndActionDelegate = SwitchToStats;
         else
             transform.Find("StatsButton").gameObject.SetActive(false);
@@ -127,8 +124,8 @@ public class PopupInventoryBhv : StatsDisplayerBhv
             }
             _buttons[0].transform.position = _buttonsPosition[0];
             _buttons[1].transform.position = _buttonsPosition[1];
-            _buttonsText[0].text = _forceDiscardAction == null ? item.PositiveAction : "Discard";
-            _buttonsText[1].text = _forceDiscardAction == null ? item.NegativeAction : "Cancel";
+            _buttonsText[0].text = item.PositiveAction;
+            _buttonsText[1].text = item.NegativeAction;
         }
         else //Inventory Empty
         {
@@ -146,14 +143,7 @@ public class PopupInventoryBhv : StatsDisplayerBhv
 
     private void NegativeAction()
     {
-        if (_forceDiscardAction != null)
-        {
-            ExitPopup();
-        }
-        else
-        {
-            _instantiator.NewPopupYesNo(Constants.YesNoTitle, Constants.YesNoContent, Constants.Cancel, Constants.Proceed, OnDiscard);
-        }
+        _instantiator.NewPopupYesNo(Constants.YesNoTitle, Constants.YesNoContent, Constants.Cancel, Constants.Proceed, OnDiscard);
     }
 
     private object OnDiscard(bool result = false)
@@ -168,13 +158,7 @@ public class PopupInventoryBhv : StatsDisplayerBhv
 
     private void PositiveAction()
     {
-        if (_forceDiscardAction != null)
-        {
-            _character.Inventory.RemoveAt(_selectedItem);
-            SetButtons();
-            Invoke(nameof(OnForceDiscardAction), 0.5f);
-        }
-        else if (_character.Inventory[_selectedItem].InventoryItemType == InventoryItemType.Consumable)
+        if (_character.Inventory[_selectedItem].InventoryItemType == InventoryItemType.Consumable)
         {
             ((Consumable)_character.Inventory[_selectedItem]).OnUse(_character, _selectedItem, OnPositiveAction);
         }
@@ -184,19 +168,12 @@ public class PopupInventoryBhv : StatsDisplayerBhv
         }
     }
 
-    private void OnForceDiscardAction()
-    {
-        _forceDiscardAction(true);
-        _forceDiscardAction = null;
-        ExitPopup();
-    }
-
     private object OnPositiveAction(bool result)
     {
         if (result)
         {
             SetButtons();
-            _sceneUpdateAction();
+            _sceneUpdateAction?.Invoke();
         }
         return result;
     }
@@ -223,7 +200,8 @@ public class PopupInventoryBhv : StatsDisplayerBhv
 
     public override void ExitPopup()
     {
-        _forceDiscardAction?.Invoke(false);
-        base.ExitPopup();
+        Constants.DecreaseInputLayer();
+        _afterManageAction?.Invoke(false);
+        Destroy(gameObject);
     }
 }

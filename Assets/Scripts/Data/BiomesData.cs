@@ -18,6 +18,8 @@ public static class BiomesData
         "Robinson's Inn", "The Return Of The Prince", "The Prince Of Dankness", "The Sleep Inn", "The Gag Ball", "The Magic Wand", "The Spartan", "The Arrow In The Knee",
         "The Gates Of Hell", "El Famoso Taüf", "The Feathers", "Last Calibur", "The Acid Knife", "The Good Boy", "The Unique Horn"};
 
+    public static string[] MerchantNames = { "Merchant", "Vendor", "Trader", "Dealer", "Retailer", "Supplier", "Peddler", "Dude", "Robb... Reseller!" };
+
     public static int InnSleepBonusPercent = 25;
     public static int MerchentPriceBonusPercent = 15;
 

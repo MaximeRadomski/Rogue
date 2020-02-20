@@ -195,7 +195,7 @@ public class Character
         return Helper.MultiplierFromPercent(1, LevelingDamagePercent * (Level - 1));
     }
 
-    public void AddToInventory(List<InventoryItem> items, System.Func<bool, object> afterInventoryWork)
+    public void AddToInventory(List<InventoryItem> items, Func<bool, object> afterInventoryWork)
     {
         int invId = Inventory.Count;
         List<InventoryItem> discardedItems = new List<InventoryItem>();
@@ -214,7 +214,7 @@ public class Character
         if (discardedItems.Count > 0)
         {
             if (_instantiator == null) GetPrivates();
-            LoopDiscarded(_instantiator, discardedItems, 0, afterInventoryWork);
+            LoopDiscarded(_instantiator, discardedItems, afterInventoryWork);
         }
         else
         {
@@ -222,39 +222,42 @@ public class Character
         }
     }
 
-    private void LoopDiscarded(Instantiator instantiator, List<InventoryItem> discardedItems, int id, System.Func<bool, object> afterInventoryWork)
+    private void LoopDiscarded(Instantiator instantiator, List<InventoryItem> discardedItems, System.Func<bool, object> afterInventoryWork)
     {
-        if (id >= discardedItems.Count)
+        if (discardedItems.Count == 0)
         {
             afterInventoryWork(true);
             return;
         }
             
         instantiator.NewPopupYesNo("Full Inventory",
-                "Your inventory is full. Do you wish to discard an item in order to make some place for:\n" + discardedItems[id].GetNameWithColor(),
-                "No", "Yes", OnAcceptDiscard);
+                "Your inventory is full. Do you wish to manage your items in order to make some place for:\n" + discardedItems[0].GetNameWithColor() + "?",
+                "No", "Yes", OnAcceptManage);
 
-        object OnAcceptDiscard(bool result)
+        object OnAcceptManage(bool result)
         {
             if (result)
             {
-                instantiator.NewPopupInventory(this, null, OnDiscard);
+                instantiator.NewPopupInventory(this, null, OnManage);
                 return true;
             }
-            LoopDiscarded(instantiator, discardedItems, id + 1, afterInventoryWork);
+            discardedItems.RemoveAt(0);
+            LoopDiscarded(instantiator, discardedItems, afterInventoryWork);
             return false;
         }
 
-        object OnDiscard(bool result)
+        object OnManage(bool result)
         {
-            if (result)
-            {
-                Inventory.Add(discardedItems[id]);
-                LoopDiscarded(instantiator, discardedItems, id + 1, afterInventoryWork);
-                return true;
-            }
-            LoopDiscarded(instantiator, discardedItems, id + 1, afterInventoryWork);
-            return false;
+            //if (result)
+            //{
+            //    Inventory.Add(discardedItems[id]);
+            //    LoopDiscarded(instantiator, discardedItems, id + 1, afterInventoryWork);
+            //    return true;
+            //}
+            //LoopDiscarded(instantiator, discardedItems, id + 1, afterInventoryWork);
+            //return false;
+            AddToInventory(discardedItems, afterInventoryWork);
+            return result;
         }
     }
 }

@@ -15,8 +15,10 @@ public class PopupSwitchBhv : StatsDisplayerBhv
     private GameObject _positiveButton;
     private List<GameObject> _weaponContainers;
     private List<GameObject> _skillContainers;
+    private List<Vector3> _containersPositions;
     private int _selectedItem;
     private InventoryItemType _itemType;
+    private bool _isSwitching;
 
     public void SetPrivates(InventoryItem item, int itemId, Character character,
         System.Func<bool, object> resultAction)
@@ -50,6 +52,7 @@ public class PopupSwitchBhv : StatsDisplayerBhv
             transform.Find("Title").GetComponent<TMPro.TextMeshPro>().text = "Switch Skill";
             GetComponent<SpriteRenderer>().sprite = _backgrounds[1];
         }
+        _isSwitching = false;
         SetButtons();
     }
 
@@ -125,6 +128,39 @@ public class PopupSwitchBhv : StatsDisplayerBhv
         DisplayItem(_character.Inventory[_mainItemId], true);
         _positiveButton.GetComponent<BoxCollider2D>().enabled = false;
         Invoke(nameof(AfterSwitch), 0.5f);
+        _containersPositions = new List<Vector3>();
+        if (_itemType == InventoryItemType.Weapon)
+        {
+            _containersPositions.Add(_weaponContainers[0].transform.position);
+            _containersPositions.Add(_weaponContainers[1].transform.position);
+            _weaponContainers[0].transform.position = _containersPositions[1];
+            _weaponContainers[1].transform.position = _containersPositions[0];
+        }
+        else
+        {
+            _containersPositions.Add(_skillContainers[0].transform.position);
+            _containersPositions.Add(_skillContainers[1].transform.position);
+            _skillContainers[0].transform.position = _containersPositions[1];
+            _skillContainers[1].transform.position = _containersPositions[0];
+        }
+        _isSwitching = true;
+    }
+
+    private void Update()
+    {
+        if (_isSwitching)
+        {
+            if (_itemType == InventoryItemType.Weapon)
+            {
+                _weaponContainers[0].transform.position = Vector3.Lerp(_weaponContainers[0].transform.position, _containersPositions[0], 0.5f);
+                _weaponContainers[1].transform.position = Vector3.Lerp(_weaponContainers[1].transform.position, _containersPositions[1], 0.5f);
+            }
+            else
+            {
+                _skillContainers[0].transform.position = Vector3.Lerp(_skillContainers[0].transform.position, _containersPositions[0], 0.5f);
+                _skillContainers[1].transform.position = Vector3.Lerp(_skillContainers[1].transform.position, _containersPositions[1], 0.5f);
+            }
+        }
     }
 
     private void AfterSwitch()

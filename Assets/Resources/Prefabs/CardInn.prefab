@@ -123,7 +123,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1025985085798764124}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 430e36936db6a984bafbd00c3357ed39, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d173c2e584c1fb45ac9cc82f258d057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
@@ -780,7 +780,7 @@ PrefabInstance:
     - target: {fileID: 7108046686861183876, guid: f708d7ee52051c144a07111a8491be28,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1.0496
+      value: 1.0495
       objectReference: {fileID: 0}
     - target: {fileID: 7108046686861183876, guid: f708d7ee52051c144a07111a8491be28,
         type: 3}

@@ -55,6 +55,14 @@ public class Instantiator : MonoBehaviour
         tmpPopupInstance.GetComponent<PopupInventoryBhv>().SetPrivates(character, updateAction, resultAction);
     }
 
+    public void NewPopupMerchantBuy(Character character, System.Func<bool, object> resultAction)
+    {
+        var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupMerchant");
+        var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
+        Constants.IncreaseInputLayer(tmpPopupInstance.name);
+        tmpPopupInstance.GetComponent<PopupMerchantBhv>().SetPrivates(character, resultAction);
+    }
+
     public void NewPopupYesNo(string title, string content, string negative, string positive,
         System.Func<bool, object> resultAction)
     {
@@ -126,6 +134,16 @@ public class Instantiator : MonoBehaviour
                 return;
             }
         }
+        //else if (!biome.EncounteredMerchant)
+        //{
+        //    var merchant = Random.Range(0, 100);
+        //    if (merchant < biome.MerchantPercent)
+        //    {
+        //        biome.EncounteredMerchant = true;
+        //        NewCardMerchant(id, day, biome, character);
+        //        return;
+        //    }
+        //}
 
         var rand = Random.Range(0, 2);
         if (rand == 0)
@@ -154,6 +172,13 @@ public class Instantiator : MonoBehaviour
         var tmpCardObject = Resources.Load<GameObject>("Prefabs/CardInn");
         var tmpCardInstance = Instantiate(tmpCardObject, tmpCardObject.transform.position, tmpCardObject.transform.rotation);
         tmpCardInstance.GetComponent<CardInnBhv>().SetPrivates(id, day, biome, character, this);
+    }
+
+    public void NewCardMerchant(int id, int day, Biome biome, Character character)
+    {
+        var tmpCardObject = Resources.Load<GameObject>("Prefabs/CardMerchant");
+        var tmpCardInstance = Instantiate(tmpCardObject, tmpCardObject.transform.position, tmpCardObject.transform.rotation);
+        tmpCardInstance.GetComponent<CardMerchantBhv>().SetPrivates(id, day, biome, character, this);
     }
 
     public void NewCardBiome(int id, int day, Biome biome, int choice, int maxChoice, Character character)
