@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Models;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -55,12 +56,12 @@ public class Instantiator : MonoBehaviour
         tmpPopupInstance.GetComponent<PopupInventoryBhv>().SetPrivates(character, updateAction, resultAction);
     }
 
-    public void NewPopupMerchantBuy(Character character, System.Func<bool, object> resultAction)
+    public void NewPopupMerchantBuy(Character character, AlignmentMerchant alignment, System.Func<bool, object> resultAction)
     {
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupMerchant");
         var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpPopupInstance.name);
-        tmpPopupInstance.GetComponent<PopupMerchantBhv>().SetPrivates(character, resultAction);
+        tmpPopupInstance.GetComponent<PopupMerchantBhv>().SetPrivates(character, alignment, resultAction);
     }
 
     public void NewPopupYesNo(string title, string content, string negative, string positive,
@@ -134,16 +135,16 @@ public class Instantiator : MonoBehaviour
                 return;
             }
         }
-        //else if (!biome.EncounteredMerchant)
-        //{
-        //    var merchant = Random.Range(0, 100);
-        //    if (merchant < biome.MerchantPercent)
-        //    {
-        //        biome.EncounteredMerchant = true;
-        //        NewCardMerchant(id, day, biome, character);
-        //        return;
-        //    }
-        //}
+        else if (!biome.EncounteredMerchant)
+        {
+            var merchant = Random.Range(0, 100);
+            if (merchant < biome.MerchantPercent)
+            {
+                biome.EncounteredMerchant = true;
+                NewCardMerchant(id, day, biome, character);
+                return;
+            }
+        }
 
         var rand = Random.Range(0, 2);
         if (rand == 0)

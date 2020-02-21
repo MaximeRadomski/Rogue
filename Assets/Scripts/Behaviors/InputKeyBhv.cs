@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputKeyBhv : MonoBehaviour
+public class InputKeyBhv : PopupBhv
 {
     public Vector3[] LayoutPositions;
     public Sprite[] Sprites;
@@ -53,7 +53,7 @@ public class InputKeyBhv : MonoBehaviour
         }
         else if (name.Contains("Close"))
         {
-            _buttonBhv.EndActionDelegate = Close;
+            _buttonBhv.EndActionDelegate = ExitPopup;
         }
         else if (name.Contains("Cancel"))
         {
@@ -164,7 +164,7 @@ public class InputKeyBhv : MonoBehaviour
 
     #region Close
 
-    private void Close()
+    public override void ExitPopup()
     {
         Camera.main.gameObject.GetComponent<CameraBhv>().Unfocus();
         Constants.DecreaseInputLayer();
@@ -178,7 +178,7 @@ public class InputKeyBhv : MonoBehaviour
     private void Cancel()
     {
         _target.text = _originalTargetText;
-        Close();
+        ExitPopup();
     }
 
     #endregion
@@ -187,7 +187,7 @@ public class InputKeyBhv : MonoBehaviour
 
     private void Validate()
     {
-        Close();
+        ExitPopup();
     }
 
     #endregion
