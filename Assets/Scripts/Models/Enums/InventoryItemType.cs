@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum InventoryItemType
 {
-    Weapon,
-    Skill,
-    Consumable
+    Weapon = 0,
+    Skill = 1,
+    Item = 2
 }

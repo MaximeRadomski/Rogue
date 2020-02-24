@@ -72,8 +72,8 @@ public class PopupInventoryBhv : StatsDisplayerBhv
                     case InventoryItemType.Skill:
                         slotIcon.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsSkill_" + ((Skill)item).IconId);
                         break;
-                    case InventoryItemType.Consumable:
-                        slotIcon.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsConsumable_" + ((Consumable)item).IconId);
+                    case InventoryItemType.Item:
+                        slotIcon.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsItem_" + ((Item)item).IconId);
                         break;
                 }
             }
@@ -117,8 +117,8 @@ public class PopupInventoryBhv : StatsDisplayerBhv
                     DisplayStatsSkill(_tabs[1], (Skill)item, "SkinContainerSkill", "StatsListSkill");
                     _tabs[1].transform.position = _currentTabPosition;
                     break;
-                case InventoryItemType.Consumable:
-                    DisplayStatsConsumable(_tabs[2], (Consumable)item, "SkinContainerConsumable", "StatsListConsumable");
+                case InventoryItemType.Item:
+                    DisplayStatsItem(_tabs[2], (Item)item, "SkinContainerItem", "StatsListItem");
                     _tabs[2].transform.position = _currentTabPosition;
                     break;
             }
@@ -158,9 +158,9 @@ public class PopupInventoryBhv : StatsDisplayerBhv
 
     private void PositiveAction()
     {
-        if (_character.Inventory[_selectedItem].InventoryItemType == InventoryItemType.Consumable)
+        if (_character.Inventory[_selectedItem].InventoryItemType == InventoryItemType.Item)
         {
-            ((Consumable)_character.Inventory[_selectedItem]).OnUse(_character, _selectedItem, OnPositiveAction);
+            ((Item)_character.Inventory[_selectedItem]).OnUse(_character, _selectedItem, OnPositiveAction);
         }
         else
         {

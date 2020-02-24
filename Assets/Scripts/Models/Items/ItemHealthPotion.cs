@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConsumableHealthPotion : Consumable
+public class ItemHealthPotion : Item
 {
-    public ConsumableHealthPotion()
+    public ItemHealthPotion()
     {
-        Name = ConsumablesData.NormalConsumablesNames[0];
+        Name = ItemsData.NormalItemsNames[0];
         Description = "Heal <material=\"LongRed\">" + _hp + " HP</material>";
         Story = "Made with plants, river water and bat blood, this potion taste is dreadful. And the purpose of the plants is only aromatic...";
         Weight = 2;

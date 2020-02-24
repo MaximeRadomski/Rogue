@@ -56,12 +56,12 @@ public class Instantiator : MonoBehaviour
         tmpPopupInstance.GetComponent<PopupInventoryBhv>().SetPrivates(character, updateAction, resultAction);
     }
 
-    public void NewPopupMerchantBuy(Character character, AlignmentMerchant alignment, System.Func<bool, object> resultAction)
+    public void NewPopupMerchant(Character character, AlignmentMerchant alignment, InventoryItemType type, bool isBuying, System.Func<bool, object> resultAction, List<InventoryItem> itemsForSale)
     {
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupMerchant");
         var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpPopupInstance.name);
-        tmpPopupInstance.GetComponent<PopupMerchantBhv>().SetPrivates(character, alignment, resultAction);
+        tmpPopupInstance.GetComponent<PopupMerchantBhv>().SetPrivates(character, alignment, type, isBuying, resultAction, itemsForSale);
     }
 
     public void NewPopupYesNo(string title, string content, string negative, string positive,
@@ -125,6 +125,16 @@ public class Instantiator : MonoBehaviour
 
     public void NewRandomCard(int id, int day, Biome biome, Character character)
     {
+        if (!biome.EncounteredMerchant)
+        {
+            var merchant = Random.Range(0, 100);
+            if (merchant < biome.MerchantPercent)
+            {
+                biome.EncounteredMerchant = true;
+                NewCardMerchant(id, day, biome, character);
+                return;
+            }
+        }
         if (!biome.EncounteredInn)
         {
             var inn = Random.Range(0, 100);
@@ -132,16 +142,6 @@ public class Instantiator : MonoBehaviour
             {
                 biome.EncounteredInn = true;
                 NewCardInn(id, day, biome, character);
-                return;
-            }
-        }
-        else if (!biome.EncounteredMerchant)
-        {
-            var merchant = Random.Range(0, 100);
-            if (merchant < biome.MerchantPercent)
-            {
-                biome.EncounteredMerchant = true;
-                NewCardMerchant(id, day, biome, character);
                 return;
             }
         }
@@ -247,9 +247,9 @@ public class Instantiator : MonoBehaviour
         skinContainer.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Skills/Skills_" + skill.IconId);
     }
 
-    public void LoadConsumableSkin(Consumable consumable, GameObject skinContainer)
+    public void LoadItemSkin(Item item, GameObject skinContainer)
     {
-        skinContainer.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Consumables/Consumables_" + consumable.IconId);
+        skinContainer.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Items/Items_" + item.IconId);
     }
 
     public GameObject NewCell(int x, int y, char c, Grid grid)

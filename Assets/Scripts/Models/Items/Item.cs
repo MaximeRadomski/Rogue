@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Consumable : InventoryItem
+public abstract class Item : InventoryItem
 {
     public int IconId;
     public int MinutesNeeded;
 
-    public Consumable()
+    public Item()
     {
-        InventoryItemType = InventoryItemType.Consumable;
+        InventoryItemType = InventoryItemType.Item;
     }
 
     public virtual void OnUse(Character character, int id, System.Func<bool, object> resultAction)

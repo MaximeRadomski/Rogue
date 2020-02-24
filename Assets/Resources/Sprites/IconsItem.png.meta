@@ -1,13 +1,22 @@
 fileFormatVersion: 2
-guid: 23099fdac52dc744ea5546cc416fad28
+guid: 8f1c3e52d1e07c64eaa5cd788838c524
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1458253429931614191
-    second: Consumables_0
+      213: -5180201136663724392
+    second: IconsConsumables_0
   - first:
-      213: -7526724144147813300
-    second: Consumables_1
+      213: 255119801387923005
+    second: IconsConsumable_0
+  - first:
+      213: 6438421937096923152
+    second: IconsConsumable_1
+  - first:
+      213: -8892815105824508810
+    second: IconsItem_0
+  - first:
+      213: -6430072111632870841
+    second: IconsItem_1
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -66,7 +75,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
+    maxTextureSize: 32
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -78,7 +87,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 128
+    maxTextureSize: 32
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -90,7 +99,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 128
+    maxTextureSize: 32
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -104,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Consumables_0
+      name: IconsItem_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 30
-        width: 110
-        height: 30
+        y: 0
+        width: 9
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,20 +127,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 21b78739169dc8044adcb2d917952ae5
-      internalID: 1458253429931614191
+      spriteID: c21b99a7f9e1a4342971ffdbf8e7b3ef
+      internalID: -8892815105824508810
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Consumables_1
+      name: IconsItem_1
       rect:
         serializedVersion: 2
-        x: 0
+        x: 9
         y: 0
-        width: 110
-        height: 30
+        width: 9
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -139,8 +148,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d08fda638700b442a8f90a8f124ada6
-      internalID: -7526724144147813300
+      spriteID: c59a3454bd0ada644b1b65477fee38a5
+      internalID: -6430072111632870841
       vertices: []
       indices: 
       edges: []

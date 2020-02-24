@@ -1,22 +1,19 @@
 fileFormatVersion: 2
-guid: a1d1df166ebc47b48a8f26c10a94f595
+guid: 23099fdac52dc744ea5546cc416fad28
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2659244955995682118
-    second: SwipeCard_0
+      213: 1458253429931614191
+    second: Consumables_0
   - first:
-      213: -7368705246773432081
-    second: SwipeCard_1
+      213: -7526724144147813300
+    second: Consumables_1
   - first:
-      213: 8797870387001168904
-    second: SwipeCard_2
+      213: 8033092973025764044
+    second: Items_0
   - first:
-      213: -6491173968732493645
-    second: SwipeCard_3
-  - first:
-      213: 5469147959640948675
-    second: SwipeCard_4
+      213: 4337684191699249041
+    second: Items_1
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -75,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -87,7 +84,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 1024
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -99,7 +96,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 1024
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -113,13 +110,34 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SwipeCard_0
+      name: Items_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 30
+        width: 110
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb45c1b3ca7904c4e9b8eee441bd4d77
+      internalID: 8033092973025764044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Items_1
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 142
-        height: 142
+        width: 110
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,92 +145,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e174e86ac4cb3a1468928b9beea0a89d
-      internalID: -2659244955995682118
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SwipeCard_1
-      rect:
-        serializedVersion: 2
-        x: 142
-        y: 0
-        width: 142
-        height: 142
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bedb2f80d43da384480bfcdd743ba95a
-      internalID: -7368705246773432081
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SwipeCard_2
-      rect:
-        serializedVersion: 2
-        x: 284
-        y: 0
-        width: 142
-        height: 142
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c26add6193ac9694ca5796e033818aeb
-      internalID: 8797870387001168904
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SwipeCard_3
-      rect:
-        serializedVersion: 2
-        x: 426
-        y: 0
-        width: 142
-        height: 142
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5935adf1dc8995e40bfa3468bf405b03
-      internalID: -6491173968732493645
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SwipeCard_4
-      rect:
-        serializedVersion: 2
-        x: 568
-        y: 0
-        width: 142
-        height: 142
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 160e13f6fa362fb44af1e81c05e5ea70
-      internalID: 5469147959640948675
+      spriteID: bdab35cda1068a74695bad6b472ffa3a
+      internalID: 4337684191699249041
       vertices: []
       indices: 
       edges: []

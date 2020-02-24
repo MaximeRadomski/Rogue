@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 8f1c3e52d1e07c64eaa5cd788838c524
+guid: 7d54c9d8abbbc5444be398b11e2dd44c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5180201136663724392
-    second: IconsConsumables_0
+      213: 6619814809855056898
+    second: SwipeCardMerchant_0
   - first:
-      213: 255119801387923005
-    second: IconsConsumable_0
+      213: 1376501946730993869
+    second: SwipeCardMerchant_1
   - first:
-      213: 6438421937096923152
-    second: IconsConsumable_1
+      213: -6115844745878099895
+    second: SwipeCardMerchant_2
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 32
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -81,7 +81,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 32
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -93,7 +93,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 32
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -107,13 +107,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IconsConsumable_0
+      name: SwipeCardMerchant_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 9
-        height: 10
+        width: 142
+        height: 142
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,20 +121,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ce6636b9672d87e4d9528156c3c032fa
-      internalID: 255119801387923005
+      spriteID: bc2e3dbf935bee84aa0fda30fa984bd5
+      internalID: 6619814809855056898
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IconsConsumable_1
+      name: SwipeCardMerchant_1
       rect:
         serializedVersion: 2
-        x: 9
+        x: 142
         y: 0
-        width: 9
-        height: 10
+        width: 142
+        height: 142
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,8 +142,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: df2649f935d31c642ae0790f8377a8b9
-      internalID: 6438421937096923152
+      spriteID: c9163572be52ebe4b8408ca9e12e84fc
+      internalID: 1376501946730993869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SwipeCardMerchant_2
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 0
+        width: 142
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44b4d5fa309d8d543b5bc241a685d068
+      internalID: -6115844745878099895
       vertices: []
       indices: 
       edges: []

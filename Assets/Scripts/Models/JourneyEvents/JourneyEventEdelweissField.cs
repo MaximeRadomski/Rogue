@@ -21,7 +21,7 @@
     {
         _character.AddToInventory(new System.Collections.Generic.List<InventoryItem>
         {
-            new ConsumableEdelweissPotion()
+            new ItemEdelweissPotion()
         }, OnInventoryWork);
         return result;
     }

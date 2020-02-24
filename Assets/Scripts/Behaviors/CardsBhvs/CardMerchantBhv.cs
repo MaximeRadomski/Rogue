@@ -13,7 +13,7 @@ class CardMerchantBhv : CardBhv
         _cacheSpriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/SwipeCardCache_" + biome.MapType.GetHashCode());
         _merchantId = Random.Range(0, BiomesData.MerchantNames.Length);
         _inventoryItemType = (InventoryItemType)Random.Range(0, Helper.EnumCount<InventoryItemType>());
-        _alignmentMerchant = AlignmentMerchant.Classic;
+        _alignmentMerchant = AlignmentMerchant.Honest;
         if (Random.Range(0, 100) < biome.FraudulentMerchantPercentage)
             _alignmentMerchant = AlignmentMerchant.Fraudulent;
         else if (Random.Range(0, 100) < biome.HonestMerchantPercentage)
@@ -25,10 +25,9 @@ class CardMerchantBhv : CardBhv
 
     public void DisplayStats()
     {
-        transform.Find("MerchantAlignment").GetComponent<TMPro.TextMeshPro>().text = _alignmentMerchant.ToString();
-        transform.Find("MerchantName").GetComponent<TMPro.TextMeshPro>().text = _inventoryItemType + BiomesData.MerchantNames[_merchantId];
-        transform.Find("MerchantPicture").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/MerchantPicture_" + _inventoryItemType.GetHashCode());
-        transform.Find("MerchantBanner").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/MerchantBanner_" + _inventoryItemType.GetHashCode());
+        transform.Find("MerchantAlignment").GetComponent<TMPro.TextMeshPro>().text = _alignmentMerchant.GetDescription();
+        transform.Find("MerchantName").GetComponent<TMPro.TextMeshPro>().text = _inventoryItemType + "s " + BiomesData.MerchantNames[_merchantId];
+        transform.Find("MerchantPicture").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/SwipeCardMerchant_" + _inventoryItemType.GetHashCode());
     }
 
     public override void Venture()
@@ -37,7 +36,7 @@ class CardMerchantBhv : CardBhv
         if (Helper.FloatEqualsPrecision(transform.position.x, _likePosition.x, 0.1f))
         {
             _state = CardState.Off;
-            _instantiator.NewPopupMerchantBuy(_character, _alignmentMerchant, AfterVenture);
+            _instantiator.NewPopupMerchant(_character, _alignmentMerchant, _inventoryItemType, isBuying: true, AfterVenture, null);
         }
     }
 

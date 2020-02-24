@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-public class ConsumableEdelweissPotion : Consumable
+public class ItemEdelweissPotion : Item
 {
-    public ConsumableEdelweissPotion()
+    public ItemEdelweissPotion()
     {
-        Name = ConsumablesData.RareConsumablesNames[0];
+        Name = ItemsData.RareItemsNames[0];
         Description = "Recover <material=\"LongRed\">+15%</material> of your max <material=\"LongRed\">HP</material>";
         Story = "This potion is made from rare Edelweiss. It is said your experience alter its effects a lot.";
         Weight = 1;

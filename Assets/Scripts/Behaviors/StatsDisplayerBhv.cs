@@ -108,25 +108,25 @@ public class StatsDisplayerBhv : PopupBhv
         return statsList;
     }
 
-    protected void DisplayStatsConsumable(GameObject container, Consumable consumable, string skinContainerName, string statsListName)
+    protected void DisplayStatsItem(GameObject container, Item item, string skinContainerName, string statsListName)
     {
-        _instantiator.LoadConsumableSkin(consumable, container.transform.Find(skinContainerName).gameObject);
-        container.transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = consumable.GetNameWithColor();
-        container.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsConsumable_" + consumable.IconId);
-        container.transform.Find("Cooldown").GetComponent<TMPro.TextMeshPro>().text = Helper.TimeFromMinutes(consumable.MinutesNeeded);
-        PopulateStatsList(statsListName, GenerateStatsListConsumable, consumable);
+        _instantiator.LoadItemSkin(item, container.transform.Find(skinContainerName).gameObject);
+        container.transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = item.GetNameWithColor();
+        container.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsItem_" + item.IconId);
+        container.transform.Find("Cooldown").GetComponent<TMPro.TextMeshPro>().text = Helper.TimeFromMinutes(item.MinutesNeeded);
+        PopulateStatsList(statsListName, GenerateStatsListItem, item);
     }
 
-    private string GenerateStatsListConsumable(object parameter)
+    private string GenerateStatsListItem(object parameter)
     {
-        var consumable = (Consumable)parameter;
+        var item = (Item)parameter;
         string statsList = "";
         statsList += MakeTitle("Description");
-        statsList += MakeContent("", consumable.Description);
-        statsList += MakeContent(consumable.Story, "");
+        statsList += MakeContent("", item.Description);
+        statsList += MakeContent(item.Story, "");
 
-        statsList += MakeTitle("Consumable Characteristics");
-        statsList += MakeContent("Weight: ", consumable.Weight + " " + Constants.UnitWeight);
+        statsList += MakeTitle("Item Characteristics");
+        statsList += MakeContent("Weight: ", item.Weight + " " + Constants.UnitWeight);
         return statsList;
     }
 

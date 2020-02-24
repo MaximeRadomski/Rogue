@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,9 @@ namespace Assets.Scripts.Models
 
     public enum AlignmentMerchant
     {
-        Classic = 0,
-        Honest = -1,
+        Honest = 0,
+        [Description("On Sale")]
+        OnSale = -1,
         Fraudulent = 1
     }
 }

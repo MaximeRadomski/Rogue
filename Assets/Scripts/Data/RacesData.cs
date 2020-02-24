@@ -127,7 +127,7 @@ public static class RacesData
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.HumanSkillsNames[0]) :
                                                                  SkillsData.GetSkillFromName(SkillsData.HumanSkillsNames[1])},
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
-            Inventory = new List<InventoryItem> { ConsumablesData.GetRandomConsumable(),
+            Inventory = new List<InventoryItem> { ItemsData.GetRandomItem(),
                                                   WeaponsData.GetWeaponFromType(WeaponType.GreatSword),
                                                   SkillsData.GetSkillFromName(SkillsData.RareSkillsNames[0]) },
             InventoryPlace = 4,
@@ -157,10 +157,10 @@ public static class RacesData
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.GoblinSkillsNames[0]) :
                                                                  SkillsData.GetSkillFromName(SkillsData.GoblinSkillsNames[1])},
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
-            Inventory = new List<InventoryItem> { ConsumablesData.GetRandomConsumable(),
+            Inventory = new List<InventoryItem> { ItemsData.GetRandomItem(),
                                                   WeaponsData.GetWeaponFromType(WeaponType.Daggers),
-                                                  WeaponsData.GetWeaponFromType((WeaponType)Random.Range(0, Helper.EnumCount<WeaponType>())),
-                                                  WeaponsData.GetWeaponFromType((WeaponType)Random.Range(0, Helper.EnumCount<WeaponType>())),
+                                                  WeaponsData.GetRandomWeapon(),
+                                                  WeaponsData.GetRandomWeapon(),
                                                   SkillsData.GetSkillFromName(SkillsData.HumanSkillsNames[0]),
                                                   SkillsData.GetSkillFromName(SkillsData.MagicalSkillsNames[Random.Range(0, SkillsData.MagicalSkillsNames.Length)])},
             InventoryPlace = 6,
@@ -190,7 +190,7 @@ public static class RacesData
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.ElfSkillsNames[0]) :
                                                                  SkillsData.GetSkillFromName(SkillsData.ElfSkillsNames[1])},
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
-            Inventory = new List<InventoryItem> { ConsumablesData.GetRandomConsumable() },
+            Inventory = new List<InventoryItem> { ItemsData.GetRandomItem() },
             InventoryPlace = 2,
             WeightLimit = 20,
             SleepHoursNeeded = 10,
@@ -219,7 +219,7 @@ public static class RacesData
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.DwarfSkillsNames[0]) :
                                                                  SkillsData.GetSkillFromName(SkillsData.DwarfSkillsNames[1])},
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
-            Inventory = new List<InventoryItem> { ConsumablesData.GetRandomConsumable() },
+            Inventory = new List<InventoryItem> { ItemsData.GetRandomItem() },
             InventoryPlace = 3,
             WeightLimit = 60,
             SleepHoursNeeded = 7,
@@ -248,7 +248,7 @@ public static class RacesData
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.OrcSkillsNames[0]) :
                                                                  SkillsData.GetSkillFromName(SkillsData.OrcSkillsNames[1])},
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
-            Inventory = new List<InventoryItem> { ConsumablesData.GetRandomConsumable() },
+            Inventory = new List<InventoryItem> { ItemsData.GetRandomItem() },
             InventoryPlace = 3,
             WeightLimit = 80,
             SleepHoursNeeded = 12,

@@ -22,4 +22,9 @@ public abstract class InventoryItem
             nameTag = "<material=\"LongYellow\">";
         return nameTag + Name + "</material>";
     }
+
+    public int GetPrice()
+    {
+        return 20;
+    }
 }

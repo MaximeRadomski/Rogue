@@ -34,7 +34,7 @@ public class PlayerPrefsHelper : MonoBehaviour
                 continue;
             }
             if (character.Inventory[i].InventoryItemType == InventoryItemType.Skill
-                || character.Inventory[i].InventoryItemType == InventoryItemType.Consumable)
+                || character.Inventory[i].InventoryItemType == InventoryItemType.Item)
                 PlayerPrefs.SetString(characterName + Constants.PpInventoryItem + i, character.Inventory[i].Name);
             else
                 PlayerPrefs.SetString(characterName + Constants.PpInventoryItem + i, JsonUtility.ToJson(character.Inventory[i]));
@@ -68,7 +68,7 @@ public class PlayerPrefsHelper : MonoBehaviour
             else if (typeId == InventoryItemType.Skill.GetHashCode())
                 character.Inventory.Add(SkillsData.GetSkillFromName(serialized));
             else
-                character.Inventory.Add(ConsumablesData.GetConsumableFromName(serialized));
+                character.Inventory.Add(ItemsData.GetItemFromName(serialized));
         }
         return character;
     }

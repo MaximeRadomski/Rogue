@@ -24,6 +24,11 @@ public static class WeaponsData
     public static int RareWeaponAppearancePercent = 5;
     public static int MagicalWeaponAppearancePercent = 15;
 
+    public static Weapon GetRandomWeapon()
+    {
+        return GetWeaponFromType((WeaponType)Random.Range(0, Helper.EnumCount<WeaponType>()));
+    }
+
     public static Weapon GetWeaponFromType(WeaponType type, bool isBase = false)
     {
         int notTypeIfZero = Random.Range(0, 100 / ChanceNotRaceWeaponPercent);
