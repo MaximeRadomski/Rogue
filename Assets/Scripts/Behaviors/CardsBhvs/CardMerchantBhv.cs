@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Models;
+using System.Collections.Generic;
 using UnityEngine;
 
 class CardMerchantBhv : CardBhv
@@ -6,6 +7,7 @@ class CardMerchantBhv : CardBhv
     private AlignmentMerchant _alignmentMerchant;
     private InventoryItemType _inventoryItemType;
     private int _merchantId;
+    private List<InventoryItem> _itemsForSale;
 
     public override void SetPrivates(int id, int day, Biome biome, Character character, Instantiator instantiator)
     {
@@ -16,9 +18,8 @@ class CardMerchantBhv : CardBhv
         _alignmentMerchant = AlignmentMerchant.Honest;
         if (Random.Range(0, 100) < biome.FraudulentMerchantPercentage)
             _alignmentMerchant = AlignmentMerchant.Fraudulent;
-        else if (Random.Range(0, 100) < biome.HonestMerchantPercentage)
-            _alignmentMerchant = AlignmentMerchant.Honest;
-        _minutesNeededAvoid = 20;
+        else if (Random.Range(0, 100) < biome.OnSaleMerchantPercentage)
+            _alignmentMerchant = AlignmentMerchant.OnSale;
         _minutesNeededAvoid = 20;
         DisplayStats();
     }
@@ -36,13 +37,14 @@ class CardMerchantBhv : CardBhv
         if (Helper.FloatEqualsPrecision(transform.position.x, _likePosition.x, 0.1f))
         {
             _state = CardState.Off;
-            _instantiator.NewPopupMerchant(_character, _alignmentMerchant, _inventoryItemType, isBuying: true, AfterVenture, null);
+            _instantiator.NewPopupMerchant(_character, _alignmentMerchant, _inventoryItemType, isBuying: true, AfterVenture, _itemsForSale);
         }
     }
 
-    private object AfterVenture(bool result)
+    private object AfterVenture(List<InventoryItem> itemsForSale)
     {
-        _swipeSceneBhv.NewCard(_minutesNeededVenturePositive);
-        return result;
+        _itemsForSale = itemsForSale;
+        CancelAction();
+        return true;
     }
 }

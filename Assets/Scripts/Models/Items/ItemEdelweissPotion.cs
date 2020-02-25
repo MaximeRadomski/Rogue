@@ -12,6 +12,7 @@ public class ItemEdelweissPotion : Item
         IconId = 1;
         MinutesNeeded = 10;
         PositiveAction = "Drink";
+        BasePrice = 100;
     }
 
     public override void OnUse(Character character, int id, System.Func<bool, object> resultAction)

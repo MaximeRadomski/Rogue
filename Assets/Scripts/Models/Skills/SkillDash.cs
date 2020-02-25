@@ -22,6 +22,7 @@ public class SkillDash : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,1, 1,1, 1,0, 1,-1, 0,-1, -1,-1, -1,0, -1,1 };
         IconId = 4;
+        BasePrice = 100;
 
         Description = "taAvoid the first next turn hit";
     }

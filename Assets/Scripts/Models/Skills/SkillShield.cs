@@ -21,6 +21,7 @@ public class SkillShield : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,0 };
         IconId = 0;
+        BasePrice = 100;
 
         Description = "Block the first next turn hit";
     }

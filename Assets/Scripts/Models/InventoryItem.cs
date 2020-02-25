@@ -12,6 +12,9 @@ public abstract class InventoryItem
     public string Story;
     public string PositiveAction = Constants.InventoryItemPositiveAction;
     public string NegativeAction = Constants.InventoryItemNegativeAction;
+    public int BasePrice;
+
+    public int _weaponRandomPriceAdd;
 
     public virtual string GetNameWithColor()
     {
@@ -23,8 +26,34 @@ public abstract class InventoryItem
         return nameTag + Name + "</material>";
     }
 
-    public int GetPrice()
+    public int GetPrice(Character character, bool isBuying, AlignmentMerchant alignment)
     {
-        return 20;
+        int levelAdd = (BasePrice / 3) * (character.Level - 1);
+        int rarityAdd = 0;
+        if (Rarity == Rarity.Magical)
+            rarityAdd = (int)(BasePrice * 2f);
+        else if (Rarity == Rarity.Magical)
+            rarityAdd = (int)(BasePrice * 3.5f);
+        int finalPrice = BasePrice + levelAdd + rarityAdd;
+        if (InventoryItemType == InventoryItemType.Weapon)
+            finalPrice += _weaponRandomPriceAdd == 0 ? (_weaponRandomPriceAdd = Random.Range(1, BasePrice / 5)) : _weaponRandomPriceAdd;
+        if (isBuying)
+        {
+            float multiplier = 1.0f;
+            if (alignment == AlignmentMerchant.Fraudulent)
+                multiplier = Helper.MultiplierFromPercent(1, BiomesData.MerchentPriceBonusPercent);
+            else if (alignment == AlignmentMerchant.OnSale)
+                multiplier = Helper.MultiplierFromPercent(1, -BiomesData.MerchentPriceBonusPercent);
+            return (int)(finalPrice * multiplier);
+        }
+        else
+        {
+            float multiplier = 1.0f;
+            if (alignment == AlignmentMerchant.Fraudulent)
+                multiplier = Helper.MultiplierFromPercent(1, -BiomesData.MerchentPriceBonusPercent);
+            else if (alignment == AlignmentMerchant.OnSale)
+                multiplier = Helper.MultiplierFromPercent(1, BiomesData.MerchentPriceBonusPercent);
+            return (int)((finalPrice / 5) * multiplier);
+        }
     }
 }

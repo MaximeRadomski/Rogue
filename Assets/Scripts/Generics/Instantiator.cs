@@ -56,7 +56,7 @@ public class Instantiator : MonoBehaviour
         tmpPopupInstance.GetComponent<PopupInventoryBhv>().SetPrivates(character, updateAction, resultAction);
     }
 
-    public void NewPopupMerchant(Character character, AlignmentMerchant alignment, InventoryItemType type, bool isBuying, System.Func<bool, object> resultAction, List<InventoryItem> itemsForSale)
+    public void NewPopupMerchant(Character character, AlignmentMerchant alignment, InventoryItemType type, bool isBuying, System.Func<List<InventoryItem>, object> resultAction, List<InventoryItem> itemsForSale)
     {
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupMerchant");
         var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);

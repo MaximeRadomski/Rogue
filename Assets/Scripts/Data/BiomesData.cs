@@ -44,6 +44,8 @@ public static class BiomesData
             GoodInnPercentage = 20,
             MediocreInnPercentage = 20,
             MerchantPercent = Random.Range(10, 16),
+            OnSaleMerchantPercentage = 25,
+            FraudulentMerchantPercentage = 25,
             Destinations = 2,
             Steps = MaxStepFromMapType(type)
         };

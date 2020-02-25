@@ -149,7 +149,8 @@ public static class WeaponsData
             RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
             RangeZones = null,
             NbSkinParts = 4,
-            Weight = Random.Range(3, 6 + 1)
+            Weight = Random.Range(3, 6 + 1),
+            BasePrice = 100
         };
     }
 
@@ -170,7 +171,8 @@ public static class WeaponsData
             RangeZones = null,
             NbSkinParts = 4,
             Specificity = "Only in line",
-            Weight = Random.Range(3, 6 + 1)
+            Weight = Random.Range(3, 6 + 1),
+            BasePrice = 90
         };
     }
 
@@ -190,7 +192,8 @@ public static class WeaponsData
             RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
             RangeZones = new List<RangeDirection> { RangeDirection.Up },
             NbSkinParts = 4,
-            Weight = Random.Range(2, 4 + 1)
+            Weight = Random.Range(2, 4 + 1),
+            BasePrice = 40
         };
     }
 
@@ -211,7 +214,8 @@ public static class WeaponsData
             RangeZones = null,
             NbSkinParts = 4,
             Specificity = "Only diagonally",
-            Weight = Random.Range(1, 2 + 1)
+            Weight = Random.Range(1, 2 + 1),
+            BasePrice = 20
         };
     }
 
@@ -238,7 +242,8 @@ public static class WeaponsData
                                              -2,1, -3,1, -4,1, 2,-2, 2,-3, 3,-2, -1,2, -1,3, -1,4, },
             RangeZones = null,
             NbSkinParts = 3,
-            Weight = Random.Range(3, 6 + 1)
+            Weight = Random.Range(3, 6 + 1),
+            BasePrice = 150
         };
     }
 
@@ -258,7 +263,8 @@ public static class WeaponsData
             RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
             RangeZones = null,
             NbSkinParts = 4,
-            Weight = Random.Range(2, 4 + 1)
+            Weight = Random.Range(2, 4 + 1),
+            BasePrice = 120
         };
     }
 
@@ -279,7 +285,8 @@ public static class WeaponsData
             RangeZones = new List<RangeDirection> { RangeDirection.Left, RangeDirection.Right },
             NbSkinParts = 5,
             Specificity = "Dwarf craftsmanship, fixed Damage Range",
-            Weight = Random.Range(10, 20 + 1)
+            Weight = Random.Range(10, 20 + 1),
+            BasePrice = 200
         };
     }
 
@@ -300,7 +307,8 @@ public static class WeaponsData
             RangeZones = null,
             NbSkinParts = 5,
             Specificity = "Dwarf craftsmanship, fixed Damage Range",
-            Weight = Random.Range(5, 10 + 1)
+            Weight = Random.Range(5, 10 + 1),
+            BasePrice = 200
         };
     }
 
@@ -320,7 +328,8 @@ public static class WeaponsData
             RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
             RangeZones = new List<RangeDirection> { RangeDirection.Up, RangeDirection.Left, RangeDirection.Right, RangeDirection.DiagonalLeft, RangeDirection.DiagonalRight },
             NbSkinParts = 5,
-            Weight = Random.Range(10, 20 + 1)
+            Weight = Random.Range(10, 20 + 1),
+            BasePrice = 250
         };
     }
 
@@ -341,7 +350,8 @@ public static class WeaponsData
             RangeZones = null,
             NbSkinParts = 2,
             Specificity = "Only diagonally",
-            Weight = Random.Range(4, 8 + 1)
+            Weight = Random.Range(4, 8 + 1),
+            BasePrice = 80
         };
     }
 }

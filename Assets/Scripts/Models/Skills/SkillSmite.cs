@@ -27,6 +27,7 @@ public class SkillSmite : Skill
                                          -3,0, -4,0, -5,0,
                                          -2,1, -3,1, -4,1, 2,-2, 2,-3, 3,-2, -1,2, -1,3, -1,4, };
         IconId = 14;
+        BasePrice = 250;
 
         Description = "Deal <material=\"LongRed\">100 HP</material> + Character Leveling Damages Percent per user levels";
     }

@@ -19,6 +19,7 @@ public class SkillTeleportation : Skill
         MaxRange = 99;
         RangeType = RangeType.FullRange;
         IconId = 10;
+        BasePrice = 150;
 
         Description = "Teleport on any cell on the map";
     }

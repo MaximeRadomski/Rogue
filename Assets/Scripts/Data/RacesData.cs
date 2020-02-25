@@ -94,6 +94,9 @@ public static class RacesData
         tmpCharacter.Level = level;
         tmpCharacter.HpMax = Helper.MaxHpFromLevelOne(tmpCharacter.HpMax, level, tmpCharacter.LevelingHealthPercent);
         tmpCharacter.Gold = Random.Range(0,25*tmpCharacter.Level);
+        //DEBUG
+        if (race == CharacterRace.Dwarf)
+            tmpCharacter.Gold = 7777;
         tmpCharacter.Experience = 0;
         tmpCharacter.Hp = tmpCharacter.HpMax;
         return tmpCharacter;

@@ -41,6 +41,8 @@ public static class Helper
 
     public static int CharacterAfterString(string str, string subStr)
     {
+        if (!str.Contains(subStr))
+            return -1;
         return str.IndexOf(subStr) + subStr.Length;
     }
 

@@ -20,6 +20,7 @@ public class SkillClarity : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 };
         IconId = 13;
+        BasePrice = 100;
 
         Description = "Clear all positive and negative effects";
     }

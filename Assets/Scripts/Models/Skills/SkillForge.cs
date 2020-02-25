@@ -22,6 +22,7 @@ public class SkillForge : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,0 };
         IconId = 6;
+        BasePrice = 100;
 
         Description = "Empower your next hits by 75% for the next two turns";
     }

@@ -20,6 +20,7 @@ public class SkillRoots : Skill
         MaxRange = 0;
         RangeType = RangeType.NoRange;
         IconId = 8;
+        BasePrice = 100;
 
         Description = "Adds a chance to remove <material=\"LongGreen\">0</material> to <material=\"LongGreen\">3 MP</material> each hit";
     }

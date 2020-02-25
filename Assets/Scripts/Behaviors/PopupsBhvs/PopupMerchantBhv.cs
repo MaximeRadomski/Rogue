@@ -4,7 +4,7 @@ using UnityEngine;
 
 class PopupMerchantBhv : StatsDisplayerBhv
 {
-    public List<Sprite> _buySellSprites;
+    public List<Sprite> BuySellSprites;
 
     private Character _character;
     private List<GameObject> _tabs;
@@ -19,19 +19,21 @@ class PopupMerchantBhv : StatsDisplayerBhv
     private TMPro.TextMeshPro _playerGoldText;
     private TMPro.TextMeshPro _weightText;
     private bool _isBuying;
-    private System.Func<bool, object> _afterManageAction;
+    private System.Func<List<InventoryItem>, object> _afterManageAction;
     private AlignmentMerchant _alignment;
     private InventoryItemType _type;
 
     private List<InventoryItem> _items;
     private List<InventoryItem> _itemsForSale;
     private int _itemsInventoryPlace;
+    private int _currentPrice;
 
-    public void SetPrivates(Character character, AlignmentMerchant alignment, InventoryItemType type, bool isBuying, System.Func<bool, object> afterManageAction, List<InventoryItem> itemsForSale)
+    public void SetPrivates(Character character, AlignmentMerchant alignment, InventoryItemType type, bool isBuying, System.Func<List<InventoryItem>, object> afterManageAction, List<InventoryItem> itemsForSale)
     {
         _isBuying = isBuying;
         _alignment = alignment;
         _character = character;
+        _type = type;
         _afterManageAction = afterManageAction;
         _selectedItem = 0;
         _selectedSprite = transform.Find("SelectedSprite").gameObject;
@@ -76,7 +78,7 @@ class PopupMerchantBhv : StatsDisplayerBhv
         transform.Find("Title").GetComponent<TMPro.TextMeshPro>().text = _isBuying ? "Buy" : "Sell";
         transform.Find("ExitButton").GetComponent<ButtonBhv>().EndActionDelegate = ExitPopup;
         transform.Find("SwitchButton").GetComponent<ButtonBhv>().EndActionDelegate = SwitchBuySell;
-        transform.Find("SwitchButton").GetComponent<SpriteRenderer>().sprite = _isBuying ? _buySellSprites[1] : _buySellSprites[0];
+        transform.Find("SwitchButton").GetComponent<SpriteRenderer>().sprite = _isBuying ? BuySellSprites[1] : BuySellSprites[0];
         _buttonPositive.GetComponent<ButtonBhv>().EndActionDelegate = PositiveAction;
         _weightText.gameObject.GetComponent<ButtonBhv>().EndActionDelegate = WeightAction;
         for (int i = 0; i < 6; ++i)
@@ -147,7 +149,8 @@ class PopupMerchantBhv : StatsDisplayerBhv
             }
             _priceText.transform.position = _buttonPriceNPositivePosition[0];
             _buttonPositive.transform.position = _buttonPriceNPositivePosition[1];
-            _priceText.text = item.GetPrice() + " " + Constants.UnitGold;
+            _currentPrice = item.GetPrice(_character, _isBuying, _alignment);
+            _priceText.text = _currentPrice + " " + Constants.UnitGold;
             _buttonPositiveText.text = _isBuying ? "Buy" : "Sell";
         }
         else //Inventory Empty
@@ -167,7 +170,35 @@ class PopupMerchantBhv : StatsDisplayerBhv
 
     private void PositiveAction()
     {
-
+        if (_isBuying)
+        {
+            if (_character.Gold > _currentPrice)
+            {
+                if (_character.Inventory.Count < _character.InventoryPlace)
+                {
+                    _character.LooseGold(_currentPrice);
+                    _character.Inventory.Add(_itemsForSale[_selectedItem]);
+                    _itemsForSale.RemoveAt(_selectedItem);
+                    SetButtons();
+                }
+                else
+                {
+                    _instantiator.NewSnack("Your inventory is full");
+                }
+            }
+            else
+            {
+                _instantiator.NewSnack("You do not have enough <material=\"LongGold\">" + Constants.UnitGold + "</material>");
+            }
+        }
+        else
+        {
+            _character.GainGold(_currentPrice);
+            if (_itemsForSale.Count < 6)
+                _itemsForSale.Add(_character.Inventory[_selectedItem]);
+            _character.Inventory.RemoveAt(_selectedItem);
+            SetButtons();
+        }
     }
 
     private void WeightAction()
@@ -212,5 +243,11 @@ class PopupMerchantBhv : StatsDisplayerBhv
             transform.GetChild(i).gameObject.SetActive(false); //In order for the "GameObject.Find()" not to see any doublons
         _instantiator.NewPopupMerchant(_character, _alignment, _type, !_isBuying, _afterManageAction, _itemsForSale);
         Destroy(gameObject);
+    }
+
+    public override void ExitPopup()
+    {
+        _afterManageAction(_itemsForSale);
+        base.ExitPopup();
     }
 }

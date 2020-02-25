@@ -16,6 +16,6 @@ public class Biome
 
     public bool EncounteredMerchant;
     public int MerchantPercent;
-    public int HonestMerchantPercentage;
+    public int OnSaleMerchantPercentage;
     public int FraudulentMerchantPercentage;
 }

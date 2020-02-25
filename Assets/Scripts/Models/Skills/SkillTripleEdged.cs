@@ -21,6 +21,7 @@ public class SkillTripleEdged : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,0 };
         IconId = 16;
+        BasePrice = 300;
 
         Description = "Make and receive double damages during two turns";
     }

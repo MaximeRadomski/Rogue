@@ -20,6 +20,7 @@ public class SkillHeal : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,0 };
         IconId = 12;
+        BasePrice = 100;
 
         Description = "Heal the user for <material=\"LongRed\">50 HP</material> + 10% per user levels";
     }

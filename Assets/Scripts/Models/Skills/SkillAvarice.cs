@@ -20,6 +20,7 @@ public class SkillAvarice : Skill
         MaxRange = 0;
         RangeType = RangeType.NoRange;
         IconId = 3;
+        BasePrice = 100;
 
         Description = "Steal <material=\"LongGold\">Gold</material> on each hit";
     }

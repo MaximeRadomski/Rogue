@@ -20,6 +20,7 @@ public class SkillVampire : Skill
         MaxRange = 0;
         RangeType = RangeType.NoRange;
         IconId = 2;
+        BasePrice = 100;
 
         Description = "Steal <material=\"LongRed\">" + _percentToSteal + "%</material> of the damages done as <material=\"LongRed\">HP</material>";
     }

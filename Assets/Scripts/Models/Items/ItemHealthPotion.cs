@@ -14,6 +14,7 @@ public class ItemHealthPotion : Item
         IconId = 0;
         MinutesNeeded = 15;
         PositiveAction = "Drink";
+        BasePrice = 50;
     }
 
     private int _hp = 75;
