@@ -9,7 +9,7 @@ public static class ItemsData
     public static int MagicalItemAppearancePercent = 30;
 
     public static string[] NormalItemsNames = { "Health Potion" };
-    public static string[] MagicalItemsNames = { "Health Potion" };
+    public static string[] MagicalItemsNames = { "Dragon's Tail Dry Sausage" };
     public static string[] RareItemsNames = { "Edelweiss Potion" };
 
     public static Item GetRandomItem(bool isPlayer = false)
@@ -37,7 +37,9 @@ public static class ItemsData
     {
         if (string.IsNullOrEmpty(name))
             return null;
-        var instance = Activator.CreateInstance(Type.GetType("Item" + name.Replace(" ", "")));
+        var cleanName = name.Replace(" ", "");
+        cleanName = cleanName.Replace("'", "");
+        var instance = Activator.CreateInstance(Type.GetType("Item" + cleanName));
         return (Item)instance;
     }
 }

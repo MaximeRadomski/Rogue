@@ -121,7 +121,7 @@ public class Character
             amount = Gold;
         Gold -= amount;
         if (_instantiator == null) GetPrivates();
-        _instantiator.PopText("-" + amount + " " + Constants.UnitGold, _ressourcePopPosition, TextType.Gold, TextThickness.Long);
+        _instantiator.PopText("-" + amount + " " + Constants.UnitGold, _gold?.transform.position ?? _ressourcePopPosition, TextType.Gold, TextThickness.Long);
         if (_gold != null) _gold.text = Gold.ToString() + " " + Constants.UnitGold;
         return amount;
     }
@@ -133,7 +133,7 @@ public class Character
             amountToAdd = Constants.MaxGold - Gold;
         Gold += amountToAdd;
         if (_instantiator == null) GetPrivates();
-        _instantiator.PopText("+" + amountToAdd + " " + Constants.UnitGold, _ressourcePopPosition, TextType.Gold, TextThickness.Long);
+        _instantiator.PopText("+" + amountToAdd + " " + Constants.UnitGold, _gold?.transform.position ?? _ressourcePopPosition, TextType.Gold, TextThickness.Long);
         if (_gold != null) _gold.text = Gold.ToString() + " " + Constants.UnitGold;
         return amountToAdd;
     }
@@ -148,7 +148,7 @@ public class Character
     {
         int amountToAdd = amount;
         if (_instantiator == null) GetPrivates();
-        _instantiator.PopText("+" + amountToAdd + " " + Constants.UnitXp, _ressourcePopPosition, TextType.Xp, TextThickness.Long);
+        _instantiator.PopText("+" + amountToAdd + " " + Constants.UnitXp, _xp?.transform.position ?? _ressourcePopPosition, TextType.Xp, TextThickness.Long);
         if (_xp != null) _xp.text = Experience.ToString() + "/" + Helper.XpNeedForLevel(Level) + " " + Constants.UnitXp;
         var needed = Helper.XpNeedForLevel(Level);
         if (Experience + amountToAdd >= needed)
@@ -170,7 +170,7 @@ public class Character
                 }
             }
             if (_instantiator == null) GetPrivates();
-            _instantiator.PopText("LEVEL " + Level, _ressourcePopPosition, TextType.Magical);
+            _instantiator.PopText("LEVEL " + Level, _level?.transform.position ?? _ressourcePopPosition, TextType.Magical);
             if (_level != null) _level.text = Level.ToString();
         }
         else

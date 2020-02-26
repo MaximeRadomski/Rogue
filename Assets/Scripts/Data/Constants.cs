@@ -98,7 +98,12 @@ public static class Constants
         "Remember to reed tips!",
         "You look nice today.",
         "Make war, not love.\n- Famous Orc",
-        "Orcs names are not gendered."
+        "Orcs names are not gendered.",
+        "Humans are omnivorous.",
+        "Gobelins are carnivorous.",
+        "Elves are omnivorous.",
+        "Dwarves are omnivorous.",
+        "Orcs are vegans."
     };
 
     // CACHE SAVES

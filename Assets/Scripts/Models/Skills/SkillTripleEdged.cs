@@ -23,7 +23,7 @@ public class SkillTripleEdged : Skill
         IconId = 16;
         BasePrice = 300;
 
-        Description = "Make and receive double damages during two turns";
+        Description = "Make and receive triple damages during two turns";
     }
 
     public override void Activate(int x, int y)

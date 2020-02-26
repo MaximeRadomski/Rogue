@@ -75,7 +75,7 @@ class PopupMerchantBhv : StatsDisplayerBhv
 
     private void SetButtons()
     {
-        transform.Find("Title").GetComponent<TMPro.TextMeshPro>().text = _isBuying ? "Buy" : "Sell";
+        transform.Find("Title").GetComponent<TMPro.TextMeshPro>().text = _isBuying ? "Purchase" : "Sell";
         transform.Find("ExitButton").GetComponent<ButtonBhv>().EndActionDelegate = ExitPopup;
         transform.Find("SwitchButton").GetComponent<ButtonBhv>().EndActionDelegate = SwitchBuySell;
         transform.Find("SwitchButton").GetComponent<SpriteRenderer>().sprite = _isBuying ? BuySellSprites[1] : BuySellSprites[0];
@@ -151,7 +151,7 @@ class PopupMerchantBhv : StatsDisplayerBhv
             _buttonPositive.transform.position = _buttonPriceNPositivePosition[1];
             _currentPrice = item.GetPrice(_character, _isBuying, _alignment);
             _priceText.text = _currentPrice + " " + Constants.UnitGold;
-            _buttonPositiveText.text = _isBuying ? "Buy" : "Sell";
+            _buttonPositiveText.text = _isBuying ? "Purchase" : "Sell";
         }
         else //Inventory Empty
         {

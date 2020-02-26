@@ -14,7 +14,7 @@ public abstract class InventoryItem
     public string NegativeAction = Constants.InventoryItemNegativeAction;
     public int BasePrice;
 
-    public int _weaponRandomPriceAdd;
+    public int _weaponRandomPriceAdd = -1;
 
     public virtual string GetNameWithColor()
     {
@@ -32,11 +32,11 @@ public abstract class InventoryItem
         int rarityAdd = 0;
         if (Rarity == Rarity.Magical)
             rarityAdd = (int)(BasePrice * 2f);
-        else if (Rarity == Rarity.Magical)
+        else if (Rarity == Rarity.Rare)
             rarityAdd = (int)(BasePrice * 3.5f);
         int finalPrice = BasePrice + levelAdd + rarityAdd;
-        if (InventoryItemType == InventoryItemType.Weapon)
-            finalPrice += _weaponRandomPriceAdd == 0 ? (_weaponRandomPriceAdd = Random.Range(1, BasePrice / 5)) : _weaponRandomPriceAdd;
+        //if (InventoryItemType == InventoryItemType.Weapon)
+            finalPrice += _weaponRandomPriceAdd == -1 ? (_weaponRandomPriceAdd = Random.Range(1, BasePrice / 5)) : _weaponRandomPriceAdd;
         if (isBuying)
         {
             float multiplier = 1.0f;
