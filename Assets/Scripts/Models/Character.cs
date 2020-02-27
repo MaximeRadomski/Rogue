@@ -10,6 +10,7 @@ public class Character
     public CharacterRace Race;
     public CharacterRace StrongAgainst;
     public MapType StrongIn;
+    public Diet Diet;
     public int Level;
     public int LevelingHealthPercent;
     public int LevelingDamagePercent;

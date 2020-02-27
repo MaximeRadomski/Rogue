@@ -17,6 +17,17 @@ public class ItemEdelweissPotion : Item
 
     public override void OnUse(Character character, int id, System.Func<bool, object> resultAction)
     {
+        if (character.Diet == Diet.Carnivorous)
+        {
+            var instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator;
+            instantiator.NewPopupYesNo("Wrong Diet", "You are carnivorous...\nYou won't drink it.", string.Empty, "Hmm...", AfterDiet);
+            object AfterDiet(bool result)
+            {
+                resultAction(false);
+                return result;
+            }
+            return;
+        }
         if (character.Hp < character.HpMax)
         {
             character.GainHp((int)(character.HpMax * 0.15f));

@@ -17,6 +17,9 @@ TextureImporter:
   - first:
       213: -6430072111632870841
     second: IconsItem_1
+  - first:
+      213: -3317104535529362120
+    second: IconsItem_2
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -127,7 +130,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c21b99a7f9e1a4342971ffdbf8e7b3ef
+      spriteID: 465c76b546c310846b1d427845f79b3c
       internalID: -8892815105824508810
       vertices: []
       indices: 
@@ -148,8 +151,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c59a3454bd0ada644b1b65477fee38a5
+      spriteID: c6fd142f9571c2f4aa6912c40055178f
       internalID: -6430072111632870841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconsItem_2
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 0
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72d020d2d9d778640b3cda5a9b2a391f
+      internalID: -3317104535529362120
       vertices: []
       indices: 
       edges: []

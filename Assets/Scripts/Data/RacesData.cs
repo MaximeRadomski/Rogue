@@ -95,7 +95,7 @@ public static class RacesData
         tmpCharacter.HpMax = Helper.MaxHpFromLevelOne(tmpCharacter.HpMax, level, tmpCharacter.LevelingHealthPercent);
         tmpCharacter.Gold = Random.Range(0,25*tmpCharacter.Level);
         //DEBUG
-        if (race == CharacterRace.Dwarf)
+        if (race == CharacterRace.Dwarf || race == CharacterRace.Orc)
             tmpCharacter.Gold = 7777;
         tmpCharacter.Experience = 0;
         tmpCharacter.Hp = tmpCharacter.HpMax;
@@ -118,6 +118,7 @@ public static class RacesData
             Race = CharacterRace.Human,
             StrongAgainst = CharacterRace.Gobelin,
             StrongIn = MapType.City,
+            Diet = Diet.Omnivorous,
             HpMax = 300,
             PaMax = 6,
             PmMax = 2,
@@ -148,6 +149,7 @@ public static class RacesData
             Race = CharacterRace.Gobelin,
             StrongAgainst = CharacterRace.Elf,
             StrongIn = MapType.Sewers,
+            Diet = Diet.Carnivorous,
             HpMax = 250,
             PaMax = 6,
             PmMax = 3,
@@ -181,6 +183,7 @@ public static class RacesData
             Race = CharacterRace.Elf,
             StrongAgainst = CharacterRace.Dwarf,
             StrongIn = MapType.Forest,
+            Diet = Diet.Omnivorous,
             HpMax = 200,
             PaMax = 6,
             PmMax = 4,
@@ -210,6 +213,7 @@ public static class RacesData
             Race = CharacterRace.Dwarf,
             StrongAgainst = CharacterRace.Orc,
             StrongIn = MapType.Mines,
+            Diet = Diet.Omnivorous,
             HpMax = 400,
             PaMax = 6,
             PmMax = 2,
@@ -222,7 +226,8 @@ public static class RacesData
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.DwarfSkillsNames[0]) :
                                                                  SkillsData.GetSkillFromName(SkillsData.DwarfSkillsNames[1])},
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
-            Inventory = new List<InventoryItem> { ItemsData.GetRandomItem() },
+            Inventory = new List<InventoryItem> { ItemsData.GetRandomItem(),
+                                                  ItemsData.GetRandomItemFromRarity(Rarity.Magical) },
             InventoryPlace = 3,
             WeightLimit = 60,
             SleepHoursNeeded = 7,
@@ -239,6 +244,7 @@ public static class RacesData
             Race = CharacterRace.Orc,
             StrongAgainst = CharacterRace.Human,
             StrongIn = MapType.Mountains,
+            Diet = Diet.Herbivorous,
             HpMax = 500,
             PaMax = 6,
             PmMax = 2,
@@ -251,7 +257,7 @@ public static class RacesData
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.OrcSkillsNames[0]) :
                                                                  SkillsData.GetSkillFromName(SkillsData.OrcSkillsNames[1])},
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
-            Inventory = new List<InventoryItem> { ItemsData.GetRandomItem() },
+            Inventory = new List<InventoryItem> { ItemsData.GetRandomItemFromRarity(Rarity.Magical) },
             InventoryPlace = 3,
             WeightLimit = 80,
             SleepHoursNeeded = 12,

@@ -103,7 +103,7 @@ public static class Constants
         "Gobelins are carnivorous.",
         "Elves are omnivorous.",
         "Dwarves are omnivorous.",
-        "Orcs are vegans."
+        "Orcs are herbivorous."
     };
 
     // CACHE SAVES

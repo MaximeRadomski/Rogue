@@ -52,9 +52,9 @@ public class CardInnBhv : CardBhv
     private void OnVenturePositive()
     {
         _instantiator.NewPopupYesNo("Inn",
-            MakeContent(_alignmentInn + " Inn: ", "Sleep Time " + (_alignmentInn != AlignmentInn.Good ? "+" : "") + (_alignmentInn.GetHashCode() * BiomesData.InnSleepBonusPercent) + "%")
-            + MakeContent("Race Sleep Time: ", Helper.TimeFromMinutes(_character.SleepHoursNeeded * 60))
-            + MakeContent("Race HP Restoration: ", "+" + _character.SleepRestorationPercent + "%")
+            MakeContent("Sleep Time Needed: ", Helper.TimeFromMinutes(_character.SleepHoursNeeded * 60))
+            + MakeContent(_alignmentInn + " Inn: ", "Sleep Time " + (_alignmentInn != AlignmentInn.Good ? "+" : "") + (_alignmentInn.GetHashCode() * BiomesData.InnSleepBonusPercent) + "%")
+            + MakeContent("HP Restoration: ", "+" + _character.SleepRestorationPercent + "%")
             + MakeContent("", "You recover <material=\"LongRed\">" + _hpRecovered + " HP</material>."),
             string.Empty, "Zzz", AfterVenturePositive);
     }
@@ -75,7 +75,7 @@ public class CardInnBhv : CardBhv
 
     private void OnVentureNegative()
     {
-        _instantiator.NewPopupYesNo("Inn", "The innkeeper throw you out of his establishment when he realises you do not have enough <material=\"LongGold\">"
+        _instantiator.NewPopupYesNo("Inn", "The innkeeper throws you out of his establishment when he realises you do not have enough <material=\"LongGold\">"
             + Constants.UnitGold + "</material> to rent a room.",
             string.Empty, "Damn", AfterVentureNegative);
     }
