@@ -5,7 +5,7 @@ class ItemDragonsTailDrySausage : Item
     public ItemDragonsTailDrySausage()
     {
         Name = ItemsData.MagicalItemsNames[0];
-        Description = "Boost maximum equipment load by 5 " + Constants.UnitWeight;
+        Description = "Boosts maximum equipment load by 5 " + Constants.UnitWeight;
         Story = "A dish favoured by Havel the Rock, the famous knight in dragon's scale armor.";
         Weight = 3;
         Rarity = Rarity.Magical;

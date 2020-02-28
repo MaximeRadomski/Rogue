@@ -8,9 +8,9 @@ public static class ItemsData
     public static int RareItemAppearancePercent = 10;
     public static int MagicalItemAppearancePercent = 30;
 
-    public static string[] NormalItemsNames = { "Health Potion" };
+    public static string[] NormalItemsNames = { "Health Potion", "Whetstone" };
     public static string[] MagicalItemsNames = { "Dragon's Tail Dry Sausage" };
-    public static string[] RareItemsNames = { "Edelweiss Potion" };
+    public static string[] RareItemsNames = { "Edelweiss Potion", "Summoned Broccoli" };
 
     public static Item GetRandomItem(bool isPlayer = false)
     {

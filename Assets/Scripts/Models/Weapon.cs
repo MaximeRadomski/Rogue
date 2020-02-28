@@ -16,6 +16,7 @@ public class Weapon : InventoryItem
     public string Specificity;
     public List<int> RangePositions;
     public List<RangeDirection> RangeZones;
+    public bool UnequipLock;
 
     public int NbSkinParts;
     public List<string> WeaponParts;

@@ -96,6 +96,7 @@ public class PopupCharacterStatsBhv : StatsDisplayerBhv
         statsList += MakeContent("Fav Weapons: ", _character.FavWeapons[0] + ", " + _character.FavWeapons[1]);
         statsList += MakeContent("Leveling Health: ", "+" + _character.LevelingHealthPercent + "%");
         statsList += MakeContent("Leveling Damages: ", "+" + _character.LevelingDamagePercent + "%");
+        statsList += MakeContent("Diet: ", _character.Diet.ToString());
 
         statsList += MakeTitle("Gender Characteristics");
         statsList += MakeContent("Weapons Damages: ", _character.Gender == CharacterGender.Female ? "-" + RacesData.GenderDamage + "%" : "+" + RacesData.GenderDamage + "%");

@@ -20,6 +20,12 @@ TextureImporter:
   - first:
       213: -3317104535529362120
     second: IconsItem_2
+  - first:
+      213: -5196331826010747551
+    second: IconsItem_3
+  - first:
+      213: 2478685799576532584
+    second: IconsItem_4
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -78,7 +84,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 32
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -90,7 +96,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 32
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -102,7 +108,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 32
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -130,7 +136,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 465c76b546c310846b1d427845f79b3c
+      spriteID: 9748ffed5750b8d4380e1f8c776f5eef
       internalID: -8892815105824508810
       vertices: []
       indices: 
@@ -151,7 +157,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6fd142f9571c2f4aa6912c40055178f
+      spriteID: da4701e593beba648b0c7faa62e30373
       internalID: -6430072111632870841
       vertices: []
       indices: 
@@ -172,8 +178,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 72d020d2d9d778640b3cda5a9b2a391f
+      spriteID: c9b2fdaa406f932489ce022d4c6a58fc
       internalID: -3317104535529362120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconsItem_3
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 0
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 678580964e4d1984d85b5f469bc06981
+      internalID: -5196331826010747551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconsItem_4
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 0
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 933b798961b75e64181ac73630eec7da
+      internalID: 2478685799576532584
       vertices: []
       indices: 
       edges: []

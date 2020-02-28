@@ -61,7 +61,7 @@ public class CardInnBhv : CardBhv
 
     private object AfterVenturePositive(bool result)
     {
-        _instantiator.NewOverBlend(OverBlendType.StartLoadingEndAction, "SLEEPING LIKE A COFFIN", 0.75f, AfterSleep);
+        _instantiator.NewOverBlend(OverBlendType.StartLoadingEndAction, "DEEP SLEEP", 0.75f, AfterSleep);
         return result;
     }
 

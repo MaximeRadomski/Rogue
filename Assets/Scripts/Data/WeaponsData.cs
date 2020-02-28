@@ -23,6 +23,7 @@ public static class WeaponsData
     public static int ChanceNotRaceWeaponPercent = 10;
     public static int RareWeaponAppearancePercent = 5;
     public static int MagicalWeaponAppearancePercent = 15;
+    public static int MaxSharpenedAmount = 3;
 
     public static Weapon GetRandomWeapon()
     {
