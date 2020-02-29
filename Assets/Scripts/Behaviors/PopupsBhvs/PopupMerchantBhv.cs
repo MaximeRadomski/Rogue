@@ -21,7 +21,7 @@ class PopupMerchantBhv : StatsDisplayerBhv
     private bool _isBuying;
     private System.Func<List<InventoryItem>, object> _afterManageAction;
     private AlignmentMerchant _alignment;
-    private InventoryItemType _type;
+    private InventoryItemType _merchantType;
 
     private List<InventoryItem> _items;
     private List<InventoryItem> _itemsForSale;
@@ -33,7 +33,7 @@ class PopupMerchantBhv : StatsDisplayerBhv
         _isBuying = isBuying;
         _alignment = alignment;
         _character = character;
-        _type = type;
+        _merchantType = type;
         _afterManageAction = afterManageAction;
         _selectedItem = 0;
         _selectedSprite = transform.Find("SelectedSprite").gameObject;
@@ -193,11 +193,17 @@ class PopupMerchantBhv : StatsDisplayerBhv
         }
         else
         {
-            _character.GainGold(_currentPrice);
-            if (_itemsForSale.Count < 6)
+            if (_character.Inventory[_selectedItem].InventoryItemType == _merchantType)
+            {
+                _character.GainGold(_currentPrice);
                 _itemsForSale.Add(_character.Inventory[_selectedItem]);
-            _character.Inventory.RemoveAt(_selectedItem);
-            SetButtons();
+                _character.Inventory.RemoveAt(_selectedItem);
+                SetButtons();
+            }
+            else
+            {
+                _instantiator.NewSnack("This merchant won't buy " + _character.Inventory[_selectedItem].InventoryItemType + "s");
+            }
         }
     }
 
@@ -241,7 +247,7 @@ class PopupMerchantBhv : StatsDisplayerBhv
         Constants.DecreaseInputLayer();
         for (int i = 0; i < transform.childCount; ++i)
             transform.GetChild(i).gameObject.SetActive(false); //In order for the "GameObject.Find()" not to see any doublons
-        _instantiator.NewPopupMerchant(_character, _alignment, _type, !_isBuying, _afterManageAction, _itemsForSale);
+        _instantiator.NewPopupMerchant(_character, _alignment, _merchantType, !_isBuying, _afterManageAction, _itemsForSale);
         Destroy(gameObject);
     }
 

@@ -82,6 +82,15 @@ public class Instantiator : MonoBehaviour
         tmpPopupInstance.GetComponent<PopupSwitchBhv>().SetPrivates(item, itemId, character, resultAction);
     }
 
+    public void NewPopupApplyItem(InventoryItem item, int itemId, Character character, InventoryItemType itemType,
+        System.Func<InventoryItem, object> resultAction)
+    {
+        var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupApplyItem");
+        var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
+        Constants.IncreaseInputLayer(tmpPopupInstance.name);
+        tmpPopupInstance.GetComponent<PopupApplyItemBhv>().SetPrivates(item, itemId, character, itemType, resultAction);
+    }
+
     public void NewOverBlend(OverBlendType overBlendType, string message, float? constantLoadingSpeed,
         System.Func<bool, object> resultAction, bool reverse = false)
     {

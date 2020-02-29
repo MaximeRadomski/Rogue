@@ -24,6 +24,7 @@ public class StatsDisplayerBhv : PopupBhv
     {
         _instantiator.LoadWeaponSkin(weapon, container.transform.Find(skinContainerName).gameObject);
         container.transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = weapon.GetNameWithColor();
+        container.transform.Find("Sharpness").GetComponent<TMPro.TextMeshPro>().text = weapon.AmountSharpened > 0 ? ("+" + weapon.AmountSharpened) : string.Empty;
         container.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsWeapon_" + weapon.Type.GetHashCode());
         container.transform.Find("Damages").GetComponent<TMPro.TextMeshPro>().text = weapon.BaseDamage.ToString();
         container.transform.Find("Pa").GetComponent<TMPro.TextMeshPro>().text = weapon.PaNeeded.ToString();
@@ -108,13 +109,14 @@ public class StatsDisplayerBhv : PopupBhv
         return statsList;
     }
 
-    protected void DisplayStatsItem(GameObject container, Item item, string skinContainerName, string statsListName)
+    protected void DisplayStatsItem(GameObject container, Item item, string skinContainerName, string statsListName, bool displayList = true)
     {
         _instantiator.LoadItemSkin(item, container.transform.Find(skinContainerName).gameObject);
         container.transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = item.GetNameWithColor();
         container.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsItem_" + item.IconId);
         container.transform.Find("Cooldown").GetComponent<TMPro.TextMeshPro>().text = Helper.TimeFromMinutes(item.MinutesNeeded);
-        PopulateStatsList(statsListName, GenerateStatsListItem, item);
+        if (displayList)
+            PopulateStatsList(statsListName, GenerateStatsListItem, item);
     }
 
     private string GenerateStatsListItem(object parameter)

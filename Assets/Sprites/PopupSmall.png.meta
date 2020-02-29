@@ -11,6 +11,12 @@ TextureImporter:
   - first:
       213: -7596416231930667894
     second: PopupSmall_2
+  - first:
+      213: 4493015415743633904
+    second: PopupSmall_3
+  - first:
+      213: 163242159488113816
+    second: PopupSmall_4
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -69,7 +75,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -81,7 +87,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 512
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -93,7 +99,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 512
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -121,7 +127,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d96bbfdb6a3f644fa8310ffbc638d3b
+      spriteID: c148cc84af2e4824e948a4b01edc5136
       internalID: -5083097111138202384
       vertices: []
       indices: 
@@ -142,7 +148,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c81631e2553bb14a88d90a091ec0876
+      spriteID: 5f1492408260c6346a1d74762705054d
       internalID: -5337141746365422066
       vertices: []
       indices: 
@@ -163,8 +169,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0c38e6d8a61f8aa4b8d2a857456e521f
+      spriteID: 86cc4769e0f3b0342af3cbe0716acd41
       internalID: -7596416231930667894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PopupSmall_3
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 0
+        width: 142
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d75677975e778a64b8f378bdeca488ba
+      internalID: 4493015415743633904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PopupSmall_4
+      rect:
+        serializedVersion: 2
+        x: 568
+        y: 0
+        width: 142
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1118f0bee8f5feb46bca0cf16e71c3b4
+      internalID: 163242159488113816
       vertices: []
       indices: 
       edges: []
