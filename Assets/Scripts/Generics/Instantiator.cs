@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class Instantiator : MonoBehaviour
 {
-    private InputControlerBhv _inputControler;
-
     void Start()
     {
         SetPrivates();
@@ -263,7 +261,7 @@ public class Instantiator : MonoBehaviour
 
     public GameObject NewCell(int x, int y, char c, Grid grid)
     {
-        var cellGameObject = Resources.Load<GameObject>("Prefabs/TemplateCell");
+        var cellGameObject = Resources.Load<GameObject>("Prefabs/Cell");
         var cellInstance = Instantiate(cellGameObject, cellGameObject.transform.position, cellGameObject.transform.rotation);
         cellInstance.transform.parent = grid.transform;
         cellInstance.transform.position = new Vector3(x * grid.cellSize.x, y * grid.cellSize.y, 0.0f) + grid.transform.position;
@@ -276,7 +274,6 @@ public class Instantiator : MonoBehaviour
             cellBhv.State = CellState.Spawn;
         else
             cellBhv.State = CellState.None;
-        cellInstance.GetComponent<SpriteRenderer>().sortingOrder = Constants.GridMax - y;
         return cellInstance;
     }
 }

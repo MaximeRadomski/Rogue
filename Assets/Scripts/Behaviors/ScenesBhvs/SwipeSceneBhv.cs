@@ -44,7 +44,6 @@ public class SwipeSceneBhv : SceneBhv
         OnRootPreviousScene = Constants.RaceChoiceScene;
         _journey = PlayerPrefsHelper.GetJourney();
         _playerCharacter = PlayerPrefsHelper.GetCharacter(Constants.PpPlayer);
-        Instantiator = GetComponent<Instantiator>();
         Instantiator.SetPrivates();
         _currentBiomeChoice = 0;
         _avoidBhv = GameObject.Find("ButtonAvoid").GetComponent<ButtonBhv>();
@@ -128,7 +127,7 @@ public class SwipeSceneBhv : SceneBhv
 
     private void UpdateDisplayJourneyAndCharacterStats()
     {
-        _orbLife.UpdateContent(_playerCharacter.Hp, _playerCharacter.HpMax, Instantiator);
+        _orbLife.UpdateContent(_playerCharacter.Hp, _playerCharacter.HpMax, Instantiator, TextType.Hp);
         _level.text = _playerCharacter.Level.ToString();
         _xp.text = _playerCharacter.Experience.ToString() + "/" + Helper.XpNeedForLevel(_playerCharacter.Level) + " " + Constants.UnitXp;
         _gold.text = _playerCharacter.Gold.ToString() + " " + Constants.UnitGold;
@@ -187,6 +186,8 @@ public class SwipeSceneBhv : SceneBhv
             PlayerPrefsHelper.SaveCharacter(Constants.PpOpponent + i, opponentCharacters[i]);
         }
         PlayerPrefs.SetInt(Constants.PpNbOpponents, opponentCharacters.Count);
+        PlayerPrefsHelper.SaveJourney(_journey);
+        PlayerPrefsHelper.SaveCharacter(Constants.PpPlayer, _playerCharacter);
         NavigationService.LoadNextScene(Constants.FightScene);
     }
 

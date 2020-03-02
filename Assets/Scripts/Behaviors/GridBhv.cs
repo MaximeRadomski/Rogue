@@ -20,6 +20,16 @@ public class GridBhv : MonoBehaviour
         _fightSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>();
     }
 
+    public bool CanStart()
+    {
+        foreach (var cell in Cells)
+        {
+            if (!cell.GetComponent<CellBhv>().ReadyToStart)
+                return false;
+        }
+        return true;
+    }
+
     #region Init
 
     public void InitGrid(Map map)

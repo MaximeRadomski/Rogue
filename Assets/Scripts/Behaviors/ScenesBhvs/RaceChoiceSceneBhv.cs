@@ -8,7 +8,6 @@ public class RaceChoiceSceneBhv : SceneBhv
     private TMPro.TextMeshPro _characterName;
     private Character _playerCharacter;
     private GameObject _skinContainer;
-    private Instantiator _instantiator;
     private TMPro.TextMeshPro _raceTextMesh;
     private int _skinColor;
     private CharacterGender _gender;
@@ -27,7 +26,6 @@ public class RaceChoiceSceneBhv : SceneBhv
         base.SetPrivates();
         _characterName = GameObject.Find("CharacterName").GetComponent<TMPro.TextMeshPro>();
         _skinContainer = GameObject.Find("SkinContainer");
-        _instantiator = GetComponent<Instantiator>();
         _raceTextMesh = GameObject.Find("RaceText").GetComponent<TMPro.TextMeshPro>();
         _gender = (CharacterGender)Random.Range(0, 1);
         _race = CharacterRace.Human;
@@ -45,7 +43,7 @@ public class RaceChoiceSceneBhv : SceneBhv
 
     private void SetButtons()
     {
-        _characterName.gameObject.GetComponent<ButtonBhv>().EndActionDelegate = _instantiator.EditViaKeyboard;
+        _characterName.gameObject.GetComponent<ButtonBhv>().EndActionDelegate = Instantiator.EditViaKeyboard;
         GameObject.Find("ButtonStart").GetComponent<ButtonBhv>().EndActionDelegate = GoToSwipeScene;
         GameObject.Find("ButtonRandomAll").GetComponent<ButtonBhv>().EndActionDelegate = RandomizeAll;
         GameObject.Find("ButtonRandomSkin").GetComponent<ButtonBhv>().EndActionDelegate = RandomizeSkin;
@@ -212,7 +210,7 @@ public class RaceChoiceSceneBhv : SceneBhv
 
     public void GoToSwipeScene()
     {
-        _instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "YOUR JOURNEY BEGINS", 2.0f, OnToSwipeScene);
+        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "YOUR JOURNEY BEGINS", 2.0f, OnToSwipeScene);
     }
 
     public object OnToSwipeScene(bool result)

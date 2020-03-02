@@ -101,7 +101,7 @@ public class Character
         }
         Hp -= damages;
         if (_orbHp == null) GetPrivates();
-        _orbHp?.UpdateContent(Hp, HpMax, _instantiator, -damages);
+        _orbHp?.UpdateContent(Hp, HpMax, _instantiator, TextType.Hp, - damages);
         return damages;
     }
 
@@ -112,7 +112,7 @@ public class Character
             amountToAdd = HpMax - Hp;
         Hp += amountToAdd;
         if (_orbHp == null) GetPrivates();
-        _orbHp?.UpdateContent(Hp, HpMax, _instantiator, amountToAdd);
+        _orbHp?.UpdateContent(Hp, HpMax, _instantiator, TextType.Hp, amountToAdd);
         return amountToAdd;
     }
 

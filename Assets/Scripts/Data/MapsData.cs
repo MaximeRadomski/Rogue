@@ -17,4 +17,7 @@ public static class MapsData
         new Map("Mountains 01", MapType.Mountains, "0113111"+"1120321"+"1111022"+"1111111"+"2201111"+"1240211"+"1114110"),
         new Map("Mountains 02", MapType.Mountains, "1132311"+"1110111"+"1121111"+"1111111"+"1111211"+"1110111"+"1142411")
     };
+
+    public const int NbOnTemplates = 8;
+    public const int NbOffTemplates = 10;
 }

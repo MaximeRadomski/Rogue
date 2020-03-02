@@ -29,6 +29,8 @@ public class CharacterBhv : MonoBehaviour
     private List<RangePos> _pathfindingPos = new List<RangePos>();
     private SkinContainerBhv _skinContainer;
     private CharacterBhv _attackedOpponent;
+    private OrbBhv _orbPa;
+    private OrbBhv _orbPm;
 
     public delegate void ActionDelegate();
     public ActionDelegate AfterMouvementDelegate;
@@ -60,6 +62,8 @@ public class CharacterBhv : MonoBehaviour
             if (Character.Skills[i] != null)
                 Character.Skills[i].Init(this, OpponentBhvs, _gridBhv, i);
         }
+        _orbPa = GameObject.Find("Pa").GetComponent<OrbBhv>();
+        _orbPm = GameObject.Find("Pm").GetComponent<OrbBhv>();
     }
 
     void Update()
@@ -88,6 +92,7 @@ public class CharacterBhv : MonoBehaviour
         if (Pa - amountToRemove < 0)
             amountToRemove = Pa;
         Pa -= amountToRemove;
+        _orbPa?.UpdateContent(Pa, Character.PaMax, Instantiator, TextType.Pa, -amountToRemove);
         Instantiator.PopText("-" + amountToRemove.ToString(), transform.position, TextType.Pa);
     }
 
@@ -97,6 +102,7 @@ public class CharacterBhv : MonoBehaviour
         if (Pm - amountToRemove < 0)
             amountToRemove = Pm;
         Pm -= amountToRemove;
+        _orbPm?.UpdateContent(Pm, Character.PmMax, Instantiator, TextType.Pm, -amountToRemove);
         Instantiator.PopText("-" + amountToRemove.ToString(), transform.position, TextType.Pm);
     }
 

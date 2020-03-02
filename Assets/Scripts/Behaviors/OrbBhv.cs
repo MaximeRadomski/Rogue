@@ -25,11 +25,11 @@ public class OrbBhv : MonoBehaviour
             _contentSpriteRenderer.transform.position += new Vector3(-0.005f, 0.0f, 0.0f);
     }
 
-    public void UpdateContent(int current, int max, Instantiator instantiator, int? amount = null)
+    public void UpdateContent(int current, int max, Instantiator instantiator, TextType textType, int? amount = null)
     {
         if (amount != null && amount != 0)
         {
-            instantiator.PopText((amount >= 0 ? "+" : "") + amount, transform.position + new Vector3(0.0f, 0.5f, 0.0f), TextType.Hp);
+            instantiator.PopText((amount >= 0 ? "+" : "") + amount, transform.position + new Vector3(0.0f, 0.5f, 0.0f), textType);
         }
         _textMesh.text = current.ToString();
         float ratio = (float)current / max;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 class PopupMerchantBhv : StatsDisplayerBhv
 {
-    public List<Sprite> BuySellSprites;
+    public Sprite[] BuySellSprites;
 
     private Character _character;
     private List<GameObject> _tabs;

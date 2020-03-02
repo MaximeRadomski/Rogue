@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class FightSceneBhv : SceneBhv
 {
     public FightState State;
+    public Journey Journey;
 
     private Map _map;
     private GridBhv _gridBhv;
@@ -17,7 +18,8 @@ public class FightSceneBhv : SceneBhv
     private int _currentOrderId;
     private List<CharOrder> _orderList;
     private CharacterBhv _currentPlayingCharacterBhv;
-    
+
+    private bool IsWaitingStart;
 
     void Start()
     {
@@ -27,7 +29,16 @@ public class FightSceneBhv : SceneBhv
         InitGrid();
         InitCharacters();
         InitCharactersOrder();
-        GameStart();
+        IsWaitingStart = true;
+    }
+
+    private void Update()
+    {
+        if (IsWaitingStart)
+        {
+            if (_gridBhv.CanStart())
+                GameStart();
+        }
     }
 
     #region Init
@@ -35,6 +46,7 @@ public class FightSceneBhv : SceneBhv
     protected override void SetPrivates()
     {
         base.SetPrivates();
+        Journey = PlayerPrefsHelper.GetJourney();
         OnRootPreviousScene = Constants.SwipeScene;
         _gridBhv = GetComponent<GridBhv>();
         _map = MapsData.EasyMaps[Random.Range(0, MapsData.EasyMaps.Count)];
@@ -167,6 +179,7 @@ public class FightSceneBhv : SceneBhv
         _gridBhv.ResetAllCellsVisited();
         _gridBhv.SpawnOpponent(_opponentBhvs);
         _gridBhv.SpawnPlayer();
+        IsWaitingStart = false;
     }
 
     private void NextTurn()

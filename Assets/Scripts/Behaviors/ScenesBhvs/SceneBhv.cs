@@ -12,6 +12,7 @@ public abstract class SceneBhv : MonoBehaviour
     {
         Application.targetFrameRate = 60;
         NavigationService.SetCurrentRootScene(SceneManager.GetActiveScene().name);
+        Instantiator = GetComponent<Instantiator>();
     }
 
     public virtual void Pause()
