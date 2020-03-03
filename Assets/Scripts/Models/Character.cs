@@ -46,10 +46,10 @@ public class Character
     private void GetPrivates()
     {
         _instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator;
-        _orbHp = GameObject.Find("Hp").GetComponent<OrbBhv>();
-        _level = GameObject.Find("LevelText").GetComponent<TMPro.TextMeshPro>();
-        _xp = GameObject.Find("Xp").GetComponent<TMPro.TextMeshPro>();
-        _gold = GameObject.Find("Gold").GetComponent<TMPro.TextMeshPro>();
+        _orbHp = GameObject.Find("Hp")?.GetComponent<OrbBhv>();
+        _level = GameObject.Find("LevelText")?.GetComponent<TMPro.TextMeshPro>();
+        _xp = GameObject.Find("Xp")?.GetComponent<TMPro.TextMeshPro>();
+        _gold = GameObject.Find("Gold")?.GetComponent<TMPro.TextMeshPro>();
         _ressourcePopPosition = new Vector2(0.0f, -2.6f);
     }
 

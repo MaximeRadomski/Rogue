@@ -62,8 +62,8 @@ public class CharacterBhv : MonoBehaviour
             if (Character.Skills[i] != null)
                 Character.Skills[i].Init(this, OpponentBhvs, _gridBhv, i);
         }
-        _orbPa = GameObject.Find("Pa").GetComponent<OrbBhv>();
-        _orbPm = GameObject.Find("Pm").GetComponent<OrbBhv>();
+        _orbPa = GameObject.Find("Pa")?.GetComponent<OrbBhv>();
+        _orbPm = GameObject.Find("Pm")?.GetComponent<OrbBhv>();
     }
 
     void Update()

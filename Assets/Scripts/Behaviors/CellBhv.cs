@@ -18,6 +18,7 @@ public class CellBhv : InputBhv
     public CellType Type;
     public CellState State;
     public bool ReadyToStart;
+    public bool IsOccupied;
 
     private GridBhv _gridBhv;
     private SoundControlerBhv _soundControler;
@@ -167,7 +168,10 @@ public class CellBhv : InputBhv
     public void ResetSpawn()
     {
         if (Type == CellType.Spawn || Type == CellType.OpponentSpawn)
+        {
             Type = CellType.On;
+            ResetDisplay();
+        }
     }
 
     public void ShowPm()

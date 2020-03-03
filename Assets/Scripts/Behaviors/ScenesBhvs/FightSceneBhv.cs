@@ -13,7 +13,7 @@ public class FightSceneBhv : SceneBhv
     private GameObject _player;
     private CharacterBhv _playerBhv;
     private List<GameObject> _opponents;
-    private List<CharacterBhv> _opponentBhvs;
+    public List<CharacterBhv> OpponentBhvs;
 
     private int _currentOrderId;
     private List<CharOrder> _orderList;
@@ -76,7 +76,7 @@ public class FightSceneBhv : SceneBhv
         InitOpponents();
         InitPlayer();
         _playerBhv.SetPrivates();
-        foreach (var opponentBhv in _opponentBhvs)
+        foreach (var opponentBhv in OpponentBhvs)
             opponentBhv.SetPrivates();
     }
 
@@ -84,11 +84,11 @@ public class FightSceneBhv : SceneBhv
     {
         int nbOpponents = PlayerPrefs.GetInt(Constants.PpNbOpponents);
         _opponents = new List<GameObject>();
-        _opponentBhvs = new List<CharacterBhv>();
+        OpponentBhvs = new List<CharacterBhv>();
         for (int i = 0; i < nbOpponents; ++i)
         {
             _opponents.Add(Instantiator.NewCharacterGameObject(Constants.PpOpponent + i, false, i.ToString()));
-            _opponentBhvs.Add(_opponents[i].GetComponent<CharacterBhv>());
+            OpponentBhvs.Add(_opponents[i].GetComponent<CharacterBhv>());
         }
         //DisplayCharacterStats(_opponent.name, _opponentBhv.Character);
     }
@@ -105,7 +105,7 @@ public class FightSceneBhv : SceneBhv
         int orderId = 0;
         _orderList = new List<CharOrder>();
         CalculateInitiative(_playerBhv, orderId++);
-        foreach (var opponentBhv in _opponentBhvs)
+        foreach (var opponentBhv in OpponentBhvs)
             CalculateInitiative(opponentBhv, orderId++);
         int i = 0;
         while (i < _orderList.Count)
@@ -125,19 +125,19 @@ public class FightSceneBhv : SceneBhv
             else
                 ++i;
         }
-        _currentOrderId = -1;
+        _currentOrderId = -1; //Because Spawn
     }
 
     private CharacterBhv GetCharacterBhvFromOrderId(int id)
     {
         if (_playerBhv.OrderId == id)
             return _playerBhv;
-        foreach (var opponentBhv in _opponentBhvs)
+        foreach (var opponentBhv in OpponentBhvs)
         {
             if (opponentBhv.OrderId == id)
                 return opponentBhv;
         }
-        return _opponentBhvs[0];
+        return OpponentBhvs[0];
     }
 
     private int CalculateInitiative(CharacterBhv characterBhv, int orderId = -1)
@@ -177,7 +177,7 @@ public class FightSceneBhv : SceneBhv
     {
         _gridBhv.ResetAllCellsDisplay();
         _gridBhv.ResetAllCellsVisited();
-        _gridBhv.SpawnOpponent(_opponentBhvs);
+        _gridBhv.SpawnOpponent(OpponentBhvs);
         _gridBhv.SpawnPlayer();
         IsWaitingStart = false;
     }
@@ -213,12 +213,20 @@ public class FightSceneBhv : SceneBhv
 
     public void PassTurn()
     {
-        foreach (var skill in _currentPlayingCharacterBhv.Character.Skills)
+        if (State == FightState.Spawn)
         {
-            if (skill != null)
-                skill.OnEndTurn();
+            _gridBhv.ResetAllCellsSpawn();
+            NextTurn();
         }
-        NextTurn();
+        else
+        {
+            foreach (var skill in _currentPlayingCharacterBhv.Character.Skills)
+            {
+                if (skill != null)
+                    skill.OnEndTurn();
+            }
+            NextTurn();
+        }
     }
 
     public void OnPlayerMovementClick(int x, int y)
@@ -233,13 +241,13 @@ public class FightSceneBhv : SceneBhv
     {
         if (State != FightState.PlayerTurn)
             return;
-        _gridBhv.ShowPm(_playerBhv, _opponentBhvs);
+        _gridBhv.ShowPm(_playerBhv, OpponentBhvs);
     }
 
     public void OnPlayerSpawnClick(int x, int y)
     {
         _playerBhv.Spawn(x, y);
-        NextTurn();
+        //NextTurn();
     }
 
     public void OnPlayerAttackClick(int weaponId, List<CharacterBhv> touchedOpponents)
@@ -255,12 +263,12 @@ public class FightSceneBhv : SceneBhv
         {
             _playerBhv.AttackWithWeapon(weaponId, null, _map);
         }
-        _gridBhv.ShowPm(_playerBhv, _opponentBhvs);
+        _gridBhv.ShowPm(_playerBhv, OpponentBhvs);
     }
 
     public void OnPlayerCharacterClick()
     {
-        _gridBhv.ShowPm(_playerBhv, _opponentBhvs);
+        _gridBhv.ShowPm(_playerBhv, OpponentBhvs);
     }
 
     public void OnPlayerSkillClick(int skillId, int x, int y)
@@ -303,13 +311,13 @@ public class FightSceneBhv : SceneBhv
     private void ShowWeaponOneRange()
     {
         if (State == FightState.PlayerTurn && _playerBhv.Pa >= _playerBhv.Character.Weapons[0].PaNeeded && !_playerBhv.IsMoving)
-            _gridBhv.ShowWeaponRange(_playerBhv, 0, _opponentBhvs);
+            _gridBhv.ShowWeaponRange(_playerBhv, 0, OpponentBhvs);
     }
 
     private void ShowWeaponTwoRange()
     {
         if (State == FightState.PlayerTurn && _playerBhv.Pa >= _playerBhv.Character.Weapons[1].PaNeeded && !_playerBhv.IsMoving)
-            _gridBhv.ShowWeaponRange(_playerBhv, 1, _opponentBhvs);
+            _gridBhv.ShowWeaponRange(_playerBhv, 1, OpponentBhvs);
     }
 
     private void ClickSkill1()

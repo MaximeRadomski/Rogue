@@ -314,10 +314,11 @@ public class AiBhv : MonoBehaviour
         int canI = 0;
         for (int i = 0; i < 2; ++i)
         {
-            if (!_characterBhv.Character.Skills[i].IsUnderCooldown() &&
-                _characterBhv.Pa >= _characterBhv.Character.Skills[i].PaNeeded)
+            if (!_characterBhv.Character.Skills[i].IsUnderCooldown()
+                && _characterBhv.Pa >= _characterBhv.Character.Skills[i].PaNeeded)
             {
-                if (_characterBhv.Character.Skills[i].Nature == SkillNature.Buff)
+                if (_characterBhv.Character.Skills[i].Nature == SkillNature.Buff
+                    && _characterBhv.Character.Skills[i].CooldownType != CooldownType.Passive)
                 {
                     _skillsWeight[i] += 50;
                     canI += _skillsWeight[i];

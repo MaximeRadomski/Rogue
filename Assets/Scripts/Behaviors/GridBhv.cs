@@ -81,7 +81,6 @@ public class GridBhv : MonoBehaviour
 
     public void OnPlayerSpawnClick(int x, int y)
     {
-        ResetAllCellsSpawn();
         _fightSceneBhv.OnPlayerSpawnClick(x, y);
     }
 
@@ -121,7 +120,7 @@ public class GridBhv : MonoBehaviour
             !IsOpponentOnCell(x, y))
         {
             //if (characterBhv.IsPlayer)
-                cell.GetComponent<CellBhv>().ShowPm();
+            cell.GetComponent<CellBhv>().ShowPm();
             cell.GetComponent<CellBhv>().Visited = spentPm;
             //DEBUG//
             //cell.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = cell.GetComponent<CellBhv>().Visited.ToString();
@@ -159,6 +158,14 @@ public class GridBhv : MonoBehaviour
         {
             if (x == opponentBhv.X && y == opponentBhv.Y)
                 return opponentBhv;
+        }
+        if (!_currentCharacterBhv.IsPlayer)
+        {
+            foreach (var opponentBhv in _fightSceneBhv.OpponentBhvs)
+            {
+                if (x == opponentBhv.X && y == opponentBhv.Y)
+                    return opponentBhv;
+            }
         }
         return null;
     }
@@ -265,6 +272,13 @@ public class GridBhv : MonoBehaviour
         foreach (var opponentBhv in _currentOpponentBhvs)
         {
             opponentBhv.GetComponent<BoxCollider2D>().enabled = setting;
+        }
+        if (!_currentCharacterBhv.IsPlayer)
+        {
+            foreach (var opponentBhv in _fightSceneBhv.OpponentBhvs)
+            {
+                opponentBhv.GetComponent<BoxCollider2D>().enabled = setting;
+            }
         }
     }
 
