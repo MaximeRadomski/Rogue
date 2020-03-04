@@ -159,7 +159,7 @@ public class GridBhv : MonoBehaviour
             if (x == opponentBhv.X && y == opponentBhv.Y)
                 return opponentBhv;
         }
-        if (!_currentCharacterBhv.IsPlayer)
+        if (!_currentCharacterBhv.Character.IsPlayer)
         {
             foreach (var opponentBhv in _fightSceneBhv.OpponentBhvs)
             {
@@ -256,7 +256,7 @@ public class GridBhv : MonoBehaviour
             foreach (var hit in hits)
             {
                 if ((hit.transform.gameObject.TryGetComponent(out CellBhv cell) && cell.Type == CellType.Off) ||
-                    (hit.transform.gameObject.TryGetComponent(out CharacterBhv characterBhv) && characterBhv.IsPlayer == false && !(characterBhv.X == x2 && characterBhv.Y == y2)))
+                    (hit.transform.gameObject.TryGetComponent(out CharacterBhv characterBhv) && characterBhv.Character.IsPlayer == false && !(characterBhv.X == x2 && characterBhv.Y == y2)))
                 {
                     SetOpponentsHitBoxes(false);
                     return true;
@@ -273,7 +273,7 @@ public class GridBhv : MonoBehaviour
         {
             opponentBhv.GetComponent<BoxCollider2D>().enabled = setting;
         }
-        if (!_currentCharacterBhv.IsPlayer)
+        if (!_currentCharacterBhv.Character.IsPlayer)
         {
             foreach (var opponentBhv in _fightSceneBhv.OpponentBhvs)
             {
@@ -399,12 +399,12 @@ public class GridBhv : MonoBehaviour
             if ((hasToBeEmpty && IsOpponentOnCell(x, y)) ||
                 (rangeType == RangeType.Normal && IsAnythingBetween(characterBhv.X, characterBhv.Y, x, y)))
             {
-                if (characterBhv.IsPlayer)
+                if (characterBhv.Character.IsPlayer)
                     cell.ShowSkillOutOfRange();
             }
             else
             {
-                if (characterBhv.IsPlayer)
+                if (characterBhv.Character.IsPlayer)
                     cell.ShowSkillRange();
                 else
                     cell.ShowSkillRangeVisited();

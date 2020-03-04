@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Character
 {
+    public bool IsPlayer = false;
     public CharacterGender Gender;
     public string Name;
     public CharacterRace Race;
@@ -46,7 +47,8 @@ public class Character
     private void GetPrivates()
     {
         _instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator;
-        _orbHp = GameObject.Find("Hp")?.GetComponent<OrbBhv>();
+        if (IsPlayer)
+            _orbHp = GameObject.Find("Hp")?.GetComponent<OrbBhv>();
         _level = GameObject.Find("LevelText")?.GetComponent<TMPro.TextMeshPro>();
         _xp = GameObject.Find("Xp")?.GetComponent<TMPro.TextMeshPro>();
         _gold = GameObject.Find("Gold")?.GetComponent<TMPro.TextMeshPro>();
@@ -100,7 +102,7 @@ public class Character
                 damages = skill.OnTakeDamage(damages);
         }
         Hp -= damages;
-        if (_orbHp == null) GetPrivates();
+        if (_orbHp == null && IsPlayer) GetPrivates();
         _orbHp?.UpdateContent(Hp, HpMax, _instantiator, TextType.Hp, - damages);
         return damages;
     }
@@ -111,7 +113,7 @@ public class Character
         if (Hp + amountToAdd > HpMax)
             amountToAdd = HpMax - Hp;
         Hp += amountToAdd;
-        if (_orbHp == null) GetPrivates();
+        if (_orbHp == null && IsPlayer) GetPrivates();
         _orbHp?.UpdateContent(Hp, HpMax, _instantiator, TextType.Hp, amountToAdd);
         return amountToAdd;
     }

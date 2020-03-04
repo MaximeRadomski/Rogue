@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5582869791616834117}
   - component: {fileID: 2822310809767233042}
-  - component: {fileID: 4796319626925192617}
+  - component: {fileID: 5415252140772257180}
   m_Layer: 0
   m_Name: HumanCharacter
   m_TagString: Untagged
@@ -60,7 +60,7 @@ MonoBehaviour:
   Instantiator: {fileID: 0}
   OpponentBhvs: []
   UnderEffects: 
---- !u!61 &4796319626925192617
+--- !u!61 &5415252140772257180
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

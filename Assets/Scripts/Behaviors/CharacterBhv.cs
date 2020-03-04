@@ -16,7 +16,6 @@ public class CharacterBhv : MonoBehaviour
     public int Pa;
     public Character Character;
     public AiBhv Ai;
-    public bool IsPlayer = false;
     public Instantiator Instantiator;
     public List<CharacterBhv> OpponentBhvs;
     public List<SkillEffect> UnderEffects;
@@ -40,7 +39,7 @@ public class CharacterBhv : MonoBehaviour
         _fightSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>();
         _gridBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GridBhv>();
         OpponentBhvs = new List<CharacterBhv>();
-        if (IsPlayer)
+        if (Character.IsPlayer)
         {
             int nbOpponents = PlayerPrefs.GetInt(Constants.PpNbOpponents);
             for (int i = 0; i < nbOpponents; ++i)
@@ -62,8 +61,11 @@ public class CharacterBhv : MonoBehaviour
             if (Character.Skills[i] != null)
                 Character.Skills[i].Init(this, OpponentBhvs, _gridBhv, i);
         }
-        _orbPa = GameObject.Find("Pa")?.GetComponent<OrbBhv>();
-        _orbPm = GameObject.Find("Pm")?.GetComponent<OrbBhv>();
+        if (Character.IsPlayer)
+        {
+            _orbPa = GameObject.Find("Pa")?.GetComponent<OrbBhv>();
+            _orbPm = GameObject.Find("Pm")?.GetComponent<OrbBhv>();
+        }
     }
 
     void Update()
@@ -210,7 +212,7 @@ public class CharacterBhv : MonoBehaviour
         else if (IsAttacking == 2 && (Vector2)transform.position == (Vector2)_gridBhv.Cells[X, Y].transform.position)
         {
             IsAttacking = 0;
-            if (!IsPlayer)
+            if (!Character.IsPlayer)
                 Ai.AfterAction();
         }
     }
@@ -277,7 +279,7 @@ public class CharacterBhv : MonoBehaviour
             IsMovingFirstPathStep = false;
             X = _pathfindingPos[0].X;
             Y = _pathfindingPos[0].Y;
-            if (!IsPlayer)
+            if (!Character.IsPlayer)
                 Ai.AfterMovement();
         }
     }
@@ -295,9 +297,9 @@ public class CharacterBhv : MonoBehaviour
                 IsMoving = false;
                 X = _cellToReachX;
                 Y = _cellToReachY;
-                if (IsPlayer)
+                if (Character.IsPlayer)
                     _fightSceneBhv.AfterPlayerMovement();
-                else if (!IsPlayer)
+                else if (!Character.IsPlayer)
                     Ai.AfterMovement();
                 if (AfterMouvementDelegate != null)
                     AfterMouvementDelegate();

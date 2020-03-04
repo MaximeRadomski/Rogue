@@ -198,7 +198,7 @@ public class FightSceneBhv : SceneBhv
         _currentPlayingCharacterBhv.Pm = _currentPlayingCharacterBhv.Character.PmMax;
         _currentPlayingCharacterBhv.Turn++;
 
-        if (_currentPlayingCharacterBhv.IsPlayer)
+        if (_currentPlayingCharacterBhv.Character.IsPlayer)
         {
             State = FightState.PlayerTurn;
             _gridBhv.ShowPm(_currentPlayingCharacterBhv, _currentPlayingCharacterBhv.OpponentBhvs);
@@ -335,6 +335,11 @@ public class FightSceneBhv : SceneBhv
     }
 
     #endregion
+
+    public void ShowCharacterStats(Character character)
+    {
+        Instantiator.NewPopupCharacterStats(character, null);
+    }
 
     #region exit
 

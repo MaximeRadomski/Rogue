@@ -84,11 +84,8 @@ public static class RacesData
                 tmpCharacter = GetBaseOrc(gender, isPlayer);
                 break;
         }
-
-        if (isPlayer)
-            tmpCharacter.Skills.Add(SkillsData.GetRandomSkill(true));
-        else
-            tmpCharacter.Skills.Add(SkillsData.GetRandomSkill());
+        tmpCharacter.IsPlayer = isPlayer;
+        tmpCharacter.Skills.Add(SkillsData.GetRandomSkill(isPlayer));
         tmpCharacter.Gender = gender;
         tmpCharacter.Name = name;
         tmpCharacter.Level = level;

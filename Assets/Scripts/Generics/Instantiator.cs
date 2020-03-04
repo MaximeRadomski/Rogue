@@ -208,13 +208,12 @@ public class Instantiator : MonoBehaviour
         else
         {
             characterInstance.name = Constants.GoOpponentName + id;
-            characterInstance.AddComponent<AiBhv>();
         }
         var playerBhv = characterInstance.GetComponent<CharacterBhv>();
         playerBhv.X = 0;
         playerBhv.Y = 0;
         playerBhv.Character = character;
-        playerBhv.IsPlayer = isPlayer;
+        playerBhv.Character.IsPlayer = isPlayer;
         return characterInstance;
     }
 

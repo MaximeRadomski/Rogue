@@ -79,7 +79,7 @@ public abstract class Skill : InventoryItem
 
     public void AfterActivation()
     {
-        if (!CharacterBhv.IsPlayer)
+        if (!CharacterBhv.Character.IsPlayer)
             CharacterBhv.Ai.AfterAction();
         else
             GridBhv.ShowPm(CharacterBhv, OpponentBhvs);

@@ -113,6 +113,11 @@ public class CellBhv : InputBhv
         _soundControler.PlaySound(_soundControler.ClickOut);
         if (State == CellState.None || State == CellState.AttackZone)
         {
+            var onCellCharacter = _gridBhv.IsOpponentOnCell(X, Y);
+            if (State == CellState.None && onCellCharacter != null)
+            {
+                GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>().ShowCharacterStats(onCellCharacter.Character);
+            }
             _gridBhv.ResetAllCellsZone();
             return;
         }
