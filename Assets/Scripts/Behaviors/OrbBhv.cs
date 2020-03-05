@@ -13,7 +13,7 @@ public class OrbBhv : MonoBehaviour
     {
         _textMesh = transform.Find(gameObject.name + "Text").GetComponent<TMPro.TextMeshPro>();
         _content = transform.Find(gameObject.name + "Mask").Find(gameObject.name + "Content").gameObject;
-        _height = _content.GetComponent<SpriteRenderer>().size.y;
+        _height = _content.GetComponent<SpriteRenderer>().sprite.rect.size.y * Constants.Pixel;
         _contentSpriteRenderer = _content.GetComponent<SpriteRenderer>();
     }
 

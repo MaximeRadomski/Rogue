@@ -21,14 +21,19 @@ public class FightSceneBhv : SceneBhv
 
     private bool IsWaitingStart;
 
+    private OrbBhv _orbHp;
+    private OrbBhv _orbPa;
+    private OrbBhv _orbPm;
+
     void Start()
     {
         State = FightState.Spawn;
         SetPrivates();
-        SetButtons();
         InitGrid();
         InitCharacters();
+        SetButtons();
         InitCharactersOrder();
+        UpdateResources();
         IsWaitingStart = true;
     }
 
@@ -50,6 +55,9 @@ public class FightSceneBhv : SceneBhv
         OnRootPreviousScene = Constants.SwipeScene;
         _gridBhv = GetComponent<GridBhv>();
         _map = MapsData.EasyMaps[Random.Range(0, MapsData.EasyMaps.Count)];
+        _orbHp = GameObject.Find("Hp")?.GetComponent<OrbBhv>();
+        _orbPa = GameObject.Find("Pa")?.GetComponent<OrbBhv>();
+        _orbPm = GameObject.Find("Pm")?.GetComponent<OrbBhv>();
     }
 
     private void SetButtons()
@@ -57,12 +65,21 @@ public class FightSceneBhv : SceneBhv
         GameObject.Find("ButtonReload").GetComponent<ButtonBhv>().EndActionDelegate = Helper.ReloadScene;
         GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToSwipe;
         GameObject.Find("ButtonPassTurn").GetComponent<ButtonBhv>().EndActionDelegate = PassTurn;
+        GameObject.Find("Pm").GetComponent<ButtonBhv>().EndActionDelegate = OnPlayerPmClick;
         GameObject.Find("PlayerCharacter").GetComponent<ButtonBhv>().EndActionDelegate = OnPlayerCharacterClick;
-        GameObject.Find("PlayerWeapon1").GetComponent<ButtonBhv>().EndActionDelegate = ShowWeaponOneRange;
-        GameObject.Find("PlayerWeapon2").GetComponent<ButtonBhv>().EndActionDelegate = ShowWeaponTwoRange;
-        GameObject.Find("PlayerSkill1").GetComponent<ButtonBhv>().EndActionDelegate = ClickSkill1;
-        GameObject.Find("PlayerSkill2").GetComponent<ButtonBhv>().EndActionDelegate = ClickSkill2;
-
+        var tmpButton = GameObject.Find("PlayerWeapon1");
+        tmpButton.GetComponent<ButtonBhv>().EndActionDelegate = ShowWeaponOneRange;
+        tmpButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsWeapon_" + _playerBhv.Character.Weapons[0].Type.GetHashCode());
+        tmpButton = GameObject.Find("PlayerWeapon2");
+        tmpButton.GetComponent<ButtonBhv>().EndActionDelegate = ShowWeaponTwoRange;
+        tmpButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsWeapon_" + _playerBhv.Character.Weapons[1].Type.GetHashCode());
+        tmpButton = GameObject.Find("PlayerSkill1");
+        tmpButton.GetComponent<ButtonBhv>().EndActionDelegate = ClickSkill1;
+        tmpButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsSkill_" + _playerBhv.Character.Skills[0].IconId);
+        tmpButton = GameObject.Find("PlayerSkill2");
+        tmpButton.GetComponent<ButtonBhv>().EndActionDelegate = ClickSkill2;
+        tmpButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsSkill_" + _playerBhv.Character.Skills[1].IconId);
+        Instantiator.LoadCharacterSkin(_playerBhv.Character, GameObject.Find("CharacterSkinContainer"));
     }
 
     private void InitGrid()
@@ -194,9 +211,10 @@ public class FightSceneBhv : SceneBhv
             if (skill != null)
                 skill.OnStartTurn();
         }
-        _currentPlayingCharacterBhv.Pa = _currentPlayingCharacterBhv.Character.PaMax;
-        _currentPlayingCharacterBhv.Pm = _currentPlayingCharacterBhv.Character.PmMax;
+        _currentPlayingCharacterBhv.ResetPa();
+        _currentPlayingCharacterBhv.ResetPm();
         _currentPlayingCharacterBhv.Turn++;
+        UpdateResources();
 
         if (_currentPlayingCharacterBhv.Character.IsPlayer)
         {
@@ -209,6 +227,13 @@ public class FightSceneBhv : SceneBhv
             _currentPlayingCharacterBhv.Ai.StartThinking();
         }
         
+    }
+
+    public void UpdateResources()
+    {
+        _orbHp.UpdateContent(_playerBhv.Character.Hp, _playerBhv.Character.HpMax, Instantiator, TextType.Hp);
+        _orbPa.UpdateContent(_playerBhv.Pa, _playerBhv.Character.PaMax, Instantiator, TextType.Pa);
+        _orbPm.UpdateContent(_playerBhv.Pm, _playerBhv.Character.PmMax, Instantiator, TextType.Pm);
     }
 
     public void PassTurn()
@@ -266,14 +291,21 @@ public class FightSceneBhv : SceneBhv
         _gridBhv.ShowPm(_playerBhv, OpponentBhvs);
     }
 
-    public void OnPlayerCharacterClick()
+    public void OnPlayerPmClick()
     {
+        if (State != FightState.PlayerTurn)
+            return;
         _gridBhv.ShowPm(_playerBhv, OpponentBhvs);
     }
 
     public void OnPlayerSkillClick(int skillId, int x, int y)
     {
         _playerBhv.Character.Skills[skillId].Activate(x, y);
+    }
+
+    public void OnPlayerCharacterClick()
+    {
+        Instantiator.NewPopupCharacterStats(_playerBhv.Character, null);
     }
 
     #endregion

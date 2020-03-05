@@ -66,6 +66,8 @@ public class CharacterBhv : MonoBehaviour
             _orbPa = GameObject.Find("Pa")?.GetComponent<OrbBhv>();
             _orbPm = GameObject.Find("Pm")?.GetComponent<OrbBhv>();
         }
+        Pa = Character.PaMax;
+        Pm = Character.PmMax;
     }
 
     void Update()
@@ -88,14 +90,26 @@ public class CharacterBhv : MonoBehaviour
         Instantiator.PopText("+" + Character.GainHp(amount).ToString(), transform.position, TextType.Hp);
     }
 
+    public void ResetPa()
+    {
+        Pa = Character.PaMax;
+    }
+
     public void LosePa(int amount)
     {
         int amountToRemove = amount;
         if (Pa - amountToRemove < 0)
             amountToRemove = Pa;
         Pa -= amountToRemove;
-        _orbPa?.UpdateContent(Pa, Character.PaMax, Instantiator, TextType.Pa, -amountToRemove);
-        Instantiator.PopText("-" + amountToRemove.ToString(), transform.position, TextType.Pa);
+        if (Character.IsPlayer)
+            _orbPa?.UpdateContent(Pa, Character.PaMax, Instantiator, TextType.Pa, -amountToRemove);
+        else
+            Instantiator.PopText("-" + amountToRemove.ToString(), transform.position, TextType.Pa);
+    }
+
+    public void ResetPm()
+    {
+        Pm = Character.PmMax;
     }
 
     public void LosePm(int amount)
@@ -104,8 +118,10 @@ public class CharacterBhv : MonoBehaviour
         if (Pm - amountToRemove < 0)
             amountToRemove = Pm;
         Pm -= amountToRemove;
-        _orbPm?.UpdateContent(Pm, Character.PmMax, Instantiator, TextType.Pm, -amountToRemove);
-        Instantiator.PopText("-" + amountToRemove.ToString(), transform.position, TextType.Pm);
+        if (Character.IsPlayer)
+            _orbPm?.UpdateContent(Pm, Character.PmMax, Instantiator, TextType.Pm, -amountToRemove);
+        else
+            Instantiator.PopText("-" + amountToRemove.ToString(), transform.position, TextType.Pm);
     }
 
     public void GainSkillEffect(SkillEffect effect)

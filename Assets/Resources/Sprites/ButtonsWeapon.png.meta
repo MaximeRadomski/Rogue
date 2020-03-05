@@ -1,25 +1,37 @@
 fileFormatVersion: 2
-guid: b9d08dd771e42bf448ccdd4c4e0200a6
+guid: 528f6a003a6a3654ab0fabe18fc4fdb9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7873339745299520073
-    second: CharacterOrbs_0
+      213: 6161935664317493558
+    second: ButtonsWeapon_0
   - first:
-      213: 6413307994144996003
-    second: CharacterOrbs_1
+      213: 319299784191883675
+    second: ButtonsWeapon_1
   - first:
-      213: 3141820248644005581
-    second: CharacterOrbs_2
+      213: -6076014272529847183
+    second: ButtonsWeapon_2
   - first:
-      213: 8894947811300107085
-    second: CharacterOrbs_3
+      213: -8686235229181331587
+    second: ButtonsWeapon_3
   - first:
-      213: -8093654186115195304
-    second: CharacterOrbs_4
+      213: -5210513680026792265
+    second: ButtonsWeapon_4
   - first:
-      213: 8135809649901935884
-    second: CharacterOrbs_5
+      213: 1199917369944354316
+    second: ButtonsWeapon_5
+  - first:
+      213: -459186888103944461
+    second: ButtonsWeapon_6
+  - first:
+      213: 8073745644884290707
+    second: ButtonsWeapon_7
+  - first:
+      213: -3671547272607981094
+    second: ButtonsWeapon_8
+  - first:
+      213: 8943125618957701335
+    second: ButtonsWeapon_9
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -78,7 +90,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -90,7 +102,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 128
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -102,7 +114,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 128
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -116,127 +128,211 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CharacterOrbs_0
+      name: ButtonsWeapon_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
-        width: 32
-        height: 32
+        y: 0
+        width: 15
+        height: 15
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ccda3451d6d51d24a8419ae3b86f4833
-      internalID: -7873339745299520073
+      spriteID: dca018ebb259e9b4ea068695f0c9721f
+      internalID: 6161935664317493558
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharacterOrbs_1
+      name: ButtonsWeapon_1
       rect:
         serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 32
+        x: 15
+        y: 0
+        width: 15
+        height: 15
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 969af6f7693298a4591fcb5e703f159f
-      internalID: 6413307994144996003
+      spriteID: 48cc402797aa12a4292510bd62922451
+      internalID: 319299784191883675
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharacterOrbs_2
+      name: ButtonsWeapon_2
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 0
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbf6cdcd064ef0f4f885fd85a343dd69
+      internalID: -6076014272529847183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ButtonsWeapon_3
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 0
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec27762a0bd5fcd46a142f99b7376ece
+      internalID: -8686235229181331587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ButtonsWeapon_4
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 0
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61b65947cd3c3d146acb40c5817afd45
+      internalID: -5210513680026792265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ButtonsWeapon_5
       rect:
         serializedVersion: 2
         x: 75
-        y: 39
-        width: 10
-        height: 18
+        y: 0
+        width: 15
+        height: 15
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 985de405469328a47823e4310e45a1e4
-      internalID: 3141820248644005581
+      spriteID: 73393a50efe20f84798e5dbc942c39bf
+      internalID: 1199917369944354316
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharacterOrbs_3
+      name: ButtonsWeapon_6
       rect:
         serializedVersion: 2
-        x: 0
+        x: 90
         y: 0
-        width: 32
-        height: 32
+        width: 15
+        height: 15
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd2237efbf349a14ea24f07a09026375
-      internalID: 8894947811300107085
+      spriteID: a9ad5130d23172444819fa1cca31d0b3
+      internalID: -459186888103944461
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharacterOrbs_4
+      name: ButtonsWeapon_7
       rect:
         serializedVersion: 2
-        x: 32
+        x: 105
         y: 0
-        width: 32
-        height: 32
+        width: 15
+        height: 15
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b1d1e4741d6c0ae46b51a2d8636089c8
-      internalID: -8093654186115195304
+      spriteID: fad53303f83150448be26046711abfd3
+      internalID: 8073745644884290707
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharacterOrbs_5
+      name: ButtonsWeapon_8
       rect:
         serializedVersion: 2
-        x: 64
+        x: 120
         y: 0
-        width: 32
-        height: 32
+        width: 15
+        height: 15
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0bb9a66f7d2ec264ba5af5f52b4b2d54
-      internalID: 8135809649901935884
+      spriteID: 7bf6b59657daa0642ae6fe054b4ad620
+      internalID: -3671547272607981094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ButtonsWeapon_9
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 0
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a150d1382c5ab19438dee4cfdcf4a210
+      internalID: 8943125618957701335
       vertices: []
       indices: 
       edges: []
