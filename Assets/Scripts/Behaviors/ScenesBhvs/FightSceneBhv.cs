@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class FightSceneBhv : SceneBhv
 {
     public FightState State;
-    public Journey Journey;
 
     private Map _map;
     private GridBhv _gridBhv;
@@ -16,6 +15,7 @@ public class FightSceneBhv : SceneBhv
     public List<CharacterBhv> OpponentBhvs;
 
     private int _currentOrderId;
+    private int _clickHistory;
     private List<CharOrder> _orderList;
     private CharacterBhv _currentPlayingCharacterBhv;
 
@@ -24,6 +24,10 @@ public class FightSceneBhv : SceneBhv
     private OrbBhv _orbHp;
     private OrbBhv _orbPa;
     private OrbBhv _orbPm;
+    private ButtonBhv _buttonPass;
+    private ButtonBhv _buttonRunAway;
+    private ButtonBhv _buttonWeapon1, _buttonWeapon2;
+    private ButtonBhv _buttonSkill1, _buttonSkill2;
 
     void Start()
     {
@@ -44,6 +48,17 @@ public class FightSceneBhv : SceneBhv
             if (_gridBhv.CanStart())
                 GameStart();
         }
+        if (State == FightState.PlayerTurn)
+        {
+            if (!_buttonWeapon1.Disabled && _playerBhv.Pa < _playerBhv.Character.Weapons[0].PaNeeded)
+                _buttonWeapon1.DisableButton();
+            if (!_buttonWeapon2.Disabled && _playerBhv.Pa < _playerBhv.Character.Weapons[1].PaNeeded)
+                _buttonWeapon2.DisableButton();
+            if (!_buttonSkill1.Disabled && _playerBhv.Pa < _playerBhv.Character.Skills[0].PaNeeded)
+                _buttonSkill1.DisableButton();
+            if (!_buttonSkill2.Disabled && _playerBhv.Pa < _playerBhv.Character.Skills[1].PaNeeded)
+                _buttonSkill2.DisableButton();
+        }
     }
 
     #region Init
@@ -51,7 +66,7 @@ public class FightSceneBhv : SceneBhv
     protected override void SetPrivates()
     {
         base.SetPrivates();
-        Journey = PlayerPrefsHelper.GetJourney();
+        PauseMenu = Instantiator.NewPauseMenu();
         OnRootPreviousScene = Constants.SwipeScene;
         _gridBhv = GetComponent<GridBhv>();
         _map = MapsData.EasyMaps[Random.Range(0, MapsData.EasyMaps.Count)];
@@ -63,23 +78,36 @@ public class FightSceneBhv : SceneBhv
     private void SetButtons()
     {
         GameObject.Find("ButtonReload").GetComponent<ButtonBhv>().EndActionDelegate = Helper.ReloadScene;
-        GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToSwipe;
-        GameObject.Find("ButtonPassTurn").GetComponent<ButtonBhv>().EndActionDelegate = PassTurn;
+        GameObject.Find("ButtonPause").GetComponent<ButtonBhv>().EndActionDelegate = Pause;
+        (_buttonPass = GameObject.Find("ButtonPassTurn").GetComponent<ButtonBhv>()).EndActionDelegate = PassTurn;
+        (_buttonRunAway = GameObject.Find("ButtonRunAway").GetComponent<ButtonBhv>()).EndActionDelegate = RunAway;
         GameObject.Find("Pm").GetComponent<ButtonBhv>().EndActionDelegate = OnPlayerPmClick;
         GameObject.Find("PlayerCharacter").GetComponent<ButtonBhv>().EndActionDelegate = OnPlayerCharacterClick;
-        var tmpButton = GameObject.Find("PlayerWeapon1");
-        tmpButton.GetComponent<ButtonBhv>().EndActionDelegate = ShowWeaponOneRange;
-        tmpButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsWeapon_" + _playerBhv.Character.Weapons[0].Type.GetHashCode());
-        tmpButton = GameObject.Find("PlayerWeapon2");
-        tmpButton.GetComponent<ButtonBhv>().EndActionDelegate = ShowWeaponTwoRange;
-        tmpButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsWeapon_" + _playerBhv.Character.Weapons[1].Type.GetHashCode());
-        tmpButton = GameObject.Find("PlayerSkill1");
-        tmpButton.GetComponent<ButtonBhv>().EndActionDelegate = ClickSkill1;
-        tmpButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsSkill_" + _playerBhv.Character.Skills[0].IconId);
-        tmpButton = GameObject.Find("PlayerSkill2");
-        tmpButton.GetComponent<ButtonBhv>().EndActionDelegate = ClickSkill2;
-        tmpButton.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsSkill_" + _playerBhv.Character.Skills[1].IconId);
+        _buttonWeapon1 = GameObject.Find("PlayerWeapon1").GetComponent<ButtonBhv>();
+        _buttonWeapon1.EndActionDelegate = ShowWeaponOneRange;
+        _buttonWeapon1.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsWeapon_" + _playerBhv.Character.Weapons[0].Type.GetHashCode());
+        _buttonWeapon2 = GameObject.Find("PlayerWeapon2").GetComponent<ButtonBhv>();
+        _buttonWeapon2.EndActionDelegate = ShowWeaponTwoRange;
+        _buttonWeapon2.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsWeapon_" + _playerBhv.Character.Weapons[1].Type.GetHashCode());
+        _buttonSkill1 = GameObject.Find("PlayerSkill1").GetComponent<ButtonBhv>();
+        _buttonSkill1.EndActionDelegate = ClickSkill1;
+        _buttonSkill1.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsSkill_" + _playerBhv.Character.Skills[0].IconId);
+        _buttonSkill2 = GameObject.Find("PlayerSkill2").GetComponent<ButtonBhv>();
+        _buttonSkill2.EndActionDelegate = ClickSkill2;
+        _buttonSkill2.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsSkill_" + _playerBhv.Character.Skills[1].IconId);
         Instantiator.LoadCharacterSkin(_playerBhv.Character, GameObject.Find("CharacterSkinContainer"));
+        PauseMenu.Buttons[0].EndActionDelegate = Resume;
+        PauseMenu.TextMeshes[0].text = "Resume";
+        PauseMenu.Buttons[1].EndActionDelegate = GiveUp;
+        PauseMenu.TextMeshes[1].text = "Give Up";
+        PauseMenu.Buttons[2].EndActionDelegate = Settings;
+        PauseMenu.TextMeshes[2].text = "Settings";
+        PauseMenu.Buttons[3].EndActionDelegate = Exit;
+        PauseMenu.TextMeshes[3].text = "Exit";
+        PauseMenu.Buttons[4].gameObject.SetActive(false);
+
+        ManagePlayerButtons();
+        _buttonPass.EnableButton();
     }
 
     private void InitGrid()
@@ -219,14 +247,59 @@ public class FightSceneBhv : SceneBhv
         if (_currentPlayingCharacterBhv.Character.IsPlayer)
         {
             State = FightState.PlayerTurn;
+            ManagePlayerButtons();
             _gridBhv.ShowPm(_currentPlayingCharacterBhv, _currentPlayingCharacterBhv.OpponentBhvs);
         }            
         else
         {
             State = FightState.OpponentTurn;
+            ManagePlayerButtons();
             _currentPlayingCharacterBhv.Ai.StartThinking();
         }
         
+    }
+
+    public void ManagePlayerButtons()
+    {
+        if (State == FightState.PlayerTurn)
+        {
+            _clickHistory = 0;
+            _buttonPass.EnableButton();
+            _buttonRunAway.EnableButton();
+            _buttonWeapon1.EnableButton();
+            _buttonWeapon2.EnableButton();
+            var skill = _playerBhv.Character.Skills[0];
+            if (!skill.IsUnderCooldown())
+            {
+                _buttonSkill1.EnableButton();
+                _buttonSkill1.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = string.Empty;
+            }
+            else
+            {
+                _buttonSkill1.DisableButton();
+                _buttonSkill1.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = skill.Cooldown <= skill.CooldownMax ? skill.Cooldown.ToString() : string.Empty;
+            }
+            skill = _playerBhv.Character.Skills[1];
+            if (!skill.IsUnderCooldown())
+            {
+                _buttonSkill2.EnableButton();
+                _buttonSkill2.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = string.Empty;
+            }
+            else
+            {
+                _buttonSkill2.DisableButton();
+                _buttonSkill2.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = skill.Cooldown <= skill.CooldownMax ? skill.Cooldown.ToString() : string.Empty;
+            }
+        }
+        else
+        {
+            _buttonPass.DisableButton();
+            _buttonRunAway.DisableButton();
+            _buttonWeapon1.DisableButton();
+            _buttonWeapon2.DisableButton();
+            _buttonSkill1.DisableButton();
+            _buttonSkill2.DisableButton();
+        }
     }
 
     public void UpdateResources()
@@ -245,6 +318,8 @@ public class FightSceneBhv : SceneBhv
         }
         else
         {
+            if (_currentPlayingCharacterBhv.Character.IsPlayer && State != FightState.PlayerTurn)
+                return;
             foreach (var skill in _currentPlayingCharacterBhv.Character.Skills)
             {
                 if (skill != null)
@@ -340,20 +415,34 @@ public class FightSceneBhv : SceneBhv
         GameObject.Find(name + "Weapon2PA").GetComponent<UnityEngine.UI.Text>().text = "PA:" + character.Weapons[1].PaNeeded;
     }
 
+    private void CheckDoubleClick(int clickId)
+    {
+        if (clickId == _clickHistory)
+        {
+            Instantiator.NewPopupCharacterStats(_playerBhv.Character, null, false, clickId);
+            _clickHistory = 0;
+        }
+        else
+            _clickHistory = clickId;
+    }
+
     private void ShowWeaponOneRange()
     {
+        CheckDoubleClick(1);
         if (State == FightState.PlayerTurn && _playerBhv.Pa >= _playerBhv.Character.Weapons[0].PaNeeded && !_playerBhv.IsMoving)
             _gridBhv.ShowWeaponRange(_playerBhv, 0, OpponentBhvs);
     }
 
     private void ShowWeaponTwoRange()
     {
+        CheckDoubleClick(2);
         if (State == FightState.PlayerTurn && _playerBhv.Pa >= _playerBhv.Character.Weapons[1].PaNeeded && !_playerBhv.IsMoving)
             _gridBhv.ShowWeaponRange(_playerBhv, 1, OpponentBhvs);
     }
 
     private void ClickSkill1()
     {
+        CheckDoubleClick(3);
         if (State == FightState.PlayerTurn && _playerBhv.Character.Skills != null && _playerBhv.Character.Skills.Count >= 1
             && _playerBhv.Pa >= _playerBhv.Character.Skills[0].PaNeeded && !_playerBhv.IsMoving)
             _playerBhv.Character.Skills[0].OnClick();
@@ -361,6 +450,7 @@ public class FightSceneBhv : SceneBhv
 
     private void ClickSkill2()
     {
+        CheckDoubleClick(4);
         if (State == FightState.PlayerTurn && _playerBhv.Character.Skills != null && _playerBhv.Character.Skills.Count >= 2
             && _playerBhv.Pa >= _playerBhv.Character.Skills[1].PaNeeded && !_playerBhv.IsMoving)
             _playerBhv.Character.Skills[1].OnClick();
@@ -373,12 +463,33 @@ public class FightSceneBhv : SceneBhv
         Instantiator.NewPopupCharacterStats(character, null);
     }
 
-    #region exit
-
-    public void GoToSwipe()
+    public virtual void RunAway()
     {
-        NavigationService.LoadPreviousScene(OnRootPreviousScene);
-    }
+        Instantiator.NewPopupYesNo(Constants.YesNoTitle,
+            "You have " + (Soul.RunAwayPercent + Journey.RunAwayPercent) + "% chance of running away.\nDo you risk it?"
+            , Constants.Cancel, "Risk it!", OnRiskRunningAway);
 
-    #endregion
+        object OnRiskRunningAway(bool result)
+        {
+            if (result)
+            {
+                var rand = Random.Range(0, 100);
+                if (rand < Soul.RunAwayPercent + Journey.RunAwayPercent)
+                {
+                    Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "RUNNING AWAY", 2.0f, TransitionRunAway, reverse: true);
+                    object TransitionRunAway(bool transResult)
+                    {
+                        NavigationService.LoadPreviousScene(OnRootPreviousScene);
+                        return transResult;
+                    }
+                }
+                else
+                {
+                    Instantiator.NewSnack("Your attempt to flee fails");
+                    PassTurn();
+                }
+            }
+            return result;
+        }
+    }
 }

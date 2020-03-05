@@ -37,7 +37,6 @@ public static class Constants
     //  PLAYER PREFS  //
     public const string PpScenePath = "ScenePath";
     public const string PpAudioLevel = "AudioLevel";
-    public const float PpAudioLevelDefault = 1;
     public const string PpJourney = "Journey";
     public const string PpCurrentBiome = "CurrentBiome";
     public const string PpPlayer = "Player";
@@ -50,6 +49,9 @@ public static class Constants
     public const string PpNbOpponents = "NbOpponents";
     public const string PpSerializeDefault = null;
     public const string PpFavKeyboardLayout = "FavKeyboard";
+    public const string PpSoul = "Soul";
+    public const string PpRun = "Run";
+    public const float PpAudioLevelDefault = 1.0f;
     public const int PpFavKeyboardLayoutDefault = 0;
 
     //  SCENES  //
@@ -83,6 +85,7 @@ public static class Constants
     public static Color ColorPlain = new Color(1.0f, 1.0f, 1.0f, 1.0f);
     public static Color ColorPlainTransparent = new Color(1.0f, 1.0f, 1.0f, 0.0f);
     public static Color ColorPlainSemiTransparent = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+    public static Color ColorPlainQuarterTransparent = new Color(1.0f, 1.0f, 1.0f, 0.25f);
 
     // SORTING LAYERS //
     public const string SortingLayerCard = "Card";

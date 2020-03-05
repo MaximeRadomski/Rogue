@@ -233,8 +233,8 @@ public class RaceChoiceSceneBhv : SceneBhv
                 }
             }
         }
-        var journey = new Journey(_playerCharacter);
-        PlayerPrefsHelper.SaveJourney(journey);
+        Journey = new Journey(_playerCharacter);
+        PlayerPrefsHelper.SaveJourney(Journey);
         PlayerPrefsHelper.SaveCharacter(Constants.PpPlayer, _playerCharacter);
         NavigationService.LoadNextScene(Constants.SwipeScene);
         return result;

@@ -130,7 +130,10 @@ public class CardOpponentBhv : CardBhv
     {
         base.Venture();
         if (Helper.FloatEqualsPrecision(transform.position.x, _likePosition.x, 0.1f))
+        {
+            _state = CardState.Off;
             _swipeSceneBhv.GoToFightScene(_opponentCharacters);
+        }
     }
 
     public override void BeginAction(Vector2 initialTouchPosition)

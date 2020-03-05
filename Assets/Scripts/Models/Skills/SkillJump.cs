@@ -36,6 +36,5 @@ public class SkillJump : Skill
     {
         base.Activate(x, y);
         CharacterBhv.MoveToPosition(x, y, false);
-
     }
 }

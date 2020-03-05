@@ -16,12 +16,12 @@ public class PopupCharacterStatsBhv : StatsDisplayerBhv
 
     private System.Func<bool> _sceneUpdateAction;
 
-    public void SetPrivates(Character character, System.Func<bool> sceneUpdateAction, bool isInventoryAvailable)
+    public void SetPrivates(Character character, System.Func<bool> sceneUpdateAction, bool isInventoryAvailable, int tabId)
     {
         _title = transform.Find("Title").GetComponent<TMPro.TextMeshPro>();
         _character = character;
         _sceneUpdateAction = sceneUpdateAction;
-        _currentTab = 0;
+        _currentTab = tabId;
         _resetTabPosition = new Vector3(-10.0f, 10.0f, 0.0f);
         _currentTabPosition = transform.position;
         _tabs = new List<GameObject>();
@@ -31,7 +31,7 @@ public class PopupCharacterStatsBhv : StatsDisplayerBhv
         {
             _tabs.Add(transform.Find("Tab" + i).gameObject);
             _buttonsTabs.Add(transform.Find("ButtonTab" + i).GetComponent<ButtonBhv>());
-            if (i == 0)
+            if (i == _currentTab)
             {
                 BringTabFront(_tabs[i]);
             }

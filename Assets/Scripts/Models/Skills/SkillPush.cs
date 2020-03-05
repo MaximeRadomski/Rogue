@@ -63,7 +63,8 @@ public class SkillPush : Skill
 
     private void AfterPush()
     {
-        _pushedOpponentBhv.AfterMouvementDelegate = null;
+        if (_pushedOpponentBhv != null)
+            _pushedOpponentBhv.AfterMouvementDelegate = null;
         AfterActivation();
     }
 }

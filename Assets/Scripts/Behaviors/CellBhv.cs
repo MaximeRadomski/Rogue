@@ -65,7 +65,7 @@ public class CellBhv : InputBhv
             {
                 _offSprite.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Biomes/" + mapType + "/CellsOff_" + Random.Range(0, MapsData.NbOffTemplates));
                 _onSprite.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Biomes/" + mapType + "/CellsOn_0");
-                _offSprite.sortingOrder = Constants.GridMax - Y;
+                _offSprite.sortingOrder = (Constants.GridMax - Y) * 100;
             }
             _onSprite.sortingOrder = Constants.GridMax - Y;
         }        
@@ -194,7 +194,7 @@ public class CellBhv : InputBhv
     public void ShowWeaponOutOfRange()
     {
         _overSprite.sprite = OverSprites[_weapon];
-        _overSprite.color = Constants.ColorPlainSemiTransparent;
+        _overSprite.color = Constants.ColorPlainQuarterTransparent;
     }
 
     public void ShowWeaponZone()
@@ -218,7 +218,7 @@ public class CellBhv : InputBhv
     public void ShowSkillOutOfRange()
     {
         _overSprite.sprite = OverSprites[_skill];
-        _overSprite.color = Constants.ColorPlainSemiTransparent;
+        _overSprite.color = Constants.ColorPlainQuarterTransparent;
     }
 
     void Update()

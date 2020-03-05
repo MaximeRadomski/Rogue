@@ -65,9 +65,10 @@ public abstract class Skill : InventoryItem
         _isDebuffed = false;
         if (CooldownType == CooldownType.Normal)
         {
-            Cooldown = CooldownMax;
+            Cooldown = CooldownMax + 1;
             if (Effect != SkillEffect.None)
                 CharacterBhv.GainSkillEffect(Effect);
+            GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>().ManagePlayerButtons();
         }            
         else if (CooldownType == CooldownType.OnceAFight)
         {

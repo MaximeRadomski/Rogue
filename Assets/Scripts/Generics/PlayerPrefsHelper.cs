@@ -14,6 +14,8 @@ public class PlayerPrefsHelper : MonoBehaviour
     public static Journey GetJourney()
     {
         var journey = JsonUtility.FromJson<Journey>(PlayerPrefs.GetString(Constants.PpJourney, Constants.PpSerializeDefault));
+        if (journey == null)
+            return null;
         journey.Biome = JsonUtility.FromJson<Biome>(PlayerPrefs.GetString(Constants.PpCurrentBiome, Constants.PpSerializeDefault));
         return journey;
     }
@@ -71,5 +73,19 @@ public class PlayerPrefsHelper : MonoBehaviour
                 character.Inventory.Add(ItemsData.GetItemFromName(serialized));
         }
         return character;
+    }
+
+    public static void SaveSoul(Soul soul)
+    {
+        PlayerPrefs.SetString(Constants.PpSoul, JsonUtility.ToJson(soul));
+        Debug.Log(JsonUtility.ToJson(soul));
+    }
+
+    public static Soul GetSoul()
+    {
+        var soul = JsonUtility.FromJson<Soul>(PlayerPrefs.GetString(Constants.PpSoul, Constants.PpSerializeDefault));
+        if (soul == null)
+            soul = new Soul();
+        return soul;
     }
 }

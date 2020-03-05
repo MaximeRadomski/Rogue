@@ -7,7 +7,7 @@ public static class NavigationService
 {
     private static string _path;
 
-    public static void SetCurrentRootScene(string name)
+    public static void TrySetCurrentRootScene(string name)
     {
         if (string.IsNullOrEmpty(_path))
             _path = "/" + name;
@@ -15,7 +15,7 @@ public static class NavigationService
 
     public static void NewRootScene(string name)
     {
-        _path = "";
+        _path = string.Empty;
         LoadNextScene(name);
     }
 

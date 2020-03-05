@@ -72,7 +72,8 @@ public class SkillGrapplingHook : Skill
 
     private void AfterGrap()
     {
-        _grabbedOpponentBhv.AfterMouvementDelegate = null;
+        if (_grabbedOpponentBhv != null)
+            _grabbedOpponentBhv.AfterMouvementDelegate = null;
         AfterActivation();
     }
 }

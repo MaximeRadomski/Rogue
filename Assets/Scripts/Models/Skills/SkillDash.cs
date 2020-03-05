@@ -24,7 +24,7 @@ public class SkillDash : Skill
         IconId = 4;
         BasePrice = 100;
 
-        Description = "taAvoid the first next turn hit";
+        Description = "Avoid the first next turn hit";
     }
 
     private int _currentTargetX;

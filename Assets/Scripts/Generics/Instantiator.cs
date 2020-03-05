@@ -38,12 +38,12 @@ public class Instantiator : MonoBehaviour
             Camera.main.gameObject.GetComponent<CameraBhv>().FocusY(target.transform.position.y + (Camera.main.orthographicSize - Constants.KeyboardHeight));
     }
 
-    public void NewPopupCharacterStats(Character character, System.Func<bool> sceneUpdateAction, bool isInventoryAvailable = false)
+    public void NewPopupCharacterStats(Character character, System.Func<bool> sceneUpdateAction, bool isInventoryAvailable = false, int tabId = 0)
     {
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupCharacterStats");
         var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpPopupInstance.name);
-        tmpPopupInstance.GetComponent<PopupCharacterStatsBhv>().SetPrivates(character, sceneUpdateAction, isInventoryAvailable);
+        tmpPopupInstance.GetComponent<PopupCharacterStatsBhv>().SetPrivates(character, sceneUpdateAction, isInventoryAvailable, tabId);
     }
 
     public void NewPopupInventory(Character character, System.Func<bool> updateAction, System.Func<bool, object> resultAction = null)

@@ -8,7 +8,6 @@ public class SwipeSceneBhv : SceneBhv
     public Sprite[] DayNight;
 
     private Character _playerCharacter;
-    private Journey _journey;
 
     private GameObject _characterSkinContainer;
     private OrbBhv _orbLife;
@@ -41,14 +40,13 @@ public class SwipeSceneBhv : SceneBhv
     protected override void SetPrivates()
     {
         base.SetPrivates();
+        PauseMenu = Instantiator.NewPauseMenu();
         OnRootPreviousScene = Constants.RaceChoiceScene;
-        _journey = PlayerPrefsHelper.GetJourney();
         _playerCharacter = PlayerPrefsHelper.GetCharacter(Constants.PpPlayer);
         Instantiator.SetPrivates();
         _currentBiomeChoice = 0;
         _avoidBhv = GameObject.Find("ButtonAvoid").GetComponent<ButtonBhv>();
-        _ventureBhv = GameObject.Find("ButtonVenture").GetComponent<ButtonBhv>();
-        PauseMenu = Instantiator.NewPauseMenu();
+        _ventureBhv = GameObject.Find("ButtonVenture").GetComponent<ButtonBhv>();        
     }
 
     private void SetButtons()
@@ -56,8 +54,25 @@ public class SwipeSceneBhv : SceneBhv
         GameObject.Find("ButtonPause").GetComponent<ButtonBhv>().EndActionDelegate = Pause;
         GameObject.Find("CharacterButton").GetComponent<ButtonBhv>().EndActionDelegate = ShowCharacterStats;
         GameObject.Find("ButtonInventory").GetComponent<ButtonBhv>().EndActionDelegate = ShowInventory;
-        Instantiator.NewRandomCard(1, _journey.Day, _journey.Biome, _playerCharacter);
-        Instantiator.NewRandomCard(0, _journey.Day, _journey.Biome, _playerCharacter);
+        if (Journey.Step >= Journey.Biome.Steps) //Just '<' because it instantiates one in advance
+        {
+            ++_currentBiomeChoice;
+            Instantiator.NewCardBiome(1, Journey.Day, Journey.Biome, _currentBiomeChoice, Journey.Biome.Destinations, _playerCharacter);
+            if (Journey.Biome.Destinations > 1)
+            {
+                ++_currentBiomeChoice;
+                Instantiator.NewCardBiome(0, Journey.Day, Journey.Biome, _currentBiomeChoice, Journey.Biome.Destinations, _playerCharacter);
+            }
+            else
+            {
+                _avoidBhv.DisableButton();
+            }
+        }
+        else
+        {
+            Instantiator.NewRandomCard(1, Journey.Day, Journey.Biome, _playerCharacter);
+            Instantiator.NewRandomCard(0, Journey.Day, Journey.Biome, _playerCharacter);
+        }
         _currentCard = GameObject.Find("Card1");
         _avoidBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Avoid;
         _ventureBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Venture;
@@ -76,31 +91,33 @@ public class SwipeSceneBhv : SceneBhv
     {
         if (_playerCharacter.GetTotalWeight() > _playerCharacter.WeightLimit)
             minutesPassed *= 2;
-        _journey.UpdateTime(minutesPassed);
+        Journey.UpdateTime(minutesPassed);
         if (regenerate)
             _playerCharacter.RegenerationFromMinutes(minutesPassed);
         //Debug.Log("Minutes Passed = " + minutesPassed + "\t|\t\tHours = " + _journey.Hour + "h" + _journey.Minutes);
-        ++_journey.Step;
+        ++Journey.Step;
         Destroy(GameObject.Find("Card1"));
         _currentCard = GameObject.Find("Card0");
         _currentCard.GetComponent<CardBhv>().BringToFront();
         Instantiator.PopText(Helper.TimeFromMinutes(minutesPassed), (Vector2)_currentCard.transform.position + new Vector2(0.0f, 1.6f), TextType.Normal);
         _avoidBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Avoid;
         _ventureBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Venture;
-        if (_journey.Step < _journey.Biome.Steps) //Just '<' because it instantiates one in advance
+        if (Journey.Step < Journey.Biome.Steps) //Just '<' because it instantiates one in advance
         {
-            Instantiator.NewRandomCard(0, _journey.Day, _journey.Biome, _playerCharacter);
+            Instantiator.NewRandomCard(0, Journey.Day, Journey.Biome, _playerCharacter);
         }            
-        else if (_currentBiomeChoice < _journey.Biome.Destinations)
+        else if (_currentBiomeChoice < Journey.Biome.Destinations)
         {
             ++_currentBiomeChoice;
-            Instantiator.NewCardBiome(0, _journey.Day, _journey.Biome, _currentBiomeChoice, _journey.Biome.Destinations, _playerCharacter);
+            Instantiator.NewCardBiome(0, Journey.Day, Journey.Biome, _currentBiomeChoice, Journey.Biome.Destinations, _playerCharacter);
         }
         else
         {
             _avoidBhv.DisableButton();
         }
         UpdateDisplayJourneyAndCharacterStats();
+        PlayerPrefsHelper.SaveJourney(Journey);
+        PlayerPrefsHelper.SaveCharacter(Constants.PpPlayer, _playerCharacter);
     }
 
     private void FirstDisplayJourneyAndCharacterStats()
@@ -132,23 +149,23 @@ public class SwipeSceneBhv : SceneBhv
         _xp.text = _playerCharacter.Experience.ToString() + "/" + Helper.XpNeedForLevel(_playerCharacter.Level) + " " + Constants.UnitXp;
         _gold.text = _playerCharacter.Gold.ToString() + " " + Constants.UnitGold;
         _matchPercentage.text = _currentCard.GetComponent<CardBhv>().PositiveOutcomePercent + "%";
-        float englishHour = _journey.Hour > 12 ? _journey.Hour - 12 : _journey.Hour;
-        if (_journey.Hour == 24 || _journey.Hour == 12) englishHour = 0;
-        float minutes = _journey.Minutes / 60.0f;
+        float englishHour = Journey.Hour > 12 ? Journey.Hour - 12 : Journey.Hour;
+        if (Journey.Hour == 24 || Journey.Hour == 12) englishHour = 0;
+        float minutes = Journey.Minutes / 60.0f;
         var newRotation = 30.0f * (englishHour + minutes);
         _hoursCircle.GetComponent<HoursCircleBhv>().Rotate(new Vector3(0.0f, 0.0f, newRotation));
-        _biomePicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/BiomePicture_" + _journey.Biome.MapType.GetHashCode());
-        _amPm.text = _journey.Hour > 12 ? "PM" : "AM";
-        _day.text = _journey.Day.ToString();
-        _dayNight.sprite = _journey.Hour >= 20 || _journey.Hour < 4 ? DayNight[1] : DayNight[0];
-        _biomeSteps.text = (_journey.Step <= _journey.Biome.Steps ? _journey.Step : _journey.Biome.Steps) + "-" + _journey.Biome.Steps;
+        _biomePicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/BiomePicture_" + Journey.Biome.MapType.GetHashCode());
+        _amPm.text = Journey.Hour > 12 ? "PM" : "AM";
+        _day.text = Journey.Day.ToString();
+        _dayNight.sprite = Journey.Hour >= 20 || Journey.Hour < 4 ? DayNight[1] : DayNight[0];
+        _biomeSteps.text = (Journey.Step <= Journey.Biome.Steps ? Journey.Step : Journey.Biome.Steps) + "-" + Journey.Biome.Steps;
     }
 
     public void NewBiome(Biome biome, int minutesPassed)
     {
         if (_playerCharacter.GetTotalWeight() > _playerCharacter.WeightLimit)
             minutesPassed *= 2;
-        _journey.UpdateTime(minutesPassed);
+        Journey.UpdateTime(minutesPassed);
         _playerCharacter.RegenerationFromMinutes(minutesPassed);
         var remainingCards = GameObject.FindGameObjectsWithTag(Constants.TagGrabbableCard);
         foreach (var card in remainingCards)
@@ -157,15 +174,15 @@ public class SwipeSceneBhv : SceneBhv
         }
         _avoidBhv.EnableButton();
         _currentBiomeChoice = 0;
-        _journey.Step = 1;
-        _journey.Biome = biome;
-        Instantiator.NewRandomCard(1, _journey.Day, _journey.Biome, _playerCharacter);
+        Journey.Step = 1;
+        Journey.Biome = biome;
+        Instantiator.NewRandomCard(1, Journey.Day, Journey.Biome, _playerCharacter);
         _currentCard = GameObject.Find("Card1");
         Instantiator.PopText(Helper.TimeFromMinutes(minutesPassed), (Vector2)_currentCard.transform.position + new Vector2(0.0f, 1.6f), TextType.Normal);
         //backCard.GetComponent<CardBhv>().BringToFront();
         _avoidBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Avoid;
         _ventureBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Venture;
-        Instantiator.NewRandomCard(0, _journey.Day, _journey.Biome, _playerCharacter);
+        Instantiator.NewRandomCard(0, Journey.Day, Journey.Biome, _playerCharacter);
         UpdateDisplayJourneyAndCharacterStats();
     }
 
@@ -186,9 +203,15 @@ public class SwipeSceneBhv : SceneBhv
             PlayerPrefsHelper.SaveCharacter(Constants.PpOpponent + i, opponentCharacters[i]);
         }
         PlayerPrefs.SetInt(Constants.PpNbOpponents, opponentCharacters.Count);
-        PlayerPrefsHelper.SaveJourney(_journey);
+        Journey.Step++;
+        PlayerPrefsHelper.SaveJourney(Journey);
         PlayerPrefsHelper.SaveCharacter(Constants.PpPlayer, _playerCharacter);
-        NavigationService.LoadNextScene(Constants.FightScene);
+        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "ENTERING COMBAT", 2.0f, TransitionFight);
+        object TransitionFight(bool transResult)
+        {
+            NavigationService.LoadNextScene(Constants.FightScene);
+            return transResult;
+        }
     }
 
     private void ShowCharacterStats()
@@ -206,50 +229,4 @@ public class SwipeSceneBhv : SceneBhv
         UpdateDisplayJourneyAndCharacterStats();
         return true;
     }
-
-    #region PauseMenu
-
-    private void GiveUp()
-    {
-        Instantiator.NewPopupYesNo(Constants.YesNoTitle,
-            "You wont be able to recover your progress if you give up now!"
-            , Constants.Cancel, Constants.Proceed, OnAcceptGiveUp);
-    }
-
-    private object OnAcceptGiveUp(bool result)
-    {
-        if (result)
-        {
-            Camera.main.gameObject.GetComponent<CameraBhv>().Unfocus();
-            Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "GAME OVER", 10.0f, TransitionGiveUp, reverse: true);
-            object TransitionGiveUp(bool transResult)
-            {
-                NavigationService.LoadPreviousScene(OnRootPreviousScene);
-                return transResult;
-            }
-        }
-        return result;
-    }
-
-    private void Settings()
-    {
-
-    }
-    private void Exit()
-    {
-        Instantiator.NewPopupYesNo(Constants.YesNoTitle,
-            "You wont be able to recover your progress if you give up now!"
-            , Constants.Cancel, Constants.Proceed, OnAcceptExit);
-    }
-
-    private object OnAcceptExit(bool result)
-    {
-        if (result)
-        {
-            Application.Quit();
-        }
-        return result;
-    }
-
-    #endregion
 }
