@@ -21,6 +21,7 @@ public class CellBhv : InputBhv
     public bool IsOccupied;
 
     private GridBhv _gridBhv;
+    private FightSceneBhv _fightSceneBhv;
     private SoundControlerBhv _soundControler;
 
     private bool _isStretching;
@@ -40,6 +41,7 @@ public class CellBhv : InputBhv
     public override void SetPrivates()
     {
         base.SetPrivates();
+        _fightSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>();
         _gridBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<GridBhv>();
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _isStretching = false;
@@ -116,9 +118,9 @@ public class CellBhv : InputBhv
             var onCellCharacter = _gridBhv.IsOpponentOnCell(X, Y);
             if (State == CellState.None && onCellCharacter != null)
             {
-                GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>().ShowCharacterStats(onCellCharacter.Character);
+                _fightSceneBhv.ShowCharacterStats(onCellCharacter.Character);
             }
-            _gridBhv.ResetAllCellsZone();
+            _fightSceneBhv.AfterPlayerMovement();
             return;
         }
         else if (State == CellState.Mouvement)

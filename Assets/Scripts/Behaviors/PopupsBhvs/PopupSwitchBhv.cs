@@ -77,7 +77,7 @@ public class PopupSwitchBhv : StatsDisplayerBhv
             }
         }
         DisplayItem(_mainItem, true);
-        Constants.LastEndActionClickedName = "SlotBack" + _selectedItem;
+        Constants.SetLastEndActionClickedName("SlotBack" + _selectedItem);
         UpdateView();
     }
 
@@ -109,7 +109,17 @@ public class PopupSwitchBhv : StatsDisplayerBhv
         InventoryItem tmpItem = _itemType == InventoryItemType.Weapon ? _character.Weapons[_selectedItem] : (InventoryItem)_character.Skills[_selectedItem];
         if (_itemType == InventoryItemType.Weapon)
         {
-            _character.Weapons[_selectedItem] = (Weapon)_mainItem;
+            var weapon = (Weapon)_mainItem;
+            var notSelectedWeapon = _selectedItem == 0 ? 1 : 0;
+            //GreatSword check
+            if ((weapon.Type == WeaponType.GreatSword && !WeaponsData.IsSmallWeapon(_character.Weapons[notSelectedWeapon].Type))
+                || (_character.Weapons[notSelectedWeapon].Type == WeaponType.GreatSword && !WeaponsData.IsSmallWeapon(weapon.Type)))
+            {
+                _instantiator.NewSnack("Great Swords can only be equipped with small weapons (knives, daggers, gauntlets).");
+                NegativeDelegate();
+                return;
+            }
+            _character.Weapons[_selectedItem] = weapon;
             DisplayItem(_character.Weapons[_selectedItem]);
         }
         else

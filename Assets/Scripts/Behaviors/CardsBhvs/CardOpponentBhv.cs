@@ -43,11 +43,11 @@ public class CardOpponentBhv : CardBhv
 
         _opponentCharacters = new List<Character>();
         var nbOpponents = 1;
-        if (Random.Range(0, 100) < 5)
+        if (Random.Range(0, 100) < 2)
             nbOpponents = 4;
-        else if (Random.Range(0, 100) < 15)
+        else if (Random.Range(0, 100) < 5)
             nbOpponents = 3;
-        else if (Random.Range(0, 100) < 30)
+        else if (Random.Range(0, 100) < 15)
             nbOpponents = 2;
         if (nbOpponents == 1)
             transform.Find("Opponents").GetComponent<TMPro.TextMeshPro>().text = "Opponent";

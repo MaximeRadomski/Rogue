@@ -68,7 +68,6 @@ public abstract class Skill : InventoryItem
             Cooldown = CooldownMax + 1;
             if (Effect != SkillEffect.None)
                 CharacterBhv.GainSkillEffect(Effect);
-            GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>().ManagePlayerButtons();
         }            
         else if (CooldownType == CooldownType.OnceAFight)
         {
@@ -76,6 +75,7 @@ public abstract class Skill : InventoryItem
             if (Effect != SkillEffect.None)
                 CharacterBhv.GainSkillEffect(Effect);
         }
+        GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>().ManagePlayerButtons();
     }
 
     public void AfterActivation()

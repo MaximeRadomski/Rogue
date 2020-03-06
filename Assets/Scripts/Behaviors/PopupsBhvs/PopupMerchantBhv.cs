@@ -116,7 +116,7 @@ class PopupMerchantBhv : StatsDisplayerBhv
                 slotIcon.GetComponent<SpriteRenderer>().sprite = null;
             }
         }
-        Constants.LastEndActionClickedName = "SlotBack" + _selectedItem;
+        Constants.SetLastEndActionClickedName("SlotBack" + _selectedItem);
         UpdateView();
     }
 

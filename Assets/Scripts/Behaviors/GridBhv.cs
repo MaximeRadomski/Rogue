@@ -92,25 +92,33 @@ public class GridBhv : MonoBehaviour
     {
         ResetAllCellsVisited();
         ResetAllCellsDisplay();
+        _currentCharacterBhv = characterBhv;
+        _currentOpponentBhvs = opponentBhvs;
         var nbPm = unlimitedPm ? Constants.UnlimitedPm : characterBhv.GetComponent<CharacterBhv>().Pm;
         int x = characterBhv.GetComponent<CharacterBhv>().X;
         int y = characterBhv.GetComponent<CharacterBhv>().Y;
-        if (nbPm <= 0 || IsAdjacentOpponent(x, y, opponentBhvs))
-            return;
+        if (nbPm <= 0)
+            return;        
         SpreadPmStart(x, y, nbPm, characterBhv, opponentBhvs);
     }
 
     private void SpreadPmStart(int x, int y, int nbPm, CharacterBhv characterBhv, List<CharacterBhv> opponentBhvs)
     {
-        SpreadPm(x, y + 1, nbPm, 1, characterBhv, opponentBhvs);
-        SpreadPm(x + 1, y, nbPm, 1, characterBhv, opponentBhvs);
-        SpreadPm(x, y - 1, nbPm, 1, characterBhv, opponentBhvs);
-        SpreadPm(x - 1, y, nbPm, 1, characterBhv, opponentBhvs);
+        var spentPm = 1;
+        if (IsAdjacentOpponent(x, y, opponentBhvs))
+        {
+            --nbPm;
+            ++spentPm;
+        }            
+        SpreadPm(x, y + 1, nbPm, spentPm, characterBhv, opponentBhvs);
+        SpreadPm(x + 1, y, nbPm, spentPm, characterBhv, opponentBhvs);
+        SpreadPm(x, y - 1, nbPm, spentPm, characterBhv, opponentBhvs);
+        SpreadPm(x - 1, y, nbPm, spentPm, characterBhv, opponentBhvs);
     }
 
     private void SpreadPm(int x, int y, int nbPm, int spentPm, CharacterBhv characterBhv, List<CharacterBhv> opponentBhvs)
     {
-        if (!Helper.IsPosValid(x, y))
+        if (!Helper.IsPosValid(x, y) || IsOpponentOnCell(x, y))
             return;
         var cell = Cells[x, y];
         if (cell == null || (x == characterBhv.X && y == characterBhv.Y))
@@ -124,12 +132,20 @@ public class GridBhv : MonoBehaviour
             cell.GetComponent<CellBhv>().Visited = spentPm;
             //DEBUG//
             //cell.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = cell.GetComponent<CellBhv>().Visited.ToString();
-            if (--nbPm > 0 && !IsAdjacentOpponent(x, y, opponentBhvs))
+            if (--nbPm > 0)
             {
-                SpreadPm(x, y + 1, nbPm, spentPm + 1, characterBhv, opponentBhvs);
-                SpreadPm(x + 1, y, nbPm, spentPm + 1, characterBhv, opponentBhvs);
-                SpreadPm(x, y - 1, nbPm, spentPm + 1, characterBhv, opponentBhvs);
-                SpreadPm(x - 1, y, nbPm, spentPm + 1, characterBhv, opponentBhvs);
+                if (IsAdjacentOpponent(x, y, opponentBhvs))
+                {
+                    --nbPm;
+                    ++spentPm;
+                }
+                if (nbPm > 0)
+                {
+                    SpreadPm(x, y + 1, nbPm, spentPm + 1, characterBhv, opponentBhvs);
+                    SpreadPm(x + 1, y, nbPm, spentPm + 1, characterBhv, opponentBhvs);
+                    SpreadPm(x, y - 1, nbPm, spentPm + 1, characterBhv, opponentBhvs);
+                    SpreadPm(x - 1, y, nbPm, spentPm + 1, characterBhv, opponentBhvs);
+                }
             }
         }
     }

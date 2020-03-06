@@ -18,7 +18,7 @@ public class SkillClarity : Skill
         MinRange = 1;
         MaxRange = 1;
         RangeType = RangeType.Normal;
-        RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 };
+        RangePositions = new List<int> { 0,0, 0,1, 1,0, 0,-1, -1,0 };
         IconId = 13;
         BasePrice = 100;
 

@@ -111,9 +111,26 @@ public static class Constants
 
     // CACHE SAVES
     public static bool InputLocked = false;
+    public static bool DoubleClick = false;
     public static int InputLayer = 0;
     public static string LastEndActionClickedName = null;
+    public static string ClickHistory = null;
     public static List<string> InputTopLayerNames = null;
+
+    public static void SetLastEndActionClickedName(string name)
+    {
+        if (!DoubleClick) //Prevents triple click
+            ClickHistory = LastEndActionClickedName;
+        LastEndActionClickedName = name;
+
+        if (ClickHistory == LastEndActionClickedName)
+        {
+            DoubleClick = true;
+            ClickHistory = string.Empty; //Prevents triple click
+        }
+        else
+            DoubleClick = false;
+    }
 
     public static void IncreaseInputLayer(string name)
     {

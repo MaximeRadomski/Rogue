@@ -32,10 +32,12 @@ public static class WeaponsData
 
     public static Weapon GetWeaponFromType(WeaponType type, bool isBase = false)
     {
-        int notTypeIfZero = Random.Range(0, 100 / ChanceNotRaceWeaponPercent);
-        if (!isBase && notTypeIfZero == 0)
+        int notAskedType = Random.Range(0, 100);
+        if (!isBase && notAskedType < ChanceNotRaceWeaponPercent)
         {
-            type = (WeaponType)Random.Range(0, System.Enum.GetNames(typeof(WeaponType)).Length);
+            var tmpType = (WeaponType)Random.Range(0, System.Enum.GetNames(typeof(WeaponType)).Length);
+            if (tmpType != WeaponType.GreatSword) //Because GreatSwords can only be equipped with small weapons.
+                type = tmpType;
         }
         Rarity rarity = Rarity.Normal;
         if (!isBase)
@@ -134,6 +136,11 @@ public static class WeaponsData
         return weaponParts;
     }
 
+    public static bool IsSmallWeapon(WeaponType type)
+    {
+        return (type == WeaponType.Knife || type == WeaponType.Daggers || type == WeaponType.Gauntlets);
+    }
+
     //  SWORD  //
     public static int[] SwordDamage = { 100, 150, 220, 300 };
     public static Weapon GetBaseSword()
@@ -171,7 +178,8 @@ public static class WeaponsData
             RangePositions = new List<int> { 0,2, 2,0, 0,-2, -2,0 },
             RangeZones = null,
             NbSkinParts = 4,
-            Specificity = "Only in line",
+            SpecificityTitle = "Straightforward",
+            Specificity = "Only in line.",
             Weight = Random.Range(3, 6 + 1),
             BasePrice = 90
         };
@@ -214,6 +222,7 @@ public static class WeaponsData
             RangePositions = new List<int> { -1,1, 1,1, 1,-1, -1,-1 },
             RangeZones = null,
             NbSkinParts = 4,
+            SpecificityTitle = "Curvy",
             Specificity = "Only diagonally",
             Weight = Random.Range(1, 2 + 1),
             BasePrice = 20
@@ -285,7 +294,8 @@ public static class WeaponsData
             RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
             RangeZones = new List<RangeDirection> { RangeDirection.Left, RangeDirection.Right },
             NbSkinParts = 5,
-            Specificity = "Dwarf craftsmanship, fixed Damage Range",
+            SpecificityTitle = "Dwarf craftsmanship",
+            Specificity = "Fixed Damage Range",
             Weight = Random.Range(10, 20 + 1),
             BasePrice = 200
         };
@@ -307,7 +317,8 @@ public static class WeaponsData
             RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
             RangeZones = null,
             NbSkinParts = 5,
-            Specificity = "Dwarf craftsmanship, fixed Damage Range",
+            SpecificityTitle = "Dwarf craftsmanship",
+            Specificity = "Fixed Damage Range.",
             Weight = Random.Range(5, 10 + 1),
             BasePrice = 200
         };
@@ -329,6 +340,8 @@ public static class WeaponsData
             RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
             RangeZones = new List<RangeDirection> { RangeDirection.Up, RangeDirection.Left, RangeDirection.Right, RangeDirection.DiagonalLeft, RangeDirection.DiagonalRight },
             NbSkinParts = 5,
+            SpecificityTitle = "Heavy Weapon",
+            Specificity = "Can only be equipped with small weapons (knives, daggers, gauntlets).",
             Weight = Random.Range(10, 20 + 1),
             BasePrice = 250
         };
@@ -347,9 +360,10 @@ public static class WeaponsData
             CritMultiplierPercent = 130,
             MinRange = 2,
             MaxRange = 2,
-            RangePositions = new List<int> { -1,1, 1,1, 1,-1, -1,-1 },
+            RangePositions = new List<int> { -1, 1, 1, 1, 1, -1, -1, -1 },
             RangeZones = null,
             NbSkinParts = 2,
+            SpecificityTitle = "Curvy",
             Specificity = "Only diagonally",
             Weight = Random.Range(4, 8 + 1),
             BasePrice = 80

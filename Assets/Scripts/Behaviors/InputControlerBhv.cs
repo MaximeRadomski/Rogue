@@ -78,7 +78,7 @@ public class InputControlerBhv : MonoBehaviour
                         }                            
                         else if (Input.GetTouch(i).phase == TouchPhase.Ended && _lastDownInput?.name == _currentInput.name)
                         {
-                            Constants.LastEndActionClickedName = _currentInput.name;
+                            Constants.SetLastEndActionClickedName(_currentInput.name);
                             _currentInput.EndAction(touchPosWorld2D);
                             _currentInput = null;
                             _lastDownInput = null;
@@ -117,7 +117,7 @@ public class InputControlerBhv : MonoBehaviour
                         }                            
                         else if (_endPhase && _lastDownInput?.name == _currentInput.name)
                         {
-                            Constants.LastEndActionClickedName = _currentInput.name;
+                            Constants.SetLastEndActionClickedName(_currentInput.name);
                             _currentInput.EndAction(touchPosWorld2D);
                             _currentInput = null;
                             _lastDownInput = null;

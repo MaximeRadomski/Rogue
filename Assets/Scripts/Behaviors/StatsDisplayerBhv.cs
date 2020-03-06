@@ -46,7 +46,7 @@ public class StatsDisplayerBhv : PopupBhv
         if (weapon.Specificity != null && weapon.Specificity != string.Empty)
         {
             statsList += MakeTitle(weapon.Type.GetDescription() + " Specificity");
-            statsList += MakeContent("", weapon.Specificity);
+            statsList += MakeContent(weapon.SpecificityTitle + ": ", weapon.Specificity);
         }
 
         if (weapon.RangeZones != null && weapon.RangeZones.Count > 0)
@@ -99,9 +99,9 @@ public class StatsDisplayerBhv : PopupBhv
                 hasSpecificityTitle = true;
             }
             if (skill.CooldownType == CooldownType.OnceAFight)
-                statsList += MakeContent("", "This Skill can only be used once a fight");
+                statsList += MakeContent("Single Use: ", "This Skill can only be used once a fight");
             else
-                statsList += MakeContent("", "This Skill is a passive effect");
+                statsList += MakeContent("Passive: ", "This Skill is a passive effect");
         }
 
         statsList += MakeTitle("Skill Characteristics");

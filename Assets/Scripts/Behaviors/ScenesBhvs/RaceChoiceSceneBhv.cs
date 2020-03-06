@@ -69,7 +69,7 @@ public class RaceChoiceSceneBhv : SceneBhv
             var max = Random.Range(0, maxRand);
             for (int i = 0; i < max; ++i)
             {
-                Constants.LastEndActionClickedName = button.name;
+                Constants.SetLastEndActionClickedName(button.name);
                 button.EndActionDelegate.Invoke();
             }
         }
@@ -92,7 +92,7 @@ public class RaceChoiceSceneBhv : SceneBhv
             var max = Random.Range(0, maxRand);
             for (int i = 0; i < max; ++i)
             {
-                Constants.LastEndActionClickedName = button.name;
+                Constants.SetLastEndActionClickedName(button.name);
                 button.EndActionDelegate.Invoke();
             }
         }
@@ -102,7 +102,7 @@ public class RaceChoiceSceneBhv : SceneBhv
     {
         foreach (var button in _rightButtons)
         {
-            Constants.LastEndActionClickedName = button.transform.parent.name;
+            Constants.SetLastEndActionClickedName(button.transform.parent.name);
             button.EndActionDelegate.Invoke();
         }
     }

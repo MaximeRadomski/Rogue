@@ -67,7 +67,7 @@ public class PopupApplyItemBhv : StatsDisplayerBhv
             }
         }
         DisplayItem(_mainItem, true);
-        Constants.LastEndActionClickedName = "SlotBack" + _selectedItem;
+        Constants.SetLastEndActionClickedName("SlotBack" + _selectedItem);
         UpdateView();
     }
 

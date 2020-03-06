@@ -15,7 +15,6 @@ public class FightSceneBhv : SceneBhv
     public List<CharacterBhv> OpponentBhvs;
 
     private int _currentOrderId;
-    private int _clickHistory;
     private List<CharOrder> _orderList;
     private CharacterBhv _currentPlayingCharacterBhv;
 
@@ -239,8 +238,6 @@ public class FightSceneBhv : SceneBhv
             if (skill != null)
                 skill.OnStartTurn();
         }
-        _currentPlayingCharacterBhv.ResetPa();
-        _currentPlayingCharacterBhv.ResetPm();
         _currentPlayingCharacterBhv.Turn++;
         UpdateResources();
 
@@ -263,7 +260,6 @@ public class FightSceneBhv : SceneBhv
     {
         if (State == FightState.PlayerTurn)
         {
-            _clickHistory = 0;
             _buttonPass.EnableButton();
             _buttonRunAway.EnableButton();
             _buttonWeapon1.EnableButton();
@@ -277,7 +273,7 @@ public class FightSceneBhv : SceneBhv
             else
             {
                 _buttonSkill1.DisableButton();
-                _buttonSkill1.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = skill.Cooldown <= skill.CooldownMax ? skill.Cooldown.ToString() : string.Empty;
+                _buttonSkill1.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = skill.Cooldown <= skill.CooldownMax && skill.Cooldown > 0 ? skill.Cooldown.ToString() : string.Empty;
             }
             skill = _playerBhv.Character.Skills[1];
             if (!skill.IsUnderCooldown())
@@ -288,7 +284,7 @@ public class FightSceneBhv : SceneBhv
             else
             {
                 _buttonSkill2.DisableButton();
-                _buttonSkill2.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = skill.Cooldown <= skill.CooldownMax ? skill.Cooldown.ToString() : string.Empty;
+                _buttonSkill2.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = skill.Cooldown <= skill.CooldownMax && skill.Cooldown > 0 ? skill.Cooldown.ToString() : string.Empty;
             }
         }
         else
@@ -325,6 +321,8 @@ public class FightSceneBhv : SceneBhv
                 if (skill != null)
                     skill.OnEndTurn();
             }
+            _currentPlayingCharacterBhv.ResetPa();
+            _currentPlayingCharacterBhv.ResetPm();
             NextTurn();
         }
     }
@@ -415,45 +413,38 @@ public class FightSceneBhv : SceneBhv
         GameObject.Find(name + "Weapon2PA").GetComponent<UnityEngine.UI.Text>().text = "PA:" + character.Weapons[1].PaNeeded;
     }
 
-    private void CheckDoubleClick(int clickId)
-    {
-        if (clickId == _clickHistory)
-        {
-            Instantiator.NewPopupCharacterStats(_playerBhv.Character, null, false, clickId);
-            _clickHistory = 0;
-        }
-        else
-            _clickHistory = clickId;
-    }
-
     private void ShowWeaponOneRange()
     {
-        CheckDoubleClick(1);
         if (State == FightState.PlayerTurn && _playerBhv.Pa >= _playerBhv.Character.Weapons[0].PaNeeded && !_playerBhv.IsMoving)
             _gridBhv.ShowWeaponRange(_playerBhv, 0, OpponentBhvs);
+        if (Constants.DoubleClick)
+            Instantiator.NewPopupCharacterStats(_playerBhv.Character, null, false, 1);
     }
 
     private void ShowWeaponTwoRange()
     {
-        CheckDoubleClick(2);
         if (State == FightState.PlayerTurn && _playerBhv.Pa >= _playerBhv.Character.Weapons[1].PaNeeded && !_playerBhv.IsMoving)
             _gridBhv.ShowWeaponRange(_playerBhv, 1, OpponentBhvs);
+        if (Constants.DoubleClick)
+            Instantiator.NewPopupCharacterStats(_playerBhv.Character, null, false, 2);
     }
 
     private void ClickSkill1()
     {
-        CheckDoubleClick(3);
         if (State == FightState.PlayerTurn && _playerBhv.Character.Skills != null && _playerBhv.Character.Skills.Count >= 1
             && _playerBhv.Pa >= _playerBhv.Character.Skills[0].PaNeeded && !_playerBhv.IsMoving)
             _playerBhv.Character.Skills[0].OnClick();
+        if (Constants.DoubleClick)
+            Instantiator.NewPopupCharacterStats(_playerBhv.Character, null, false, 3);
     }
 
     private void ClickSkill2()
     {
-        CheckDoubleClick(4);
         if (State == FightState.PlayerTurn && _playerBhv.Character.Skills != null && _playerBhv.Character.Skills.Count >= 2
             && _playerBhv.Pa >= _playerBhv.Character.Skills[1].PaNeeded && !_playerBhv.IsMoving)
             _playerBhv.Character.Skills[1].OnClick();
+        if (Constants.DoubleClick)
+            Instantiator.NewPopupCharacterStats(_playerBhv.Character, null, false, 4);
     }
 
     #endregion

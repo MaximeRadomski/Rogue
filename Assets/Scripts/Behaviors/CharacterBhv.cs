@@ -228,7 +228,7 @@ public class CharacterBhv : MonoBehaviour
         else if (IsAttacking == 2 && (Vector2)transform.position == (Vector2)_gridBhv.Cells[X, Y].transform.position)
         {
             IsAttacking = 0;
-            if (!Character.IsPlayer)
+            if (!Character.IsPlayer && _fightSceneBhv.State == FightState.OpponentTurn)
                 Ai.AfterAction();
         }
     }
@@ -295,7 +295,7 @@ public class CharacterBhv : MonoBehaviour
             IsMovingFirstPathStep = false;
             X = _pathfindingPos[0].X;
             Y = _pathfindingPos[0].Y;
-            if (!Character.IsPlayer)
+            if (!Character.IsPlayer && _fightSceneBhv.State == FightState.OpponentTurn)
                 Ai.AfterMovement();
         }
     }
@@ -315,7 +315,7 @@ public class CharacterBhv : MonoBehaviour
                 Y = _cellToReachY;
                 if (Character.IsPlayer)
                     _fightSceneBhv.AfterPlayerMovement();
-                else if (!Character.IsPlayer)
+                else if (!Character.IsPlayer && _fightSceneBhv.State == FightState.OpponentTurn)
                     Ai.AfterMovement();
                 if (AfterMouvementDelegate != null)
                     AfterMouvementDelegate();
