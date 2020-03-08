@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class FightSceneBhv : SceneBhv
 {
     public FightState State;
+    public GameObject OrderIndicator;
 
     private Map _map;
     private GridBhv _gridBhv;
@@ -19,14 +20,16 @@ public class FightSceneBhv : SceneBhv
     private CharacterBhv _currentPlayingCharacterBhv;
 
     private bool IsWaitingStart;
-
+    private HealthBarBhv _healthBar;
     private OrbBhv _orbHp;
     private OrbBhv _orbPa;
     private OrbBhv _orbPm;
     private ButtonBhv _buttonPass;
     private ButtonBhv _buttonRunAway;
+    private ButtonBhv _buttonPm;
     private ButtonBhv _buttonWeapon1, _buttonWeapon2;
     private ButtonBhv _buttonSkill1, _buttonSkill2;
+    private Vector3 _hidePosition;
 
     void Start()
     {
@@ -34,8 +37,8 @@ public class FightSceneBhv : SceneBhv
         SetPrivates();
         InitGrid();
         InitCharacters();
-        SetButtons();
         InitCharactersOrder();
+        SetButtons();        
         UpdateResources();
         IsWaitingStart = true;
     }
@@ -69,9 +72,11 @@ public class FightSceneBhv : SceneBhv
         OnRootPreviousScene = Constants.SwipeScene;
         _gridBhv = GetComponent<GridBhv>();
         _map = MapsData.EasyMaps[Random.Range(0, MapsData.EasyMaps.Count)];
+        _healthBar = GameObject.Find("HealthBar")?.GetComponent<HealthBarBhv>();
         _orbHp = GameObject.Find("Hp")?.GetComponent<OrbBhv>();
         _orbPa = GameObject.Find("Pa")?.GetComponent<OrbBhv>();
         _orbPm = GameObject.Find("Pm")?.GetComponent<OrbBhv>();
+        _hidePosition = new Vector3(-10.0f, 10.0f, 0.0f);
     }
 
     private void SetButtons()
@@ -80,8 +85,7 @@ public class FightSceneBhv : SceneBhv
         GameObject.Find("ButtonPause").GetComponent<ButtonBhv>().EndActionDelegate = Pause;
         (_buttonPass = GameObject.Find("ButtonPassTurn").GetComponent<ButtonBhv>()).EndActionDelegate = PassTurn;
         (_buttonRunAway = GameObject.Find("ButtonRunAway").GetComponent<ButtonBhv>()).EndActionDelegate = RunAway;
-        GameObject.Find("Pm").GetComponent<ButtonBhv>().EndActionDelegate = OnPlayerPmClick;
-        GameObject.Find("PlayerCharacter").GetComponent<ButtonBhv>().EndActionDelegate = OnPlayerCharacterClick;
+        (_buttonPm = GameObject.Find("Pm").GetComponent<ButtonBhv>()).EndActionDelegate = OnPlayerPmClick;
         _buttonWeapon1 = GameObject.Find("PlayerWeapon1").GetComponent<ButtonBhv>();
         _buttonWeapon1.EndActionDelegate = ShowWeaponOneRange;
         _buttonWeapon1.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsWeapon_" + _playerBhv.Character.Weapons[0].Type.GetHashCode());
@@ -94,7 +98,6 @@ public class FightSceneBhv : SceneBhv
         _buttonSkill2 = GameObject.Find("PlayerSkill2").GetComponent<ButtonBhv>();
         _buttonSkill2.EndActionDelegate = ClickSkill2;
         _buttonSkill2.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsSkill_" + _playerBhv.Character.Skills[1].IconId);
-        Instantiator.LoadCharacterSkin(_playerBhv.Character, GameObject.Find("CharacterSkinContainer"));
         PauseMenu.Buttons[0].EndActionDelegate = Resume;
         PauseMenu.TextMeshes[0].text = "Resume";
         PauseMenu.Buttons[1].EndActionDelegate = GiveUp;
@@ -105,8 +108,32 @@ public class FightSceneBhv : SceneBhv
         PauseMenu.TextMeshes[3].text = "Exit";
         PauseMenu.Buttons[4].gameObject.SetActive(false);
 
+        bool isFramePlayerSet = false;
+        bool isFirstOpponentSet = false;
+        for (int i = 0; i < _orderList.Count; ++i)
+        {
+            var tmpCharacterBhv = GetCharacterBhvFromOrderId(i);
+            var tmpFrameX = new Vector3(0.944f * (isFramePlayerSet ? i - 1 : i), 0.0f);//Space between frames
+            var isPlayer = false;
+            if (tmpCharacterBhv.Character.IsPlayer)
+            {
+                tmpFrameX = new Vector3(_buttonPm.transform.position.x + 0.64f, _buttonPm.transform.position.y);//Space next to Pm
+                isFramePlayerSet = true;
+                isPlayer = true;
+            }
+            else if (!isFirstOpponentSet)
+            {
+                ShowCharacterLifeName(tmpCharacterBhv.Character);
+                isFirstOpponentSet = true;
+            }
+            var tmpFrameInstance = Instantiator.NewCharacterFrame(tmpCharacterBhv.Character.Race, tmpFrameX, _orderList[i].Id, isPlayer);
+            tmpCharacterBhv.Character.Frame = tmpFrameInstance;
+            tmpFrameInstance.GetComponent<ButtonBhv>().EndActionDelegate = OnPlayerCharacterClick;
+            Instantiator.LoadCharacterSkin(tmpCharacterBhv.Character, tmpFrameInstance.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject);
+        }
+
+        _healthBar.transform.position = _hidePosition;
         ManagePlayerButtons();
-        _buttonPass.EnableButton();
     }
 
     private void InitGrid()
@@ -231,6 +258,11 @@ public class FightSceneBhv : SceneBhv
         if (++_currentOrderId >= _orderList.Count)
             _currentOrderId = 0;
         _currentPlayingCharacterBhv = GetCharacterBhvFromOrderId(_orderList[_currentOrderId].Id);
+        var currentPlayingFrame = GameObject.Find("FrameCharacter" + _currentOrderId);
+        OrderIndicator.transform.parent = currentPlayingFrame.transform;
+        OrderIndicator.transform.position = currentPlayingFrame.transform.position;
+        if (!_currentPlayingCharacterBhv.Character.IsPlayer)
+            ShowCharacterLifeName(_currentPlayingCharacterBhv.Character);
         //DEBUG
         //_currentPlayingCharacterBhv = _playerBhv;
         foreach (var skill in _currentPlayingCharacterBhv.Character.Skills)
@@ -345,6 +377,7 @@ public class FightSceneBhv : SceneBhv
     public void OnPlayerSpawnClick(int x, int y)
     {
         _playerBhv.Spawn(x, y);
+        _buttonPass.EnableButton();
         //NextTurn();
     }
 
@@ -378,7 +411,8 @@ public class FightSceneBhv : SceneBhv
 
     public void OnPlayerCharacterClick()
     {
-        Instantiator.NewPopupCharacterStats(_playerBhv.Character, null);
+        int id = int.Parse(Constants.LastEndActionClickedName.Substring(Helper.CharacterAfterString(Constants.LastEndActionClickedName, "FrameCharacter")));
+        Instantiator.NewPopupCharacterStats(GetCharacterBhvFromOrderId(_orderList[id].Id).Character, null);
     }
 
     #endregion
@@ -449,9 +483,10 @@ public class FightSceneBhv : SceneBhv
 
     #endregion
 
-    public void ShowCharacterStats(Character character)
+    public void ShowCharacterLifeName(Character character)
     {
-        Instantiator.NewPopupCharacterStats(character, null);
+        _healthBar.GetComponent<PositionBhv>().UpdatePositions();
+        _healthBar.UpdateContent(character.Hp, character.HpMax, character.Name, character.Frame);
     }
 
     public virtual void RunAway()

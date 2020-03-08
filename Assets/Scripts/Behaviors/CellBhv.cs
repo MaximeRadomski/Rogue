@@ -61,12 +61,12 @@ public class CellBhv : InputBhv
             if (Type != CellType.Off)
             {
                 _offSprite.gameObject.SetActive(false);
-                _onSprite.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Biomes/" + mapType + "/CellsOn_" + Random.Range(0, MapsData.NbOnTemplates));
+                _onSprite.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Biomes/" + mapType + "/CellsOn_" + Random.Range(1, MapsData.NbOnTemplates));
             }
             else
             {
                 _offSprite.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Biomes/" + mapType + "/CellsOff_" + Random.Range(0, MapsData.NbOffTemplates));
-                _onSprite.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Biomes/" + mapType + "/CellsOn_0");
+                _onSprite.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Biomes/" + mapType + "/CellsOn_1");
                 _offSprite.sortingOrder = (Constants.GridMax - Y) * 100;
             }
             _onSprite.sortingOrder = Constants.GridMax - Y;
@@ -74,7 +74,7 @@ public class CellBhv : InputBhv
         else if (Type == CellType.Impracticable)
         {
             _offSprite.gameObject.SetActive(false);
-            _onSprite.gameObject.SetActive(false);
+            _onSprite.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/Biomes/" + mapType + "/CellsOn_0");
         }
         _overSprite.sprite = null;
         _overSprite.sortingOrder = _onSprite.sortingOrder + 1;
@@ -99,6 +99,14 @@ public class CellBhv : InputBhv
         _isStretching = true;
         transform.localScale = _pressedScale;
         _soundControler.PlaySound(_soundControler.ClickIn);
+        if (Type == CellType.On)
+        {
+            var onCellCharacter = _gridBhv.IsOpponentOnCell(X, Y, true);
+            if (onCellCharacter != null)
+            {
+                _fightSceneBhv.ShowCharacterLifeName(onCellCharacter.Character);
+            }
+        }
     }
 
     public override void DoAction(Vector2 touchPosition)
@@ -115,11 +123,6 @@ public class CellBhv : InputBhv
         _soundControler.PlaySound(_soundControler.ClickOut);
         if (State == CellState.None || State == CellState.AttackZone)
         {
-            var onCellCharacter = _gridBhv.IsOpponentOnCell(X, Y);
-            if (State == CellState.None && onCellCharacter != null)
-            {
-                _fightSceneBhv.ShowCharacterStats(onCellCharacter.Character);
-            }
             _fightSceneBhv.AfterPlayerMovement();
             return;
         }
@@ -184,7 +187,8 @@ public class CellBhv : InputBhv
     public void ShowPm()
     {
         State = CellState.Mouvement;
-        _overSprite.sprite = OverSprites[_pm];
+        if (_fightSceneBhv.State == FightState.PlayerTurn)
+            _overSprite.sprite = OverSprites[_pm];
     }
 
     public void ShowWeaponRange()
@@ -228,7 +232,7 @@ public class CellBhv : InputBhv
         if (_isStretching)
             StretchOnBegin();
         //DEBUG//
-        //transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = Visited.ToString();
+        //transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = Visited.ToString();
     }
 
     private void StretchOnBegin()

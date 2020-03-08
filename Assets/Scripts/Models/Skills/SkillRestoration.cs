@@ -22,13 +22,13 @@ public class SkillRestoration : Skill
         IconId = 9;
         BasePrice = 100;
 
-        Description = "Restore <material=\"LongRed\">10%</material> of your maximum health each turn";
+        Description = "Restore <material=\"LongRed\">5%</material> of your maximum health each turn";
     }
 
     public override void OnStartTurn()
     {
-        float hpToRestore = (CharacterBhv.Character.HpMax / 10);
-        hpToRestore *= Helper.MultiplierFromPercent(1.0f, Random.Range(0, 51));
+        float hpToRestore = (CharacterBhv.Character.HpMax * 0.05f);
+        //hpToRestore *= Helper.MultiplierFromPercent(1.0f, Random.Range(0, 51));
         CharacterBhv.GainHp((int)hpToRestore);
     }
 }

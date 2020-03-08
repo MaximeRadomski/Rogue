@@ -45,7 +45,7 @@ public class PositionBhv : MonoBehaviour
     private void AdjustHorizontalPosition()
     {
         transform.position = new Vector3((_horizontalMult * Camera.main.orthographicSize * Camera.main.aspect) + XOffset, transform.position.y, 0.0f);
-        transform.position += Camera.main.transform.position;
+        transform.position += new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0);
     }
 }
 

@@ -37,11 +37,13 @@ public class Character
     public int RaceWeaponDamagePercent; //To Add
     public int NotRaceWeaponDamagePercent; //To Substract
 
-    private Instantiator _instantiator;
+    public GameObject Frame;
     private OrbBhv _orbHp;
+    private HealthBarBhv _healthBar;
     private TMPro.TextMeshPro _level;
     private TMPro.TextMeshPro _xp;
     private TMPro.TextMeshPro _gold;
+    private Instantiator _instantiator;
     private Vector2 _ressourcePopPosition;
 
     private void GetPrivates()
@@ -49,6 +51,8 @@ public class Character
         _instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SceneBhv>().Instantiator;
         if (IsPlayer)
             _orbHp = GameObject.Find("Hp")?.GetComponent<OrbBhv>();
+        else
+            _healthBar = GameObject.Find("HealthBar")?.GetComponent<HealthBarBhv>();
         _level = GameObject.Find("LevelText")?.GetComponent<TMPro.TextMeshPro>();
         _xp = GameObject.Find("Xp")?.GetComponent<TMPro.TextMeshPro>();
         _gold = GameObject.Find("Gold")?.GetComponent<TMPro.TextMeshPro>();
@@ -102,8 +106,18 @@ public class Character
                 damages = skill.OnTakeDamage(damages);
         }
         Hp -= damages;
-        if (_orbHp == null && IsPlayer) GetPrivates();
-        _orbHp?.UpdateContent(Hp, HpMax, _instantiator, TextType.Hp, - damages);
+        if (IsPlayer)
+        {
+            if (_orbHp == null)
+                GetPrivates();
+            _orbHp?.UpdateContent(Hp, HpMax, _instantiator, TextType.Hp, -damages);
+        }
+        else
+        {
+            if (_healthBar == null)
+                GetPrivates();
+            _healthBar.UpdateContent(Hp, HpMax, Name, Frame);
+        }
         return damages;
     }
 

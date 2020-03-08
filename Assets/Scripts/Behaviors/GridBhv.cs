@@ -118,7 +118,7 @@ public class GridBhv : MonoBehaviour
 
     private void SpreadPm(int x, int y, int nbPm, int spentPm, CharacterBhv characterBhv, List<CharacterBhv> opponentBhvs)
     {
-        if (!Helper.IsPosValid(x, y) || IsOpponentOnCell(x, y))
+        if (!Helper.IsPosValid(x, y) || IsOpponentOnCell(x, y, true))
             return;
         var cell = Cells[x, y];
         if (cell == null || (x == characterBhv.X && y == characterBhv.Y))
@@ -138,6 +138,7 @@ public class GridBhv : MonoBehaviour
                 {
                     --nbPm;
                     ++spentPm;
+                    cell.GetComponent<CellBhv>().Visited = spentPm;
                 }
                 if (nbPm > 0)
                 {
@@ -166,7 +167,7 @@ public class GridBhv : MonoBehaviour
         return false;
     }
 
-    public CharacterBhv IsOpponentOnCell(int x, int y)
+    public CharacterBhv IsOpponentOnCell(int x, int y, bool searchForPlayerOpponents = false)
     {
         if (_currentOpponentBhvs == null)
             return null;
@@ -175,7 +176,7 @@ public class GridBhv : MonoBehaviour
             if (x == opponentBhv.X && y == opponentBhv.Y)
                 return opponentBhv;
         }
-        if (!_currentCharacterBhv.Character.IsPlayer)
+        if (searchForPlayerOpponents)
         {
             foreach (var opponentBhv in _fightSceneBhv.OpponentBhvs)
             {
@@ -271,8 +272,8 @@ public class GridBhv : MonoBehaviour
         {
             foreach (var hit in hits)
             {
-                if ((hit.transform.gameObject.TryGetComponent(out CellBhv cell) && cell.Type == CellType.Off) ||
-                    (hit.transform.gameObject.TryGetComponent(out CharacterBhv characterBhv) && characterBhv.Character.IsPlayer == false && !(characterBhv.X == x2 && characterBhv.Y == y2)))
+                if ((hit.transform.gameObject.TryGetComponent(out CellBhv cell) && cell.Type == CellType.Off)
+                    || (hit.transform.gameObject.TryGetComponent(out CharacterBhv targetBhv) && !(targetBhv.X == x1 && targetBhv.Y == y1) && !(targetBhv.X == x2 && targetBhv.Y == y2)))
                 {
                     SetOpponentsHitBoxes(false);
                     return true;

@@ -98,8 +98,20 @@ public class PopupApplyItemBhv : StatsDisplayerBhv
     private void PositiveDelegate()
     {
         InventoryItem tmpItem = _itemType == InventoryItemType.Weapon ? _character.Weapons[_selectedItem] : (InventoryItem)_character.Skills[_selectedItem];
+        if (_itemType == InventoryItemType.Skill)
+            _skillAffected.transform.GetChild(0).GetComponent<StretchOnAppearanceBhv>().Stretch();
+        else
+            _weaponAffected.transform.GetChild(0).GetComponent<StretchOnAppearanceBhv>().Stretch();
         Constants.DecreaseInputLayer();
         _resultAction(tmpItem);
+        SetButtons();
+        Constants.InputLocked = true;
+        Invoke(nameof(AfterPositive), 0.5f);
+    }
+
+    private void AfterPositive()
+    {
+        Constants.InputLocked = false;
         Destroy(gameObject);
     }
 

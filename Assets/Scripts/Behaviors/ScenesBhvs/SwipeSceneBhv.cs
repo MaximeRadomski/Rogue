@@ -54,7 +54,7 @@ public class SwipeSceneBhv : SceneBhv
         GameObject.Find("ButtonPause").GetComponent<ButtonBhv>().EndActionDelegate = Pause;
         GameObject.Find("CharacterButton").GetComponent<ButtonBhv>().EndActionDelegate = ShowCharacterStats;
         GameObject.Find("ButtonInventory").GetComponent<ButtonBhv>().EndActionDelegate = ShowInventory;
-        if (Journey.Step >= Journey.Biome.Steps) //Just '<' because it instantiates one in advance
+        if (Journey.Step > Journey.Biome.Steps) //Just '<' because it instantiates one in advance
         {
             ++_currentBiomeChoice;
             Instantiator.NewCardBiome(1, Journey.Day, Journey.Biome, _currentBiomeChoice, Journey.Biome.Destinations, _playerCharacter);
@@ -206,7 +206,7 @@ public class SwipeSceneBhv : SceneBhv
         Journey.Step++;
         PlayerPrefsHelper.SaveJourney(Journey);
         PlayerPrefsHelper.SaveCharacter(Constants.PpPlayer, _playerCharacter);
-        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "ENTERING COMBAT", 2.0f, TransitionFight);
+        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "ENTERING FIGHT", 4.0f, TransitionFight);
         object TransitionFight(bool transResult)
         {
             NavigationService.LoadNextScene(Constants.FightScene);

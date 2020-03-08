@@ -200,7 +200,7 @@ public class Instantiator : MonoBehaviour
     public GameObject NewCharacterGameObject(string characterName, bool isPlayer = false, string id = "")
     {
         var character = PlayerPrefsHelper.GetCharacter(characterName);
-        var characterObject = Resources.Load<GameObject>("Prefabs/" + CharacterRace.Human + "Character");
+        var characterObject = Resources.Load<GameObject>("Prefabs/Character" + CharacterRace.Human);
         var characterInstance = Instantiate(characterObject, new Vector2(-3.0f, -5.0f), characterObject.transform.rotation);
         LoadCharacterSkin(character, characterInstance.transform.Find("SkinContainer").gameObject);
         if (isPlayer)
@@ -215,6 +215,23 @@ public class Instantiator : MonoBehaviour
         playerBhv.Character = character;
         playerBhv.Character.IsPlayer = isPlayer;
         return characterInstance;
+    }
+
+    public GameObject NewCharacterFrame(CharacterRace race, Vector3 position, int id, bool IsPlayer = false)
+    {
+        var tmpFrameObject = Resources.Load<GameObject>("Prefabs/FrameHuman"); //TODO Change by race
+        var tmpPosition = tmpFrameObject.transform.position + position;
+        if (IsPlayer)
+            tmpPosition = position;
+        var tmpFrameInstance = Instantiate(tmpFrameObject, tmpPosition, tmpFrameObject.transform.rotation);
+        if (IsPlayer)
+        {
+            tmpFrameInstance.GetComponent<PositionBhv>().enabled = false;
+            tmpFrameInstance.transform.parent = GameObject.Find("CharacterUI").transform;
+            tmpFrameInstance.transform.Find("HealthBar").gameObject.SetActive(false);
+        }
+        tmpFrameInstance.name = "FrameCharacter" + id;
+        return tmpFrameInstance;
     }
 
     public void LoadCharacterSkin(Character character, GameObject skinContainer)

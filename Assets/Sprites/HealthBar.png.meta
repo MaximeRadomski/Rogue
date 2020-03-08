@@ -1,34 +1,25 @@
 fileFormatVersion: 2
-guid: e321d6b8d37c2f04fa39c6a7360537a1
+guid: 51771396cb73df54f8df8b34f9353a25
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6887666225235757579
-    second: CellsOn_0
+      213: -8227546954408941770
+    second: HealthBar_0
   - first:
-      213: -1872248570342726320
-    second: CellsOn_1
+      213: -3178617384780871938
+    second: HealthBar_1
   - first:
-      213: 5939629663647494545
-    second: CellsOn_2
+      213: 5032351099696674128
+    second: HealthBar_2
   - first:
-      213: -3910938906621822990
-    second: CellsOn_3
+      213: 5856585005746452560
+    second: HealthBar_3
   - first:
-      213: -1936338189457618526
-    second: CellsOn_4
+      213: -6503669339106013020
+    second: HealthBar_4
   - first:
-      213: -5896651113565874996
-    second: CellsOn_5
-  - first:
-      213: 1801209917451408359
-    second: CellsOn_6
-  - first:
-      213: -3075492145460864423
-    second: CellsOn_7
-  - first:
-      213: -1255877038177813958
-    second: CellsOn_8
+      213: -7959300830350487195
+    second: HealthBar_5
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -125,190 +116,127 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CellsOn_0
+      name: HealthBar_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 40
-        width: 30
-        height: 40
+        y: 80
+        width: 134
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 673496b34928a5a469d02b5eda8a8195
-      internalID: 6887666225235757579
+      spriteID: 42b82ed828966e740a050f4072de852a
+      internalID: -8227546954408941770
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CellsOn_1
+      name: HealthBar_1
       rect:
         serializedVersion: 2
-        x: 30
-        y: 40
-        width: 30
-        height: 40
+        x: 6
+        y: 70
+        width: 122
+        height: 4
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a18b0d5c1f5909648b1bbc6f6db04f00
-      internalID: -1872248570342726320
+      spriteID: 332de05ee1647e94398303287ae469aa
+      internalID: -3178617384780871938
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CellsOn_2
+      name: HealthBar_2
       rect:
         serializedVersion: 2
-        x: 60
-        y: 40
-        width: 30
-        height: 40
+        x: 6
+        y: 54
+        width: 122
+        height: 4
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8bc45f0a1a39a4245918f28c6b414353
-      internalID: 5939629663647494545
+      spriteID: e2972068833dcf847a6ee76eb7a9397a
+      internalID: 5032351099696674128
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CellsOn_3
+      name: HealthBar_3
       rect:
         serializedVersion: 2
-        x: 90
-        y: 40
-        width: 30
-        height: 40
+        x: 38
+        y: 32
+        width: 58
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 907d8b8a67986cf4b80b6b55cdddc035
-      internalID: -3910938906621822990
+      spriteID: 85c46906e80b905459bc2bd662e13dcd
+      internalID: 5856585005746452560
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CellsOn_4
+      name: HealthBar_4
       rect:
         serializedVersion: 2
-        x: 120
-        y: 40
-        width: 30
-        height: 40
+        x: 44
+        y: 22
+        width: 46
+        height: 4
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 30b31fa970029a642932664a9f449269
-      internalID: -1936338189457618526
+      spriteID: 8ee6e379fa5327e4c93f36e0a3d71787
+      internalID: -6503669339106013020
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CellsOn_5
+      name: HealthBar_5
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 30
-        height: 40
+        x: 44
+        y: 6
+        width: 46
+        height: 4
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d187dfabc34d6374eb113f32fcab141a
-      internalID: -5896651113565874996
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CellsOn_6
-      rect:
-        serializedVersion: 2
-        x: 30
-        y: 0
-        width: 30
-        height: 40
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a948768069f5b9c42a9a16013b5a02cd
-      internalID: 1801209917451408359
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CellsOn_7
-      rect:
-        serializedVersion: 2
-        x: 60
-        y: 0
-        width: 30
-        height: 40
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: df42c523a52269949b9f68e87143db70
-      internalID: -3075492145460864423
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CellsOn_8
-      rect:
-        serializedVersion: 2
-        x: 90
-        y: 0
-        width: 30
-        height: 40
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e0b5a9cf5a2db1e478c6b2948a11b48f
-      internalID: -1255877038177813958
+      spriteID: 215781fba76e07e4189d1518b4b82c41
+      internalID: -7959300830350487195
       vertices: []
       indices: 
       edges: []

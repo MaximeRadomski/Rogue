@@ -230,7 +230,7 @@ public static class WeaponsData
     }
 
     //  BOW  //
-    public static int[] BowDamage = { 60, 100, 140, 180 };
+    public static int[] BowDamage = { 80, 120, 160, 200 };
     public static Weapon GetBaseBow()
     {
         return new Weapon()
@@ -258,7 +258,7 @@ public static class WeaponsData
     }
 
     //  DAGGERS  //
-    public static int[] DaggersDamage = { 20, 40, 80, 180 };
+    public static int[] DaggersDamage = { 30, 50, 80, 150 };
     public static Weapon GetBaseDaggers()
     {
         return new Weapon()
@@ -294,7 +294,7 @@ public static class WeaponsData
             RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
             RangeZones = new List<RangeDirection> { RangeDirection.Left, RangeDirection.Right },
             NbSkinParts = 5,
-            SpecificityTitle = "Dwarf craftsmanship",
+            SpecificityTitle = "Dwarf Craftsmanship",
             Specificity = "Fixed Damage Range",
             Weight = Random.Range(10, 20 + 1),
             BasePrice = 200
@@ -317,7 +317,7 @@ public static class WeaponsData
             RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 },
             RangeZones = null,
             NbSkinParts = 5,
-            SpecificityTitle = "Dwarf craftsmanship",
+            SpecificityTitle = "Dwarf Craftsmanship",
             Specificity = "Fixed Damage Range.",
             Weight = Random.Range(5, 10 + 1),
             BasePrice = 200

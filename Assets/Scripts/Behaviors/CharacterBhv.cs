@@ -103,8 +103,7 @@ public class CharacterBhv : MonoBehaviour
         Pa -= amountToRemove;
         if (Character.IsPlayer)
             _orbPa?.UpdateContent(Pa, Character.PaMax, Instantiator, TextType.Pa, -amountToRemove);
-        else
-            Instantiator.PopText("-" + amountToRemove.ToString(), transform.position, TextType.Pa);
+        Instantiator.PopText("-" + amountToRemove.ToString(), transform.position, TextType.Pa);
     }
 
     public void ResetPm()
@@ -120,8 +119,7 @@ public class CharacterBhv : MonoBehaviour
         Pm -= amountToRemove;
         if (Character.IsPlayer)
             _orbPm?.UpdateContent(Pm, Character.PmMax, Instantiator, TextType.Pm, -amountToRemove);
-        else
-            Instantiator.PopText("-" + amountToRemove.ToString(), transform.position, TextType.Pm);
+        Instantiator.PopText("-" + amountToRemove.ToString(), transform.position, TextType.Pm);
     }
 
     public void GainSkillEffect(SkillEffect effect)

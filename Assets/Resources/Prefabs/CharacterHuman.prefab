@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 5582869791616834117}
   - component: {fileID: 2822310809767233042}
   - component: {fileID: 5415252140772257180}
+  - component: {fileID: -306796633165584391}
   m_Layer: 0
-  m_Name: HumanCharacter
+  m_Name: CharacterHuman
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,7 +57,6 @@ MonoBehaviour:
   Pm: 0
   Pa: 0
   Ai: {fileID: 0}
-  IsPlayer: 0
   Instantiator: {fileID: 0}
   OpponentBhvs: []
   UnderEffects: 
@@ -86,6 +86,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.45}
   m_EdgeRadius: 0
+--- !u!95 &-306796633165584391
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307629294952203592}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &8123956818600840184
 PrefabInstance:
   m_ObjectHideFlags: 0

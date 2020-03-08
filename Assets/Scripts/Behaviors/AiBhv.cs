@@ -72,10 +72,10 @@ public class AiBhv : MonoBehaviour
         //No Action Weight over 0
         //Now processing to movement
         bool moveResult = false;
-        if (_getCloseWeight > 0 && _getCloseWeight >= _getFarWeight)
+        //if (_getCloseWeight > 0 && _getCloseWeight >= _getFarWeight)
             moveResult = GetClose();
-        else if (_getFarWeight > 0 && _getFarWeight > _getCloseWeight)
-            moveResult = GetFar();
+        //else if (_getFarWeight > 0 && _getFarWeight > _getCloseWeight)
+        //    moveResult = GetFar();
         if (moveResult)
             return;
         _fightSceneBhv.PassTurn();
@@ -374,7 +374,7 @@ public class AiBhv : MonoBehaviour
         if (_opponentBhv.Y < 3 ||
             (_opponentBhv.Y == 3 && _characterBhv.Y > 3))
             y = Constants.GridMax - 1;
-        if (x != _characterBhv.X && y != _characterBhv.Y)
+        //if (x != _characterBhv.X && y != _characterBhv.Y)
             _gridBhv.ShowPm(_characterBhv, _characterBhv.OpponentBhvs, unlimitedPm: true);
         var tmpPos = GetClosestCellVisitedToPos(_gridBhv.Cells[x, y].transform.position);
         _characterBhv.SetPath(tmpPos.X, tmpPos.Y, usePm: false);

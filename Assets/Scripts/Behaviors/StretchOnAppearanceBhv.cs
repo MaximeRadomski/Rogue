@@ -17,7 +17,10 @@ public class StretchOnAppearanceBhv : MonoBehaviour
     {
         _isStretching = false;
         _resetedScale = new Vector3(1.0f, 1.0f, 1.0f);
-        _stretchedScale = new Vector3(0.9f, 0.9f, 1.0f);
+        if (gameObject.name.Contains("Popup"))
+            _stretchedScale = new Vector3(0.9f, 0.9f, 1.0f);
+        else
+            _stretchedScale = new Vector3(0.75f, 0.75f, 1.0f);
         Stretch();
     }
 

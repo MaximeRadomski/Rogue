@@ -115,7 +115,7 @@ public class PopupSwitchBhv : StatsDisplayerBhv
             if ((weapon.Type == WeaponType.GreatSword && !WeaponsData.IsSmallWeapon(_character.Weapons[notSelectedWeapon].Type))
                 || (_character.Weapons[notSelectedWeapon].Type == WeaponType.GreatSword && !WeaponsData.IsSmallWeapon(weapon.Type)))
             {
-                _instantiator.NewSnack("Great Swords can only be equipped with small weapons (knives, daggers, gauntlets).");
+                _instantiator.NewSnack("Great Swords can only be equipped with small weapons.");
                 NegativeDelegate();
                 return;
             }

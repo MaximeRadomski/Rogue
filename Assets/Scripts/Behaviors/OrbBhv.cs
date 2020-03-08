@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class OrbBhv : MonoBehaviour
 {
+    public bool PopText;
+
     private TMPro.TextMeshPro _textMesh;
     private GameObject _content;
     private SpriteRenderer _contentSpriteRenderer;
@@ -27,7 +29,7 @@ public class OrbBhv : MonoBehaviour
 
     public void UpdateContent(int current, int max, Instantiator instantiator, TextType textType, int? changingAmount = null)
     {
-        if (changingAmount != null && changingAmount != 0)
+        if (changingAmount != null && changingAmount != 0 && PopText)
         {
             instantiator.PopText((changingAmount >= 0 ? "+" : "") + changingAmount, transform.position + new Vector3(0.0f, 0.5f, 0.0f), textType);
         }
