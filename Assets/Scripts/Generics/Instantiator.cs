@@ -130,6 +130,13 @@ public class Instantiator : MonoBehaviour
         tmpPoppingTextInstance.GetComponent<PoppingTextBhv>().SetPrivates(text, position + new Vector2(0.0f, -0.3f * nbTextsOnThisPosition), type, thickness);
     }
 
+    public void PopIcon(Sprite sprite, Vector2 position)
+    {
+        var tmpPoppingIconObject = Resources.Load<GameObject>("Prefabs/PoppingIcon");
+        var tmpPoppingIconInstance = Instantiate(tmpPoppingIconObject, position, tmpPoppingIconObject.transform.rotation);
+        tmpPoppingIconInstance.GetComponent<PoppingIconBhv>().SetPrivates(sprite, position + new Vector2(0.0f, +0.3f));
+    }
+
     public void NewRandomCard(int id, int day, Biome biome, Character character)
     {
         if (!biome.EncounteredMerchant)

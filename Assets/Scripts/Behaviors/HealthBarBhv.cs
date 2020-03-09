@@ -9,19 +9,29 @@ public class HealthBarBhv : MonoBehaviour
     private SpriteRenderer _contentSpriteRenderer;
     private float _width;
     private float? _frameHeight;
+    private bool _isSet;
 
     void Start()
+    {
+        if (!_isSet)
+            SetPrivates();
+    }
+
+    private void SetPrivates()
     {
         _text = transform.Find("Text").GetComponent<TMPro.TextMeshPro>();
         _content = transform.Find("Content").gameObject;
         _contentSpriteRenderer = _content.GetComponent<SpriteRenderer>();
         _width = _contentSpriteRenderer.sprite.rect.size.x * Constants.Pixel;
+        _isSet = true;
     }
 
     public void UpdateContent(int current, int max, string name, GameObject frame)
     {
         if (current < 0)
             current = 0;
+        if (_text == null)
+            SetPrivates();
         _text.text = name + "   (" + current + ")";
         float ratio = (float)current / max;
         _content.transform.localScale = new Vector3(1.0f * ratio, 1.0f, 1.0f);

@@ -112,7 +112,7 @@ public class FightSceneBhv : SceneBhv
         bool isFirstOpponentSet = false;
         for (int i = 0; i < _orderList.Count; ++i)
         {
-            var tmpCharacterBhv = GetCharacterBhvFromOrderId(i);
+            var tmpCharacterBhv = GetCharacterBhvFromOrderId(_orderList[i].Id);
             var tmpFrameX = new Vector3(0.944f * (isFramePlayerSet ? i - 1 : i), 0.0f);//Space between frames
             var isPlayer = false;
             if (tmpCharacterBhv.Character.IsPlayer)
@@ -126,7 +126,7 @@ public class FightSceneBhv : SceneBhv
                 ShowCharacterLifeName(tmpCharacterBhv.Character);
                 isFirstOpponentSet = true;
             }
-            var tmpFrameInstance = Instantiator.NewCharacterFrame(tmpCharacterBhv.Character.Race, tmpFrameX, _orderList[i].Id, isPlayer);
+            var tmpFrameInstance = Instantiator.NewCharacterFrame(tmpCharacterBhv.Character.Race, tmpFrameX, tmpCharacterBhv.OrderId, isPlayer);
             tmpCharacterBhv.Character.Frame = tmpFrameInstance;
             tmpFrameInstance.GetComponent<ButtonBhv>().EndActionDelegate = OnPlayerCharacterClick;
             Instantiator.LoadCharacterSkin(tmpCharacterBhv.Character, tmpFrameInstance.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject);
@@ -258,7 +258,7 @@ public class FightSceneBhv : SceneBhv
         if (++_currentOrderId >= _orderList.Count)
             _currentOrderId = 0;
         _currentPlayingCharacterBhv = GetCharacterBhvFromOrderId(_orderList[_currentOrderId].Id);
-        var currentPlayingFrame = GameObject.Find("FrameCharacter" + _currentOrderId);
+        var currentPlayingFrame = GameObject.Find("FrameCharacter" + _currentPlayingCharacterBhv.OrderId);
         OrderIndicator.transform.parent = currentPlayingFrame.transform;
         OrderIndicator.transform.position = currentPlayingFrame.transform.position;
         if (!_currentPlayingCharacterBhv.Character.IsPlayer)
@@ -411,8 +411,10 @@ public class FightSceneBhv : SceneBhv
 
     public void OnPlayerCharacterClick()
     {
-        int id = int.Parse(Constants.LastEndActionClickedName.Substring(Helper.CharacterAfterString(Constants.LastEndActionClickedName, "FrameCharacter")));
-        Instantiator.NewPopupCharacterStats(GetCharacterBhvFromOrderId(_orderList[id].Id).Character, null);
+        int orderId = int.Parse(Constants.LastEndActionClickedName.Substring(Helper.CharacterAfterString(Constants.LastEndActionClickedName, "FrameCharacter")));
+        var character = GetCharacterBhvFromOrderId(orderId).Character;
+        ShowCharacterLifeName(character);
+        Instantiator.NewPopupCharacterStats(character, null);
     }
 
     #endregion

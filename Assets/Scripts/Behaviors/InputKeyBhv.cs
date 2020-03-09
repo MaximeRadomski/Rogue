@@ -30,9 +30,12 @@ public class InputKeyBhv : PopupBhv
         _keyboard = this.transform.parent.gameObject;
         //_keyHover = _keyboard.transform.Find("KeyHover").gameObject;
         _buttonBhv = GetComponent<ButtonBhv>();
-        _textMeshLower = transform.GetChild(0).GetComponent<TMPro.TextMeshPro>();
-        _textMeshUpper = transform.GetChild(1).GetComponent<TMPro.TextMeshPro>();
-        _spriteRenderer = transform.GetChild(2).GetComponent<SpriteRenderer>();
+        if (transform.childCount > 0)
+        {
+            _textMeshLower = transform.GetChild(0).GetComponent<TMPro.TextMeshPro>();
+            _textMeshUpper = transform.GetChild(1).GetComponent<TMPro.TextMeshPro>();
+            _spriteRenderer = transform.GetChild(2).GetComponent<SpriteRenderer>();
+        }
         var name = this.gameObject.name;
         if (name.Contains("Layout"))
         {

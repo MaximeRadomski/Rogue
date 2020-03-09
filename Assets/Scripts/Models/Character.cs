@@ -127,8 +127,18 @@ public class Character
         if (Hp + amountToAdd > HpMax)
             amountToAdd = HpMax - Hp;
         Hp += amountToAdd;
-        if (_orbHp == null && IsPlayer) GetPrivates();
-        _orbHp?.UpdateContent(Hp, HpMax, _instantiator, TextType.Hp, amountToAdd);
+        if (IsPlayer)
+        {
+            if (_orbHp == null)
+                GetPrivates();
+            _orbHp?.UpdateContent(Hp, HpMax, _instantiator, TextType.Hp, amountToAdd);
+        }
+        else
+        {
+            if (_healthBar == null)
+                GetPrivates();
+            _healthBar.UpdateContent(Hp, HpMax, Name, Frame);
+        }
         return amountToAdd;
     }
 

@@ -199,6 +199,7 @@ public class CharacterBhv : MonoBehaviour
             LosePa(tmpWeapon.PaNeeded);
             IsAttacking = 1;
             _attackedOpponent = opponentBhv;
+            Instantiator.PopIcon(Helper.GetSpriteFromSpriteSheet("Sprites/IconsWeapon_" + tmpWeapon.Type.GetHashCode()), transform.position);
         }
         foreach (var skill in Character.Skills)
         {

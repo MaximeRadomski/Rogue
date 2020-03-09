@@ -34,7 +34,10 @@ public class InputControlerBhv : MonoBehaviour
                 var gameObjectToDestroy = GameObject.Find(Constants.InputTopLayerNames[Constants.InputTopLayerNames.Count - 1]);
                 if (!_currentScene.Paused)
                     Camera.main.gameObject.GetComponent<CameraBhv>().Unfocus();
-                gameObjectToDestroy.GetComponent<PopupBhv>().ExitPopup();
+                if (gameObjectToDestroy.name.Contains("Keyboard"))
+                    gameObjectToDestroy.transform.GetChild(0).GetComponent<PopupBhv>().ExitPopup();
+                else
+                    gameObjectToDestroy.GetComponent<PopupBhv>().ExitPopup();
                 //Constants.DecreaseInputLayer();
                 //Destroy(gameObjectToDestroy);
             }

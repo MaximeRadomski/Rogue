@@ -51,8 +51,11 @@ public static class Constants
     public const string PpFavKeyboardLayout = "FavKeyboard";
     public const string PpSoul = "Soul";
     public const string PpRun = "Run";
+    public const string PpCombatSpeed = "CombatSpeed";
+    public const float PpCombatSpeedDefault = 0.5f;
     public const float PpAudioLevelDefault = 1.0f;
     public const int PpFavKeyboardLayoutDefault = 0;
+
 
     //  SCENES  //
     public const string RaceChoiceScene = "RaceChoiceScene";
