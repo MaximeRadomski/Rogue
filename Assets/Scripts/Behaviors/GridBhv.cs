@@ -125,7 +125,7 @@ public class GridBhv : MonoBehaviour
             return;
         if (cell.GetComponent<CellBhv>().Type == CellType.On &&
             (spentPm < cell.GetComponent<CellBhv>().Visited || cell.GetComponent<CellBhv>().Visited == -1) &&
-            !IsOpponentOnCell(x, y))
+            !IsOpponentOnCell(x, y, true))
         {
             //if (characterBhv.IsPlayer)
             cell.GetComponent<CellBhv>().ShowPm();
@@ -169,12 +169,13 @@ public class GridBhv : MonoBehaviour
 
     public CharacterBhv IsOpponentOnCell(int x, int y, bool searchForPlayerOpponents = false)
     {
-        if (_currentOpponentBhvs == null)
-            return null;
-        foreach (var opponentBhv in _currentOpponentBhvs)
+        if (_currentOpponentBhvs != null)
         {
-            if (x == opponentBhv.X && y == opponentBhv.Y)
-                return opponentBhv;
+            foreach (var opponentBhv in _currentOpponentBhvs)
+            {
+                if (x == opponentBhv.X && y == opponentBhv.Y)
+                    return opponentBhv;
+            }
         }
         if (searchForPlayerOpponents)
         {
@@ -304,7 +305,10 @@ public class GridBhv : MonoBehaviour
         List<CharacterBhv> tmpTouchedOpponents = null;
         CharacterBhv touchedCell = null;
         List<CharacterBhv> touchedZone = null;
-        if ((touchedCell = IsOpponentOnCell(x, y)) != null || (touchedZone = IsOpponentInZone(x, y)) != null)
+
+        touchedCell = IsOpponentOnCell(x, y);
+        touchedZone = IsOpponentInZone(x, y);
+        if (touchedCell != null || touchedZone != null)
         {
             tmpTouchedOpponents = new List<CharacterBhv>();
             if (touchedCell != null)
@@ -319,7 +323,7 @@ public class GridBhv : MonoBehaviour
             _fightSceneBhv.OnPlayerAttackClick(_currentWeaponId, tmpTouchedOpponents);
             return;
         }
-        _fightSceneBhv.OnPlayerAttackClick(_currentWeaponId, null);
+        _fightSceneBhv.OnPlayerAttackClick(_currentWeaponId, null, Cells[x, y].transform.position);
     }
 
     private List<CharacterBhv> IsOpponentInZone(int x, int y)
@@ -413,7 +417,7 @@ public class GridBhv : MonoBehaviour
         var cell = Cells[x, y].GetComponent<CellBhv>();
         if (cell.Type == CellType.On && cell.State == CellState.None)
         {
-            if ((hasToBeEmpty && IsOpponentOnCell(x, y)) ||
+            if ((hasToBeEmpty && IsOpponentOnCell(x, y, true)) ||
                 (rangeType == RangeType.Normal && IsAnythingBetween(characterBhv.X, characterBhv.Y, x, y)))
             {
                 if (characterBhv.Character.IsPlayer)

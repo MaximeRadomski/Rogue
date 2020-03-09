@@ -28,8 +28,12 @@ public class SkillClarity : Skill
     public override void Activate(int x, int y)
     {
         base.Activate(x, y);
-        Debuff(GridBhv.IsOpponentOnCell(x, y));
-        AfterActivation();
+        CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+        {
+            Debuff(GridBhv.IsOpponentOnCell(x, y));
+            AfterActivation();
+            return true;
+        }));
     }
 
     public void Debuff(CharacterBhv debuffedOpponentBhv)

@@ -30,9 +30,13 @@ public class SkillPush : Skill
     public override void Activate(int x, int y)
     {
         base.Activate(x, y);
-        var result = Push(GridBhv.IsOpponentOnCell(x, y));
-        if (result == false)
-            AfterPush();
+        CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+        {
+            var result = Push(GridBhv.IsOpponentOnCell(x, y));
+            if (result == false)
+                AfterPush();
+            return true;
+        }));
     }
 
     public bool Push(CharacterBhv pushedOpponentBhv)
@@ -43,10 +47,12 @@ public class SkillPush : Skill
         int x = _pushedOpponentBhv.X - CharacterBhv.X;
         int y = _pushedOpponentBhv.Y - CharacterBhv.Y;
         if (!Helper.IsPosValid(_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y)
-            || GridBhv.Cells[_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y].GetComponent<CellBhv>().Type != CellType.On)
+            || GridBhv.Cells[_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y].GetComponent<CellBhv>().Type != CellType.On
+            || GridBhv.IsOpponentOnCell(_pushedOpponentBhv.X + x, _pushedOpponentBhv.X + x, true))
         {
-            if (Helper.IsPosValid(_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y)
+            if ((Helper.IsPosValid(_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y)
                 && GridBhv.Cells[_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y].GetComponent<CellBhv>().Type == CellType.Off)
+                || GridBhv.IsOpponentOnCell(_pushedOpponentBhv.X + x, _pushedOpponentBhv.X + x, true))
             {
                 var floatAmount = 30.0f * CharacterBhv.Character.GetDamageMultiplier();
                 pushedOpponentBhv.TakeDamages((int)floatAmount);

@@ -37,6 +37,10 @@ public class SkillRoots : Skill
             pmToRemove = 2;
         else
             pmToRemove = 3;
-        opponentBhv?.LosePm(pmToRemove);
+        opponentBhv?.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+        {
+            opponentBhv?.LosePm(pmToRemove);
+            return true;
+        }));
     }
 }

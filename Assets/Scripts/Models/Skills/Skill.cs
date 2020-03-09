@@ -61,7 +61,12 @@ public abstract class Skill : InventoryItem
     public virtual void Activate(int x, int y)
     {
         Debug.Log("Activate:" + Name);
-        CharacterBhv.LosePa(PaNeeded);
+        CharacterBhv.Instantiator.PopIcon(Helper.GetSpriteFromSpriteSheet("Sprites/IconsSkill_" + IconId), CharacterBhv.transform.position);
+        CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+        {
+            CharacterBhv.LosePa(PaNeeded);
+            return true;
+        }));
         _isDebuffed = false;
         if (CooldownType == CooldownType.Normal)
         {

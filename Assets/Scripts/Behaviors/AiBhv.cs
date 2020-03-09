@@ -431,12 +431,12 @@ public class AiBhv : MonoBehaviour
 
     public void AfterMovement()
     {
-        Invoke(nameof(Think), 0.05f);
+        Invoke(nameof(Think), 0.2f);
     }
 
     public void AfterAction()
     {
-        Invoke(nameof(Think), 0.5f);
+        Invoke(nameof(Think), 1.0f);
     }
 
     #endregion

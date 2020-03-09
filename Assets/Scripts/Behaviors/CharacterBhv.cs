@@ -27,7 +27,7 @@ public class CharacterBhv : MonoBehaviour
     private List<Vector2> _pathfindingSteps = new List<Vector2>();
     private List<RangePos> _pathfindingPos = new List<RangePos>();
     private SkinContainerBhv _skinContainer;
-    private CharacterBhv _attackedOpponent;
+    private Vector3 _attackedPosition;
     private OrbBhv _orbPa;
     private OrbBhv _orbPm;
 
@@ -80,9 +80,15 @@ public class CharacterBhv : MonoBehaviour
             Attack();
     }
 
+    private int _tmpAmount;
+
     public void TakeDamages(int damages)
     {
-        Instantiator.PopText("-" + Character.TakeDamages(damages).ToString(), transform.position, TextType.Hp);
+        StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+        {
+            Instantiator.PopText("-" + Character.TakeDamages(damages).ToString(), transform.position, TextType.Hp);
+            return true;
+        }));
     }
 
     public void GainHp(int amount)
@@ -151,7 +157,7 @@ public class CharacterBhv : MonoBehaviour
         }
     }
 
-    public int AttackWithWeapon(int weaponId, CharacterBhv opponentBhv, Map map, bool usePa = true)
+    public int AttackWithWeapon(int weaponId, CharacterBhv opponentBhv, Map map, bool usePa = true, Vector3 touchedPosition = default(Vector3))
     {
         var tmpWeapon = Character.Weapons[weaponId];
 
@@ -196,10 +202,14 @@ public class CharacterBhv : MonoBehaviour
         //Debug.Log("Final Damages = " + resultInt);
         if (usePa)
         {
-            LosePa(tmpWeapon.PaNeeded);
-            IsAttacking = 1;
-            _attackedOpponent = opponentBhv;
             Instantiator.PopIcon(Helper.GetSpriteFromSpriteSheet("Sprites/IconsWeapon_" + tmpWeapon.Type.GetHashCode()), transform.position);
+            StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+            {
+                LosePa(tmpWeapon.PaNeeded);
+                IsAttacking = 1;
+                _attackedPosition = touchedPosition;
+                return true;
+            }));
         }
         foreach (var skill in Character.Skills)
         {
@@ -211,13 +221,13 @@ public class CharacterBhv : MonoBehaviour
 
     private void Attack()
     {
-        if (_attackedOpponent == null)
+        if (_attackedPosition == null)
         {
             IsAttacking = 0;
         }
 
         if (IsAttacking == 1)
-            transform.position = Vector2.Lerp(transform.position, _attackedOpponent.transform.position, 0.2f);
+            transform.position = Vector2.Lerp(transform.position, _attackedPosition, 0.2f);
         else
             transform.position = Vector2.Lerp(transform.position, _gridBhv.Cells[X, Y].transform.position, 0.7f);
         if (IsAttacking == 1 && Vector2.Distance(_gridBhv.Cells[X, Y].transform.position, transform.position) > 0.1f)

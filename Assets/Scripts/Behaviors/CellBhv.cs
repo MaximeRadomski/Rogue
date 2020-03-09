@@ -99,7 +99,7 @@ public class CellBhv : InputBhv
         _isStretching = true;
         transform.localScale = _pressedScale;
         _soundControler.PlaySound(_soundControler.ClickIn);
-        if (Type == CellType.On)
+        if (Type == CellType.On || Type == CellType.OpponentSpawn)
         {
             var onCellCharacter = _gridBhv.IsOpponentOnCell(X, Y, true);
             if (onCellCharacter != null)

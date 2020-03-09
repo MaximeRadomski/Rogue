@@ -131,8 +131,9 @@ public class FightSceneBhv : SceneBhv
             tmpFrameInstance.GetComponent<ButtonBhv>().EndActionDelegate = OnPlayerCharacterClick;
             Instantiator.LoadCharacterSkin(tmpCharacterBhv.Character, tmpFrameInstance.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject);
         }
-
-        _healthBar.transform.position = _hidePosition;
+        var firstPlayingFrame = GameObject.Find("FrameCharacter" + _orderList[0].Id);
+        OrderIndicator.transform.parent = firstPlayingFrame.transform;
+        OrderIndicator.transform.position = firstPlayingFrame.transform.position;
         ManagePlayerButtons();
     }
 
@@ -381,7 +382,7 @@ public class FightSceneBhv : SceneBhv
         //NextTurn();
     }
 
-    public void OnPlayerAttackClick(int weaponId, List<CharacterBhv> touchedOpponents)
+    public void OnPlayerAttackClick(int weaponId, List<CharacterBhv> touchedOpponents, Vector3 touchedPosition = default(Vector3))
     {
         if (touchedOpponents != null)
         {
@@ -392,7 +393,7 @@ public class FightSceneBhv : SceneBhv
         }
         else
         {
-            _playerBhv.AttackWithWeapon(weaponId, null, _map);
+            _playerBhv.AttackWithWeapon(weaponId, null, _map, touchedPosition:touchedPosition);
         }
         _gridBhv.ShowPm(_playerBhv, OpponentBhvs);
     }

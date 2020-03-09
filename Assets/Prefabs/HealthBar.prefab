@@ -283,16 +283,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3466262264693636507}
     m_Modifications:
-    - target: {fileID: 434119521052424437, guid: f708d7ee52051c144a07111a8491be28,
-        type: 3}
-      propertyPath: m_Name
-      value: Text
-      objectReference: {fileID: 0}
-    - target: {fileID: 434119521052424437, guid: f708d7ee52051c144a07111a8491be28,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
     - target: {fileID: 7108046686861183876, guid: f708d7ee52051c144a07111a8491be28,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -398,6 +388,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 434119521052424437, guid: f708d7ee52051c144a07111a8491be28,
+        type: 3}
+      propertyPath: m_Name
+      value: Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 434119521052424437, guid: f708d7ee52051c144a07111a8491be28,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 944019512307197496, guid: f708d7ee52051c144a07111a8491be28,
         type: 3}
       propertyPath: m_SortingLayerID
@@ -466,7 +466,7 @@ PrefabInstance:
     - target: {fileID: 7357396588303126451, guid: f708d7ee52051c144a07111a8491be28,
         type: 3}
       propertyPath: m_textAlignment
-      value: 4098
+      value: 8194
       objectReference: {fileID: 0}
     - target: {fileID: 7357396588303126451, guid: f708d7ee52051c144a07111a8491be28,
         type: 3}

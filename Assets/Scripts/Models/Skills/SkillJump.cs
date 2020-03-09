@@ -35,6 +35,10 @@ public class SkillJump : Skill
     public override void Activate(int x, int y)
     {
         base.Activate(x, y);
-        CharacterBhv.MoveToPosition(x, y, false);
+        CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+        {
+            CharacterBhv.MoveToPosition(x, y, false);
+            return true;
+        }));
     }
 }

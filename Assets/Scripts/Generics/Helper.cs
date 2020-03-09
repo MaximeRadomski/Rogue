@@ -9,6 +9,12 @@ using UnityEngine.SceneManagement;
 
 public static class Helper
 {
+    public static IEnumerator ExecuteAfterDelay(float delay, Func<object> func)
+    {
+        yield return new WaitForSeconds(delay);
+        func.Invoke();
+    }
+
     public static string TimeFromMinutes(int amount)
     {
         var hours = amount % Constants.DayInMinutes;

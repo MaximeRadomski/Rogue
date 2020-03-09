@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerPrefsHelper : MonoBehaviour
 {
+    public static float GetSpeed()
+    {
+        return PlayerPrefs.GetFloat(Constants.PpCombatSpeed, Constants.PpCombatSpeedDefault);
+    }
+
     public static void SaveJourney(Journey journey)
     {
         PlayerPrefs.SetString(Constants.PpJourney, JsonUtility.ToJson(journey));

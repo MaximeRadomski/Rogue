@@ -510,7 +510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpriteRenderer: {fileID: 177424253}
-  LowestIntensity: 0.3
+  LowestIntensity: 0
   Speed: 0.03
 --- !u!1 &191069046
 GameObject:
@@ -2149,7 +2149,7 @@ PrefabInstance:
     - target: {fileID: 3466262264693636507, guid: 9743f593b61f9004393657adeddb30c0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.02
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3466262264693636507, guid: 9743f593b61f9004393657adeddb30c0,
         type: 3}
