@@ -21,6 +21,7 @@ public class FightSceneBhv : SceneBhv
 
     private bool IsWaitingStart;
     private HealthBarBhv _healthBar;
+    private TMPro.TextMeshPro _fightTitle;
     private OrbBhv _orbHp;
     private OrbBhv _orbPa;
     private OrbBhv _orbPm;
@@ -73,6 +74,7 @@ public class FightSceneBhv : SceneBhv
         _gridBhv = GetComponent<GridBhv>();
         _map = MapsData.EasyMaps[Random.Range(0, MapsData.EasyMaps.Count)];
         _healthBar = GameObject.Find("HealthBar")?.GetComponent<HealthBarBhv>();
+        _fightTitle = GameObject.Find("FightTitle")?.GetComponent<TMPro.TextMeshPro>();
         _orbHp = GameObject.Find("Hp")?.GetComponent<OrbBhv>();
         _orbPa = GameObject.Find("Pa")?.GetComponent<OrbBhv>();
         _orbPm = GameObject.Find("Pm")?.GetComponent<OrbBhv>();
@@ -109,7 +111,7 @@ public class FightSceneBhv : SceneBhv
         PauseMenu.Buttons[4].gameObject.SetActive(false);
 
         bool isFramePlayerSet = false;
-        bool isFirstOpponentSet = false;
+        //bool isFirstOpponentSet = false;
         for (int i = 0; i < _orderList.Count; ++i)
         {
             var tmpCharacterBhv = GetCharacterBhvFromOrderId(_orderList[i].Id);
@@ -121,19 +123,22 @@ public class FightSceneBhv : SceneBhv
                 isFramePlayerSet = true;
                 isPlayer = true;
             }
-            else if (!isFirstOpponentSet)
-            {
-                ShowCharacterLifeName(tmpCharacterBhv.Character);
-                isFirstOpponentSet = true;
-            }
+            //else if (!isFirstOpponentSet)
+            //{
+            //    ShowCharacterLifeName(tmpCharacterBhv.Character);
+            //    isFirstOpponentSet = true;
+            //}
             var tmpFrameInstance = Instantiator.NewCharacterFrame(tmpCharacterBhv.Character.Race, tmpFrameX, tmpCharacterBhv.OrderId, isPlayer);
             tmpCharacterBhv.Character.Frame = tmpFrameInstance;
             tmpFrameInstance.GetComponent<ButtonBhv>().EndActionDelegate = OnPlayerCharacterClick;
             Instantiator.LoadCharacterSkin(tmpCharacterBhv.Character, tmpFrameInstance.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject);
+            tmpFrameInstance.transform.Find("Order").GetComponent<TMPro.TextMeshPro>().text = (i + 1).ToString();
         }
         var firstPlayingFrame = GameObject.Find("FrameCharacter" + _orderList[0].Id);
         OrderIndicator.transform.parent = firstPlayingFrame.transform;
         OrderIndicator.transform.position = firstPlayingFrame.transform.position;
+        _fightTitle.text = "Spawning Phase";
+        HideCharacterLifeName();
         ManagePlayerButtons();
     }
 
@@ -264,6 +269,8 @@ public class FightSceneBhv : SceneBhv
         OrderIndicator.transform.position = currentPlayingFrame.transform.position;
         if (!_currentPlayingCharacterBhv.Character.IsPlayer)
             ShowCharacterLifeName(_currentPlayingCharacterBhv.Character);
+        else
+            HideCharacterLifeName();
         //DEBUG
         //_currentPlayingCharacterBhv = _playerBhv;
         foreach (var skill in _currentPlayingCharacterBhv.Character.Skills)
@@ -272,6 +279,8 @@ public class FightSceneBhv : SceneBhv
                 skill.OnStartTurn();
         }
         _currentPlayingCharacterBhv.Turn++;
+        if (_currentOrderId == 0)
+            _fightTitle.text = _map.Name + ":  <material=\"LongWhite\">" + Helper.GetOrdinal(GetCharacterBhvFromOrderId(_orderList[0].Id).Turn) + " Turn</material>";
         UpdateResources();
 
         if (_currentPlayingCharacterBhv.Character.IsPlayer)
@@ -414,7 +423,7 @@ public class FightSceneBhv : SceneBhv
     {
         int orderId = int.Parse(Constants.LastEndActionClickedName.Substring(Helper.CharacterAfterString(Constants.LastEndActionClickedName, "FrameCharacter")));
         var character = GetCharacterBhvFromOrderId(orderId).Character;
-        ShowCharacterLifeName(character);
+        //ShowCharacterLifeName(character);
         Instantiator.NewPopupCharacterStats(character, null);
     }
 
@@ -488,8 +497,15 @@ public class FightSceneBhv : SceneBhv
 
     public void ShowCharacterLifeName(Character character)
     {
+        _fightTitle.transform.position = _hidePosition;
         _healthBar.GetComponent<PositionBhv>().UpdatePositions();
         _healthBar.UpdateContent(character.Hp, character.HpMax, character.Name, character.Frame);
+    }
+
+    public void HideCharacterLifeName()
+    {
+        _healthBar.transform.position = _hidePosition;
+        _fightTitle.GetComponent<PositionBhv>().UpdatePositions();
     }
 
     public virtual void RunAway()

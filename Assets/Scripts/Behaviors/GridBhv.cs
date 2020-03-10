@@ -302,15 +302,11 @@ public class GridBhv : MonoBehaviour
 
     public void OnPlayerAttackClick(int x, int y)
     {
-        List<CharacterBhv> tmpTouchedOpponents = null;
-        CharacterBhv touchedCell = null;
-        List<CharacterBhv> touchedZone = null;
-
-        touchedCell = IsOpponentOnCell(x, y);
-        touchedZone = IsOpponentInZone(x, y);
+        var touchedCell = IsOpponentOnCell(x, y);
+        var touchedZone = IsOpponentInZone(x, y);
         if (touchedCell != null || touchedZone != null)
         {
-            tmpTouchedOpponents = new List<CharacterBhv>();
+            var tmpTouchedOpponents = new List<CharacterBhv>();
             if (touchedCell != null)
                 tmpTouchedOpponents.Add(touchedCell);
             if (touchedZone != null)

@@ -28,8 +28,12 @@ public class SkillGreatHeal : Skill
     public override void Activate(int x, int y)
     {
         base.Activate(x, y);
-        var floatAmount = 100.0f * Helper.MultiplierFromPercent(1, 25 * (CharacterBhv.Character.Level - 1));
-        CharacterBhv.GainHp((int)floatAmount);
-        AfterActivation();
+        CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+        {
+            var floatAmount = 100.0f * Helper.MultiplierFromPercent(1, 25 * (CharacterBhv.Character.Level - 1));
+            CharacterBhv.GainHp((int)floatAmount);
+            AfterActivation();
+            return true;
+        }));
     }
 }

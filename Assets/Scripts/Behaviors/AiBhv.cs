@@ -429,14 +429,14 @@ public class AiBhv : MonoBehaviour
         return true;
     }
 
-    public void AfterMovement()
+    public void AfterMovement(bool teleport = false)
     {
         Invoke(nameof(Think), 0.2f);
     }
 
     public void AfterAction()
     {
-        Invoke(nameof(Think), 1.0f);
+        Invoke(nameof(Think), 0.5f);
     }
 
     #endregion
@@ -485,7 +485,9 @@ public class AiBhv : MonoBehaviour
     private bool GetClose()
     {
         _gridBhv.ShowPm(_characterBhv, _characterBhv.OpponentBhvs, unlimitedPm: true);
-        var posToReach = GetSmallestNearVisited(_opponentBhv.X, _opponentBhv.Y);
+        var posToReach = GetSmallestNearVisited(_opponentBhv.X, _opponentBhv.Y, transform.position);
+        if (posToReach == null)
+            return false;
         SetPathToOpponent(posToReach);
         if (_gridBhv.Cells[posToReach.X, posToReach.Y].GetComponent<CellBhv>().Visited > _characterBhv.Pm)
         {
@@ -509,10 +511,10 @@ public class AiBhv : MonoBehaviour
         return MoveToNextCell();
     }
 
-    private RangePos GetSmallestNearVisited(int x, int y)
+    private RangePos GetSmallestNearVisited(int x, int y, Vector3 actualPosition)
     {
         int smallestVisited = Constants.UnlimitedPm;
-        RangePos tmpRangePos = new RangePos(0, 0);
+        RangePos tmpRangePos = new RangePos(-1, -1);
         int tmpX = x;
         int tmpY = y;
         for (int i = 0; i < 4; ++i)
@@ -531,6 +533,36 @@ public class AiBhv : MonoBehaviour
                 tmpRangePos.Y = tmpY;
             }
         }
+        if (tmpRangePos.X == -1 && tmpRangePos.Y == -1)
+            return GetSmallestNearVisitedRay(x, y, actualPosition);
+        return tmpRangePos;
+    }
+
+    private RangePos GetSmallestNearVisitedRay(int x, int y, Vector3 actualPosition)
+    {
+        //int smallestVisited = Constants.UnlimitedPm;
+        float smallestDistance = 999.0f;
+        RangePos tmpRangePos = new RangePos(-1, -1);
+        foreach (var cell in _gridBhv.Cells)
+        {
+            var tmpX = cell.GetComponent<CellBhv>().X;
+            var tmpY = cell.GetComponent<CellBhv>().Y;
+            float tmpDistance;
+            if (Helper.IsPosValid(tmpX, tmpY)
+                && cell.GetComponent<CellBhv>().Type == CellType.On
+                && cell.GetComponent<CellBhv>().Visited > 0
+                //&& _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited < smallestVisited
+                && (tmpDistance = Vector3.Distance(_gridBhv.Cells[x, y].transform.position, cell.transform.position)) < smallestDistance)
+            {
+                //smallestVisited = _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited;
+                smallestDistance = tmpDistance;
+                tmpRangePos.X = tmpX;
+                tmpRangePos.Y = tmpY;
+            }
+        }
+        if (tmpRangePos.X == -1 && tmpRangePos.Y == -1
+            || Vector3.Distance(_gridBhv.Cells[x, y].transform.position, actualPosition) < Vector3.Distance(_gridBhv.Cells[x, y].transform.position, _gridBhv.Cells[tmpRangePos.X, tmpRangePos.Y].transform.position))
+            return null;
         return tmpRangePos;
     }
 

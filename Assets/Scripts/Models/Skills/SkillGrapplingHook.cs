@@ -34,9 +34,14 @@ public class SkillGrapplingHook : Skill
     public override void Activate(int x, int y)
     {
         base.Activate(x, y);
-        var result = Grap(GridBhv.IsOpponentOnCell(x, y));
-        if (result == false)
-            AfterGrap();
+        CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+        {
+
+            var result = Grap(GridBhv.IsOpponentOnCell(x, y));
+            if (result == false)
+                AfterGrap();
+            return true;
+        }));
     }
 
     public bool Grap(CharacterBhv grabbedOpponentBhv)

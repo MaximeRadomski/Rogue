@@ -8,13 +8,15 @@ public class PositionBhv : MonoBehaviour
     public CameraHorizontalSide HorizontalSide;
     public float XOffset;
     public float YOffset;
+    public bool DontActivateOnStart;
 
     private float _verticalMult;
     private float _horizontalMult;
 
     void Start()
     {
-        UpdatePositions();   
+        if (!DontActivateOnStart)
+            UpdatePositions();   
     }
 
     public void UpdatePositions()
@@ -25,7 +27,10 @@ public class PositionBhv : MonoBehaviour
                 _verticalMult = 0;
             else
                 _verticalMult = VerticalSide == CameraVerticalSide.TopBorder ? 1.0f : -1.0f;
-            Invoke("AdjustVerticalPosition", 0.0f);
+            if (!DontActivateOnStart)
+                Invoke("AdjustVerticalPosition", 0.0f);
+            else
+                AdjustVerticalPosition();
         }
         if (HorizontalSide != CameraHorizontalSide.None)
         {
@@ -33,7 +38,10 @@ public class PositionBhv : MonoBehaviour
                 _horizontalMult = 0;
             else
                 _horizontalMult = HorizontalSide == CameraHorizontalSide.RightBorder ? 1.0f : -1.0f;
-            Invoke("AdjustHorizontalPosition", 0.0f);
+            if (!DontActivateOnStart)
+                Invoke("AdjustHorizontalPosition", 0.0f);
+            else
+                AdjustHorizontalPosition();
         }
     }
 

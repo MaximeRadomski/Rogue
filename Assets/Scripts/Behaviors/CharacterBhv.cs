@@ -206,8 +206,8 @@ public class CharacterBhv : MonoBehaviour
             StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
             {
                 LosePa(tmpWeapon.PaNeeded);
-                IsAttacking = 1;
-                _attackedPosition = touchedPosition;
+                _attackedPosition = opponentBhv?.transform.position ?? touchedPosition;
+                IsAttacking = 1;                
                 return true;
             }));
         }
@@ -224,6 +224,8 @@ public class CharacterBhv : MonoBehaviour
         if (_attackedPosition == null)
         {
             IsAttacking = 0;
+            if (!Character.IsPlayer && _fightSceneBhv.State == FightState.OpponentTurn)
+                Ai.AfterAction();
         }
 
         if (IsAttacking == 1)
@@ -234,7 +236,7 @@ public class CharacterBhv : MonoBehaviour
         {
             IsAttacking = 2;
         }
-        else if (IsAttacking == 2 && (Vector2)transform.position == (Vector2)_gridBhv.Cells[X, Y].transform.position)
+        else if (IsAttacking == 2 && Helper.VectorEqualsPrecision(transform.position, _gridBhv.Cells[X, Y].transform.position, 0.01f))
         {
             IsAttacking = 0;
             if (!Character.IsPlayer && _fightSceneBhv.State == FightState.OpponentTurn)

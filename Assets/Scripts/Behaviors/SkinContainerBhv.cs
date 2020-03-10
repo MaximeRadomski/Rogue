@@ -47,4 +47,9 @@ public class SkinContainerBhv : MonoBehaviour
             if (spriteRenderer != null) spriteRenderer.maskInteraction = maskInteraction;
         }
     }
+
+    public void OrientToTarget()
+    {
+
+    }
 }

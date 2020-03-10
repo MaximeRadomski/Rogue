@@ -35,8 +35,12 @@ public class SkillSmite : Skill
     public override void Activate(int x, int y)
     {
         base.Activate(x, y);
-        Smite(GridBhv.IsOpponentOnCell(x, y));
-        AfterActivation();
+        CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+        {
+            Smite(GridBhv.IsOpponentOnCell(x, y));
+            AfterActivation();
+            return true;
+        }));
     }
 
     public void Smite(CharacterBhv smitedOpponentBhv)

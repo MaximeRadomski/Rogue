@@ -27,8 +27,13 @@ public class SkillRestoration : Skill
 
     public override void OnStartTurn()
     {
-        float hpToRestore = (CharacterBhv.Character.HpMax * 0.05f);
-        //hpToRestore *= Helper.MultiplierFromPercent(1.0f, Random.Range(0, 51));
-        CharacterBhv.GainHp((int)hpToRestore);
+        CharacterBhv.Instantiator.PopIcon(Helper.GetSpriteFromSpriteSheet("Sprites/IconsSkill_" + IconId), CharacterBhv.transform.position);
+        CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+        {
+            float hpToRestore = (CharacterBhv.Character.HpMax * 0.05f);
+            //hpToRestore *= Helper.MultiplierFromPercent(1.0f, Random.Range(0, 51));
+            CharacterBhv.GainHp((int)hpToRestore);
+            return true;
+        }));
     }
 }

@@ -106,6 +106,10 @@ public class CellBhv : InputBhv
             {
                 _fightSceneBhv.ShowCharacterLifeName(onCellCharacter.Character);
             }
+            else
+            {
+                _fightSceneBhv.HideCharacterLifeName();
+            }
         }
     }
 

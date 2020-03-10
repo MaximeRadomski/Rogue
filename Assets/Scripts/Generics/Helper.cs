@@ -9,6 +9,36 @@ using UnityEngine.SceneManagement;
 
 public static class Helper
 {
+    public static string GetOrdinal(int number)
+    {
+        string str = number.ToString();
+        var suffix = "th";
+        if (str.Length == 1)
+        {
+            if (number == 1)
+                suffix = "st";
+            else if (number == 2)
+                suffix = "nd";
+            if (number == 3)
+                suffix = "rd";
+        }
+        else
+        {
+            var last = str.Substring(str.Length - 1);
+            var secondLast = str.Substring(str.Length - 2, 1);
+            if (secondLast != "1")
+            {
+                if (last == "1")
+                    suffix = "st";
+                else if (last == "2")
+                    suffix = "nd";
+                if (last == "3")
+                    suffix = "rd";
+            }
+        }
+        return number + suffix;
+    }
+
     public static IEnumerator ExecuteAfterDelay(float delay, Func<object> func)
     {
         yield return new WaitForSeconds(delay);
