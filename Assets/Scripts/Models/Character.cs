@@ -39,7 +39,7 @@ public class Character
 
     public GameObject Frame;
     private OrbBhv _orbHp;
-    private HealthBarBhv _healthBar;
+    private ResourceBarBhv _healthBar;
     private TMPro.TextMeshPro _level;
     private TMPro.TextMeshPro _xp;
     private TMPro.TextMeshPro _gold;
@@ -52,7 +52,7 @@ public class Character
         if (IsPlayer)
             _orbHp = GameObject.Find("Hp")?.GetComponent<OrbBhv>();
         else
-            _healthBar = GameObject.Find("HealthBar")?.GetComponent<HealthBarBhv>();
+            _healthBar = GameObject.Find("HealthBar")?.GetComponent<ResourceBarBhv>();
         _level = GameObject.Find("LevelText")?.GetComponent<TMPro.TextMeshPro>();
         _xp = GameObject.Find("Xp")?.GetComponent<TMPro.TextMeshPro>();
         _gold = GameObject.Find("Gold")?.GetComponent<TMPro.TextMeshPro>();

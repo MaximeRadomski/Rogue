@@ -82,11 +82,11 @@ public class CharacterBhv : MonoBehaviour
 
     private int _tmpAmount;
 
-    public void TakeDamages(int damages)
+    public void TakeDamages(Damage damage)
     {
         StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
         {
-            Instantiator.PopText("-" + Character.TakeDamages(damages).ToString(), transform.position, TextType.Hp);
+            Instantiator.PopText("-" + Character.TakeDamages(damage.Amount).ToString(), transform.position, damage.Critical ? TextType.HpCritical : TextType.Hp);
             return true;
         }));
     }
@@ -157,20 +157,21 @@ public class CharacterBhv : MonoBehaviour
         }
     }
 
-    public int AttackWithWeapon(int weaponId, CharacterBhv opponentBhv, Map map, bool usePa = true, Vector3 touchedPosition = default(Vector3))
+    public Damage AttackWithWeapon(int weaponId, CharacterBhv opponentBhv, Map map, bool usePa = true, Vector3 touchedPosition = default(Vector3))
     {
+        var tmpDamage = new Damage();
         var tmpWeapon = Character.Weapons[weaponId];
 
         float baseDamages = tmpWeapon.BaseDamage * Helper.MultiplierFromPercent(1, Random.Range(-tmpWeapon.DamageRangePercentage, tmpWeapon.DamageRangePercentage + 1));
         baseDamages *= Character.GetDamageMultiplier();
 
-        float weaponHandlingMultiplier = 1.0f;
+        float weaponHandlingMultiplier = 0.0f;
         if (tmpWeapon.Type != Character.FavWeapons[0] && tmpWeapon.Type != Character.FavWeapons[1])
             weaponHandlingMultiplier = Helper.MultiplierFromPercent(weaponHandlingMultiplier, - (RacesData.NotRaceWeaponDamagePercent + Character.NotRaceWeaponDamagePercent));
         else
             weaponHandlingMultiplier = Helper.MultiplierFromPercent(weaponHandlingMultiplier, Character.RaceWeaponDamagePercent);
 
-        float raceGenderMultiplier = 1.0f;
+        float raceGenderMultiplier = 0.0f;
         if (opponentBhv != null && opponentBhv.Character.Race == Character.StrongAgainst)
             raceGenderMultiplier = Helper.MultiplierFromPercent(raceGenderMultiplier, RacesData.StrongAgainstDamagePercent);
         if (map?.Type == Character.StrongIn)
@@ -180,17 +181,18 @@ public class CharacterBhv : MonoBehaviour
         else
             raceGenderMultiplier = Helper.MultiplierFromPercent(raceGenderMultiplier, RacesData.GenderDamage);
 
-        float skillMultiplier = 1.0f;
+        float skillMultiplier = 0.0f;
         foreach (var skill in Character.Skills)
         {
             if (skill != null)
                 skillMultiplier = Helper.MultiplierFromPercent(skillMultiplier, skill.OnStartAttack());
         }
 
-        float criticalMultiplier = 1.0f;
+        float criticalMultiplier = 0.0f;
         int criticalPercent = Random.Range(0, 100);
         if (criticalPercent < tmpWeapon.CritChancePercent)
         {
+            tmpDamage.Critical = true;
             criticalMultiplier = Helper.MultiplierFromPercent(raceGenderMultiplier, tmpWeapon.CritMultiplierPercent);
             if (Character.Gender == CharacterGender.Male)
                 criticalMultiplier = Helper.MultiplierFromPercent(criticalMultiplier, -RacesData.GenderCritical);
@@ -198,7 +200,7 @@ public class CharacterBhv : MonoBehaviour
                 criticalMultiplier = Helper.MultiplierFromPercent(criticalMultiplier, RacesData.GenderCritical);
         }
 
-        int resultInt = (int)(baseDamages * weaponHandlingMultiplier * raceGenderMultiplier * skillMultiplier * criticalMultiplier);
+        tmpDamage.Amount = (int)(baseDamages * (1.0f + weaponHandlingMultiplier + raceGenderMultiplier + skillMultiplier + criticalMultiplier));
         //Debug.Log("Final Damages = " + resultInt);
         if (usePa)
         {
@@ -214,9 +216,9 @@ public class CharacterBhv : MonoBehaviour
         foreach (var skill in Character.Skills)
         {
             if (skill != null)
-                skill.OnEndAttack(resultInt, opponentBhv);
+                skill.OnEndAttack(tmpDamage.Amount, opponentBhv);
         }
-        return resultInt;
+        return tmpDamage;
     }
 
     private void Attack()

@@ -297,6 +297,8 @@ public static class Helper
                 return thickness + "Gold";
             case TextType.Xp:
                 return thickness + "Orange";
+            case TextType.HpCritical:
+                return thickness + "RedCritical";
         }
         return thickness + "White";
     }

@@ -15,6 +15,8 @@ public class PoppingTextBhv : MonoBehaviour
 
     public void SetPrivates(string text, Vector2 startingPosition, TextType type, TextThickness thickness)
     {
+        if (type == TextType.HpCritical)
+            text += "!";
         StartingPosition = startingPosition;
         transform.position = new Vector2(startingPosition.x, startingPosition.y);
         _positionToReach = new Vector2(startingPosition.x, startingPosition.y + 0.25f);

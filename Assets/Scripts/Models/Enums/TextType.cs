@@ -12,7 +12,8 @@ public enum TextType
     Pa = 5,
     Pm = 6,
     Gold = 7,
-    Xp = 8
+    Xp = 8,
+    HpCritical = 9
 }
 
 public enum TextThickness

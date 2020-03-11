@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class HoursCircleBhv : MonoBehaviour
 {
+    public Material NormalMaterial;
+    public Material NightMaterial;
+
     private Vector3 _targetRotation = new Vector3(0.0f, 0.0f, 0.0f);
     private Vector3? _targetRotation2 = null;
     private List<TMPro.TextMeshPro> _hours;
@@ -17,8 +20,30 @@ public class HoursCircleBhv : MonoBehaviour
         }
     }
 
-    public void Rotate(Vector3 targetRotation)
+    private void UpdateNight(int hour)
     {
+        for (int i = 0; i < 12; ++i)
+            _hours[i].fontSharedMaterial = NormalMaterial;
+        if (hour >= 17 || hour <= 7)
+        {
+            for (int i = 7; i < 12; ++i)
+            {
+                if (hour >= 17 || hour <= 4)
+                    _hours[i].fontSharedMaterial = NightMaterial;
+            }
+            for (int i = 0; i < 4; ++i)
+            {
+                if (hour >= 19 || hour <= 7)
+                    _hours[i].fontSharedMaterial = NightMaterial;
+            }                
+        }
+    }
+
+    public void Rotate(Vector3 targetRotation, int hour)
+    {
+        if (_hours == null)
+            SetPrivates();
+        UpdateNight(hour);
         if (targetRotation.z > transform.eulerAngles.z)
             _targetRotation = targetRotation;
         else
@@ -26,8 +51,6 @@ public class HoursCircleBhv : MonoBehaviour
             _targetRotation = new Vector3(0.0f, 0.0f, 359.9f);
             _targetRotation2 = targetRotation;
         }
-        if (_hours == null)
-            SetPrivates();
     }
 
     void Update()

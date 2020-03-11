@@ -156,21 +156,23 @@ public class AiBhv : MonoBehaviour
     private int ShouldIWeaponThePlayer()
     {
         int shouldI = 0;
-        foreach (var skillEffect in _opponentBhv.UnderEffects.OrEmptyIfNull())
-        {
-            if (skillEffect == SkillEffect.Immuned)
-                shouldI -= 100;
-            else if (skillEffect == SkillEffect.DefenseUp)
-                shouldI -= 10;
-            else
-                shouldI += 10;
-        }
+        //The AI is too smart with this :'(
+        //foreach (var skillEffect in _opponentBhv.UnderEffects.OrEmptyIfNull())
+        //{
+        //    if (skillEffect == SkillEffect.Immuned)
+        //        shouldI -= 100;
+        //    else if (skillEffect == SkillEffect.DefenseUp)
+        //        shouldI -= 10;
+        //    else
+        //        shouldI += 10;
+        //}
+        shouldI += 10;
         for (int i = 0; i < 2; ++i)
         {
             if (_weaponsWeight[i] <= 0)
                 continue;
-            float AttackRatioHp = (float)_characterBhv.AttackWithWeapon(i, _opponentBhv, _gridBhv.Map, usePa:false) / _opponentBhv.Character.Hp;
-            float AttackRatioMaxHp = (float)_characterBhv.AttackWithWeapon(i, _opponentBhv, _gridBhv.Map, usePa: false) / _opponentBhv.Character.HpMax;
+            float AttackRatioHp = (float)_characterBhv.AttackWithWeapon(i, _opponentBhv, _gridBhv.Map, usePa:false).Amount / _opponentBhv.Character.Hp;
+            float AttackRatioMaxHp = (float)_characterBhv.AttackWithWeapon(i, _opponentBhv, _gridBhv.Map, usePa: false).Amount / _opponentBhv.Character.HpMax;
             if (AttackRatioHp > 1.15f)
                 shouldI += 100;
             else if (AttackRatioHp >= 1.0f)
@@ -186,15 +188,17 @@ public class AiBhv : MonoBehaviour
     private int ShouldIAttackSkillThePlayer()
     {
         int shouldI = 0;
-        foreach (var skillEffect in _opponentBhv.UnderEffects.OrEmptyIfNull())
-        {
-            if (skillEffect == SkillEffect.Immuned)
-                shouldI -= 100;
-            else if (skillEffect == SkillEffect.DefenseUp)
-                shouldI -= 10;
-            else
-                shouldI += 10;
-        }
+        //The AI is too smart with this :'(
+        //foreach (var skillEffect in _opponentBhv.UnderEffects.OrEmptyIfNull())
+        //{
+        //    if (skillEffect == SkillEffect.Immuned)
+        //        shouldI -= 100;
+        //    else if (skillEffect == SkillEffect.DefenseUp)
+        //        shouldI -= 10;
+        //    else
+        //        shouldI += 10;
+        //}
+        shouldI = 10;
         return shouldI;
     }
 

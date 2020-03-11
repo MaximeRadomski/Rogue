@@ -35,7 +35,7 @@ public class SkillDash : Skill
         base.Activate(x, y);
         _currentTargetX = x;
         _currentTargetY = y;
-        CharacterBhv.GainSkillEffect(SkillEffect.Immuned);
+        //CharacterBhv.GainSkillEffect(SkillEffect.Immuned);
         AfterActivation();
     }
 

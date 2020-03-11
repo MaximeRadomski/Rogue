@@ -13,8 +13,8 @@ public static class SkillsData
     public static string[] DwarfSkillsNames = { "Forge", "Grappling Hook" };
     public static string[] OrcSkillsNames = { "Roots", "Restoration" };
 
-    public static string[] NormalSkillsNames = { "Teleportation", "Push", "Heal", "Clarity" };
-    public static string[] MagicalSkillsNames = { "Smite", "Great Heal" };
+    public static string[] NormalSkillsNames = { "Clarity", "Push", "Heal" };
+    public static string[] MagicalSkillsNames = { "Smite", "Great Heal", "Teleportation" };
     public static string[] RareSkillsNames = { "TripleEdged" };
 
     public static int RareSkillAppearancePercent = 5;

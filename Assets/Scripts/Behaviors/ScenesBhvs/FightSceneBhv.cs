@@ -20,7 +20,7 @@ public class FightSceneBhv : SceneBhv
     private CharacterBhv _currentPlayingCharacterBhv;
 
     private bool IsWaitingStart;
-    private HealthBarBhv _healthBar;
+    private ResourceBarBhv _healthBar;
     private TMPro.TextMeshPro _fightTitle;
     private OrbBhv _orbHp;
     private OrbBhv _orbPa;
@@ -73,7 +73,7 @@ public class FightSceneBhv : SceneBhv
         OnRootPreviousScene = Constants.SwipeScene;
         _gridBhv = GetComponent<GridBhv>();
         _map = MapsData.EasyMaps[Random.Range(0, MapsData.EasyMaps.Count)];
-        _healthBar = GameObject.Find("HealthBar")?.GetComponent<HealthBarBhv>();
+        _healthBar = GameObject.Find("HealthBar")?.GetComponent<ResourceBarBhv>();
         _fightTitle = GameObject.Find("FightTitle")?.GetComponent<TMPro.TextMeshPro>();
         _orbHp = GameObject.Find("Hp")?.GetComponent<OrbBhv>();
         _orbPa = GameObject.Find("Pa")?.GetComponent<OrbBhv>();

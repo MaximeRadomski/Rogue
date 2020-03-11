@@ -153,12 +153,21 @@ public class SwipeSceneBhv : SceneBhv
         if (Journey.Hour == 24 || Journey.Hour == 12) englishHour = 0;
         float minutes = Journey.Minutes / 60.0f;
         var newRotation = 30.0f * (englishHour + minutes);
-        _hoursCircle.GetComponent<HoursCircleBhv>().Rotate(new Vector3(0.0f, 0.0f, newRotation));
+        _hoursCircle.GetComponent<HoursCircleBhv>().Rotate(new Vector3(0.0f, 0.0f, newRotation), Journey.Hour);
         _biomePicture.sprite = Helper.GetSpriteFromSpriteSheet("Sprites/BiomePicture_" + Journey.Biome.MapType.GetHashCode());
-        _amPm.text = Journey.Hour > 12 ? "PM" : "AM";
+        _amPm.text = Journey.Hour >= 12 ? "PM" : "AM";
         _day.text = Journey.Day.ToString();
-        _dayNight.sprite = Journey.Hour >= 20 || Journey.Hour < 4 ? DayNight[1] : DayNight[0];
+        _dayNight.sprite = IsNight() ? DayNight[1] : DayNight[0];
+        if (IsNight())
+            _dayNight.color = new Color(0.64f, 0.60f, 1.0f, 1.0f);
+        else
+            _dayNight.color = Constants.ColorPlain;
         _biomeSteps.text = (Journey.Step <= Journey.Biome.Steps ? Journey.Step : Journey.Biome.Steps) + "-" + Journey.Biome.Steps;
+    }
+
+    private bool IsNight()
+    {
+        return Journey.Hour >= 20 || Journey.Hour < 4;
     }
 
     public void NewBiome(Biome biome, int minutesPassed)

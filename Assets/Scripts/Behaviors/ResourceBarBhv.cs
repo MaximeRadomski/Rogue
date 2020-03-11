@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthBarBhv : MonoBehaviour
+public class ResourceBarBhv : MonoBehaviour
 {
     private TMPro.TextMeshPro _text;
     private GameObject _content;
@@ -19,20 +19,21 @@ public class HealthBarBhv : MonoBehaviour
 
     private void SetPrivates()
     {
-        _text = transform.Find("Text").GetComponent<TMPro.TextMeshPro>();
-        _content = transform.Find("Content").gameObject;
+        _text = transform.Find("Text")?.GetComponent<TMPro.TextMeshPro>();
+        _content = transform.Find("Content")?.gameObject;
         _contentSpriteRenderer = _content.GetComponent<SpriteRenderer>();
         _width = _contentSpriteRenderer.sprite.rect.size.x * Constants.Pixel;
         _isSet = true;
     }
 
-    public void UpdateContent(int current, int max, string name, GameObject frame)
+    public void UpdateContent(int current, int max, string name, GameObject frame = null)
     {
         if (current < 0)
             current = 0;
-        if (_text == null)
+        if (_text == null && _content == null)
             SetPrivates();
-        _text.text = name + "   (" + current + ")";
+        if (_text != null)
+            _text.text = name + "   (" + current + ")";
         float ratio = (float)current / max;
         _content.transform.localScale = new Vector3(1.0f * ratio, 1.0f, 1.0f);
         var space = _width * ((1.0f - ratio) / 2);

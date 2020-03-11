@@ -13,7 +13,7 @@ public class PlayerPrefsHelper : MonoBehaviour
     {
         PlayerPrefs.SetString(Constants.PpJourney, JsonUtility.ToJson(journey));
         PlayerPrefs.SetString(Constants.PpCurrentBiome, JsonUtility.ToJson(journey.Biome));
-        Debug.Log(JsonUtility.ToJson(journey));
+        //Debug.Log(JsonUtility.ToJson(journey));
     }
 
     public static Journey GetJourney()
