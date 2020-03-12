@@ -487,7 +487,7 @@ public class AiBhv : MonoBehaviour
                 }
             }
         }
-        if (_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs))
+        if (_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs) || _characterBhv.Pa <= 0)
             canI -= 1000;
         return canI;
     }
@@ -635,7 +635,7 @@ public class AiBhv : MonoBehaviour
     {
         int shouldI = 0;
         if (_characterBhv.Character.Hp <= _characterBhv.Character.HpMax * 0.2f)
-            shouldI += 20;
+            shouldI += 30;
         else if (_characterBhv.Character.Hp == _characterBhv.Character.HpMax)
             shouldI -= 300;
         for (int i = 0; i < 2; ++i)
@@ -644,7 +644,7 @@ public class AiBhv : MonoBehaviour
                 && _characterBhv.Pa > _characterBhv.Character.Weapons[i].PaNeeded
                 /*&& !_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs)*/)
             {
-                shouldI += 30;
+                shouldI += 50;
             }
         }
         foreach (var weapon in _opponentBhv.Character.Weapons)
@@ -658,7 +658,7 @@ public class AiBhv : MonoBehaviour
     private bool GetFar()
     {
         //SetPathToOppositeCorner();
-        _gridBhv.ShowPm(_opponentBhv, _opponentBhv.OpponentBhvs, unlimitedPm: true);
+        _gridBhv.ShowPm(_opponentBhv, null, unlimitedPm: true);
         var posToReach = GetFarestIdCellToPlayer();
         if (posToReach == null)
             return false;

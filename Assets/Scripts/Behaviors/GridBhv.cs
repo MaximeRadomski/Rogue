@@ -153,6 +153,8 @@ public class GridBhv : MonoBehaviour
 
     public bool IsAdjacentOpponent(int x, int y, List<CharacterBhv> opponentBhvs)
     {
+        if (opponentBhvs == null)
+            return false;
         foreach (var opponentBhv in opponentBhvs)
         {
             if (x == opponentBhv.X && y + 1 == opponentBhv.Y)
