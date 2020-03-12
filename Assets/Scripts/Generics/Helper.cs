@@ -41,8 +41,10 @@ public static class Helper
 
     public static IEnumerator ExecuteAfterDelay(float delay, Func<object> func)
     {
+        Constants.InputLocked = true;
         yield return new WaitForSeconds(delay);
         func.Invoke();
+        Constants.InputLocked = false;
     }
 
     public static string TimeFromMinutes(int amount)

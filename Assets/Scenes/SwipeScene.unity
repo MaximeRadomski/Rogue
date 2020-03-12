@@ -6768,11 +6768,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 8016368340128703262, guid: 2c1ce27369086bb4db0c87500376078e,
-        type: 3}
-      propertyPath: m_CullTransparentMesh
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8016368340128703263, guid: 2c1ce27369086bb4db0c87500376078e,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -6848,6 +6843,11 @@ PrefabInstance:
       propertyPath: m_fontMaterial
       value: 
       objectReference: {fileID: 950535514}
+    - target: {fileID: 8016368340128703262, guid: 2c1ce27369086bb4db0c87500376078e,
+        type: 3}
+      propertyPath: m_CullTransparentMesh
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c1ce27369086bb4db0c87500376078e, type: 3}
 --- !u!224 &1763202222 stripped

@@ -19,6 +19,7 @@ public class OverBlendBhv : MonoBehaviour
 
     public void SetPrivates(OverBlendType overBlendType, string message, float? constantLoadingSpeed, System.Func<bool, object> resultAction, bool reverse)
     {
+        Constants.InputLocked = true;
         DontDestroyOnLoad(gameObject);
         _overBlendType = overBlendType;
         _loadPercent = 0;

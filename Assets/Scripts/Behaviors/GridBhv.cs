@@ -379,6 +379,7 @@ public class GridBhv : MonoBehaviour
     {
         ResetAllCellsDisplay();
         ResetAllCellsVisited();
+        ResetAllCellsSkillVisited();
         _currentCharacterBhv = characterBhv;
         _currentOpponentBhvs = opponentBhvs;
         _currentSkillId = skillId;
@@ -452,6 +453,14 @@ public class GridBhv : MonoBehaviour
         foreach (var cell in Cells)
         {
             cell.GetComponent<CellBhv>().ResetVisited();
+        }
+    }
+
+    public void ResetAllCellsSkillVisited()
+    {
+        foreach (var cell in Cells)
+        {
+            cell.GetComponent<CellBhv>().ResetSkillVisited();
         }
     }
 

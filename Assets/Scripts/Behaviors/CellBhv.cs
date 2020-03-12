@@ -15,6 +15,7 @@ public class CellBhv : InputBhv
     public int X;
     public int Y;
     public int Visited;
+    public int SkillVisited;
     public CellType Type;
     public CellState State;
     public bool ReadyToStart;
@@ -179,6 +180,11 @@ public class CellBhv : InputBhv
         Visited = Constants.VisitedPmValue;
     }
 
+    public void ResetSkillVisited()
+    {
+        SkillVisited = Constants.VisitedPmValue;
+    }
+
     public void ResetSpawn()
     {
         if (Type == CellType.Spawn || Type == CellType.OpponentSpawn)
@@ -222,7 +228,7 @@ public class CellBhv : InputBhv
     public void ShowSkillRangeVisited()
     {
         State = CellState.SkillRange;
-        Visited = Constants.VisitedSkillValue;
+        SkillVisited = Constants.VisitedSkillValue;
     }
 
     public void ShowSkillOutOfRange()

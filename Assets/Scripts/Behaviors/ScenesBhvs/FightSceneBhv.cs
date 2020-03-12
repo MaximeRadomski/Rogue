@@ -257,10 +257,16 @@ public class FightSceneBhv : SceneBhv
         _gridBhv.SpawnOpponent(OpponentBhvs);
         _gridBhv.SpawnPlayer();
         IsWaitingStart = false;
+        StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+        {
+            Instantiator.NewOverTitleMap(_map, null, Direction.Left);
+            return true;
+        }));
     }
 
     private void NextTurn()
     {
+        bool? lastCharacterIsPlayer = _currentPlayingCharacterBhv?.Character.IsPlayer ?? null;
         if (++_currentOrderId >= _orderList.Count)
             _currentOrderId = 0;
         _currentPlayingCharacterBhv = GetCharacterBhvFromOrderId(_orderList[_currentOrderId].Id);
@@ -288,12 +294,22 @@ public class FightSceneBhv : SceneBhv
             State = FightState.PlayerTurn;
             ManagePlayerButtons();
             _gridBhv.ShowPm(_currentPlayingCharacterBhv, _currentPlayingCharacterBhv.OpponentBhvs);
+            Instantiator.NewOverTitleFight("Player Turn", null, Direction.Left);
         }            
         else
         {
             State = FightState.OpponentTurn;
             ManagePlayerButtons();
-            _currentPlayingCharacterBhv.Ai.StartThinking();
+            if (lastCharacterIsPlayer == true || lastCharacterIsPlayer == null)
+                Instantiator.NewOverTitleFight("Opponent" + (_orderList.Count > 2 ? "s" : "") + " Turn", AfterTitleFight, Direction.Left);
+            else
+                AfterTitleFight(true);
+            
+            object AfterTitleFight(bool result)
+            {
+                _currentPlayingCharacterBhv.Ai.StartThinking();
+                return result;
+            }
         }
         
     }

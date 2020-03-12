@@ -29,17 +29,13 @@ public class SkillVampire : Skill
 
     public override void OnEndAttack(int damages, CharacterBhv opponentBhv)
     {
-        CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
-        {
-            float damagesToSteal = damages * Helper.MultiplierFromPercent(0, _percentToSteal);
-            CharacterBhv.GainHp((int)damagesToSteal);
-            //CharacterBhv.GainHp((int)damagesToSteal);
-            //CharacterBhv.GainHp((int)damagesToSteal);
-            //CharacterBhv.GainHp((int)damagesToSteal);
-            //CharacterBhv.GainHp((int)damagesToSteal);
-            //CharacterBhv.GainHp((int)damagesToSteal);
-            //CharacterBhv.GainHp((int)damagesToSteal);
-            return true;
-        }));
+        float damagesToSteal = damages * Helper.MultiplierFromPercent(0, _percentToSteal);
+        CharacterBhv.GainHp((int)damagesToSteal);
+        //CharacterBhv.GainHp((int)damagesToSteal);
+        //CharacterBhv.GainHp((int)damagesToSteal);
+        //CharacterBhv.GainHp((int)damagesToSteal);
+        //CharacterBhv.GainHp((int)damagesToSteal);
+        //CharacterBhv.GainHp((int)damagesToSteal);
+        //CharacterBhv.GainHp((int)damagesToSteal);
     }
 }

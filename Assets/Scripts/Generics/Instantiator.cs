@@ -94,8 +94,21 @@ public class Instantiator : MonoBehaviour
     {
         var tmpOverBlendObject = Resources.Load<GameObject>("Prefabs/OverBlend");
         var tmpOverBlendInstance = Instantiate(tmpOverBlendObject, tmpOverBlendObject.transform.position, tmpOverBlendObject.transform.rotation);
-        Constants.InputLocked = true;
         tmpOverBlendInstance.GetComponent<OverBlendBhv>().SetPrivates(overBlendType, message, constantLoadingSpeed, resultAction, reverse);
+    }
+
+    public void NewOverTitleMap(Map map, System.Func<bool, object> resultAction, Direction mainDirection, Direction secondaryDirection = Direction.None)
+    {
+        var tmpOverTitleObject = Resources.Load<GameObject>("Prefabs/OverTitleMap");
+        var tmpOverTitleInstance = Instantiate(tmpOverTitleObject, tmpOverTitleObject.transform.position, tmpOverTitleObject.transform.rotation);
+        tmpOverTitleInstance.GetComponent<OverBlendTitleBhv>().SetPrivates(map.Name, resultAction, mainDirection, secondaryDirection);
+    }
+
+    public void NewOverTitleFight(string title, System.Func<bool, object> resultAction, Direction mainDirection, Direction secondaryDirection = Direction.None)
+    {
+        var tmpOverTitleObject = Resources.Load<GameObject>("Prefabs/OverTitleFight");
+        var tmpOverTitleInstance = Instantiate(tmpOverTitleObject, tmpOverTitleObject.transform.position, tmpOverTitleObject.transform.rotation);
+        tmpOverTitleInstance.GetComponent<OverBlendTitleBhv>().SetPrivates(title, resultAction, mainDirection, secondaryDirection);
     }
 
     public void NewSnack(string content, float duration = 2.0f)

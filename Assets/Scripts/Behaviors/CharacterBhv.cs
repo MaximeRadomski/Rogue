@@ -24,8 +24,8 @@ public class CharacterBhv : MonoBehaviour
     private GridBhv _gridBhv;
     private int _cellToReachX;
     private int _cellToReachY;
-    private List<Vector2> _pathfindingSteps = new List<Vector2>();
-    private List<RangePos> _pathfindingPos = new List<RangePos>();
+    public List<Vector2> PathfindingSteps = new List<Vector2>();
+    public List<RangePos> PathfindingPos = new List<RangePos>();
     private SkinContainerBhv _skinContainer;
     private Vector3 _attackedPosition;
     private OrbBhv _orbPa;
@@ -209,14 +209,15 @@ public class CharacterBhv : MonoBehaviour
             {
                 LosePa(tmpWeapon.PaNeeded);
                 _attackedPosition = opponentBhv?.transform.position ?? touchedPosition;
-                IsAttacking = 1;                
+                IsAttacking = 1;
+                foreach (var skill in Character.Skills)
+                {
+                    if (skill != null)
+                        skill.OnEndAttack(tmpDamage.Amount, opponentBhv);
+                }
                 return true;
             }));
-        }
-        foreach (var skill in Character.Skills)
-        {
-            if (skill != null)
-                skill.OnEndAttack(tmpDamage.Amount, opponentBhv);
+            
         }
         return tmpDamage;
     }
@@ -254,20 +255,20 @@ public class CharacterBhv : MonoBehaviour
             SetPath(x, y);
         else
         {
-            _pathfindingSteps.Clear();
-            _pathfindingPos.Clear();
-            _pathfindingSteps.Add(_gridBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
-            _pathfindingPos.Add(new RangePos(_cellToReachX, _cellToReachY));
+            PathfindingSteps.Clear();
+            PathfindingPos.Clear();
+            PathfindingSteps.Add(_gridBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
+            PathfindingPos.Add(new RangePos(_cellToReachX, _cellToReachY));
         }
         IsMoving = true;
     }
 
     public void SetPath(int xToReach, int yToReach, bool usePm = true)
     {
-        _pathfindingSteps.Clear();
-        _pathfindingPos.Clear();
-        _pathfindingSteps.Add(_gridBhv.Cells[xToReach, yToReach].transform.position);
-        _pathfindingPos.Add(new RangePos(xToReach, yToReach));
+        PathfindingSteps.Clear();
+        PathfindingPos.Clear();
+        PathfindingSteps.Add(_gridBhv.Cells[xToReach, yToReach].transform.position);
+        PathfindingPos.Add(new RangePos(xToReach, yToReach));
         var visitedIndex = _gridBhv.Cells[xToReach, yToReach].GetComponent<CellBhv>().Visited;
         if (usePm)
             LosePm(visitedIndex);
@@ -283,8 +284,8 @@ public class CharacterBhv : MonoBehaviour
                 --y;
             else if (LookForLowerIndex(x - 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x - 1, y, OpponentBhvs))
                 --x;
-            _pathfindingSteps.Insert(0, _gridBhv.Cells[x, y].transform.position);
-            _pathfindingPos.Insert(0, new RangePos(x, y));
+            PathfindingSteps.Insert(0, _gridBhv.Cells[x, y].transform.position);
+            PathfindingPos.Insert(0, new RangePos(x, y));
             --visitedIndex;
         }
     }
@@ -301,13 +302,13 @@ public class CharacterBhv : MonoBehaviour
     public void MoveToFirstPathStep()
     {
         IsMovingFirstPathStep = true;
-        transform.position = Vector2.Lerp(transform.position, _pathfindingSteps[0], 0.7f);
-        if ((Vector2)transform.position == _pathfindingSteps[0])
+        transform.position = Vector2.Lerp(transform.position, PathfindingSteps[0], 0.7f);
+        if ((Vector2)transform.position == PathfindingSteps[0])
         {
-            _skinContainer.SetSkinContainerSortingLayerOrder(Constants.GridMax - _pathfindingPos[0].Y);
+            _skinContainer.SetSkinContainerSortingLayerOrder(Constants.GridMax - PathfindingPos[0].Y);
             IsMovingFirstPathStep = false;
-            X = _pathfindingPos[0].X;
-            Y = _pathfindingPos[0].Y;
+            X = PathfindingPos[0].X;
+            Y = PathfindingPos[0].Y;
             if (!Character.IsPlayer && _fightSceneBhv.State == FightState.OpponentTurn)
                 Ai.AfterMovement();
         }
@@ -315,13 +316,13 @@ public class CharacterBhv : MonoBehaviour
 
     public void Move()
     {
-        transform.position = Vector2.Lerp(transform.position, _pathfindingSteps[0], 0.7f);
-        if ((Vector2)transform.position == _pathfindingSteps[0])
+        transform.position = Vector2.Lerp(transform.position, PathfindingSteps[0], 0.7f);
+        if ((Vector2)transform.position == PathfindingSteps[0])
         {
-            _skinContainer.SetSkinContainerSortingLayerOrder(Constants.GridMax - _pathfindingPos[0].Y);
-            _pathfindingPos.RemoveAt(0);
-            _pathfindingSteps.RemoveAt(0);
-            if (_pathfindingSteps.Count == 0)
+            _skinContainer.SetSkinContainerSortingLayerOrder(Constants.GridMax - PathfindingPos[0].Y);
+            PathfindingPos.RemoveAt(0);
+            PathfindingSteps.RemoveAt(0);
+            if (PathfindingSteps.Count == 0)
             {
                 IsMoving = false;
                 X = _cellToReachX;
