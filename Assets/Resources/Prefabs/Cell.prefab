@@ -135,6 +135,7 @@ MonoBehaviour:
   X: 0
   Y: 0
   Visited: 0
+  SkillVisited: 0
   Type: 0
   State: 0
   ReadyToStart: 0

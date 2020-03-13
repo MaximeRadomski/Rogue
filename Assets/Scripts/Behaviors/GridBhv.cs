@@ -118,14 +118,14 @@ public class GridBhv : MonoBehaviour
 
     private void SpreadPm(int x, int y, int nbPm, int spentPm, CharacterBhv characterBhv, List<CharacterBhv> opponentBhvs)
     {
-        if (!Helper.IsPosValid(x, y) || IsOpponentOnCell(x, y, true) || nbPm <= 0)
+        if (!Helper.IsPosValid(x, y) || (opponentBhvs != null && IsOpponentOnCell(x, y, true)) || nbPm <= 0)
             return;
         var cell = Cells[x, y];
         if (cell == null || (x == characterBhv.X && y == characterBhv.Y))
             return;
-        if (cell.GetComponent<CellBhv>().Type == CellType.On &&
-            (spentPm < cell.GetComponent<CellBhv>().Visited || cell.GetComponent<CellBhv>().Visited == -1) &&
-            !IsOpponentOnCell(x, y, true))
+        if (cell.GetComponent<CellBhv>().Type == CellType.On
+            && (spentPm < cell.GetComponent<CellBhv>().Visited || cell.GetComponent<CellBhv>().Visited == -1)
+            && (opponentBhvs == null || !IsOpponentOnCell(x, y, true)))
         {
             //if (characterBhv.IsPlayer)
             cell.GetComponent<CellBhv>().ShowPm();

@@ -72,9 +72,9 @@ public class AiBhv : MonoBehaviour
         //No Action Weight over 0
         //Now processing to movement
         bool moveResult = false;
-        if (_getCloseWeight > 0 && _getCloseWeight >= _getFarWeight)
+        if (_getCloseWeight > 0 && _getCloseWeight > _getFarWeight)
             moveResult = GetClose();
-        else if (_getFarWeight > 0 && _getFarWeight > _getCloseWeight)
+        else if (_getFarWeight > 0 && _getFarWeight >= _getCloseWeight)
             moveResult = GetFar();
         if (moveResult)
             return;
@@ -367,10 +367,10 @@ public class AiBhv : MonoBehaviour
 
     #region Movement
 
-    private void SetPathToOpponent(RangePos tmpPos)
+    private bool SetPathToOpponent(RangePos tmpPos)
     {
         _gridBhv.ShowPm(_characterBhv, _characterBhv.OpponentBhvs, unlimitedPm:true);
-        _characterBhv.SetPath(tmpPos.X, tmpPos.Y, usePm:false);
+        return _characterBhv.SetPath(tmpPos.X, tmpPos.Y, usePm:false);
     }
 
     //private void SetPathToOppositeCorner()
@@ -440,9 +440,12 @@ public class AiBhv : MonoBehaviour
 
     private bool MoveToNextCell()
     {
-        if (_characterBhv.Pm <= 0)
+        bool isAdjacent = _gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs);
+        if (_characterBhv.Pm <= 0
+            || (isAdjacent && _characterBhv.Pm <= 1))
             return false;
-        _characterBhv.LosePm(1);
+        var lostPm = isAdjacent ? 2 : 1;
+        _characterBhv.LosePm(lostPm);
         _characterBhv.MoveToFirstPathStep();
         return true;
     }
@@ -487,7 +490,7 @@ public class AiBhv : MonoBehaviour
                 }
             }
         }
-        if (_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs) || _characterBhv.Pa <= 0)
+        if (_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs))
             canI -= 1000;
         return canI;
     }
@@ -497,6 +500,9 @@ public class AiBhv : MonoBehaviour
         int shouldI = 0;
         if (_characterBhv.Character.Hp == _characterBhv.Character.HpMax)
             shouldI += 20;
+        if (_characterBhv.Pa <= 0)
+            shouldI -= 20;
+        shouldI += _characterBhv.Pa;
         return shouldI;
     }
 
@@ -637,7 +643,7 @@ public class AiBhv : MonoBehaviour
         if (_characterBhv.Character.Hp <= _characterBhv.Character.HpMax * 0.2f)
             shouldI += 30;
         else if (_characterBhv.Character.Hp == _characterBhv.Character.HpMax)
-            shouldI -= 300;
+            shouldI -= 30;
         for (int i = 0; i < 2; ++i)
         {
             if (_characterBhv.Character.Weapons[i].Type == WeaponType.Bow
@@ -660,9 +666,11 @@ public class AiBhv : MonoBehaviour
         //SetPathToOppositeCorner();
         _gridBhv.ShowPm(_opponentBhv, null, unlimitedPm: true);
         var posToReach = GetFarestIdCellToPlayer();
-        if (posToReach == null)
+        if (posToReach == null
+            || (posToReach.X == _characterBhv.X && posToReach.Y == _characterBhv.Y))
             return false;
-        SetPathToOpponent(posToReach);
+        if (SetPathToOpponent(posToReach) == false)
+            return false;
         if (_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs) || _characterBhv.Pm == 0
             || _gridBhv.Cells[posToReach.X, posToReach.Y].GetComponent<CellBhv>().Visited > _characterBhv.Pm)
         {

@@ -139,12 +139,13 @@ public class SwipeSceneBhv : SceneBhv
 
         Instantiator.LoadCharacterSkin(_playerCharacter, _characterSkinContainer);
         _characterName.text = _playerCharacter.Name;
+        _orbLife.UpdateContent(_playerCharacter.Hp, _playerCharacter.HpMax, Instantiator, TextType.Hp);
         UpdateDisplayJourneyAndCharacterStats();
     }
 
     private void UpdateDisplayJourneyAndCharacterStats()
     {
-        _orbLife.UpdateContent(_playerCharacter.Hp, _playerCharacter.HpMax, Instantiator, TextType.Hp);
+        //_orbLife.UpdateContent(_playerCharacter.Hp, _playerCharacter.HpMax, Instantiator, TextType.Hp);
         _level.text = _playerCharacter.Level.ToString();
         _xp.text = _playerCharacter.Experience.ToString() + "/" + Helper.XpNeedForLevel(_playerCharacter.Level) + " " + Constants.UnitXp;
         _gold.text = _playerCharacter.Gold.ToString() + " " + Constants.UnitGold;

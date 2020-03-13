@@ -110,13 +110,13 @@ public class Character
         {
             if (_orbHp == null)
                 GetPrivates();
-            _orbHp?.UpdateContent(Hp, HpMax, _instantiator, TextType.Hp, -damages);
+            _orbHp?.UpdateContent(Hp, HpMax, _instantiator, TextType.Hp, -damages, Direction.Down);
         }
         else
         {
             if (_healthBar == null)
                 GetPrivates();
-            _healthBar.UpdateContent(Hp, HpMax, Name, Frame);
+            _healthBar.UpdateContent(Hp, HpMax, Name, Frame, Direction.Down);
         }
         return damages;
     }
@@ -131,13 +131,14 @@ public class Character
         {
             if (_orbHp == null)
                 GetPrivates();
-            _orbHp?.UpdateContent(Hp, HpMax, _instantiator, TextType.Hp, amountToAdd);
+            if (amountToAdd > 0)
+                _orbHp?.UpdateContent(Hp, HpMax, _instantiator, TextType.Hp, amountToAdd, Direction.Up);
         }
         else
         {
             if (_healthBar == null)
                 GetPrivates();
-            _healthBar.UpdateContent(Hp, HpMax, Name, Frame);
+            _healthBar.UpdateContent(Hp, HpMax, Name, Frame, Direction.Up);
         }
         return amountToAdd;
     }

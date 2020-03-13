@@ -243,6 +243,8 @@ public class CellBhv : InputBhv
             StretchOnBegin();
         //DEBUG//
         //transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = Visited.ToString();
+        //if (Visited > -1)
+        //    _overSprite.sprite = OverSprites[_pm];
     }
 
     private void StretchOnBegin()

@@ -77,6 +77,7 @@ public class PopupCharacterStatsBhv : StatsDisplayerBhv
     private void DisplayStatsCharacter()
     {
         _instantiator.LoadCharacterSkin(_character, _skinContainerBhv.gameObject);
+        _tabs[0].transform.Find("Level").GetComponent<TMPro.TextMeshPro>().text = _character.Level.ToString();
         _tabs[0].transform.Find("Name").GetComponent<TMPro.TextMeshPro>().text = _character.Name;
         _tabs[0].transform.Find("Race").GetComponent<TMPro.TextMeshPro>().text = _character.Race.ToString();
         _tabs[0].transform.Find("Gender").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsGender_" + _character.Gender.GetHashCode());

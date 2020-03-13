@@ -108,7 +108,7 @@ public class CharacterBhv : MonoBehaviour
             amountToRemove = Pa;
         Pa -= amountToRemove;
         if (Character.IsPlayer)
-            _orbPa?.UpdateContent(Pa, Character.PaMax, Instantiator, TextType.Pa, -amountToRemove);
+            _orbPa?.UpdateContent(Pa, Character.PaMax, Instantiator, TextType.Pa, -amountToRemove, Direction.Down);
         Instantiator.PopText("-" + amountToRemove.ToString(), transform.position, TextType.Pa);
     }
 
@@ -124,7 +124,7 @@ public class CharacterBhv : MonoBehaviour
             amountToRemove = Pm;
         Pm -= amountToRemove;
         if (Character.IsPlayer)
-            _orbPm?.UpdateContent(Pm, Character.PmMax, Instantiator, TextType.Pm, -amountToRemove);
+            _orbPm?.UpdateContent(Pm, Character.PmMax, Instantiator, TextType.Pm, -amountToRemove, Direction.Down);
         Instantiator.PopText("-" + amountToRemove.ToString(), transform.position, TextType.Pm);
     }
 
@@ -263,10 +263,12 @@ public class CharacterBhv : MonoBehaviour
         IsMoving = true;
     }
 
-    public void SetPath(int xToReach, int yToReach, bool usePm = true)
+    public bool SetPath(int xToReach, int yToReach, bool usePm = true)
     {
         PathfindingSteps.Clear();
         PathfindingPos.Clear();
+        if (_gridBhv.Cells[xToReach, yToReach].GetComponent<CellBhv>().Visited <= 0)
+            return false;
         PathfindingSteps.Add(_gridBhv.Cells[xToReach, yToReach].transform.position);
         PathfindingPos.Add(new RangePos(xToReach, yToReach));
         var visitedIndex = _gridBhv.Cells[xToReach, yToReach].GetComponent<CellBhv>().Visited;
@@ -276,18 +278,19 @@ public class CharacterBhv : MonoBehaviour
         int y = yToReach;
         while (visitedIndex > 0)
         {
-            if (LookForLowerIndex(x, y + 1, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x, y + 1, OpponentBhvs))
+            if (LookForLowerIndex(x, y + 1, visitedIndex - 1)/* && !_gridBhv.IsAdjacentOpponent(x, y + 1, OpponentBhvs)*/)
                 ++y;
-            else if (LookForLowerIndex(x + 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x + 1, y, OpponentBhvs))
+            else if (LookForLowerIndex(x + 1, y, visitedIndex - 1)/* && !_gridBhv.IsAdjacentOpponent(x + 1, y, OpponentBhvs)*/)
                 ++x;
-            else if (LookForLowerIndex(x, y - 1, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x, y - 1, OpponentBhvs))
+            else if (LookForLowerIndex(x, y - 1, visitedIndex - 1)/* && !_gridBhv.IsAdjacentOpponent(x, y - 1, OpponentBhvs)*/)
                 --y;
-            else if (LookForLowerIndex(x - 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x - 1, y, OpponentBhvs))
+            else if (LookForLowerIndex(x - 1, y, visitedIndex - 1)/* && !_gridBhv.IsAdjacentOpponent(x - 1, y, OpponentBhvs)*/)
                 --x;
             PathfindingSteps.Insert(0, _gridBhv.Cells[x, y].transform.position);
             PathfindingPos.Insert(0, new RangePos(x, y));
             --visitedIndex;
         }
+        return true;
     }
 
     private bool LookForLowerIndex(int x, int y, int visitedIndex)

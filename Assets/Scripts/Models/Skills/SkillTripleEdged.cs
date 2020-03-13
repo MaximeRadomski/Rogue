@@ -12,7 +12,7 @@ public class SkillTripleEdged : Skill
         Effect = SkillEffect.AttackUp;
         Rarity = Rarity.Rare;
         CooldownType = CooldownType.OnceAFight;
-        CooldownMax = -1;
+        CooldownMax = 0;
         Cooldown = 0;
         EffectDuration = 1;
         PaNeeded = 6;

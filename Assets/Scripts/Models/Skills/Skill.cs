@@ -35,9 +35,18 @@ public abstract class Skill : InventoryItem
 
     public bool IsApplyingEffect()
     {
-        if (_isDebuffed || Effect == SkillEffect.None)
-            return false;
-        return Cooldown >= CooldownMax - EffectDuration;
+        if (CooldownType != CooldownType.OnceAFight)
+        {
+            if (_isDebuffed || Effect == SkillEffect.None)
+                return false;
+            return Cooldown >= CooldownMax - EffectDuration;
+        }
+        else
+        {
+            if (_isDebuffed || Effect == SkillEffect.None)
+                return false;
+            return Cooldown >= CooldownMax - EffectDuration && Cooldown != 0;
+        }
     }
 
     public bool IsUnderCooldown()

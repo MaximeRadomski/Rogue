@@ -208,7 +208,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 673d39a4d705b9f40a0ba95fb8723ce8
+      spriteID: b6138710e81e80443b28e2da28e640a5
       internalID: -1446958261385611409
       vertices: []
       indices: 
@@ -216,6 +216,27 @@ TextureImporter:
       weights: []
     - serializedVersion: 2
       name: CharacterOrbsContent_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 128
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f81bbf1393e33e644bfdab3e8f072163
+      internalID: -5179179560706888017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterOrbsContent_2
       rect:
         serializedVersion: 2
         x: 0
@@ -229,14 +250,35 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d5a086e62257f184db0c9d0b406c1997
-      internalID: -5179179560706888017
+      spriteID: 655951936b538644db1cd104614f6690
+      internalID: 4373730090784464842
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharacterOrbsContent_2
+      name: CharacterOrbsContent_3
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 32
+        width: 128
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62ec9ea5146784047a4f04fb3c6f4de5
+      internalID: 5705045091140512602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterOrbsContent_4
       rect:
         serializedVersion: 2
         x: 0
@@ -250,8 +292,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fcb0e6f0b2d8def4f98f12aca55fd664
-      internalID: 4373730090784464842
+      spriteID: c87211114ecf92d48bf25a3da8f293aa
+      internalID: 6893270466779275533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharacterOrbsContent_5
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 7
+        width: 128
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fea6aae93bb0a647ada74eaebd72903
+      internalID: 5824588967418898345
       vertices: []
       indices: 
       edges: []
