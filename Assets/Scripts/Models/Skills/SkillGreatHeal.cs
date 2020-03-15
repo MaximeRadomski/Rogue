@@ -13,7 +13,6 @@ public class SkillGreatHeal : Skill
         Rarity = Rarity.Magical;
         CooldownType = CooldownType.Normal;
         CooldownMax = 6;
-        Cooldown = 0;
         PaNeeded = 5;
         MinRange = 0;
         MaxRange = 0;

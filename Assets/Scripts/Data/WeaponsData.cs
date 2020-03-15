@@ -158,7 +158,8 @@ public static class WeaponsData
             RangeZones = null,
             NbSkinParts = 4,
             Weight = Random.Range(3, 6 + 1),
-            BasePrice = 100
+            BasePrice = 100,
+            EffectId = 1
         };
     }
 
@@ -181,7 +182,8 @@ public static class WeaponsData
             SpecificityTitle = "Straightforward",
             Specificity = "Only in line.",
             Weight = Random.Range(3, 6 + 1),
-            BasePrice = 90
+            BasePrice = 90,
+            EffectId = 1
         };
     }
 
@@ -202,7 +204,8 @@ public static class WeaponsData
             RangeZones = new List<RangeDirection> { RangeDirection.Up },
             NbSkinParts = 4,
             Weight = Random.Range(2, 4 + 1),
-            BasePrice = 40
+            BasePrice = 40,
+            EffectId = 2
         };
     }
 
@@ -225,7 +228,8 @@ public static class WeaponsData
             SpecificityTitle = "Curvy",
             Specificity = "Only diagonally",
             Weight = Random.Range(1, 2 + 1),
-            BasePrice = 20
+            BasePrice = 20,
+            EffectId = 1
         };
     }
 
@@ -253,7 +257,8 @@ public static class WeaponsData
             RangeZones = null,
             NbSkinParts = 3,
             Weight = Random.Range(3, 6 + 1),
-            BasePrice = 150
+            BasePrice = 150,
+            EffectId = 5
         };
     }
 
@@ -274,7 +279,8 @@ public static class WeaponsData
             RangeZones = null,
             NbSkinParts = 4,
             Weight = Random.Range(2, 4 + 1),
-            BasePrice = 120
+            BasePrice = 120,
+            EffectId = 1
         };
     }
 
@@ -297,7 +303,8 @@ public static class WeaponsData
             SpecificityTitle = "Dwarf Craftsmanship",
             Specificity = "Fixed Damage Range",
             Weight = Random.Range(10, 20 + 1),
-            BasePrice = 200
+            BasePrice = 200,
+            EffectId = 3
         };
     }
 
@@ -320,7 +327,8 @@ public static class WeaponsData
             SpecificityTitle = "Dwarf Craftsmanship",
             Specificity = "Fixed Damage Range.",
             Weight = Random.Range(5, 10 + 1),
-            BasePrice = 200
+            BasePrice = 200,
+            EffectId = 1
         };
     }
 
@@ -343,7 +351,8 @@ public static class WeaponsData
             SpecificityTitle = "Heavy Weapon",
             Specificity = "Can only be equipped with small weapons (knives, daggers, gauntlets).",
             Weight = Random.Range(10, 20 + 1),
-            BasePrice = 250
+            BasePrice = 250,
+            EffectId = 4
         };
     }
 
@@ -360,13 +369,14 @@ public static class WeaponsData
             CritMultiplierPercent = 130,
             MinRange = 2,
             MaxRange = 2,
-            RangePositions = new List<int> { -1, 1, 1, 1, 1, -1, -1, -1 },
+            RangePositions = new List<int> { -1,1, 0,1, 1,1, 1,0, 1,-1, 0,-1, -1,-1, -1,0 },
             RangeZones = null,
             NbSkinParts = 2,
-            SpecificityTitle = "Curvy",
-            Specificity = "Only diagonally",
+            SpecificityTitle = "Handy",
+            Specificity = "Hits in all directions",
             Weight = Random.Range(4, 8 + 1),
-            BasePrice = 80
+            BasePrice = 80,
+            EffectId = 1
         };
     }
 }

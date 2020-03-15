@@ -9,6 +9,46 @@ using UnityEngine.SceneManagement;
 
 public static class Helper
 {
+    public static float GetAngleFromTwoPositions(Vector3 start, Vector3 end)
+    {
+        float x = Mathf.Abs(Mathf.Abs(start.x) - Mathf.Abs(end.x));
+        float y = Mathf.Abs(Mathf.Abs(start.y) - Mathf.Abs(end.y));
+        float angle = 0.0f;
+        if (Helper.FloatEqualsPrecision(end.x, start.x, 0.01f) && end.y > start.y) //UP
+            angle = 0.0f;
+        else if (Helper.FloatEqualsPrecision(end.y, start.y, 0.01f) && end.x > start.x) //RIGHT
+            angle = 90.0f;
+        else if (Helper.FloatEqualsPrecision(end.x, start.x, 0.01f) && end.y < start.y) //DOWN
+            angle = 180.0f;
+        else if (Helper.FloatEqualsPrecision(end.y, start.y, 0.01f) && end.x < start.x) //LEFT
+            angle = 270.0f;
+        else //DIAGONALS
+        {
+            
+            if (end.y > start.y && end.x > start.x) //UP-RIGHT
+            {
+                angle = Mathf.Atan(x / y) * Mathf.Rad2Deg;
+                angle += 0.0f;
+            }
+            else if (end.y < start.y && end.x > start.x) //DOWN-RIGHT
+            {
+                angle = Mathf.Atan(y / x) * Mathf.Rad2Deg;
+                angle += 90.0f;
+            }
+            else if (end.y < start.y && end.x < start.x) //DOWN-LEFT
+            {
+                angle = Mathf.Atan(x / y) * Mathf.Rad2Deg;
+                angle += 180.0f;
+            }
+            else if (end.y > start.y && end.x < start.x) //UP-LEFT
+            {
+                angle = Mathf.Atan(y / x) * Mathf.Rad2Deg;
+                angle += 270.0f;
+            }
+        }
+        return -angle;
+    }
+
     public static string GetOrdinal(int number)
     {
         string str = number.ToString();

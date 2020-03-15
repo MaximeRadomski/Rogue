@@ -26,7 +26,7 @@ public class CharacterBhv : MonoBehaviour
     private int _cellToReachY;
     public List<Vector2> PathfindingSteps = new List<Vector2>();
     public List<RangePos> PathfindingPos = new List<RangePos>();
-    private SkinContainerBhv _skinContainer;
+    public SkinContainerBhv SkinContainer;
     private Vector3 _attackedPosition;
     private OrbBhv _orbPa;
     private OrbBhv _orbPm;
@@ -55,7 +55,7 @@ public class CharacterBhv : MonoBehaviour
         }
             
         Instantiator = _fightSceneBhv.Instantiator;
-        _skinContainer = transform.Find("SkinContainer").GetComponent<SkinContainerBhv>();
+        SkinContainer = transform.Find("SkinContainer").GetComponent<SkinContainerBhv>();
         for (int i = 0; i < Character.Skills.Count; ++i)
         {
             if (Character.Skills[i] != null)
@@ -87,6 +87,7 @@ public class CharacterBhv : MonoBehaviour
         StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
         {
             Instantiator.PopText("-" + Character.TakeDamages(damage.Amount).ToString(), transform.position, damage.Critical ? TextType.HpCritical : TextType.Hp);
+            SkinContainer.OnHit();
             return true;
         }));
     }
@@ -204,6 +205,7 @@ public class CharacterBhv : MonoBehaviour
         //Debug.Log("Final Damages = " + resultInt);
         if (usePa)
         {
+            SkinContainer.OrientToTarget(transform.position.x - (opponentBhv?.transform.position.x ?? touchedPosition.x));
             Instantiator.PopIcon(Helper.GetSpriteFromSpriteSheet("Sprites/IconsWeapon_" + tmpWeapon.Type.GetHashCode()), transform.position);
             StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
             {
@@ -215,6 +217,7 @@ public class CharacterBhv : MonoBehaviour
                     if (skill != null)
                         skill.OnEndAttack(tmpDamage.Amount, opponentBhv);
                 }
+                Instantiator.NewWeaponEffect(opponentBhv?.transform.position ?? touchedPosition, transform.position, tmpWeapon.EffectId, Constants.GridMax - Y);
                 return true;
             }));
             
@@ -259,6 +262,8 @@ public class CharacterBhv : MonoBehaviour
             PathfindingPos.Clear();
             PathfindingSteps.Add(_gridBhv.Cells[_cellToReachX, _cellToReachY].transform.position);
             PathfindingPos.Add(new RangePos(_cellToReachX, _cellToReachY));
+            if (PathfindingPos.Count > 0)
+                SkinContainer.OrientToTarget(X - PathfindingPos[0].X);
         }
         IsMoving = true;
     }
@@ -290,6 +295,8 @@ public class CharacterBhv : MonoBehaviour
             PathfindingPos.Insert(0, new RangePos(x, y));
             --visitedIndex;
         }
+        if (PathfindingPos.Count > 0)
+            SkinContainer.OrientToTarget(X - PathfindingPos[0].X);
         return true;
     }
 
@@ -308,7 +315,7 @@ public class CharacterBhv : MonoBehaviour
         transform.position = Vector2.Lerp(transform.position, PathfindingSteps[0], 0.7f);
         if ((Vector2)transform.position == PathfindingSteps[0])
         {
-            _skinContainer.SetSkinContainerSortingLayerOrder(Constants.GridMax - PathfindingPos[0].Y);
+            SkinContainer.SetSkinContainerSortingLayerOrder(Constants.GridMax - PathfindingPos[0].Y);
             IsMovingFirstPathStep = false;
             X = PathfindingPos[0].X;
             Y = PathfindingPos[0].Y;
@@ -322,7 +329,7 @@ public class CharacterBhv : MonoBehaviour
         transform.position = Vector2.Lerp(transform.position, PathfindingSteps[0], 0.7f);
         if ((Vector2)transform.position == PathfindingSteps[0])
         {
-            _skinContainer.SetSkinContainerSortingLayerOrder(Constants.GridMax - PathfindingPos[0].Y);
+            SkinContainer.SetSkinContainerSortingLayerOrder(Constants.GridMax - PathfindingPos[0].Y);
             PathfindingPos.RemoveAt(0);
             PathfindingSteps.RemoveAt(0);
             if (PathfindingSteps.Count == 0)
@@ -337,6 +344,8 @@ public class CharacterBhv : MonoBehaviour
                 if (AfterMouvementDelegate != null)
                     AfterMouvementDelegate();
             }
+            else
+                SkinContainer.OrientToTarget(X - PathfindingPos[0].X);
         }
     }
 
@@ -344,7 +353,7 @@ public class CharacterBhv : MonoBehaviour
     {
         X = x;
         Y = y;
-        _skinContainer.SetSkinContainerSortingLayerOrder(Constants.GridMax - y);
+        SkinContainer.SetSkinContainerSortingLayerOrder(Constants.GridMax - y);
         transform.position = _gridBhv.Cells[x, y].transform.position;
     }
 }

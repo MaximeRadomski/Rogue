@@ -404,7 +404,29 @@ public class FightSceneBhv : SceneBhv
     {
         _playerBhv.Spawn(x, y);
         _buttonPass.EnableButton();
+        MakeOpponentsLookPlayer();
+        MakePlayerLookOpponents();
         //NextTurn();
+    }
+
+    private void MakeOpponentsLookPlayer()
+    {
+        foreach (var opponent in OpponentBhvs)
+        {
+            opponent.SkinContainer.OrientToTarget(opponent.X - _playerBhv.X);
+        }
+    }
+
+    private void MakePlayerLookOpponents()
+    {
+        if (OpponentBhvs.Count == 1)
+        {
+            _playerBhv.SkinContainer.OrientToTarget(_playerBhv.X - OpponentBhvs[0].X);
+        }
+        else
+        {
+            _playerBhv.SkinContainer.OrientToTarget(_playerBhv.X - 3); //Because [3,3] is the middle of the map
+        }
     }
 
     public void OnPlayerAttackClick(int weaponId, List<CharacterBhv> touchedOpponents, Vector3 touchedPosition = default(Vector3))

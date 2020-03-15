@@ -13,7 +13,6 @@ public class SkillPush : Skill
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Normal;
         CooldownMax = 2;
-        Cooldown = 0;
         PaNeeded = 2;
         MinRange = 1;
         MaxRange = 1;

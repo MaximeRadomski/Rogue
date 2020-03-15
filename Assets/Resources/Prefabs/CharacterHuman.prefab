@@ -60,6 +60,8 @@ MonoBehaviour:
   Instantiator: {fileID: 0}
   OpponentBhvs: []
   UnderEffects: 
+  PathfindingSteps: []
+  SkinContainer: {fileID: 0}
 --- !u!61 &5415252140772257180
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -96,7 +98,7 @@ Animator:
   m_GameObject: {fileID: 307629294952203592}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2ad449856dd17b94dbde4e5439b2ac04, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

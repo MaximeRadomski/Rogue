@@ -14,7 +14,7 @@ public class SkillShield : Skill
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Normal;
         CooldownMax = 2;
-        Cooldown = 0;
+        EffectDurationMax = 1;
         PaNeeded = 2;
         MinRange = 0;
         MaxRange = 0;
@@ -36,6 +36,7 @@ public class SkillShield : Skill
     {
         if (IsApplyingEffect())
         {
+            EffectDuration = 0;
             CharacterBhv.LoseSkillEffect(Effect);
             return 0;
         }

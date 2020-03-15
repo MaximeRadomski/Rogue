@@ -14,8 +14,7 @@ public class SkillForge : Skill
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Normal;
         CooldownMax = 4;
-        Cooldown = 0;
-        EffectDuration = 2;
+        EffectDurationMax = 2;
         PaNeeded = 4;
         MinRange = 0;
         MaxRange = 0;

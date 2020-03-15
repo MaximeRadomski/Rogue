@@ -23,6 +23,7 @@ public class Weapon : InventoryItem
 
     public int NbSkinParts;
     public List<string> WeaponParts;
+    public int EffectId;
 
     public Weapon()
     {

@@ -12,6 +12,7 @@ public abstract class Skill : InventoryItem
     public int CooldownMax;
     public int Cooldown;
     public int EffectDuration;
+    public int EffectDurationMax;
     public int PaNeeded;
     public int MinRange;
     public int MaxRange;
@@ -35,18 +36,16 @@ public abstract class Skill : InventoryItem
 
     public bool IsApplyingEffect()
     {
-        if (CooldownType != CooldownType.OnceAFight)
-        {
-            if (_isDebuffed || Effect == SkillEffect.None)
-                return false;
-            return Cooldown >= CooldownMax - EffectDuration;
-        }
-        else
-        {
-            if (_isDebuffed || Effect == SkillEffect.None)
-                return false;
-            return Cooldown >= CooldownMax - EffectDuration && Cooldown != 0;
-        }
+        if (_isDebuffed || Effect == SkillEffect.None)
+            return false;
+        return EffectDuration > 0;
+    }
+
+    public bool ShouldLoseSkillEffect()
+    {
+        if (_isDebuffed || Effect == SkillEffect.None)
+            return false;
+        return EffectDuration == 0;
     }
 
     public bool IsUnderCooldown()
@@ -80,15 +79,18 @@ public abstract class Skill : InventoryItem
         if (CooldownType == CooldownType.Normal)
         {
             Cooldown = CooldownMax + 1;
+            EffectDuration = EffectDurationMax;
             if (Effect != SkillEffect.None)
                 CharacterBhv.GainSkillEffect(Effect);
         }            
         else if (CooldownType == CooldownType.OnceAFight)
         {
             Cooldown = -1;
+            EffectDuration = EffectDurationMax;
             if (Effect != SkillEffect.None)
                 CharacterBhv.GainSkillEffect(Effect);
         }
+        CharacterBhv.SkinContainer.OrientToTarget(CharacterBhv.X - x);
         GameObject.Find(Constants.GoSceneBhvName).GetComponent<FightSceneBhv>().ManagePlayerButtons();
     }
 
@@ -119,8 +121,12 @@ public abstract class Skill : InventoryItem
         if ((CooldownType == CooldownType.Normal && IsUnderCooldown()) ||
             (CooldownType == CooldownType.OnceAFight && IsUnderCooldown()))
             --Cooldown;
-        if (Effect != SkillEffect.None && !IsApplyingEffect())
-            CharacterBhv.LoseSkillEffect(Effect);
+        if (Effect != SkillEffect.None)
+        {
+            --EffectDuration;
+            if (ShouldLoseSkillEffect())
+                CharacterBhv.LoseSkillEffect(Effect);
+        }
     }
 
     public virtual void OnEndTurn()

@@ -38,6 +38,15 @@ public class Instantiator : MonoBehaviour
             Camera.main.gameObject.GetComponent<CameraBhv>().FocusY(target.transform.position.y + (Camera.main.orthographicSize - Constants.KeyboardHeight));
     }
 
+    public void NewWeaponEffect(Vector3 position, Vector3 charPosition, int effectId, int layer)
+    {
+        var tmpEffectObject = Resources.Load<GameObject>("Prefabs/WeaponEffect" + effectId.ToString("D2"));
+        var tmpEffectInstance = Instantiate(tmpEffectObject, position, tmpEffectObject.transform.rotation);
+        tmpEffectInstance.GetComponent<SpriteRenderer>().sortingOrder = (layer * 100) + 8; //8 is skin waist order
+        tmpEffectInstance.transform.eulerAngles = new Vector3(0.0f, 0.0f, Helper.GetAngleFromTwoPositions(charPosition, position) + 90);
+        
+    }
+
     public void NewPopupCharacterStats(Character character, System.Func<bool> sceneUpdateAction, bool isInventoryAvailable = false, int tabId = 0)
     {
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupCharacterStats");

@@ -14,8 +14,7 @@ public class SkillDoubleEdged : Skill
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.OnceAFight;
         CooldownMax = -1;
-        Cooldown = 0;
-        EffectDuration = 0;
+        EffectDurationMax = 1;
         PaNeeded = 2;
         MinRange = 0;
         MaxRange = 0;

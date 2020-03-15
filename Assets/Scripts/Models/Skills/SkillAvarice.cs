@@ -14,7 +14,6 @@ public class SkillAvarice : Skill
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Passive;
         CooldownMax = 0;
-        Cooldown = 0;
         PaNeeded = 0;
         MinRange = 0;
         MaxRange = 0;

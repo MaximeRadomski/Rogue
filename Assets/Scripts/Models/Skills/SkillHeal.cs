@@ -13,7 +13,6 @@ public class SkillHeal : Skill
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Normal;
         CooldownMax = 3;
-        Cooldown = 0;
         PaNeeded = 3;
         MinRange = 0;
         MaxRange = 0;

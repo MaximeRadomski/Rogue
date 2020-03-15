@@ -14,8 +14,7 @@ public class SkillDash : Skill
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Normal;
         CooldownMax = 4;
-        Cooldown = 0;
-        EffectDuration = 0;
+        EffectDurationMax = 1;
         PaNeeded = 4;
         MinRange = 1;
         MaxRange = 2;
@@ -45,6 +44,7 @@ public class SkillDash : Skill
         {
             if (!Helper.IsPosValid(_currentTargetX, _currentTargetX) || GridBhv.IsOpponentOnCell(_currentTargetX, _currentTargetY))
                 CharacterBhv.MoveToPosition(_currentTargetX, _currentTargetY, false);
+            EffectDuration = 0;
             CharacterBhv.LoseSkillEffect(Effect);
             return 0;
         }

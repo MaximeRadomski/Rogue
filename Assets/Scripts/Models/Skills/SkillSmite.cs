@@ -13,7 +13,6 @@ public class SkillSmite : Skill
         Rarity = Rarity.Magical;
         CooldownType = CooldownType.Normal;
         CooldownMax = 5;
-        Cooldown = 0;
         PaNeeded = 7;
         MinRange = 3;
         MaxRange = 5;

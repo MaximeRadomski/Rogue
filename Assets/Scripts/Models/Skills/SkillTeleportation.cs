@@ -13,7 +13,6 @@ public class SkillTeleportation : Skill
         Rarity = Rarity.Normal;
         CooldownType = CooldownType.Normal;
         CooldownMax = 5;
-        Cooldown = 0;
         PaNeeded = 4;
         MinRange = 99;
         MaxRange = 99;
