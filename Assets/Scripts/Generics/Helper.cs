@@ -5,22 +5,21 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public static class Helper
 {
     public static float GetAngleFromTwoPositions(Vector3 start, Vector3 end)
     {
-        float x = Mathf.Abs(Mathf.Abs(start.x) - Mathf.Abs(end.x));
-        float y = Mathf.Abs(Mathf.Abs(start.y) - Mathf.Abs(end.y));
+        float x = Mathf.Abs(start.x - end.x);
+        float y = Mathf.Abs(start.y - end.y);
         float angle = 0.0f;
-        if (Helper.FloatEqualsPrecision(end.x, start.x, 0.01f) && end.y > start.y) //UP
+        if (FloatEqualsPrecision(end.x, start.x, 0.01f) && end.y > start.y) //UP
             angle = 0.0f;
-        else if (Helper.FloatEqualsPrecision(end.y, start.y, 0.01f) && end.x > start.x) //RIGHT
+        else if (FloatEqualsPrecision(end.y, start.y, 0.01f) && end.x > start.x) //RIGHT
             angle = 90.0f;
-        else if (Helper.FloatEqualsPrecision(end.x, start.x, 0.01f) && end.y < start.y) //DOWN
+        else if (FloatEqualsPrecision(end.x, start.x, 0.01f) && end.y < start.y) //DOWN
             angle = 180.0f;
-        else if (Helper.FloatEqualsPrecision(end.y, start.y, 0.01f) && end.x < start.x) //LEFT
+        else if (FloatEqualsPrecision(end.y, start.y, 0.01f) && end.x < start.x) //LEFT
             angle = 270.0f;
         else //DIAGONALS
         {

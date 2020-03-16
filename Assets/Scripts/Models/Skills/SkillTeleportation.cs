@@ -10,7 +10,7 @@ public class SkillTeleportation : Skill
         Type = SkillType.NotRatial;
         Nature = SkillNature.Movement;
         Effect = SkillEffect.None;
-        Rarity = Rarity.Normal;
+        Rarity = Rarity.Rare;
         CooldownType = CooldownType.Normal;
         CooldownMax = 5;
         PaNeeded = 4;
