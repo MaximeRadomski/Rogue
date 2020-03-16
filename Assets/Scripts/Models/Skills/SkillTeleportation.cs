@@ -18,6 +18,7 @@ public class SkillTeleportation : Skill
         MaxRange = 99;
         RangeType = RangeType.FullRange;
         IconId = 10;
+        EffectId = 2;
         BasePrice = 150;
 
         Description = "Teleport on any cell on the map";
@@ -34,7 +35,7 @@ public class SkillTeleportation : Skill
         base.Activate(x, y);
         CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
         {
-
+            CharacterBhv.Instantiator.NewEffect(InventoryItemType.Skill, GridBhv.Cells[x, y].transform.position, null, EffectId, Constants.GridMax - y);
             CharacterBhv.MoveToPosition(x, y, false);
             return true;
         }));

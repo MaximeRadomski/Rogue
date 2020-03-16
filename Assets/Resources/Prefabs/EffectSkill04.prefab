@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3226355495721493329}
   - component: {fileID: 655979644373231834}
-  - component: {fileID: 1842546668221687384}
+  - component: {fileID: 1124782494188431582}
   m_Layer: 0
-  m_Name: EffectWeapon04
+  m_Name: EffectSkill04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: 2041080483
   m_SortingLayer: -6
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8784351540689797158, guid: 301ab93af99e46847906a02ad64ccc5e,
+  m_Sprite: {fileID: -3754219294068339261, guid: b81a31f42c2c1ee499403487e0137acf,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &1842546668221687384
+--- !u!95 &1124782494188431582
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -92,7 +92,7 @@ Animator:
   m_GameObject: {fileID: 6290683875812307457}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c8ed26c46c7da1244bb566c23472e2fd, type: 2}
+  m_Controller: {fileID: 9100000, guid: af123217b27251a43b7db37986e6fdce, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

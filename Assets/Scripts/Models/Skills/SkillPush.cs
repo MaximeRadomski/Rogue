@@ -19,6 +19,7 @@ public class SkillPush : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,1, 1,0, 0,-1, -1,0 };
         IconId = 11;
+        EffectId = 2;
         BasePrice = 100;
 
         Description = "Push your opponent of one cell";
@@ -54,7 +55,10 @@ public class SkillPush : Skill
                 || GridBhv.IsOpponentOnCell(_pushedOpponentBhv.X + x, _pushedOpponentBhv.X + x, true))
             {
                 var floatAmount = 30.0f * CharacterBhv.Character.GetDamageMultiplier();
-                pushedOpponentBhv.TakeDamages(new Damage((int)floatAmount));
+                //pushedOpponentBhv.TakeDamages(new Damage((int)floatAmount));
+                var damage = new Damage((int)floatAmount);
+                CharacterBhv.Instantiator.PopText("-" + pushedOpponentBhv.Character.TakeDamages(damage.Amount).ToString(), pushedOpponentBhv.transform.position, damage.Critical ? TextType.HpCritical : TextType.Hp);
+                pushedOpponentBhv.SkinContainer.OnHit();
             }
             else if (!Helper.IsPosValid(_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y)
                 ||GridBhv.Cells[_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y].GetComponent<CellBhv>().Type == CellType.Impracticable)
@@ -63,6 +67,7 @@ public class SkillPush : Skill
         }
         _pushedOpponentBhv.AfterMouvementDelegate = AfterPush;
         _pushedOpponentBhv.MoveToPosition(_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y, false);
+        CharacterBhv.Instantiator.NewEffect(InventoryItemType.Skill, GridBhv.Cells[_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y].transform.position, null, EffectId, Constants.GridMax - (_pushedOpponentBhv.Y + y));
         return true;
     }
 

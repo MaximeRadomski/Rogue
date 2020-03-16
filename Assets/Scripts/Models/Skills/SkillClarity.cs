@@ -19,6 +19,7 @@ public class SkillClarity : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,0, 0,1, 1,0, 0,-1, -1,0 };
         IconId = 13;
+        EffectId = 3;
         BasePrice = 100;
 
         Description = "Clear all positive and negative effects";
@@ -29,6 +30,7 @@ public class SkillClarity : Skill
         base.Activate(x, y);
         CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
         {
+            CharacterBhv.Instantiator.NewEffect(InventoryItemType.Skill, GridBhv.Cells[x,y].transform.position, null, EffectId, Constants.GridMax - CharacterBhv.Y);
             Debuff(GridBhv.IsOpponentOnCell(x, y));
             AfterActivation();
             return true;

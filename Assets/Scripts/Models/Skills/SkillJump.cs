@@ -20,6 +20,7 @@ public class SkillJump : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,1, 0,2, 1,1, 1,0, 2,0, 1,-1, 0,-1, 0,-2, -1,-1, -1,0, -2,0, -1,1 };
         IconId = 1;
+        EffectId = 2;
         BasePrice = 100;
 
         Description = "Jump in or out of the fight";
@@ -36,6 +37,7 @@ public class SkillJump : Skill
         base.Activate(x, y);
         CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
         {
+            CharacterBhv.Instantiator.NewEffect(InventoryItemType.Skill, GridBhv.Cells[x, y].transform.position, null, EffectId, Constants.GridMax - y);
             CharacterBhv.MoveToPosition(x, y, false);
             return true;
         }));

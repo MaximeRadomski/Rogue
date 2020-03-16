@@ -217,7 +217,7 @@ public class CharacterBhv : MonoBehaviour
                     if (skill != null)
                         skill.OnEndAttack(tmpDamage.Amount, opponentBhv);
                 }
-                Instantiator.NewWeaponEffect(opponentBhv?.transform.position ?? touchedPosition, transform.position, tmpWeapon.EffectId, Constants.GridMax - Y);
+                Instantiator.NewEffect(InventoryItemType.Weapon, opponentBhv?.transform.position ?? touchedPosition, transform.position, tmpWeapon.EffectId, Constants.GridMax - Y);
                 return true;
             }));
             

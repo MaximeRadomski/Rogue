@@ -20,6 +20,7 @@ public class SkillTripleEdged : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,0 };
         IconId = 16;
+        EffectId = 3;
         BasePrice = 300;
 
         Description = "Make and receive triple damages during two turns";
@@ -28,7 +29,12 @@ public class SkillTripleEdged : Skill
     public override void Activate(int x, int y)
     {
         base.Activate(x, y);
-        AfterActivation();
+        CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+        {
+            CharacterBhv.Instantiator.NewEffect(InventoryItemType.Skill, CharacterBhv.transform.position, null, EffectId, Constants.GridMax - CharacterBhv.Y);
+            AfterActivation();
+            return true;
+        }));
     }
 
     public override int OnStartAttack()

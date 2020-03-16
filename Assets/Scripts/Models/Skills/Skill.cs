@@ -20,6 +20,7 @@ public abstract class Skill : InventoryItem
     public List<int> RangePositions;
     public List<RangeDirection> RangeZones;
     public int IconId;
+    public int EffectId;
 
     public CharacterBhv CharacterBhv;
     public List<CharacterBhv> OpponentBhvs;

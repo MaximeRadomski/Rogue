@@ -21,6 +21,7 @@ public class SkillDash : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,1, 1,1, 1,0, 1,-1, 0,-1, -1,-1, -1,0, -1,1 };
         IconId = 4;
+        EffectId = 2;
         BasePrice = 100;
 
         Description = "Avoid the first next turn hit";
@@ -44,6 +45,7 @@ public class SkillDash : Skill
         {
             if (!Helper.IsPosValid(_currentTargetX, _currentTargetX) || GridBhv.IsOpponentOnCell(_currentTargetX, _currentTargetY))
                 CharacterBhv.MoveToPosition(_currentTargetX, _currentTargetY, false);
+            CharacterBhv.Instantiator.NewEffect(InventoryItemType.Skill, GridBhv.Cells[_currentTargetX, _currentTargetY].transform.position, null, EffectId, Constants.GridMax - _currentTargetY);
             EffectDuration = 0;
             CharacterBhv.LoseSkillEffect(Effect);
             return 0;

@@ -21,6 +21,7 @@ public class SkillForge : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,0 };
         IconId = 6;
+        EffectId = 3;
         BasePrice = 100;
 
         Description = "Empower your next hits by 75% for the next two turns";
@@ -29,7 +30,12 @@ public class SkillForge : Skill
     public override void Activate(int x, int y)
     {
         base.Activate(x, y);
-        AfterActivation();
+        CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+        {
+            CharacterBhv.Instantiator.NewEffect(InventoryItemType.Skill, CharacterBhv.transform.position, null, EffectId, Constants.GridMax - CharacterBhv.Y);
+            AfterActivation();
+            return true;
+        }));
     }
 
     public override int OnStartAttack()

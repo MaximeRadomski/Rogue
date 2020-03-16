@@ -19,6 +19,7 @@ public class SkillHeal : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,0 };
         IconId = 12;
+        EffectId = 3;
         BasePrice = 100;
 
         Description = "Heal the user for <material=\"LongRed\">50 HP</material> + 10% per user levels";
@@ -31,6 +32,7 @@ public class SkillHeal : Skill
         base.Activate(x, y);
         CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
         {
+            CharacterBhv.Instantiator.NewEffect(InventoryItemType.Skill, CharacterBhv.transform.position, null, EffectId, Constants.GridMax - CharacterBhv.Y);
             _floatHealAmount = 50.0f * Helper.MultiplierFromPercent(1, 10 * (CharacterBhv.Character.Level - 1));
             CharacterBhv.GainHp((int)_floatHealAmount);
             AfterActivation();

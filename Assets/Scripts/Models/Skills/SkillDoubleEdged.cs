@@ -21,6 +21,7 @@ public class SkillDoubleEdged : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,0 };
         IconId = 5;
+        EffectId = 3;
         BasePrice = 100;
 
         Description = "Make and receive double damages until your next turn";
@@ -29,7 +30,12 @@ public class SkillDoubleEdged : Skill
     public override void Activate(int x, int y)
     {
         base.Activate(x, y);
-        AfterActivation();
+        CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+        {
+            CharacterBhv.Instantiator.NewEffect(InventoryItemType.Skill, CharacterBhv.transform.position, null, EffectId, Constants.GridMax - CharacterBhv.Y);
+            AfterActivation();
+            return true;
+        }));
     }
 
     public override int OnStartAttack()

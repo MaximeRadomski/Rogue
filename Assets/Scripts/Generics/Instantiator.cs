@@ -38,12 +38,13 @@ public class Instantiator : MonoBehaviour
             Camera.main.gameObject.GetComponent<CameraBhv>().FocusY(target.transform.position.y + (Camera.main.orthographicSize - Constants.KeyboardHeight));
     }
 
-    public void NewWeaponEffect(Vector3 position, Vector3 charPosition, int effectId, int layer)
+    public void NewEffect(InventoryItemType type, Vector3 position, Vector3? charPosition, int effectId, int layer)
     {
-        var tmpEffectObject = Resources.Load<GameObject>("Prefabs/EffectWeapon" + effectId.ToString("D2"));
+        var tmpEffectObject = Resources.Load<GameObject>("Prefabs/Effect" + type + effectId.ToString("D2"));
         var tmpEffectInstance = Instantiate(tmpEffectObject, position, tmpEffectObject.transform.rotation);
-        tmpEffectInstance.GetComponent<SpriteRenderer>().sortingOrder = (layer * 100) + 8; //8 is skin waist order
-        tmpEffectInstance.transform.eulerAngles = new Vector3(0.0f, 0.0f, Helper.GetAngleFromTwoPositions(charPosition, position) + 90);
+        tmpEffectInstance.GetComponent<SpriteRenderer>().sortingOrder = (layer * 100) + 50; //8 is skin waist order
+        if (charPosition != null)
+            tmpEffectInstance.transform.eulerAngles = new Vector3(0.0f, 0.0f, Helper.GetAngleFromTwoPositions(charPosition ?? new Vector3(), position) + 90);
         Invoke(nameof(RemoveEffect), 1.0f);
 
         void RemoveEffect()

@@ -19,6 +19,7 @@ public class SkillAvarice : Skill
         MaxRange = 0;
         RangeType = RangeType.NoRange;
         IconId = 3;
+        EffectId = 3;
         BasePrice = 100;
 
         Description = "Steal <material=\"LongGold\">Gold</material> on each hit";
@@ -27,5 +28,6 @@ public class SkillAvarice : Skill
     public override void OnEndAttack(int damages, CharacterBhv opponentBhv)
     {
         base.OnEndAttack(damages, opponentBhv);
+        CharacterBhv.Instantiator.NewEffect(InventoryItemType.Skill, CharacterBhv.transform.position, null, EffectId, Constants.GridMax - CharacterBhv.Y);
     }
 }

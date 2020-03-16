@@ -19,6 +19,7 @@ public class SkillVampire : Skill
         MaxRange = 0;
         RangeType = RangeType.NoRange;
         IconId = 2;
+        EffectId = 3;
         BasePrice = 100;
 
         Description = "Steal <material=\"LongRed\">" + _percentToSteal + "%</material> of the damages done as <material=\"LongRed\">HP</material>";
@@ -28,6 +29,7 @@ public class SkillVampire : Skill
 
     public override void OnEndAttack(int damages, CharacterBhv opponentBhv)
     {
+        CharacterBhv.Instantiator.NewEffect(InventoryItemType.Skill, CharacterBhv.transform.position, null, EffectId, Constants.GridMax - CharacterBhv.Y);
         float damagesToSteal = damages * Helper.MultiplierFromPercent(0, _percentToSteal);
         CharacterBhv.GainHp((int)damagesToSteal);
         //CharacterBhv.GainHp((int)damagesToSteal);

@@ -1,247 +1,103 @@
 fileFormatVersion: 2
-guid: 301ab93af99e46847906a02ad64ccc5e
+guid: b81a31f42c2c1ee499403487e0137acf
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5244098675948589987
-    second: WeaponsEffect_0
+      213: 8555575873416674493
+    second: EffectsSkill_0
   - first:
-      213: 3178197946609164237
-    second: WeaponsEffect_1
+      213: -5596692721243638760
+    second: EffectsSkill_1
   - first:
-      213: 1799047799736332569
-    second: WeaponsEffect_2
+      213: 3685086348709567579
+    second: EffectsSkill_2
   - first:
-      213: 525098007586973339
-    second: WeaponsEffect_3
+      213: 632571318002797073
+    second: EffectsSkill_3
   - first:
-      213: -8876426636192156152
-    second: WeaponsEffect_4
+      213: 8353193925661557463
+    second: EffectsSkill_4
   - first:
-      213: -5305097042473128863
-    second: WeaponsEffect_5
+      213: -6838848359039785436
+    second: EffectsSkill_5
   - first:
-      213: -9014314723531919097
-    second: WeaponsEffect_6
+      213: 2482859556267782027
+    second: EffectsSkill_6
   - first:
-      213: 9101547696599188430
-    second: WeaponsEffect_7
+      213: -7950834851285572790
+    second: EffectsSkill_7
   - first:
-      213: -8808658528181320385
-    second: WeaponsEffect_8
+      213: -471857518503799936
+    second: EffectsSkill_8
   - first:
-      213: -5811897780818696604
-    second: WeaponsEffect_9
+      213: -1355264860485929832
+    second: EffectsSkill_9
   - first:
-      213: 6820207533335536861
-    second: WeaponsEffect_10
+      213: 4130439910647105432
+    second: EffectsSkill_10
   - first:
-      213: -9208843133009633618
-    second: WeaponsEffect_11
+      213: 976315923080150088
+    second: EffectsSkill_11
   - first:
-      213: -8103091550514535525
-    second: WeaponsEffect_12
+      213: -6548869505869135908
+    second: EffectsSkill_12
   - first:
-      213: -1822355819773767573
-    second: WeaponsEffect_13
+      213: 7046920870398932306
+    second: EffectsSkill_13
   - first:
-      213: -5929844118966002607
-    second: WeaponsEffect_14
+      213: 2757977424983648377
+    second: EffectsSkill_14
   - first:
-      213: 8844358445190378860
-    second: WeaponsEffect_15
+      213: -4263202969083597288
+    second: EffectsSkill_15
   - first:
-      213: -6418792997651038526
-    second: WeaponsEffect_16
+      213: -8099133500954706874
+    second: EffectsSkill_16
   - first:
-      213: 6518766377262554302
-    second: WeaponsEffect_17
+      213: 8953812481233756476
+    second: EffectsSkill_17
   - first:
-      213: -8780226376010378303
-    second: WeaponsEffect_18
+      213: -4648075823287578929
+    second: EffectsSkill_18
   - first:
-      213: 5093086183868672755
-    second: WeaponsEffect_19
+      213: -187039717667142160
+    second: EffectsSkill_19
   - first:
-      213: -220459626331132628
-    second: WeaponsEffect_20
+      213: -6806785819664226171
+    second: EffectsSkill_20
   - first:
-      213: -2897489762119539872
-    second: WeaponsEffect_21
+      213: 8142569947399769940
+    second: EffectsSkill_21
   - first:
-      213: 9130935689227090723
-    second: WeaponsEffect_22
+      213: -599140508205984106
+    second: EffectsSkill_22
   - first:
-      213: -5830239636153426979
-    second: WeaponsEffect_23
+      213: 596824325620841865
+    second: EffectsSkill_23
   - first:
-      213: -2168464302066862435
-    second: WeaponsEffect_24
+      213: -3754219294068339261
+    second: EffectsSkill_24
   - first:
-      213: 8366655082325941732
-    second: WeaponsEffect_25
+      213: -5638844020254809097
+    second: EffectsSkill_25
   - first:
-      213: -4544305366876493312
-    second: WeaponsEffect_26
+      213: 9184678535333914115
+    second: EffectsSkill_26
   - first:
-      213: 3899309705288155310
-    second: WeaponsEffect_27
+      213: 3806417691260606956
+    second: EffectsSkill_27
   - first:
-      213: 7075095257069513000
-    second: WeaponsEffect_28
+      213: 4810886951910322836
+    second: EffectsSkill_28
   - first:
-      213: 983328699485837288
-    second: WeaponsEffect_29
+      213: -4894540736004036631
+    second: EffectsSkill_29
   - first:
-      213: -5806467340059079607
-    second: WeaponsEffect_30
+      213: -8715780764559682200
+    second: EffectsSkill_30
   - first:
-      213: 1271900935993400465
-    second: WeaponsEffect_31
-  - first:
-      213: -4916557435464798612
-    second: WeaponsEffect_32
-  - first:
-      213: 9186243490167403020
-    second: WeaponsEffect_33
-  - first:
-      213: 8784412295619828875
-    second: WeaponsEffect_34
-  - first:
-      213: 6618045535547885721
-    second: WeaponsEffect_35
-  - first:
-      213: 399036162234431807
-    second: WeaponsEffect_36
-  - first:
-      213: -8973498406438742088
-    second: WeaponsEffect_37
-  - first:
-      213: -5769048440537375912
-    second: WeaponsEffect_38
-  - first:
-      213: 7457276630176366606
-    second: WeaponsEffect_39
-  - first:
-      213: -9166026993964937174
-    second: EffectsWeapon_0
-  - first:
-      213: -4888028012107844185
-    second: EffectsWeapon_1
-  - first:
-      213: 6394496715594939591
-    second: EffectsWeapon_2
-  - first:
-      213: -4510903144772500280
-    second: EffectsWeapon_3
-  - first:
-      213: -6407489856897766207
-    second: EffectsWeapon_4
-  - first:
-      213: -5577132987939648924
-    second: EffectsWeapon_5
-  - first:
-      213: -7424430954462898076
-    second: EffectsWeapon_6
-  - first:
-      213: 8687172780086091877
-    second: EffectsWeapon_7
-  - first:
-      213: -6423132090492966171
-    second: EffectsWeapon_8
-  - first:
-      213: 7624802716316573676
-    second: EffectsWeapon_9
-  - first:
-      213: 4522916961854492439
-    second: EffectsWeapon_10
-  - first:
-      213: 8514215701488920934
-    second: EffectsWeapon_11
-  - first:
-      213: -3004421282141320334
-    second: EffectsWeapon_12
-  - first:
-      213: -8474712839712039720
-    second: EffectsWeapon_13
-  - first:
-      213: -5553978889770517903
-    second: EffectsWeapon_14
-  - first:
-      213: -9151445320594987196
-    second: EffectsWeapon_15
-  - first:
-      213: -6364044012495224584
-    second: EffectsWeapon_16
-  - first:
-      213: 1620543917559875761
-    second: EffectsWeapon_17
-  - first:
-      213: 2196685077286843701
-    second: EffectsWeapon_18
-  - first:
-      213: 5942393932147022103
-    second: EffectsWeapon_19
-  - first:
-      213: 3090809956651228783
-    second: EffectsWeapon_20
-  - first:
-      213: -7703813831425921460
-    second: EffectsWeapon_21
-  - first:
-      213: -2169686224155541601
-    second: EffectsWeapon_22
-  - first:
-      213: -3761261066754742166
-    second: EffectsWeapon_23
-  - first:
-      213: 8784351540689797158
-    second: EffectsWeapon_24
-  - first:
-      213: -6020499778097774696
-    second: EffectsWeapon_25
-  - first:
-      213: 5668830633888295327
-    second: EffectsWeapon_26
-  - first:
-      213: -5925944400429410786
-    second: EffectsWeapon_27
-  - first:
-      213: 1693657035379759674
-    second: EffectsWeapon_28
-  - first:
-      213: 5116165624742460845
-    second: EffectsWeapon_29
-  - first:
-      213: -5600466135656996661
-    second: EffectsWeapon_30
-  - first:
-      213: 2216148365166782147
-    second: EffectsWeapon_31
-  - first:
-      213: -5879716887027143775
-    second: EffectsWeapon_32
-  - first:
-      213: -191589780069182529
-    second: EffectsWeapon_33
-  - first:
-      213: 2561885894172427740
-    second: EffectsWeapon_34
-  - first:
-      213: 5704917264119693017
-    second: EffectsWeapon_35
-  - first:
-      213: 160097913236598994
-    second: EffectsWeapon_36
-  - first:
-      213: -5143146330605652305
-    second: EffectsWeapon_37
-  - first:
-      213: 8738305671052220790
-    second: EffectsWeapon_38
-  - first:
-      213: 7191864871680618175
-    second: EffectsWeapon_39
+      213: 1541215041275492269
+    second: EffectsSkill_31
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -338,175 +194,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EffectsWeapon_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 248
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 485c18d851f313349b2617ed02d00157
-      internalID: -9166026993964937174
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsWeapon_1
-      rect:
-        serializedVersion: 2
-        x: 62
-        y: 248
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: eca4ac87adae9ef48ab661a1c985bcce
-      internalID: -4888028012107844185
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsWeapon_2
-      rect:
-        serializedVersion: 2
-        x: 124
-        y: 248
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 02b6085cd9a8e384db4c4fa0c89c48b5
-      internalID: 6394496715594939591
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsWeapon_3
-      rect:
-        serializedVersion: 2
-        x: 186
-        y: 248
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 97cdf0d567225b342b817fa84c7b0395
-      internalID: -4510903144772500280
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsWeapon_4
-      rect:
-        serializedVersion: 2
-        x: 248
-        y: 248
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 77ff9bee1fec9f74d925b93cf5ceb29f
-      internalID: -6407489856897766207
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsWeapon_5
-      rect:
-        serializedVersion: 2
-        x: 310
-        y: 248
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: be1bac01fd2c3454f9e50d0901df2f7d
-      internalID: -5577132987939648924
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsWeapon_6
-      rect:
-        serializedVersion: 2
-        x: 372
-        y: 248
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6e9f5a1ef2f64e9448f423b3c619e6c9
-      internalID: -7424430954462898076
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsWeapon_7
-      rect:
-        serializedVersion: 2
-        x: 434
-        y: 248
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 85f731b72367ae746aee536b946d4bc2
-      internalID: 8687172780086091877
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsWeapon_8
+      name: EffectsSkill_0
       rect:
         serializedVersion: 2
         x: 0
@@ -520,14 +208,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 78b0b493b2b96e142a114581531ecb84
-      internalID: -6423132090492966171
+      spriteID: 37b543dd0282ea94db6b6fd0fc18978b
+      internalID: 8555575873416674493
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_9
+      name: EffectsSkill_1
       rect:
         serializedVersion: 2
         x: 62
@@ -541,14 +229,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d95406579d5dcbe48a399abd782706af
-      internalID: 7624802716316573676
+      spriteID: 5ef0718a95194134ca7fa7de110967d3
+      internalID: -5596692721243638760
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_10
+      name: EffectsSkill_2
       rect:
         serializedVersion: 2
         x: 124
@@ -562,14 +250,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a22af87c9a4436408fc57cf201450cb
-      internalID: 4522916961854492439
+      spriteID: d467c7f0fe4e46a44944eb7e5f01e86d
+      internalID: 3685086348709567579
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_11
+      name: EffectsSkill_3
       rect:
         serializedVersion: 2
         x: 186
@@ -583,14 +271,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ee3cb7b621d8ae54aa9930ac58fd4e75
-      internalID: 8514215701488920934
+      spriteID: abeeb37c8b198544094bef7f88c0c166
+      internalID: 632571318002797073
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_12
+      name: EffectsSkill_4
       rect:
         serializedVersion: 2
         x: 248
@@ -604,14 +292,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 75cf89da0cd4e7145b5f78ba437c1e60
-      internalID: -3004421282141320334
+      spriteID: a34f2cdd484a0f84e94a5598191dfc0d
+      internalID: 8353193925661557463
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_13
+      name: EffectsSkill_5
       rect:
         serializedVersion: 2
         x: 310
@@ -625,14 +313,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c0dfdd591196ba94f94ef452527158bf
-      internalID: -8474712839712039720
+      spriteID: eeb3321e7e5ad7a4c8fa8a9a194ba489
+      internalID: -6838848359039785436
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_14
+      name: EffectsSkill_6
       rect:
         serializedVersion: 2
         x: 372
@@ -646,14 +334,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 734fc274d73018a4083bc7e682a24900
-      internalID: -5553978889770517903
+      spriteID: 589a300035e7d304eb0cd7655a9e75b9
+      internalID: 2482859556267782027
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_15
+      name: EffectsSkill_7
       rect:
         serializedVersion: 2
         x: 434
@@ -667,14 +355,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1c43a644ab1f80947a211918706375af
-      internalID: -9151445320594987196
+      spriteID: 5854014fdd87b014e9195ba0f74de64a
+      internalID: -7950834851285572790
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_16
+      name: EffectsSkill_8
       rect:
         serializedVersion: 2
         x: 0
@@ -688,14 +376,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 90cd4d325510a1c4fa9745550b2b9f6e
-      internalID: -6364044012495224584
+      spriteID: 9f79ab3bdaaf97747b14199ab82ae0bc
+      internalID: -471857518503799936
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_17
+      name: EffectsSkill_9
       rect:
         serializedVersion: 2
         x: 62
@@ -709,14 +397,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1634fd798d9527348a9c48560b6ef6db
-      internalID: 1620543917559875761
+      spriteID: a8742949b71923a4f852289939fd916e
+      internalID: -1355264860485929832
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_18
+      name: EffectsSkill_10
       rect:
         serializedVersion: 2
         x: 124
@@ -730,14 +418,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9e6d0febfa06af041b2f8c0c34cc897f
-      internalID: 2196685077286843701
+      spriteID: 9e78b326d066f4d4595b2ed64f6a6601
+      internalID: 4130439910647105432
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_19
+      name: EffectsSkill_11
       rect:
         serializedVersion: 2
         x: 186
@@ -751,14 +439,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 09fb718d6af6cd24d98d9d8bdb1f53e2
-      internalID: 5942393932147022103
+      spriteID: 1429a42a2747b94478797de96af73840
+      internalID: 976315923080150088
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_20
+      name: EffectsSkill_12
       rect:
         serializedVersion: 2
         x: 248
@@ -772,14 +460,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fbaaabb95b8211042b766cf0977fd30b
-      internalID: 3090809956651228783
+      spriteID: 33c17133fe84f2347bced5211e590e8b
+      internalID: -6548869505869135908
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_21
+      name: EffectsSkill_13
       rect:
         serializedVersion: 2
         x: 310
@@ -793,14 +481,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6cb3ab5d715d1854b9602813cbd65f25
-      internalID: -7703813831425921460
+      spriteID: ba03cd44de039844180fd80cf7886e8f
+      internalID: 7046920870398932306
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_22
+      name: EffectsSkill_14
       rect:
         serializedVersion: 2
         x: 372
@@ -814,14 +502,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6e5bac0251baf9b4cb137e0606d4c6f8
-      internalID: -2169686224155541601
+      spriteID: 2c07c816674f91b458d19c1554f7f473
+      internalID: 2757977424983648377
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_23
+      name: EffectsSkill_15
       rect:
         serializedVersion: 2
         x: 434
@@ -835,14 +523,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9acb09b16c2b8f44971db3c58f4804c
-      internalID: -3761261066754742166
+      spriteID: 250da418af6a59d49a6665b62d47aa38
+      internalID: -4263202969083597288
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_24
+      name: EffectsSkill_16
       rect:
         serializedVersion: 2
         x: 0
@@ -856,14 +544,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0fb1c722dd6652b4ca6b58cd75fc404b
-      internalID: 8784351540689797158
+      spriteID: a9b61229080a1c0469b1ef4643bd9138
+      internalID: -8099133500954706874
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_25
+      name: EffectsSkill_17
       rect:
         serializedVersion: 2
         x: 62
@@ -877,14 +565,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5b81212cb2777454d99a989c294dc461
-      internalID: -6020499778097774696
+      spriteID: 84c0e144be622e94caf20cc1cb29780c
+      internalID: 8953812481233756476
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_26
+      name: EffectsSkill_18
       rect:
         serializedVersion: 2
         x: 124
@@ -898,14 +586,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 49d74703d842a9a47bd6d44da3ee7cb3
-      internalID: 5668830633888295327
+      spriteID: 883e79177c880c94fbb1215dc8f5c3c8
+      internalID: -4648075823287578929
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_27
+      name: EffectsSkill_19
       rect:
         serializedVersion: 2
         x: 186
@@ -919,14 +607,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 604a7b2c81e88044a951a28c34486246
-      internalID: -5925944400429410786
+      spriteID: 8f05cbe39bffa5745aa4f1c7aaac01cb
+      internalID: -187039717667142160
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_28
+      name: EffectsSkill_20
       rect:
         serializedVersion: 2
         x: 248
@@ -940,14 +628,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 958352ad88ef7fe468c6f806b08393cb
-      internalID: 1693657035379759674
+      spriteID: 78a685ee1c5fc0940a8a3a9ce6ac85f2
+      internalID: -6806785819664226171
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_29
+      name: EffectsSkill_21
       rect:
         serializedVersion: 2
         x: 310
@@ -961,14 +649,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f39478c7c7315cc48b4bdb6709d3d0b5
-      internalID: 5116165624742460845
+      spriteID: 4c571b8697f991942acb34f90120bd40
+      internalID: 8142569947399769940
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_30
+      name: EffectsSkill_22
       rect:
         serializedVersion: 2
         x: 372
@@ -982,14 +670,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 49acec7c138a09a43a47796bac4a67b7
-      internalID: -5600466135656996661
+      spriteID: c2dec17be796fd44f92c9b432dc89ae6
+      internalID: -599140508205984106
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_31
+      name: EffectsSkill_23
       rect:
         serializedVersion: 2
         x: 434
@@ -1003,14 +691,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8729e19b1aba92742b9643a6c0a638e0
-      internalID: 2216148365166782147
+      spriteID: 8e4f05c4a667e824b9551f705cfb362e
+      internalID: 596824325620841865
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_32
+      name: EffectsSkill_24
       rect:
         serializedVersion: 2
         x: 0
@@ -1024,14 +712,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eaa77021c89a81744a34d343a8a0f51d
-      internalID: -5879716887027143775
+      spriteID: 21bb7b31f3bc48447baa494637816865
+      internalID: -3754219294068339261
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_33
+      name: EffectsSkill_25
       rect:
         serializedVersion: 2
         x: 62
@@ -1045,14 +733,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e30ac480b452a8948bb43708679f07fc
-      internalID: -191589780069182529
+      spriteID: ff1f3926f53cd95429338096ded5958b
+      internalID: -5638844020254809097
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_34
+      name: EffectsSkill_26
       rect:
         serializedVersion: 2
         x: 124
@@ -1066,14 +754,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4cebee8ed0b8175448f5ad4096074c99
-      internalID: 2561885894172427740
+      spriteID: 5b8252cb36b8d5c4b9e65f81535475a4
+      internalID: 9184678535333914115
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_35
+      name: EffectsSkill_27
       rect:
         serializedVersion: 2
         x: 186
@@ -1087,14 +775,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d3c753183e4ba94b9f7736f41dd0fbc
-      internalID: 5704917264119693017
+      spriteID: 028b51131c915ba4c806ae925fd04a16
+      internalID: 3806417691260606956
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_36
+      name: EffectsSkill_28
       rect:
         serializedVersion: 2
         x: 248
@@ -1108,14 +796,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1c4851dec41475f49a4da060c31bff6d
-      internalID: 160097913236598994
+      spriteID: 5235e7b7b537f8d4f95199503bad61b6
+      internalID: 4810886951910322836
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_37
+      name: EffectsSkill_29
       rect:
         serializedVersion: 2
         x: 310
@@ -1129,14 +817,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 442ca2556914a864da1b7e240ebfd4a3
-      internalID: -5143146330605652305
+      spriteID: 2aaec8758e734bd47b4e4691c5531267
+      internalID: -4894540736004036631
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_38
+      name: EffectsSkill_30
       rect:
         serializedVersion: 2
         x: 372
@@ -1150,14 +838,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca44fa3629bb0664599110b76a3b9cd2
-      internalID: 8738305671052220790
+      spriteID: 19bb5cf2e0f0b884f960f8df527f0222
+      internalID: -8715780764559682200
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EffectsWeapon_39
+      name: EffectsSkill_31
       rect:
         serializedVersion: 2
         x: 434
@@ -1171,8 +859,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 690fd6036a5fb3e4aa6a36c301d973a3
-      internalID: 7191864871680618175
+      spriteID: fa206300da741834d9fbaed813504dea
+      internalID: 1541215041275492269
       vertices: []
       indices: 
       edges: []

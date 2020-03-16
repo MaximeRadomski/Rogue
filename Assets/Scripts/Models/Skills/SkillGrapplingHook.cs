@@ -23,6 +23,7 @@ public class SkillGrapplingHook : Skill
                                          0,-2, 0,-3, 0,-4, 0,-5, 0,-6,
                                          -2,0, -3,0, -4,0, -5,0, -6,0 };
         IconId = 7;
+        EffectId = 2;
         BasePrice = 100;
 
         Description = "Grab and leap to your opponent";
@@ -71,6 +72,7 @@ public class SkillGrapplingHook : Skill
             }
             y = y < 0 ? ++y : --y;
         }
+        CharacterBhv.Instantiator.NewEffect(InventoryItemType.Skill, GridBhv.Cells[_grabbedOpponentBhv.X + x, _grabbedOpponentBhv.Y + y].transform.position, null, EffectId, Constants.GridMax - (_grabbedOpponentBhv.Y + y));
         return true;
     }
 

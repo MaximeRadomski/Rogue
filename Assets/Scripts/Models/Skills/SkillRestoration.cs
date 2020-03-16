@@ -19,6 +19,7 @@ public class SkillRestoration : Skill
         MaxRange = 0;
         RangeType = RangeType.NoRange;
         IconId = 9;
+        EffectId = 3;
         BasePrice = 100;
 
         Description = "Restore <material=\"LongRed\">5%</material> of your maximum health each turn";
@@ -29,6 +30,7 @@ public class SkillRestoration : Skill
         CharacterBhv.Instantiator.PopIcon(Helper.GetSpriteFromSpriteSheet("Sprites/IconsSkill_" + IconId), CharacterBhv.transform.position);
         CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
         {
+            CharacterBhv.Instantiator.NewEffect(InventoryItemType.Skill, CharacterBhv.transform.position, null, EffectId, Constants.GridMax - CharacterBhv.Y);
             float hpToRestore = (CharacterBhv.Character.HpMax * 0.05f);
             //hpToRestore *= Helper.MultiplierFromPercent(1.0f, Random.Range(0, 51));
             CharacterBhv.GainHp((int)hpToRestore);

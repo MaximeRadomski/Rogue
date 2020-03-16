@@ -21,6 +21,7 @@ public class SkillShield : Skill
         RangeType = RangeType.Normal;
         RangePositions = new List<int> { 0,0 };
         IconId = 0;
+        EffectId = 1;
         BasePrice = 100;
 
         Description = "Block the first next turn hit";
@@ -29,7 +30,12 @@ public class SkillShield : Skill
     public override void Activate(int x, int y)
     {
         base.Activate(x, y);
-        AfterActivation();
+        CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+        {
+            CharacterBhv.Instantiator.NewEffect(InventoryItemType.Skill, CharacterBhv.transform.position, null, EffectId, Constants.GridMax - CharacterBhv.Y);
+            AfterActivation();
+            return true;
+        }));
     }
 
     public override int OnTakeDamage(int damages)
