@@ -28,8 +28,10 @@ public class CharacterBhv : MonoBehaviour
     public List<RangePos> PathfindingPos = new List<RangePos>();
     public SkinContainerBhv SkinContainer;
     private Vector3 _attackedPosition;
+    private Vector3 _spawningPosition;
     private OrbBhv _orbPa;
     private OrbBhv _orbPm;
+    private bool _isSpawning;
 
     public delegate void ActionDelegate();
     public ActionDelegate AfterMouvementDelegate;
@@ -78,6 +80,15 @@ public class CharacterBhv : MonoBehaviour
             MoveToFirstPathStep();
         if (IsAttacking > 0)
             Attack();
+        else if (_isSpawning)
+        {
+            transform.position = Vector3.Lerp(transform.position, _spawningPosition, 0.4f);
+            if (Helper.VectorEqualsPrecision(transform.position, _spawningPosition, 0.01f))
+            {
+                transform.position = _spawningPosition;
+                _isSpawning = false;
+            }
+        }
     }
 
     private int _tmpAmount;
@@ -205,19 +216,19 @@ public class CharacterBhv : MonoBehaviour
         //Debug.Log("Final Damages = " + resultInt);
         if (usePa)
         {
-            SkinContainer.OrientToTarget(transform.position.x - (opponentBhv?.transform.position.x ?? touchedPosition.x));
+            SkinContainer.OrientToTarget(transform.position.x - touchedPosition.x);
             Instantiator.PopIcon(Helper.GetSpriteFromSpriteSheet("Sprites/IconsWeapon_" + tmpWeapon.Type.GetHashCode()), transform.position);
             StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
             {
                 LosePa(tmpWeapon.PaNeeded);
-                _attackedPosition = opponentBhv?.transform.position ?? touchedPosition;
+                _attackedPosition = touchedPosition;
                 IsAttacking = 1;
                 foreach (var skill in Character.Skills)
                 {
                     if (skill != null)
                         skill.OnEndAttack(tmpDamage.Amount, opponentBhv);
                 }
-                Instantiator.NewEffect(InventoryItemType.Weapon, opponentBhv?.transform.position ?? touchedPosition, transform.position, tmpWeapon.EffectId, Constants.GridMax - Y);
+                Instantiator.NewEffect(InventoryItemType.Weapon, touchedPosition, transform.position, tmpWeapon.EffectId, Constants.GridMax - Y);
                 return true;
             }));
             
@@ -354,6 +365,8 @@ public class CharacterBhv : MonoBehaviour
         X = x;
         Y = y;
         SkinContainer.SetSkinContainerSortingLayerOrder(Constants.GridMax - y);
-        transform.position = _gridBhv.Cells[x, y].transform.position;
+        _spawningPosition = _gridBhv.Cells[x, y].transform.position;
+        transform.position = _spawningPosition + new Vector3(0.0f, 1.0f, 0.0f);
+        _isSpawning = true;
     }
 }

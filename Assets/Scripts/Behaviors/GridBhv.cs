@@ -199,7 +199,7 @@ public class GridBhv : MonoBehaviour
 
     #region Weapon
 
-    public bool IsOpponentInWeaponRangeAndZone(CharacterBhv characterBhv, int weaponId, List<CharacterBhv> opponentBhvs)
+    public RangePos IsOpponentInWeaponRangeAndZone(CharacterBhv characterBhv, int weaponId, List<CharacterBhv> opponentBhvs)
     {
         _currentCharacterBhv = characterBhv;
         _currentOpponentBhvs = opponentBhvs;
@@ -217,10 +217,10 @@ public class GridBhv : MonoBehaviour
                 if (IsAnythingBetween(characterBhv.X, characterBhv.Y, x, y))
                     continue;
                 else if (IsOpponentOnCell(x, y) != null || IsOpponentInZone(x, y) != null)
-                    return true;
+                    return new RangePos(x, y);
             }
         }
-        return false;
+        return null;
     }
 
     public void ShowWeaponRange(CharacterBhv characterBhv, int weaponId, List<CharacterBhv> opponentBhvs)
@@ -318,7 +318,7 @@ public class GridBhv : MonoBehaviour
                     tmpTouchedOpponents.Add(touched);
                 }
             }
-            _fightSceneBhv.OnPlayerAttackClick(_currentWeaponId, tmpTouchedOpponents);
+            _fightSceneBhv.OnPlayerAttackClick(_currentWeaponId, tmpTouchedOpponents, Cells[x, y].transform.position);
             return;
         }
         _fightSceneBhv.OnPlayerAttackClick(_currentWeaponId, null, Cells[x, y].transform.position);

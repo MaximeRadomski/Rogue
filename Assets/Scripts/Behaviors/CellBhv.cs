@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CellBhv : InputBhv
 {
@@ -26,18 +24,14 @@ public class CellBhv : InputBhv
     private SoundControlerBhv _soundControler;
 
     private bool _isStretching;
+    private bool _isStarting;
     private Vector3 _resetedScale;
     private Vector3 _pressedScale;
 
     private SpriteRenderer _onSprite;
     private SpriteRenderer _offSprite;
     private SpriteRenderer _overSprite;
-
-    private void Start()
-    {
-        SetPrivates();
-        SetStartVisuals();
-    }
+    private Vector3 _endPosition;
 
     public override void SetPrivates()
     {
@@ -51,7 +45,7 @@ public class CellBhv : InputBhv
         _onSprite = transform.Find("OnSprite").GetComponent<SpriteRenderer>();
         _offSprite = transform.Find("OffSprite").GetComponent<SpriteRenderer>();
         _overSprite = transform.Find("OverSprite").GetComponent<SpriteRenderer>();
-        ReadyToStart = true;
+        SetStartVisuals();
     }
 
     private void SetStartVisuals()
@@ -79,7 +73,24 @@ public class CellBhv : InputBhv
         }
         _overSprite.sprite = null;
         _overSprite.sortingOrder = _onSprite.sortingOrder + 1;
+        SetStartAnimation();
     }
+
+    private void SetStartAnimation()
+    {
+        _endPosition = transform.position;
+        transform.position = new Vector3(transform.position.x, transform.position.y - Random.Range(1.0f, 3.0f), transform.position.z);
+        _onSprite.color = Constants.ColorPlainTransparent;
+        if (_offSprite.gameObject.activeSelf)
+            _offSprite.color = Constants.ColorPlainTransparent;
+        StartCoroutine(Helper.ExecuteAfterDelay(Random.Range(0.0f, 0.5f), () =>
+        {
+            _isStarting = true;
+            return true;
+        }));
+    }
+
+
 
     public void ShowPlayerSpawn()
     {
@@ -245,6 +256,22 @@ public class CellBhv : InputBhv
         //transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = Visited.ToString();
         //if (Visited > -1)
         //    _overSprite.sprite = OverSprites[_pm];
+        if (_isStarting)
+        {
+            transform.position = Vector3.Lerp(transform.position, _endPosition, 0.15f);
+            _onSprite.color = Color.Lerp(_onSprite.color, Constants.ColorPlain, 0.2f);
+            if (_offSprite.gameObject.activeSelf)
+                _offSprite.color = Color.Lerp(_offSprite.color, Constants.ColorPlain, 0.2f);
+            if (Helper.VectorEqualsPrecision(transform.position, _endPosition, 0.01f))
+            {
+                transform.position = _endPosition;
+                _onSprite.color = Constants.ColorPlain;
+                if (_offSprite.gameObject.activeSelf)
+                    _offSprite.color = Constants.ColorPlain;
+                _isStarting = false;
+                ReadyToStart = true;
+            }
+        }
     }
 
     private void StretchOnBegin()

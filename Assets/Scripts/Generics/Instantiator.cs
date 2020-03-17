@@ -325,6 +325,7 @@ public class Instantiator : MonoBehaviour
             cellBhv.State = CellState.Spawn;
         else
             cellBhv.State = CellState.None;
+        cellBhv.SetPrivates();
         return cellInstance;
     }
 }

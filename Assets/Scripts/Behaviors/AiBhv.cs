@@ -17,6 +17,7 @@ public class AiBhv : MonoBehaviour
     private int[] _skillsWeight = { 0, 0 };
     private int _getCloseWeight;
     private int _getFarWeight;
+    private RangePos[] _rangeClicked = { new RangePos(-1, -1), new RangePos(-1, -1) };
 
     #region Init
 
@@ -125,11 +126,13 @@ public class AiBhv : MonoBehaviour
     private int CanIWeaponThePlayer()
     {
         int canI = 0;
+        RangePos rangeZone = null;
         for (int i = 0; i < 2; ++i)
         {
             if (_characterBhv.Pa >= _characterBhv.Character.Weapons[i].PaNeeded &&
-            _gridBhv.IsOpponentInWeaponRangeAndZone(_characterBhv, i, _characterBhv.OpponentBhvs))
+            (rangeZone = _gridBhv.IsOpponentInWeaponRangeAndZone(_characterBhv, i, _characterBhv.OpponentBhvs)) != null)
             {
+                _rangeClicked[i] = rangeZone;
                 _weaponsWeight[i] += 10;
                 canI += _weaponsWeight[i];
             }
@@ -222,7 +225,7 @@ public class AiBhv : MonoBehaviour
         {
             if (IsTheBiggest(_weaponsWeight[i]) && _weaponsWeight[i] > 0)
             {
-                _opponentBhv.TakeDamages(_characterBhv.AttackWithWeapon(i, _opponentBhv, _gridBhv.Map));
+                _opponentBhv.TakeDamages(_characterBhv.AttackWithWeapon(i, _opponentBhv, _gridBhv.Map, touchedPosition: _gridBhv.Cells[_rangeClicked[i].X, _rangeClicked[i].Y].transform.position));
                 return true;
             }
         }

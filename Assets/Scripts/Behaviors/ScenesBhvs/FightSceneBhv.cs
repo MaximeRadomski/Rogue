@@ -257,11 +257,7 @@ public class FightSceneBhv : SceneBhv
         _gridBhv.SpawnOpponent(OpponentBhvs);
         _gridBhv.SpawnPlayer();
         IsWaitingStart = false;
-        StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
-        {
-            Instantiator.NewOverTitleMap(_map, null, Direction.Left);
-            return true;
-        }));
+        Instantiator.NewOverTitleMap(_map, null, Direction.Left);
     }
 
     private void NextTurn()
@@ -435,12 +431,12 @@ public class FightSceneBhv : SceneBhv
         {
             foreach (var opponentBhv in touchedOpponents)
             {
-                opponentBhv.TakeDamages(_playerBhv.AttackWithWeapon(weaponId, opponentBhv, _map));
+                opponentBhv.TakeDamages(_playerBhv.AttackWithWeapon(weaponId, opponentBhv, _map, touchedPosition: touchedPosition));
             }
         }
         else
         {
-            _playerBhv.AttackWithWeapon(weaponId, null, _map, touchedPosition:touchedPosition);
+            _playerBhv.AttackWithWeapon(weaponId, null, _map, touchedPosition: touchedPosition);
         }
         _gridBhv.ShowPm(_playerBhv, OpponentBhvs);
     }
