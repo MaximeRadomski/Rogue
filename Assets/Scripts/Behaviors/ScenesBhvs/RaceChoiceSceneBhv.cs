@@ -17,7 +17,7 @@ public class RaceChoiceSceneBhv : SceneBhv
 
     void Start()
     {
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
         SetPrivates();
         SetButtons();
     }
