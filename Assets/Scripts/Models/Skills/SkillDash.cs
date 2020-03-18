@@ -24,11 +24,17 @@ public class SkillDash : Skill
         EffectId = 2;
         BasePrice = 100;
 
-        Description = "Avoid the first next turn hit";
+        Description = "Avoid the first next turn hit (consume all your remaining mouvement points)";
     }
 
     private int _currentTargetX;
     private int _currentTargetY;
+
+    public override void OnClick()
+    {
+        if (!IsUnderCooldown())
+            GridBhv.ShowSkillRange(RangeType, CharacterBhv, Id, OpponentBhvs, true);
+    }
 
     public override void Activate(int x, int y)
     {
@@ -36,14 +42,19 @@ public class SkillDash : Skill
         _currentTargetX = x;
         _currentTargetY = y;
         //CharacterBhv.GainSkillEffect(SkillEffect.Immuned);
-        AfterActivation();
+        CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+        {
+            CharacterBhv.LosePm(CharacterBhv.Character.PmMax);
+            AfterActivation();
+            return true;
+        }));
     }
 
     public override int OnTakeDamage(int damages)
     {
         if (IsApplyingEffect())
         {
-            if (!Helper.IsPosValid(_currentTargetX, _currentTargetX) || GridBhv.IsOpponentOnCell(_currentTargetX, _currentTargetY))
+            if (Helper.IsPosValid(_currentTargetX, _currentTargetX) || !GridBhv.IsOpponentOnCell(_currentTargetX, _currentTargetY, true))
                 CharacterBhv.MoveToPosition(_currentTargetX, _currentTargetY, false);
             CharacterBhv.Instantiator.NewEffect(InventoryItemType.Skill, GridBhv.Cells[_currentTargetX, _currentTargetY].transform.position, null, EffectId, Constants.GridMax - _currentTargetY);
             EffectDuration = 0;

@@ -27,11 +27,11 @@ public class SkinContainerBhv : MonoBehaviour
         if (_isResetingHit)
         {
             transform.localScale = Vector3.Lerp(transform.localScale, _originalScale, 0.2f);
-            transform.position = Vector3.Lerp(transform.position, _originalPosition, 0.2f);
+            transform.position = Vector3.Lerp(transform.position, transform.parent.position + _originalPosition, 0.2f);
             if (Helper.VectorEqualsPrecision(transform.localScale, _originalScale, 0.01f))
             {
                 transform.localScale = _originalScale;
-                transform.position = _originalPosition;
+                transform.position = transform.parent.position + _originalPosition;
                 _isResetingHit = false;
             }
         }
@@ -83,7 +83,7 @@ public class SkinContainerBhv : MonoBehaviour
     {
         _originalShader = null;
         _originalColor = null;
-        _originalPosition = transform.position;
+        _originalPosition = transform.localPosition;
         _originalScale = transform.localScale;
         //for (int i = 0; i < transform.childCount; ++i)
         //{
@@ -96,7 +96,7 @@ public class SkinContainerBhv : MonoBehaviour
         //    spriteRenderer.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
         //}
         transform.localScale = new Vector3(transform.localScale.x * _hitScale.x, _hitScale.y, _hitScale.z);
-        transform.position = _originalPosition + _hitPosition;
+        transform.position = transform.parent.position + _originalPosition + _hitPosition;
         _isResetingHit = true;
         //Invoke(nameof(ResetOnHit), 0.05f);
     }

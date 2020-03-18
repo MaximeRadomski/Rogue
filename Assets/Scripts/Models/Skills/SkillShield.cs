@@ -32,7 +32,6 @@ public class SkillShield : Skill
         base.Activate(x, y);
         CharacterBhv.StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
         {
-            CharacterBhv.Instantiator.NewEffect(InventoryItemType.Skill, CharacterBhv.transform.position, null, EffectId, Constants.GridMax - CharacterBhv.Y);
             AfterActivation();
             return true;
         }));
@@ -43,6 +42,7 @@ public class SkillShield : Skill
         if (IsApplyingEffect())
         {
             EffectDuration = 0;
+            CharacterBhv.Instantiator.NewEffect(InventoryItemType.Skill, CharacterBhv.transform.position, null, EffectId, Constants.GridMax - CharacterBhv.Y);
             CharacterBhv.LoseSkillEffect(Effect);
             return 0;
         }

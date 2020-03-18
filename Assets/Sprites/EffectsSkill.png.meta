@@ -98,6 +98,84 @@ TextureImporter:
   - first:
       213: 1541215041275492269
     second: EffectsSkill_31
+  - first:
+      213: -3976161669310320005
+    second: EffectsSkill_32
+  - first:
+      213: 3806271340239152874
+    second: EffectsSkill_33
+  - first:
+      213: -1797354350284187553
+    second: EffectsSkill_0
+  - first:
+      213: 8808515802550461232
+    second: EffectsSkill_1
+  - first:
+      213: 6548562647583266286
+    second: EffectsSkill_2
+  - first:
+      213: -430532509809856265
+    second: EffectsSkill_3
+  - first:
+      213: -364206679718825157
+    second: EffectsSkill_4
+  - first:
+      213: -7837988926147103770
+    second: EffectsSkill_5
+  - first:
+      213: -4827632544949106551
+    second: EffectsSkill_6
+  - first:
+      213: 2179932703352616927
+    second: EffectsSkill_7
+  - first:
+      213: -655087211537478271
+    second: EffectsSkill_8
+  - first:
+      213: 8956019187846435887
+    second: EffectsSkill_9
+  - first:
+      213: 8200979284515022950
+    second: EffectsSkill_10
+  - first:
+      213: -1528515907689297520
+    second: EffectsSkill_11
+  - first:
+      213: -4184748333620874489
+    second: EffectsSkill_12
+  - first:
+      213: 5443465538007824751
+    second: EffectsSkill_13
+  - first:
+      213: 6323865281679066782
+    second: EffectsSkill_14
+  - first:
+      213: 8121229913783761747
+    second: EffectsSkill_15
+  - first:
+      213: -4790296854411846754
+    second: EffectsSkill_16
+  - first:
+      213: -1233601764574846224
+    second: EffectsSkill_17
+  - first:
+      213: -3066217000820072609
+    second: EffectsSkill_18
+  - first:
+      213: 7165128590266471484
+    second: EffectsSkill_19
+  - first:
+      213: 5670395236689137343
+    second: EffectsSkill_20
+  - first:
+      213: 8646178556067940040
+    second: EffectsSkill_21
+  - first:
+      213: -7184369741188066779
+    second: EffectsSkill_22
+  - first:
+      213: -5619294974381631881
+    second: EffectsSkill_23
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -194,6 +272,342 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
+      name: EffectsSkill_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 124
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18d4863e6a9a8e6f0800000000000000
+      internalID: -655087211537478271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EffectsSkill_9
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 124
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f245b25100c2a4c70800000000000000
+      internalID: 8956019187846435887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EffectsSkill_10
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 124
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 668ead7653bbfc170800000000000000
+      internalID: 8200979284515022950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EffectsSkill_11
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 124
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09945a061ee99cae0800000000000000
+      internalID: -1528515907689297520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EffectsSkill_12
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 124
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 703be14ff89cce5c0800000000000000
+      internalID: -4184748333620874489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EffectsSkill_13
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 124
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f69790ce0131b8b40800000000000000
+      internalID: 5443465538007824751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EffectsSkill_14
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 124
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9608e9e7f1e2c750800000000000000
+      internalID: 6323865281679066782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EffectsSkill_15
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 124
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35b7b56149764b070800000000000000
+      internalID: 8121229913783761747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EffectsSkill_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 62
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9b5c181462758db0800000000000000
+      internalID: -4790296854411846754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EffectsSkill_17
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 62
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f2a8342bbd51eee0800000000000000
+      internalID: -1233601764574846224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EffectsSkill_18
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 62
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5f1bdd12eb9275d0800000000000000
+      internalID: -3066217000820072609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EffectsSkill_19
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 62
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3414d88d76af6360800000000000000
+      internalID: 7165128590266471484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EffectsSkill_20
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 62
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbe4ceabc6a41be40800000000000000
+      internalID: 5670395236689137343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EffectsSkill_21
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 62
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c6870b56956df770800000000000000
+      internalID: 8646178556067940040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EffectsSkill_22
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 62
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5229b69e8cdfb4c90800000000000000
+      internalID: -7184369741188066779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EffectsSkill_23
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 62
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77658db3ef04402b0800000000000000
+      internalID: -5619294974381631881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: EffectsSkill_0
       rect:
         serializedVersion: 2
@@ -208,7 +622,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 37b543dd0282ea94db6b6fd0fc18978b
+      spriteID: dbc37ef6de28bb670800000000000000
       internalID: 8555575873416674493
       vertices: []
       indices: 
@@ -229,7 +643,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5ef0718a95194134ca7fa7de110967d3
+      spriteID: 81432416f9d8452b0800000000000000
       internalID: -5596692721243638760
       vertices: []
       indices: 
@@ -250,7 +664,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d467c7f0fe4e46a44944eb7e5f01e86d
+      spriteID: b5c997d728e042330800000000000000
       internalID: 3685086348709567579
       vertices: []
       indices: 
@@ -271,7 +685,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: abeeb37c8b198544094bef7f88c0c166
+      spriteID: 11a48a0234857c800800000000000000
       internalID: 632571318002797073
       vertices: []
       indices: 
@@ -292,7 +706,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a34f2cdd484a0f84e94a5598191dfc0d
+      spriteID: 7d202074e918ce370800000000000000
       internalID: 8353193925661557463
       vertices: []
       indices: 
@@ -313,7 +727,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eeb3321e7e5ad7a4c8fa8a9a194ba489
+      spriteID: 426aba6b6a78711a0800000000000000
       internalID: -6838848359039785436
       vertices: []
       indices: 
@@ -334,7 +748,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 589a300035e7d304eb0cd7655a9e75b9
+      spriteID: b8f66869c93e47220800000000000000
       internalID: 2482859556267782027
       vertices: []
       indices: 
@@ -355,344 +769,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5854014fdd87b014e9195ba0f74de64a
+      spriteID: a43e35df3d5f8a190800000000000000
       internalID: -7950834851285572790
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsSkill_8
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 124
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9f79ab3bdaaf97747b14199ab82ae0bc
-      internalID: -471857518503799936
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsSkill_9
-      rect:
-        serializedVersion: 2
-        x: 62
-        y: 124
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a8742949b71923a4f852289939fd916e
-      internalID: -1355264860485929832
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsSkill_10
-      rect:
-        serializedVersion: 2
-        x: 124
-        y: 124
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9e78b326d066f4d4595b2ed64f6a6601
-      internalID: 4130439910647105432
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsSkill_11
-      rect:
-        serializedVersion: 2
-        x: 186
-        y: 124
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1429a42a2747b94478797de96af73840
-      internalID: 976315923080150088
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsSkill_12
-      rect:
-        serializedVersion: 2
-        x: 248
-        y: 124
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 33c17133fe84f2347bced5211e590e8b
-      internalID: -6548869505869135908
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsSkill_13
-      rect:
-        serializedVersion: 2
-        x: 310
-        y: 124
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ba03cd44de039844180fd80cf7886e8f
-      internalID: 7046920870398932306
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsSkill_14
-      rect:
-        serializedVersion: 2
-        x: 372
-        y: 124
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2c07c816674f91b458d19c1554f7f473
-      internalID: 2757977424983648377
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsSkill_15
-      rect:
-        serializedVersion: 2
-        x: 434
-        y: 124
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 250da418af6a59d49a6665b62d47aa38
-      internalID: -4263202969083597288
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsSkill_16
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 62
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a9b61229080a1c0469b1ef4643bd9138
-      internalID: -8099133500954706874
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsSkill_17
-      rect:
-        serializedVersion: 2
-        x: 62
-        y: 62
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 84c0e144be622e94caf20cc1cb29780c
-      internalID: 8953812481233756476
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsSkill_18
-      rect:
-        serializedVersion: 2
-        x: 124
-        y: 62
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 883e79177c880c94fbb1215dc8f5c3c8
-      internalID: -4648075823287578929
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsSkill_19
-      rect:
-        serializedVersion: 2
-        x: 186
-        y: 62
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8f05cbe39bffa5745aa4f1c7aaac01cb
-      internalID: -187039717667142160
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsSkill_20
-      rect:
-        serializedVersion: 2
-        x: 248
-        y: 62
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 78a685ee1c5fc0940a8a3a9ce6ac85f2
-      internalID: -6806785819664226171
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsSkill_21
-      rect:
-        serializedVersion: 2
-        x: 310
-        y: 62
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4c571b8697f991942acb34f90120bd40
-      internalID: 8142569947399769940
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsSkill_22
-      rect:
-        serializedVersion: 2
-        x: 372
-        y: 62
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c2dec17be796fd44f92c9b432dc89ae6
-      internalID: -599140508205984106
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EffectsSkill_23
-      rect:
-        serializedVersion: 2
-        x: 434
-        y: 62
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8e4f05c4a667e824b9551f705cfb362e
-      internalID: 596824325620841865
       vertices: []
       indices: 
       edges: []
@@ -712,7 +790,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 21bb7b31f3bc48447baa494637816865
+      spriteID: 3cd8328517556ebc0800000000000000
       internalID: -3754219294068339261
       vertices: []
       indices: 
@@ -733,7 +811,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ff1f3926f53cd95429338096ded5958b
+      spriteID: 7f360ec4d3dceb1b0800000000000000
       internalID: -5638844020254809097
       vertices: []
       indices: 
@@ -754,7 +832,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5b8252cb36b8d5c4b9e65f81535475a4
+      spriteID: 306abb22778867f70800000000000000
       internalID: 9184678535333914115
       vertices: []
       indices: 
@@ -775,7 +853,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 028b51131c915ba4c806ae925fd04a16
+      spriteID: ce9d95219bc13d430800000000000000
       internalID: 3806417691260606956
       vertices: []
       indices: 
@@ -796,7 +874,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5235e7b7b537f8d4f95199503bad61b6
+      spriteID: 4923d2f8134b3c240800000000000000
       internalID: 4810886951910322836
       vertices: []
       indices: 
@@ -817,7 +895,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2aaec8758e734bd47b4e4691c5531267
+      spriteID: 9e7eccb0229131cb0800000000000000
       internalID: -4894540736004036631
       vertices: []
       indices: 
@@ -838,7 +916,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 19bb5cf2e0f0b884f960f8df527f0222
+      spriteID: 865dc34a2935b0780800000000000000
       internalID: -8715780764559682200
       vertices: []
       indices: 
@@ -859,7 +937,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fa206300da741834d9fbaed813504dea
+      spriteID: da7f6b11aee736510800000000000000
       internalID: 1541215041275492269
       vertices: []
       indices: 

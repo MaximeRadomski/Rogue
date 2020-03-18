@@ -451,6 +451,7 @@ public class FightSceneBhv : SceneBhv
     public void OnPlayerSkillClick(int skillId, int x, int y)
     {
         _playerBhv.Character.Skills[skillId].Activate(x, y);
+        _gridBhv.ShowPm(_playerBhv, OpponentBhvs);
     }
 
     public void OnPlayerCharacterClick()

@@ -48,11 +48,11 @@ public class SkillPush : Skill
         int y = _pushedOpponentBhv.Y - CharacterBhv.Y;
         if (!Helper.IsPosValid(_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y)
             || GridBhv.Cells[_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y].GetComponent<CellBhv>().Type != CellType.On
-            || GridBhv.IsOpponentOnCell(_pushedOpponentBhv.X + x, _pushedOpponentBhv.X + x, true))
+            || GridBhv.IsOpponentOnCell(_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y, true))
         {
             if ((Helper.IsPosValid(_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y)
                 && GridBhv.Cells[_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y].GetComponent<CellBhv>().Type == CellType.Off)
-                || GridBhv.IsOpponentOnCell(_pushedOpponentBhv.X + x, _pushedOpponentBhv.X + x, true))
+                || GridBhv.IsOpponentOnCell(_pushedOpponentBhv.X + x, _pushedOpponentBhv.Y + y, true))
             {
                 var floatAmount = 30.0f * CharacterBhv.Character.GetDamageMultiplier();
                 //pushedOpponentBhv.TakeDamages(new Damage((int)floatAmount));
