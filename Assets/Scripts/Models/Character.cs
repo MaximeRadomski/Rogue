@@ -40,6 +40,7 @@ public class Character
     public GameObject Frame;
     private OrbBhv _orbHp;
     private ResourceBarBhv _healthBar;
+    private ResourceBarBhv _xpBar;
     private TMPro.TextMeshPro _level;
     private TMPro.TextMeshPro _xp;
     private TMPro.TextMeshPro _gold;
@@ -53,6 +54,7 @@ public class Character
             _orbHp = GameObject.Find("Hp")?.GetComponent<OrbBhv>();
         else
             _healthBar = GameObject.Find("HealthBar")?.GetComponent<ResourceBarBhv>();
+        _xpBar = GameObject.Find("XpBar")?.GetComponent<ResourceBarBhv>();
         _level = GameObject.Find("LevelText")?.GetComponent<TMPro.TextMeshPro>();
         _xp = GameObject.Find("Xp")?.GetComponent<TMPro.TextMeshPro>();
         _gold = GameObject.Find("Gold")?.GetComponent<TMPro.TextMeshPro>();
@@ -179,27 +181,36 @@ public class Character
         _instantiator.PopText("+" + amountToAdd + " " + Constants.UnitXp, _xp?.transform.position ?? _ressourcePopPosition, TextType.Xp, TextThickness.Long);
         if (_xp != null) _xp.text = Experience.ToString() + "/" + Helper.XpNeedForLevel(Level) + " " + Constants.UnitXp;
         var needed = Helper.XpNeedForLevel(Level);
+        _xpBar?.UpdateContent(Experience + amountToAdd, needed, Name, null, Direction.Up);
         if (Experience + amountToAdd >= needed)
         {
-            while (Experience + amountToAdd >= needed)
+            Constants.InputLocked = true;
+            _instantiator.StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () =>
             {
-                int reserve = Experience + amountToAdd - needed;
-                LevelUp();
-                needed = Helper.XpNeedForLevel(Level);
-                if (reserve >= needed)
+                _xpBar?.UpdateContent(0, 1, Name, null, Direction.None);
+                while (Experience + amountToAdd >= needed)
                 {
-                    Experience = 0;
-                    amountToAdd = reserve;
+                    int reserve = Experience + amountToAdd - needed;
+                    LevelUp();
+                    needed = Helper.XpNeedForLevel(Level);
+                    if (reserve >= needed)
+                    {
+                        Experience = 0;
+                        amountToAdd = reserve;
+                    }
+                    else
+                    {
+                        Experience = reserve;
+                        amountToAdd = 0;
+                    }
                 }
-                else
-                {
-                    Experience = reserve;
-                    amountToAdd = 0;
-                }
-            }
-            if (_instantiator == null) GetPrivates();
-            _instantiator.PopText("LEVEL " + Level, _level?.transform.position ?? _ressourcePopPosition, TextType.Magical);
-            if (_level != null) _level.text = Level.ToString();
+                if (_instantiator == null) GetPrivates();
+                _instantiator.PopText("LEVEL " + Level, _level?.transform.position ?? _ressourcePopPosition, TextType.Magical);
+                if (_level != null) _level.text = Level.ToString();
+                _xpBar?.UpdateContent(Experience, needed, Name, null, Direction.Up);
+                Constants.InputLocked = false;
+                return true;
+            }));
         }
         else
         {

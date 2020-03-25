@@ -52,6 +52,8 @@ public class ResourceBarBhv : MonoBehaviour
         bool isDelaying;
         if (current < 0)
             current = 0;
+        if (current > max)
+            current = max;
         if (_text == null && _content == null)
             SetPrivates();
         if (direction == Direction.Up)

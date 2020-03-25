@@ -54,7 +54,7 @@ public class SkillDash : Skill
     {
         if (IsApplyingEffect())
         {
-            if (Helper.IsPosValid(_currentTargetX, _currentTargetX) || !GridBhv.IsOpponentOnCell(_currentTargetX, _currentTargetY, true))
+            if (Helper.IsPosValid(_currentTargetX, _currentTargetX) && !GridBhv.IsOpponentOnCell(_currentTargetX, _currentTargetY, true, true))
                 CharacterBhv.MoveToPosition(_currentTargetX, _currentTargetY, false);
             CharacterBhv.Instantiator.NewEffect(InventoryItemType.Skill, GridBhv.Cells[_currentTargetX, _currentTargetY].transform.position, null, EffectId, Constants.GridMax - _currentTargetY);
             EffectDuration = 0;

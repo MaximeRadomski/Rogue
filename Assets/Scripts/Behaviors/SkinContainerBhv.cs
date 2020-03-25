@@ -6,18 +6,19 @@ public class SkinContainerBhv : MonoBehaviour
 {
     public float SkinContainerYOffset;
 
-    private Shader _shaderGUItext;
-    private Shader _originalShader;
-    private Color? _originalColor;
+    //private Shader _shaderGUItext;
+    //private Shader _originalShader;
+    //private Color? _originalColor;
     private Vector3 _originalScale;
     private Vector3 _originalPosition;
     private Vector3 _hitScale;
     private Vector3 _hitPosition;
     private bool _isResetingHit;
+    private bool _isDying;
 
     private void Start()
     {
-        _shaderGUItext = Shader.Find("GUI/Text Shader");
+        //_shaderGUItext = Shader.Find("GUI/Text Shader");
         _hitScale = new Vector3(0.8f, 1.15f, 1.0f);
         _hitPosition = new Vector3(0.0f, 0.025f, 0.0f);
     }
@@ -33,6 +34,24 @@ public class SkinContainerBhv : MonoBehaviour
                 transform.localScale = _originalScale;
                 transform.position = transform.parent.position + _originalPosition;
                 _isResetingHit = false;
+            }
+        }
+        if (_isDying)
+        {
+            SpriteRenderer spriteRenderer = null;
+            for (int i = 0; i < transform.childCount; ++i)
+            {
+                spriteRenderer = transform.GetChild(i).GetComponent<SpriteRenderer>();
+                spriteRenderer.color = Color.Lerp(spriteRenderer.color, Constants.ColorTransparent, 0.05f);
+            }
+            if (spriteRenderer != null && Helper.FloatEqualsPrecision(spriteRenderer.color.a, Constants.ColorTransparent.a, 0.01f))
+            {
+                for (int i = 0; i < transform.childCount; ++i)
+                {
+                    spriteRenderer = transform.GetChild(i).GetComponent<SpriteRenderer>();
+                    spriteRenderer.color = Constants.ColorTransparent;
+                }
+                _isDying = false;
             }
         }
     }
@@ -81,8 +100,8 @@ public class SkinContainerBhv : MonoBehaviour
 
     public void OnHit()
     {
-        _originalShader = null;
-        _originalColor = null;
+        //_originalShader = null;
+        //_originalColor = null;
         _originalPosition = transform.localPosition;
         _originalScale = transform.localScale;
         //for (int i = 0; i < transform.childCount; ++i)
@@ -101,14 +120,19 @@ public class SkinContainerBhv : MonoBehaviour
         //Invoke(nameof(ResetOnHit), 0.05f);
     }
 
-    public void ResetOnHit()
+    //public void ResetOnHit()
+    //{
+    //    for (int i = 0; i < transform.childCount; ++i)
+    //    {
+    //        var spriteRenderer = transform.GetChild(i).GetComponent<SpriteRenderer>();
+    //        spriteRenderer.material.shader = _originalShader;
+    //        spriteRenderer.color = _originalColor ?? Constants.ColorPlain;
+    //    }
+    //}
+
+    public void OnDeath()
     {
-        for (int i = 0; i < transform.childCount; ++i)
-        {
-            var spriteRenderer = transform.GetChild(i).GetComponent<SpriteRenderer>();
-            spriteRenderer.material.shader = _originalShader;
-            spriteRenderer.color = _originalColor ?? Constants.ColorPlain;
-        }
+        _isDying = true;
     }
 
     public void OrientToTarget(float x)

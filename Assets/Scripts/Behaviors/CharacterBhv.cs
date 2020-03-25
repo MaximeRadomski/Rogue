@@ -99,6 +99,10 @@ public class CharacterBhv : MonoBehaviour
         {
             Instantiator.PopText("-" + Character.TakeDamages(damage.Amount).ToString(), transform.position, damage.Critical ? TextType.HpCritical : TextType.Hp);
             SkinContainer.OnHit();
+            if (Character.IsPlayer && Character.Hp <= 0)
+                _fightSceneBhv.OnPlayerDeath(this);
+            else if (Character.Hp <= 0)
+                _fightSceneBhv.OnOpponentDeath(this);
             return true;
         }));
     }

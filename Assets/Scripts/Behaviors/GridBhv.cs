@@ -169,7 +169,7 @@ public class GridBhv : MonoBehaviour
         return false;
     }
 
-    public CharacterBhv IsOpponentOnCell(int x, int y, bool searchForPlayerOpponents = false)
+    public CharacterBhv IsOpponentOnCell(int x, int y, bool searchForPlayerOpponents = false, bool searchForPlayer = false)
     {
         if (_currentOpponentBhvs != null)
         {
@@ -186,6 +186,11 @@ public class GridBhv : MonoBehaviour
                 if (x == opponentBhv.X && y == opponentBhv.Y)
                     return opponentBhv;
             }
+        }
+        if (searchForPlayer) //In case where the AI have to play out of its turn (like with Dash skill)
+        {
+            if (x == _fightSceneBhv.PlayerBhv.X && y == _fightSceneBhv.PlayerBhv.Y)
+                return _fightSceneBhv.PlayerBhv;
         }
         return null;
     }

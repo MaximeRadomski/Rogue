@@ -299,7 +299,28 @@ public class AiBhv : MonoBehaviour
         {
             if (_characterBhv.Character.Skills[i].Nature == SkillNature.Defensive && IsTheBiggest(_skillsWeight[i]) && _skillsWeight[i] > 0)
             {
-                _characterBhv.Character.Skills[i].Activate(_characterBhv.X, _characterBhv.Y);
+                int tmpX = _characterBhv.X;
+                int tmpY = _characterBhv.Y;
+                if (_characterBhv.Character.Skills[i].RangePositions != null && _characterBhv.Character.Skills[i].RangePositions.Count > 2) //2 Because List<int>
+                {
+                    List<int> tmpRangePos = new List<int>();
+                    for (int j = 0; j < _characterBhv.Character.Skills[i].RangePositions.Count; j += 2)
+                    {
+                        var x = _characterBhv.Character.Skills[i].RangePositions[j] + tmpX;
+                        var y = _characterBhv.Character.Skills[i].RangePositions[j + 1] + tmpY;
+                        if (Helper.IsPosValid(x, y)
+                            && _gridBhv.Cells[x, y].GetComponent<CellBhv>().Type == CellType.On
+                            && !_gridBhv.IsOpponentOnCell(x, y, true, true))
+                        {
+                            tmpRangePos.Add(_characterBhv.Character.Skills[i].RangePositions[j]);
+                            tmpRangePos.Add(_characterBhv.Character.Skills[i].RangePositions[j + 1]);
+                        }
+                    }
+                    var rand = Random.Range(0, tmpRangePos.Count / 2);
+                    tmpX += tmpRangePos[rand];
+                    tmpY += tmpRangePos[rand + 1];
+                }
+                _characterBhv.Character.Skills[i].Activate(tmpX, tmpY);
                 return true;
             }
         }

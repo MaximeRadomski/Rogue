@@ -11,7 +11,7 @@ public class FightSceneBhv : SceneBhv
     private Map _map;
     private GridBhv _gridBhv;
     private GameObject _player;
-    private CharacterBhv _playerBhv;
+    public CharacterBhv PlayerBhv;
     private List<GameObject> _opponents;
     public List<CharacterBhv> OpponentBhvs;
 
@@ -21,6 +21,7 @@ public class FightSceneBhv : SceneBhv
 
     private bool IsWaitingStart;
     private ResourceBarBhv _healthBar;
+    private ResourceBarBhv _xpBar;
     private TMPro.TextMeshPro _fightTitle;
     private OrbBhv _orbHp;
     private OrbBhv _orbPa;
@@ -53,13 +54,13 @@ public class FightSceneBhv : SceneBhv
         }
         if (State == FightState.PlayerTurn)
         {
-            if (!_buttonWeapon1.Disabled && _playerBhv.Pa < _playerBhv.Character.Weapons[0].PaNeeded)
+            if (!_buttonWeapon1.Disabled && PlayerBhv.Pa < PlayerBhv.Character.Weapons[0].PaNeeded)
                 _buttonWeapon1.DisableButton();
-            if (!_buttonWeapon2.Disabled && _playerBhv.Pa < _playerBhv.Character.Weapons[1].PaNeeded)
+            if (!_buttonWeapon2.Disabled && PlayerBhv.Pa < PlayerBhv.Character.Weapons[1].PaNeeded)
                 _buttonWeapon2.DisableButton();
-            if (!_buttonSkill1.Disabled && _playerBhv.Pa < _playerBhv.Character.Skills[0].PaNeeded)
+            if (!_buttonSkill1.Disabled && PlayerBhv.Pa < PlayerBhv.Character.Skills[0].PaNeeded)
                 _buttonSkill1.DisableButton();
-            if (!_buttonSkill2.Disabled && _playerBhv.Pa < _playerBhv.Character.Skills[1].PaNeeded)
+            if (!_buttonSkill2.Disabled && PlayerBhv.Pa < PlayerBhv.Character.Skills[1].PaNeeded)
                 _buttonSkill2.DisableButton();
         }
     }
@@ -74,6 +75,7 @@ public class FightSceneBhv : SceneBhv
         _gridBhv = GetComponent<GridBhv>();
         _map = MapsData.EasyMaps[Random.Range(0, MapsData.EasyMaps.Count)];
         _healthBar = GameObject.Find("HealthBar")?.GetComponent<ResourceBarBhv>();
+        _xpBar = GameObject.Find("XpBar")?.GetComponent<ResourceBarBhv>();
         _fightTitle = GameObject.Find("FightTitle")?.GetComponent<TMPro.TextMeshPro>();
         _orbHp = GameObject.Find("Hp")?.GetComponent<OrbBhv>();
         _orbPa = GameObject.Find("Pa")?.GetComponent<OrbBhv>();
@@ -90,16 +92,16 @@ public class FightSceneBhv : SceneBhv
         (_buttonPm = GameObject.Find("Pm").GetComponent<ButtonBhv>()).EndActionDelegate = OnPlayerPmClick;
         _buttonWeapon1 = GameObject.Find("PlayerWeapon1").GetComponent<ButtonBhv>();
         _buttonWeapon1.EndActionDelegate = ShowWeaponOneRange;
-        _buttonWeapon1.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsWeapon_" + _playerBhv.Character.Weapons[0].Type.GetHashCode());
+        _buttonWeapon1.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsWeapon_" + PlayerBhv.Character.Weapons[0].Type.GetHashCode());
         _buttonWeapon2 = GameObject.Find("PlayerWeapon2").GetComponent<ButtonBhv>();
         _buttonWeapon2.EndActionDelegate = ShowWeaponTwoRange;
-        _buttonWeapon2.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsWeapon_" + _playerBhv.Character.Weapons[1].Type.GetHashCode());
+        _buttonWeapon2.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsWeapon_" + PlayerBhv.Character.Weapons[1].Type.GetHashCode());
         _buttonSkill1 = GameObject.Find("PlayerSkill1").GetComponent<ButtonBhv>();
         _buttonSkill1.EndActionDelegate = ClickSkill1;
-        _buttonSkill1.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsSkill_" + _playerBhv.Character.Skills[0].IconId);
+        _buttonSkill1.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsSkill_" + PlayerBhv.Character.Skills[0].IconId);
         _buttonSkill2 = GameObject.Find("PlayerSkill2").GetComponent<ButtonBhv>();
         _buttonSkill2.EndActionDelegate = ClickSkill2;
-        _buttonSkill2.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsSkill_" + _playerBhv.Character.Skills[1].IconId);
+        _buttonSkill2.GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/ButtonsSkill_" + PlayerBhv.Character.Skills[1].IconId);
         PauseMenu.Buttons[0].EndActionDelegate = Resume;
         PauseMenu.TextMeshes[0].text = "Resume";
         PauseMenu.Buttons[1].EndActionDelegate = GiveUp;
@@ -110,6 +112,8 @@ public class FightSceneBhv : SceneBhv
         PauseMenu.TextMeshes[3].text = "Exit";
         PauseMenu.Buttons[4].gameObject.SetActive(false);
 
+        var xPneeded = Helper.XpNeedForLevel(PlayerBhv.Character.Level);
+        _xpBar?.UpdateContent(PlayerBhv.Character.Experience, xPneeded, null, null, Direction.None);
         bool isFramePlayerSet = false;
         //bool isFirstOpponentSet = false;
         for (int i = 0; i < _orderList.Count; ++i)
@@ -152,7 +156,7 @@ public class FightSceneBhv : SceneBhv
     {
         InitOpponents();
         InitPlayer();
-        _playerBhv.SetPrivates();
+        PlayerBhv.SetPrivates();
         foreach (var opponentBhv in OpponentBhvs)
             opponentBhv.SetPrivates();
     }
@@ -173,7 +177,7 @@ public class FightSceneBhv : SceneBhv
     private void InitPlayer()
     {
         _player = Instantiator.NewCharacterGameObject(Constants.PpPlayer, true);
-        _playerBhv = _player.GetComponent<CharacterBhv>();
+        PlayerBhv = _player.GetComponent<CharacterBhv>();
         //DisplayCharacterStats(_player.name, _playerBhv.Character);
     }
 
@@ -181,7 +185,7 @@ public class FightSceneBhv : SceneBhv
     {
         int orderId = 0;
         _orderList = new List<CharOrder>();
-        CalculateInitiative(_playerBhv, orderId++);
+        CalculateInitiative(PlayerBhv, orderId++);
         foreach (var opponentBhv in OpponentBhvs)
             CalculateInitiative(opponentBhv, orderId++);
         int i = 0;
@@ -207,8 +211,8 @@ public class FightSceneBhv : SceneBhv
 
     private CharacterBhv GetCharacterBhvFromOrderId(int id)
     {
-        if (_playerBhv.OrderId == id)
-            return _playerBhv;
+        if (PlayerBhv.OrderId == id)
+            return PlayerBhv;
         foreach (var opponentBhv in OpponentBhvs)
         {
             if (opponentBhv.OrderId == id)
@@ -318,7 +322,7 @@ public class FightSceneBhv : SceneBhv
             _buttonRunAway.EnableButton();
             _buttonWeapon1.EnableButton();
             _buttonWeapon2.EnableButton();
-            var skill = _playerBhv.Character.Skills[0];
+            var skill = PlayerBhv.Character.Skills[0];
             if (!skill.IsUnderCooldown())
             {
                 _buttonSkill1.EnableButton();
@@ -329,7 +333,7 @@ public class FightSceneBhv : SceneBhv
                 _buttonSkill1.DisableButton();
                 _buttonSkill1.transform.GetChild(0).GetComponent<TMPro.TextMeshPro>().text = skill.Cooldown <= skill.CooldownMax && skill.Cooldown > 0 ? skill.Cooldown.ToString() : string.Empty;
             }
-            skill = _playerBhv.Character.Skills[1];
+            skill = PlayerBhv.Character.Skills[1];
             if (!skill.IsUnderCooldown())
             {
                 _buttonSkill2.EnableButton();
@@ -354,9 +358,9 @@ public class FightSceneBhv : SceneBhv
 
     public void UpdateResources()
     {
-        _orbHp.UpdateContent(_playerBhv.Character.Hp, _playerBhv.Character.HpMax, Instantiator, TextType.Hp);
-        _orbPa.UpdateContent(_playerBhv.Pa, _playerBhv.Character.PaMax, Instantiator, TextType.Pa);
-        _orbPm.UpdateContent(_playerBhv.Pm, _playerBhv.Character.PmMax, Instantiator, TextType.Pm);
+        _orbHp.UpdateContent(PlayerBhv.Character.Hp, PlayerBhv.Character.HpMax, Instantiator, TextType.Hp);
+        _orbPa.UpdateContent(PlayerBhv.Pa, PlayerBhv.Character.PaMax, Instantiator, TextType.Pa);
+        _orbPm.UpdateContent(PlayerBhv.Pm, PlayerBhv.Character.PmMax, Instantiator, TextType.Pm);
     }
 
     public void PassTurn()
@@ -386,19 +390,19 @@ public class FightSceneBhv : SceneBhv
         if (State != FightState.PlayerTurn)
             return;
         _gridBhv.ResetAllCellsDisplay();
-        _playerBhv.MoveToPosition(x, y, true);
+        PlayerBhv.MoveToPosition(x, y, true);
     }
 
     public void AfterPlayerMovement()
     {
         if (State != FightState.PlayerTurn)
             return;
-        _gridBhv.ShowPm(_playerBhv, OpponentBhvs);
+        _gridBhv.ShowPm(PlayerBhv, OpponentBhvs);
     }
 
     public void OnPlayerSpawnClick(int x, int y)
     {
-        _playerBhv.Spawn(x, y);
+        PlayerBhv.Spawn(x, y);
         _buttonPass.EnableButton();
         MakeOpponentsLookPlayer();
         MakePlayerLookOpponents();
@@ -409,7 +413,7 @@ public class FightSceneBhv : SceneBhv
     {
         foreach (var opponent in OpponentBhvs)
         {
-            opponent.SkinContainer.OrientToTarget(opponent.X - _playerBhv.X);
+            opponent.SkinContainer.OrientToTarget(opponent.X - PlayerBhv.X);
         }
     }
 
@@ -417,11 +421,11 @@ public class FightSceneBhv : SceneBhv
     {
         if (OpponentBhvs.Count == 1)
         {
-            _playerBhv.SkinContainer.OrientToTarget(_playerBhv.X - OpponentBhvs[0].X);
+            PlayerBhv.SkinContainer.OrientToTarget(PlayerBhv.X - OpponentBhvs[0].X);
         }
         else
         {
-            _playerBhv.SkinContainer.OrientToTarget(_playerBhv.X - 3); //Because [3,3] is the middle of the map
+            PlayerBhv.SkinContainer.OrientToTarget(PlayerBhv.X - 3); //Because [3,3] is the middle of the map
         }
     }
 
@@ -431,27 +435,27 @@ public class FightSceneBhv : SceneBhv
         {
             foreach (var opponentBhv in touchedOpponents)
             {
-                opponentBhv.TakeDamages(_playerBhv.AttackWithWeapon(weaponId, opponentBhv, _map, touchedPosition: touchedPosition));
+                opponentBhv.TakeDamages(PlayerBhv.AttackWithWeapon(weaponId, opponentBhv, _map, touchedPosition: touchedPosition));
             }
         }
         else
         {
-            _playerBhv.AttackWithWeapon(weaponId, null, _map, touchedPosition: touchedPosition);
+            PlayerBhv.AttackWithWeapon(weaponId, null, _map, touchedPosition: touchedPosition);
         }
-        _gridBhv.ShowPm(_playerBhv, OpponentBhvs);
+        _gridBhv.ShowPm(PlayerBhv, OpponentBhvs);
     }
 
     public void OnPlayerPmClick()
     {
         if (State != FightState.PlayerTurn)
             return;
-        _gridBhv.ShowPm(_playerBhv, OpponentBhvs);
+        _gridBhv.ShowPm(PlayerBhv, OpponentBhvs);
     }
 
     public void OnPlayerSkillClick(int skillId, int x, int y)
     {
-        _playerBhv.Character.Skills[skillId].Activate(x, y);
-        _gridBhv.ShowPm(_playerBhv, OpponentBhvs);
+        PlayerBhv.Character.Skills[skillId].Activate(x, y);
+        _gridBhv.ShowPm(PlayerBhv, OpponentBhvs);
     }
 
     public void OnPlayerCharacterClick()
@@ -496,36 +500,36 @@ public class FightSceneBhv : SceneBhv
 
     private void ShowWeaponOneRange()
     {
-        if (State == FightState.PlayerTurn && _playerBhv.Pa >= _playerBhv.Character.Weapons[0].PaNeeded && !_playerBhv.IsMoving)
-            _gridBhv.ShowWeaponRange(_playerBhv, 0, OpponentBhvs);
+        if (State == FightState.PlayerTurn && PlayerBhv.Pa >= PlayerBhv.Character.Weapons[0].PaNeeded && !PlayerBhv.IsMoving)
+            _gridBhv.ShowWeaponRange(PlayerBhv, 0, OpponentBhvs);
         if (Constants.DoubleClick)
-            Instantiator.NewPopupCharacterStats(_playerBhv.Character, null, false, 1);
+            Instantiator.NewPopupCharacterStats(PlayerBhv.Character, null, false, 1);
     }
 
     private void ShowWeaponTwoRange()
     {
-        if (State == FightState.PlayerTurn && _playerBhv.Pa >= _playerBhv.Character.Weapons[1].PaNeeded && !_playerBhv.IsMoving)
-            _gridBhv.ShowWeaponRange(_playerBhv, 1, OpponentBhvs);
+        if (State == FightState.PlayerTurn && PlayerBhv.Pa >= PlayerBhv.Character.Weapons[1].PaNeeded && !PlayerBhv.IsMoving)
+            _gridBhv.ShowWeaponRange(PlayerBhv, 1, OpponentBhvs);
         if (Constants.DoubleClick)
-            Instantiator.NewPopupCharacterStats(_playerBhv.Character, null, false, 2);
+            Instantiator.NewPopupCharacterStats(PlayerBhv.Character, null, false, 2);
     }
 
     private void ClickSkill1()
     {
-        if (State == FightState.PlayerTurn && _playerBhv.Character.Skills != null && _playerBhv.Character.Skills.Count >= 1
-            && _playerBhv.Pa >= _playerBhv.Character.Skills[0].PaNeeded && !_playerBhv.IsMoving)
-            _playerBhv.Character.Skills[0].OnClick();
+        if (State == FightState.PlayerTurn && PlayerBhv.Character.Skills != null && PlayerBhv.Character.Skills.Count >= 1
+            && PlayerBhv.Pa >= PlayerBhv.Character.Skills[0].PaNeeded && !PlayerBhv.IsMoving)
+            PlayerBhv.Character.Skills[0].OnClick();
         if (Constants.DoubleClick)
-            Instantiator.NewPopupCharacterStats(_playerBhv.Character, null, false, 3);
+            Instantiator.NewPopupCharacterStats(PlayerBhv.Character, null, false, 3);
     }
 
     private void ClickSkill2()
     {
-        if (State == FightState.PlayerTurn && _playerBhv.Character.Skills != null && _playerBhv.Character.Skills.Count >= 2
-            && _playerBhv.Pa >= _playerBhv.Character.Skills[1].PaNeeded && !_playerBhv.IsMoving)
-            _playerBhv.Character.Skills[1].OnClick();
+        if (State == FightState.PlayerTurn && PlayerBhv.Character.Skills != null && PlayerBhv.Character.Skills.Count >= 2
+            && PlayerBhv.Pa >= PlayerBhv.Character.Skills[1].PaNeeded && !PlayerBhv.IsMoving)
+            PlayerBhv.Character.Skills[1].OnClick();
         if (Constants.DoubleClick)
-            Instantiator.NewPopupCharacterStats(_playerBhv.Character, null, false, 4);
+            Instantiator.NewPopupCharacterStats(PlayerBhv.Character, null, false, 4);
     }
 
     #endregion
@@ -571,5 +575,16 @@ public class FightSceneBhv : SceneBhv
             }
             return result;
         }
+    }
+
+    public void OnOpponentDeath(CharacterBhv opponentBhv)
+    {
+        opponentBhv.SkinContainer.OnDeath();
+        Instantiator.PopIcon(Helper.GetSpriteFromSpriteSheet("Sprites/IconsStatus_0"), opponentBhv.transform.position);
+        StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () =>
+        {
+            PlayerBhv.Character.GainXp(150);
+            return true;
+        }));
     }
 }

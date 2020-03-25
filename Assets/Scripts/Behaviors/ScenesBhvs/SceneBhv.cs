@@ -78,4 +78,9 @@ public abstract class SceneBhv : MonoBehaviour
             return result;
         }
     }
+
+    public void OnPlayerDeath(CharacterBhv playerBhv)
+    {
+
+    }
 }
