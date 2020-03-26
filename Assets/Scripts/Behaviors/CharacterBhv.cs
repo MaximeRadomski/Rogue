@@ -298,14 +298,28 @@ public class CharacterBhv : MonoBehaviour
         int y = yToReach;
         while (visitedIndex > 0)
         {
-            if (LookForLowerIndex(x, y + 1, visitedIndex - 1)/* && !_gridBhv.IsAdjacentOpponent(x, y + 1, OpponentBhvs)*/)
+            var tmpX = x;
+            var tmpY = y;
+            //Check if can get around the opponent
+            if (LookForLowerIndex(x, y + 1, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x, y + 1, OpponentBhvs))
                 ++y;
-            else if (LookForLowerIndex(x + 1, y, visitedIndex - 1)/* && !_gridBhv.IsAdjacentOpponent(x + 1, y, OpponentBhvs)*/)
+            else if (LookForLowerIndex(x + 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x + 1, y, OpponentBhvs))
                 ++x;
-            else if (LookForLowerIndex(x, y - 1, visitedIndex - 1)/* && !_gridBhv.IsAdjacentOpponent(x, y - 1, OpponentBhvs)*/)
+            else if (LookForLowerIndex(x, y - 1, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x, y - 1, OpponentBhvs))
                 --y;
-            else if (LookForLowerIndex(x - 1, y, visitedIndex - 1)/* && !_gridBhv.IsAdjacentOpponent(x - 1, y, OpponentBhvs)*/)
+            else if (LookForLowerIndex(x - 1, y, visitedIndex - 1) && !_gridBhv.IsAdjacentOpponent(x - 1, y, OpponentBhvs))
                 --x;
+            if (tmpX == x && tmpY == y) //Can't get around
+            {
+                if (LookForLowerIndex(x, y + 1, visitedIndex - 1))
+                    ++y;
+                else if (LookForLowerIndex(x + 1, y, visitedIndex - 1))
+                    ++x;
+                else if (LookForLowerIndex(x, y - 1, visitedIndex - 1))
+                    --y;
+                else if (LookForLowerIndex(x - 1, y, visitedIndex - 1))
+                    --x;
+            }
             PathfindingSteps.Insert(0, _gridBhv.Cells[x, y].transform.position);
             PathfindingPos.Insert(0, new RangePos(x, y));
             --visitedIndex;

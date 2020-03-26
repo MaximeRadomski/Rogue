@@ -183,6 +183,16 @@ public static class Helper
         return RoundToNextDecade((int)floatXp);
     }
 
+    public static int XpWorthForLevel(int level)
+    {
+        float floatXp = RacesData.LevelOneXpWorth;
+        for (int i = 1; i < level; ++i)
+        {
+            floatXp = floatXp + (floatXp * (0.4f - ((float)(i - 1) / 100)));
+        }
+        return RoundToNextDecade((int)floatXp);
+    }
+
     public static int MaxHpFromLevelOne(int baseMaxHp, int level, int LevelingHealthPercent)
     {
         float floatMaxHp = baseMaxHp;

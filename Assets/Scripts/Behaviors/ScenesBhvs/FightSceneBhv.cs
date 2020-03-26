@@ -43,6 +43,12 @@ public class FightSceneBhv : SceneBhv
         SetButtons();        
         UpdateResources();
         IsWaitingStart = true;
+        //var tmpLevels = "";
+        //for (int i = 1; i <= 20; ++i)
+        //{
+        //    tmpLevels += "LvL:" + i.ToString("D2") + " " + Helper.XpWorthForLevel(i) + "\n";
+        //}
+        //Debug.Log(tmpLevels);
     }
 
     private void Update()
@@ -583,7 +589,7 @@ public class FightSceneBhv : SceneBhv
         Instantiator.PopIcon(Helper.GetSpriteFromSpriteSheet("Sprites/IconsStatus_0"), opponentBhv.transform.position);
         StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () =>
         {
-            PlayerBhv.Character.GainXp(150);
+            PlayerBhv.Character.GainXp(Helper.XpWorthForLevel(opponentBhv.Character.Level));
             return true;
         }));
     }

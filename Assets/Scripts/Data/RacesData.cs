@@ -42,6 +42,7 @@ public static class RacesData
 
     //  SHARED STATS  //
     public static int LevelOneXpNeeded = 100;
+    public static int LevelOneXpWorth = 40;
     public static int NotRaceWeaponDamagePercent = 30; //To Substract
     public static int StrongAgainstDamagePercent = 20;
     public static int StrongInDamagePercent = 10;
