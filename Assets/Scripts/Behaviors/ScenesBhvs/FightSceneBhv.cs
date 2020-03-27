@@ -267,7 +267,7 @@ public class FightSceneBhv : SceneBhv
         _gridBhv.SpawnOpponent(OpponentBhvs);
         _gridBhv.SpawnPlayer();
         IsWaitingStart = false;
-        Instantiator.NewOverTitleMap(_map, null, Direction.Left);
+        Instantiator.NewOverTitle(_map.Name, "Sprites/MapTitle_0", null, Direction.Left);
     }
 
     private void NextTurn()
@@ -300,14 +300,14 @@ public class FightSceneBhv : SceneBhv
             State = FightState.PlayerTurn;
             ManagePlayerButtons();
             _gridBhv.ShowPm(_currentPlayingCharacterBhv, _currentPlayingCharacterBhv.OpponentBhvs);
-            Instantiator.NewOverTitleFight("Player Turn", null, Direction.Left);
+            Instantiator.NewOverTitle("Player Turn", "Sprites/MapTitle_1", null, Direction.Left);
         }            
         else
         {
             State = FightState.OpponentTurn;
             ManagePlayerButtons();
             if (lastCharacterIsPlayer == true || lastCharacterIsPlayer == null)
-                Instantiator.NewOverTitleFight("Opponent" + (_orderList.Count > 2 ? "s" : "") + " Turn", AfterTitleFight, Direction.Left);
+                Instantiator.NewOverTitle("Opponent" + (_orderList.Count > 2 ? "s" : "") + " Turn", "Sprites/MapTitle_1", AfterTitleFight, Direction.Left);
             else
                 AfterTitleFight(true);
             
@@ -448,7 +448,8 @@ public class FightSceneBhv : SceneBhv
         {
             PlayerBhv.AttackWithWeapon(weaponId, null, _map, touchedPosition: touchedPosition);
         }
-        _gridBhv.ShowPm(PlayerBhv, OpponentBhvs);
+        //_gridBhv.ShowPm(PlayerBhv, OpponentBhvs);
+        _gridBhv.ResetAllCellsDisplay();
     }
 
     public void OnPlayerPmClick()
@@ -461,7 +462,8 @@ public class FightSceneBhv : SceneBhv
     public void OnPlayerSkillClick(int skillId, int x, int y)
     {
         PlayerBhv.Character.Skills[skillId].Activate(x, y);
-        _gridBhv.ShowPm(PlayerBhv, OpponentBhvs);
+        //_gridBhv.ShowPm(PlayerBhv, OpponentBhvs);
+        _gridBhv.ResetAllCellsDisplay();
     }
 
     public void OnPlayerCharacterClick()
@@ -590,7 +592,42 @@ public class FightSceneBhv : SceneBhv
         StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () =>
         {
             PlayerBhv.Character.GainXp(Helper.XpWorthForLevel(opponentBhv.Character.Level));
+            for (int i = 0; i < _orderList.Count; ++i)
+            {
+                if (_orderList[i].Id == opponentBhv.OrderId)
+                {
+                    _orderList.RemoveAt(i);
+                    break;
+                }
+            }
+            Destroy(opponentBhv.gameObject);
+            if (_orderList.Count == 1)
+            {
+                Invoke(nameof(EndFightVictory), 1.0f);
+            }
             return true;
         }));
+    }
+
+    private void EndFightVictory()
+    {
+        Constants.InputLocked = true;
+        Instantiator.NewOverTitle(string.Empty, "Sprites/MapTitle_2", AfterVictory, Direction.Down);
+        object AfterVictory(bool result)
+        {
+            StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+            {
+                PlayerPrefsHelper.SaveCharacter(Constants.PpPlayer, PlayerBhv.Character);
+                Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "BACK TO JOURNEY", 4.0f, TransitionFight, reverse: true);
+                object TransitionFight(bool transResult)
+                {
+                    NavigationService.LoadNextScene(Constants.SwipeScene);
+                    Constants.InputLocked = false;
+                    return transResult;
+                }
+                return true;
+            }));
+            return result;
+        }
     }
 }

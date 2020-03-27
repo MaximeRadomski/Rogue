@@ -169,6 +169,16 @@ public class GridBhv : MonoBehaviour
         return false;
     }
 
+    public bool IsDiagonalToPosition(int x, int y, int posX, int posY)
+    {
+        if ((x == posX + 1 && y == posX + 1)
+            || (x == posX + 1 && y == posX - 1)
+            || (x == posX - 1 && y == posX - 1)
+            || (x == posX - 1 && y == posX + 1))
+            return true;
+        return false;
+    }
+
     public CharacterBhv IsOpponentOnCell(int x, int y, bool searchForPlayerOpponents = false, bool searchForPlayer = false)
     {
         if (_currentOpponentBhvs != null)

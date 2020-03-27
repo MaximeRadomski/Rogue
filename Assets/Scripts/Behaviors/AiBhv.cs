@@ -133,8 +133,8 @@ public class AiBhv : MonoBehaviour
             (rangeZone = _gridBhv.IsOpponentInWeaponRangeAndZone(_characterBhv, i, _characterBhv.OpponentBhvs)) != null)
             {
                 _rangeClicked[i] = rangeZone;
-                _weaponsWeight[i] += 10;
-                canI += _weaponsWeight[i];
+                _weaponsWeight[i] += _characterBhv.Character.Weapons[i].BaseDamage;
+                canI += 10;
             }
         }
         return canI;
@@ -522,6 +522,9 @@ public class AiBhv : MonoBehaviour
     private int ShouldIGetClose()
     {
         int shouldI = 0;
+        int shouldIWeapon;
+        if ((shouldIWeapon = ShouldIWeaponThePlayer()) >= 50)
+            shouldI += shouldIWeapon;
         if (_characterBhv.Character.Hp == _characterBhv.Character.HpMax)
             shouldI += 20;
         if (_characterBhv.Pa <= 0)
@@ -568,7 +571,7 @@ public class AiBhv : MonoBehaviour
         return MoveToNextCell();
     }
 
-    private RangePos GetSmallestNearVisited(int x, int y, Vector3 actualPosition)
+    private RangePos GetSmallestNearVisited(int x, int y, Vector3 actualPosition, bool diagonally = false)
     {
         int smallestVisited = Constants.UnlimitedPm;
         RangePos tmpRangePos = new RangePos(-1, -1);
@@ -576,20 +579,34 @@ public class AiBhv : MonoBehaviour
         int tmpY = y;
         for (int i = 0; i < 4; ++i)
         {
-            if (i == 0) { tmpX = x; tmpY = y + 1; }
-            else if (i == 1) { tmpX = x + 1; tmpY = y; }
-            else if (i == 2) { tmpX = x; tmpY = y - 1; }
-            else if (i == 3) { tmpX = x - 1; tmpY = y; }
-            if (Helper.IsPosValid(tmpX, tmpY) &&
-            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Type == CellType.On &&
-            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited > 0 &&
-            _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited < smallestVisited)
+            if (!diagonally)
+            {
+                if (i == 0) { tmpX = x; tmpY = y + 1; }
+                else if (i == 1) { tmpX = x + 1; tmpY = y; }
+                else if (i == 2) { tmpX = x; tmpY = y - 1; }
+                else if (i == 3) { tmpX = x - 1; tmpY = y; }
+            }
+            else
+            {
+                if (i == 0) { tmpX = x + 1; tmpY = y + 1; }
+                else if (i == 1) { tmpX = x + 1; tmpY = y - 1; }
+                else if (i == 2) { tmpX = x - 1; tmpY = y - 1; }
+                else if (i == 3) { tmpX = x - 1; tmpY = y + 1; }
+            }
+            
+            if (Helper.IsPosValid(tmpX, tmpY)
+                && _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Type == CellType.On
+                && _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited > 0
+                && _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited < smallestVisited)
             {
                 smallestVisited = _gridBhv.Cells[tmpX, tmpY].GetComponent<CellBhv>().Visited;
                 tmpRangePos.X = tmpX;
                 tmpRangePos.Y = tmpY;
             }
         }
+        if (_gridBhv.Cells[tmpRangePos.X, tmpRangePos.Y].GetComponent<CellBhv>().Visited > _characterBhv.Pm
+            && diagonally == false) //If too far, go to diagonal
+            return GetSmallestNearVisited(x, y, actualPosition, true);
         if (tmpRangePos.X == -1 && tmpRangePos.Y == -1)
             return GetSmallestNearVisitedRay(x, y, actualPosition);
         return tmpRangePos;

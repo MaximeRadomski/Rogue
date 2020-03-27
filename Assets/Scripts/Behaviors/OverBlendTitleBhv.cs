@@ -19,7 +19,7 @@ public class OverBlendTitleBhv : MonoBehaviour
     private float _slideSpeed;
     private float _fadeSpeed;
 
-    public void SetPrivates(string title, System.Func<bool, object> resultAction, Direction mainDirection, Direction secondaryDirection)
+    public void SetPrivates(string text, string imagePath, System.Func<bool, object> resultAction, Direction mainDirection, Direction secondaryDirection)
     {
         _startPosition = new Vector3(0.0f, 0.0f, 0.0f);
         AddDirection(mainDirection);
@@ -27,18 +27,19 @@ public class OverBlendTitleBhv : MonoBehaviour
             AddDirection(secondaryDirection);
         _endPosition = new Vector3(-_startPosition.x, -_startPosition.y, 0.0f);
         var slidingBit = 0.01f;
-        _slideStartPosition = new Vector3(_startPosition.x * slidingBit, -_startPosition.y * slidingBit, 0.0f);
-        _slideEndPosition = new Vector3(_endPosition.x * slidingBit, -_endPosition.y * slidingBit, 0.0f);
+        _slideStartPosition = new Vector3(_startPosition.x * slidingBit, _startPosition.y * slidingBit, 0.0f);
+        _slideEndPosition = new Vector3(_endPosition.x * slidingBit, _endPosition.y * slidingBit, 0.0f);
         _state = 0;
         _resultAction = resultAction;
         _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        _spriteRenderer.sprite = Helper.GetSpriteFromSpriteSheet(imagePath);
         _spriteRenderer.color = Constants.ColorPlainTransparent;
         _backgroundRenderer = transform.Find("Background").GetComponent<SpriteRenderer>();
         _backgroundPlain = _backgroundRenderer.color;
         _backgroundTransparent = new Color(_backgroundPlain.r, _backgroundPlain.g, _backgroundPlain.b, 0.0f);
         _backgroundRenderer.color = _backgroundTransparent;
         _title = transform.Find("Title").GetComponent<TMPro.TextMeshPro>();
-        _title.text = title;
+        _title.text = text;
         _moveSpeed = 0.15f;
         _slideSpeed = 0.05f;
         _fadeSpeed = 0.2f;
