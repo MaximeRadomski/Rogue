@@ -45,12 +45,12 @@ public class Instantiator : MonoBehaviour
         tmpEffectInstance.GetComponent<SpriteRenderer>().sortingOrder = (layer * 100) + 50; //8 is skin waist order
         if (charPosition != null)
             tmpEffectInstance.transform.eulerAngles = new Vector3(0.0f, 0.0f, Helper.GetAngleFromTwoPositions(charPosition ?? new Vector3(), position) + 90);
-        Invoke(nameof(RemoveEffect), 1.0f);
-
-        void RemoveEffect()
+        StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () =>
         {
             Destroy(tmpEffectInstance);
-        }
+            return true;
+        }, lockInputWhile:false));
+
     }
 
     public void NewPopupCharacterStats(Character character, System.Func<bool> sceneUpdateAction, bool isInventoryAvailable = false, int tabId = 0)
@@ -61,12 +61,20 @@ public class Instantiator : MonoBehaviour
         tmpPopupInstance.GetComponent<PopupCharacterStatsBhv>().SetPrivates(character, sceneUpdateAction, isInventoryAvailable, tabId);
     }
 
-    public void NewPopupInventory(Character character, System.Func<bool> updateAction, System.Func<bool, object> resultAction = null)
+    public void NewPopupInventory(Character character, System.Func<bool> updateAction, System.Func<bool, object> resultAction = null, InventoryItem loot = null)
     {
         var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupInventory");
         var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
         Constants.IncreaseInputLayer(tmpPopupInstance.name);
-        tmpPopupInstance.GetComponent<PopupInventoryBhv>().SetPrivates(character, updateAction, resultAction);
+        tmpPopupInstance.GetComponent<PopupInventoryBhv>().SetPrivates(character, updateAction, resultAction, loot);
+    }
+
+    public void NewPopupLoot(Character character, System.Func<bool> updateAction, System.Func<bool, object> resultAction = null, InventoryItem loot = null)
+    {
+        var tmpPopupObject = Resources.Load<GameObject>("Prefabs/PopupLoot");
+        var tmpPopupInstance = Instantiate(tmpPopupObject, tmpPopupObject.transform.position, tmpPopupObject.transform.rotation);
+        Constants.IncreaseInputLayer(tmpPopupInstance.name);
+        tmpPopupInstance.GetComponent<PopupLootBhv>().SetPrivates(character, updateAction, resultAction, loot);
     }
 
     public void NewPopupMerchant(Character character, AlignmentMerchant alignment, InventoryItemType type, bool isBuying, System.Func<List<InventoryItem>, object> resultAction, List<InventoryItem> itemsForSale)

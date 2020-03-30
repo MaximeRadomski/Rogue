@@ -14,6 +14,7 @@ public class FightSceneBhv : SceneBhv
     public CharacterBhv PlayerBhv;
     private List<GameObject> _opponents;
     public List<CharacterBhv> OpponentBhvs;
+    private List<InventoryItem> _loot;
 
     private int _currentOrderId;
     private List<CharOrder> _orderList;
@@ -568,6 +569,7 @@ public class FightSceneBhv : SceneBhv
                 var rand = Random.Range(0, 100);
                 if (rand < Soul.RunAwayPercent + Journey.RunAwayPercent)
                 {
+                    PlayerPrefsHelper.SaveCharacter(Constants.PpPlayer, PlayerBhv.Character);
                     Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "RUNNING AWAY", 2.0f, TransitionRunAway, reverse: true);
                     object TransitionRunAway(bool transResult)
                     {
@@ -581,6 +583,57 @@ public class FightSceneBhv : SceneBhv
                     PassTurn();
                 }
             }
+            return result;
+        }
+    }
+
+    private void AddToLoot(CharacterBhv opponentBhv)
+    {
+        if (_loot == null)
+            _loot = new List<InventoryItem>();
+        var drop = Random.Range(0, 100);
+        if (drop > Soul.LootPercent)
+            return;
+        var type = Random.Range(0, Helper.EnumCount<InventoryItemType>());
+        InventoryItem item = null;
+        if (type == InventoryItemType.Weapon.GetHashCode())
+        {
+            item = opponentBhv.Character.Weapons[Random.Range(0, 2)];
+        }
+        else if (type == InventoryItemType.Skill.GetHashCode())
+        {
+            item = opponentBhv.Character.Skills[Random.Range(0, 2)];
+        }
+        else if (type == InventoryItemType.Item.GetHashCode())
+        {
+            item = ItemsData.GetRandomItem();
+        }
+        if (item == null)
+            return;
+        item.LootHistory = "Looted from " + opponentBhv.Character.Name + ",\na level " + opponentBhv.Character.Level + " " + opponentBhv.Character.Race;
+        _loot.Add(item);
+
+    }
+
+    private void GainLoot()
+    {
+        if (_loot != null && _loot.Count > 0)
+        {
+            var itemsNames = "";
+            foreach (var item in _loot)
+                itemsNames += "\n" + item.GetNameWithColor();
+            Instantiator.NewPopupYesNo("Loot", "You looted:" + itemsNames, string.Empty, "Ok", OnPositiveOutcome);
+        }
+        else
+        {
+            Instantiator.NewPopupYesNo("Loot", "No items were in a good enough shape in order to be looted", string.Empty, "Oh...", OnPositiveOutcome);
+        }
+        object OnPositiveOutcome(bool result)
+        {
+            if (_loot != null && _loot.Count > 0)
+                PlayerBhv.Character.AddToInventory(_loot, OnLootGained);
+            else
+                OnLootGained(false);
             return result;
         }
     }
@@ -600,6 +653,7 @@ public class FightSceneBhv : SceneBhv
                     break;
                 }
             }
+            AddToLoot(opponentBhv);
             Destroy(opponentBhv.gameObject);
             if (_orderList.Count == 1)
             {
@@ -612,22 +666,32 @@ public class FightSceneBhv : SceneBhv
     private void EndFightVictory()
     {
         Constants.InputLocked = true;
-        Instantiator.NewOverTitle(string.Empty, "Sprites/MapTitle_2", AfterVictory, Direction.Down);
+        Instantiator.NewOverTitle(string.Empty, "Sprites/MapTitle_2", AfterVictory, Direction.Up);
         object AfterVictory(bool result)
         {
             StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
             {
-                PlayerPrefsHelper.SaveCharacter(Constants.PpPlayer, PlayerBhv.Character);
-                Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "BACK TO JOURNEY", 4.0f, TransitionFight, reverse: true);
-                object TransitionFight(bool transResult)
-                {
-                    NavigationService.LoadNextScene(Constants.SwipeScene);
-                    Constants.InputLocked = false;
-                    return transResult;
-                }
+                GainLoot();
                 return true;
             }));
             return result;
         }
+    }
+
+    object OnLootGained(bool result)
+    {
+        StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+        {
+            PlayerPrefsHelper.SaveCharacter(Constants.PpPlayer, PlayerBhv.Character);
+            Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "BACK TO JOURNEY", 4.0f, TransitionFight, reverse: true);
+            object TransitionFight(bool transResult)
+            {
+                NavigationService.LoadNextScene(Constants.SwipeScene);
+                Constants.InputLocked = false;
+                return transResult;
+            }
+            return true;
+        }));
+        return result;
     }
 }

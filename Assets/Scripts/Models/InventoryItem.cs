@@ -12,6 +12,7 @@ public abstract class InventoryItem
     public string Story;
     public string PositiveAction = Constants.InventoryItemPositiveAction;
     public string NegativeAction = Constants.InventoryItemNegativeAction;
+    public string LootHistory;
     public int BasePrice;
 
     public int _weaponRandomPriceAdd = -1;

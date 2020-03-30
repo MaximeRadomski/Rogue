@@ -277,7 +277,7 @@ public class Character
         {
             if (result)
             {
-                instantiator.NewPopupInventory(this, null, OnManage);
+                instantiator.NewPopupInventory(this, null, OnManage, discardedItems[0]);
                 return true;
             }
             discardedItems.RemoveAt(0);

@@ -14,15 +14,17 @@ public class PopupInventoryBhv : StatsDisplayerBhv
     private List<Vector3> _buttonsPosition;
     private List<TMPro.TextMeshPro> _buttonsText;
     private TMPro.TextMeshPro _weightText;
+    private InventoryItem _loot;
 
     private System.Func<bool, object> _afterManageAction;
     private System.Func<bool> _sceneUpdateAction;
 
-    public void SetPrivates(Character character, System.Func<bool> sceneUpdateAction, System.Func<bool, object> afterManageAction)
+    public void SetPrivates(Character character, System.Func<bool> sceneUpdateAction, System.Func<bool, object> afterManageAction, InventoryItem loot)
     {
         _character = character;
         _sceneUpdateAction = sceneUpdateAction;
         _afterManageAction = afterManageAction;
+        _loot = loot;
         _selectedItem = 0;
         _selectedSprite = transform.Find("SelectedSprite").gameObject;
         _resetTabPosition = new Vector3(-10.0f, -10.0f, 0.0f);
@@ -53,6 +55,10 @@ public class PopupInventoryBhv : StatsDisplayerBhv
             transform.Find("StatsButton").GetComponent<ButtonBhv>().EndActionDelegate = SwitchToStats;
         else
             transform.Find("StatsButton").gameObject.SetActive(false);
+        if (_loot != null)
+            transform.Find("LootButton").GetComponent<ButtonBhv>().EndActionDelegate = SwitchToLoot;
+        else
+            transform.Find("LootButton").gameObject.SetActive(false);
         _buttons[0].GetComponent<ButtonBhv>().EndActionDelegate = PositiveAction;
         _buttons[1].GetComponent<ButtonBhv>().EndActionDelegate = NegativeAction;
         _weightText.gameObject.GetComponent<ButtonBhv>().EndActionDelegate = WeightAction;
@@ -195,6 +201,13 @@ public class PopupInventoryBhv : StatsDisplayerBhv
     {
         Constants.DecreaseInputLayer();
         _instantiator.NewPopupCharacterStats(_character, _sceneUpdateAction, isInventoryAvailable:true);
+        Destroy(gameObject);
+    }
+
+    private void SwitchToLoot()
+    {
+        Constants.DecreaseInputLayer();
+        _instantiator.NewPopupLoot(_character, _sceneUpdateAction, _afterManageAction, _loot);
         Destroy(gameObject);
     }
 

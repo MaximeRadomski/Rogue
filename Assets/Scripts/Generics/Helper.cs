@@ -78,12 +78,14 @@ public static class Helper
         return number + suffix;
     }
 
-    public static IEnumerator ExecuteAfterDelay(float delay, Func<object> func)
+    public static IEnumerator ExecuteAfterDelay(float delay, Func<object> func, bool lockInputWhile = true)
     {
-        Constants.InputLocked = true;
+        if (lockInputWhile)
+            Constants.InputLocked = true;
         yield return new WaitForSeconds(delay);
         func.Invoke();
-        Constants.InputLocked = false;
+        if (lockInputWhile)
+            Constants.InputLocked = false;
     }
 
     public static string TimeFromMinutes(int amount)
