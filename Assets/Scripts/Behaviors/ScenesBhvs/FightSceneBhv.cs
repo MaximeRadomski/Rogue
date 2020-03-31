@@ -626,7 +626,7 @@ public class FightSceneBhv : SceneBhv
         }
         else
         {
-            Instantiator.NewPopupYesNo("Loot", "No items were in a good enough shape in order to be looted", string.Empty, "Oh...", OnPositiveOutcome);
+            Instantiator.NewPopupYesNo("Loot", "No items were in a good enough shape in order to be looted...", string.Empty, "Oh...", OnPositiveOutcome);
         }
         object OnPositiveOutcome(bool result)
         {
@@ -644,23 +644,46 @@ public class FightSceneBhv : SceneBhv
         Instantiator.PopIcon(Helper.GetSpriteFromSpriteSheet("Sprites/IconsStatus_0"), opponentBhv.transform.position);
         StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () =>
         {
+            PlayerBhv.Character.GainGold(opponentBhv.Character.Gold);
             PlayerBhv.Character.GainXp(Helper.XpWorthForLevel(opponentBhv.Character.Level));
-            for (int i = 0; i < _orderList.Count; ++i)
-            {
-                if (_orderList[i].Id == opponentBhv.OrderId)
-                {
-                    _orderList.RemoveAt(i);
-                    break;
-                }
-            }
+            RemoveOpponentFromExistence(opponentBhv);
             AddToLoot(opponentBhv);
             Destroy(opponentBhv.gameObject);
+            --_currentOrderId;
             if (_orderList.Count == 1)
             {
                 Invoke(nameof(EndFightVictory), 1.0f);
             }
             return true;
         }));
+    }
+
+    private void RemoveOpponentFromExistence(CharacterBhv opponentBhv)
+    {
+        for (int i = 0; i < _orderList.Count; ++i)
+        {
+            if (_orderList[i].Id == opponentBhv.OrderId)
+            {
+                _orderList.RemoveAt(i);
+                break;
+            }
+        }
+        for (int i = 0; i < PlayerBhv.OpponentBhvs.Count; ++i)
+        {
+            if (PlayerBhv.OpponentBhvs[i].OrderId == opponentBhv.OrderId)
+            {
+                PlayerBhv.OpponentBhvs.RemoveAt(i);
+                break;
+            }
+        }
+        for (int i = 0; i < OpponentBhvs.Count; ++i)
+        {
+            if (OpponentBhvs[i].OrderId == opponentBhv.OrderId)
+            {
+                OpponentBhvs.RemoveAt(i);
+                break;
+            }
+        }
     }
 
     private void EndFightVictory()

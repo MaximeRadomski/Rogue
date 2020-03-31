@@ -151,7 +151,7 @@ public class Instantiator : MonoBehaviour
         var nbTextsOnThisPosition = 0;
         foreach (var tmpText in tmpTexts)
         {
-            if (tmpText.GetComponent<PoppingTextBhv>().StartingPosition == position)
+            if (Helper.VectorEqualsPrecision(tmpText.GetComponent<PoppingTextBhv>().StartingPosition, position, 0.01f))
                 ++nbTextsOnThisPosition;
         }
 

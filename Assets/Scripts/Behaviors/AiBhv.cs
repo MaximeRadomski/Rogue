@@ -523,7 +523,7 @@ public class AiBhv : MonoBehaviour
     {
         int shouldI = 0;
         int shouldIWeapon;
-        if ((shouldIWeapon = ShouldIWeaponThePlayer()) >= 50)
+        if ((shouldIWeapon = ShouldIWeaponThePlayer()) >= 60)
             shouldI += shouldIWeapon;
         if (_characterBhv.Character.Hp == _characterBhv.Character.HpMax)
             shouldI += 20;
@@ -604,11 +604,11 @@ public class AiBhv : MonoBehaviour
                 tmpRangePos.Y = tmpY;
             }
         }
+        if (tmpRangePos.X == -1 && tmpRangePos.Y == -1)
+            return GetSmallestNearVisitedRay(x, y, actualPosition);
         if (_gridBhv.Cells[tmpRangePos.X, tmpRangePos.Y].GetComponent<CellBhv>().Visited > _characterBhv.Pm
             && diagonally == false) //If too far, go to diagonal
             return GetSmallestNearVisited(x, y, actualPosition, true);
-        if (tmpRangePos.X == -1 && tmpRangePos.Y == -1)
-            return GetSmallestNearVisitedRay(x, y, actualPosition);
         return tmpRangePos;
     }
 

@@ -87,7 +87,7 @@ public class OverBlendTitleBhv : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, _endPosition, _moveSpeed);
             _spriteRenderer.color = Color.Lerp(_spriteRenderer.color, Constants.ColorPlainTransparent, _fadeSpeed);
             _backgroundRenderer.color = Color.Lerp(_backgroundRenderer.color, _backgroundTransparent, _fadeSpeed);
-            if (Helper.FloatEqualsPrecision(transform.position.x, _endPosition.x, 0.01f))
+            if (Helper.VectorEqualsPrecision(transform.position, _endPosition, 0.01f))
             {
                 transform.position = _endPosition;
                 _spriteRenderer.color = Constants.ColorPlainTransparent;
