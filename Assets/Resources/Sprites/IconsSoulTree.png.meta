@@ -74,6 +74,84 @@ TextureImporter:
   - first:
       213: -3523498342490300956
     second: IconsSoulTree_23
+  - first:
+      213: -2944917753602140796
+    second: IconsSoulTree_0
+  - first:
+      213: 931879257406104855
+    second: IconsSoulTree_1
+  - first:
+      213: -2018876614316466197
+    second: IconsSoulTree_2
+  - first:
+      213: 7708375750874956984
+    second: IconsSoulTree_3
+  - first:
+      213: -3353370748455371868
+    second: IconsSoulTree_4
+  - first:
+      213: -8760510523217241209
+    second: IconsSoulTree_5
+  - first:
+      213: -5856702355909254731
+    second: IconsSoulTree_6
+  - first:
+      213: 8819838000692416752
+    second: IconsSoulTree_7
+  - first:
+      213: 1366753563026187302
+    second: IconsSoulTree_8
+  - first:
+      213: 4935730839795870613
+    second: IconsSoulTree_9
+  - first:
+      213: 8731761503906282430
+    second: IconsSoulTree_10
+  - first:
+      213: -4535687988335125941
+    second: IconsSoulTree_11
+  - first:
+      213: 1331928754016772366
+    second: IconsSoulTree_12
+  - first:
+      213: 6381311406179401596
+    second: IconsSoulTree_13
+  - first:
+      213: 6429690658721935059
+    second: IconsSoulTree_14
+  - first:
+      213: 757616287135199708
+    second: IconsSoulTree_15
+  - first:
+      213: -3567836507242914932
+    second: IconsSoulTree_16
+  - first:
+      213: 8678654221027505870
+    second: IconsSoulTree_17
+  - first:
+      213: 6395069665601305957
+    second: IconsSoulTree_18
+  - first:
+      213: 5198555277244842705
+    second: IconsSoulTree_19
+  - first:
+      213: -7896539622113857179
+    second: IconsSoulTree_20
+  - first:
+      213: 6754212076085576077
+    second: IconsSoulTree_21
+  - first:
+      213: 4886031907848723037
+    second: IconsSoulTree_22
+  - first:
+      213: -7700730892827531512
+    second: IconsSoulTree_23
+  - first:
+      213: -2843934192644818950
+    second: IconsSoulTree_24
+  - first:
+      213: 7545043166243163142
+    second: IconsSoulTree_25
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -175,7 +253,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 60
+        y: 80
         width: 20
         height: 20
       alignment: 0
@@ -185,8 +263,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9f557e89adf34d750800000000000000
-      internalID: 6328753584463107577
+      spriteID: 4859dcbe7ec8127d0800000000000000
+      internalID: -2944917753602140796
       vertices: []
       indices: 
       edges: []
@@ -196,7 +274,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 20
-        y: 60
+        y: 80
         width: 20
         height: 20
       alignment: 0
@@ -206,8 +284,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 501a2ea343ac41c90800000000000000
-      internalID: -7199907578583539451
+      spriteID: 715ee3f4f33beec00800000000000000
+      internalID: 931879257406104855
       vertices: []
       indices: 
       edges: []
@@ -217,7 +295,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 40
-        y: 60
+        y: 80
         width: 20
         height: 20
       alignment: 0
@@ -227,8 +305,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9f0085afeed7b8670800000000000000
-      internalID: 8542059583594037497
+      spriteID: befd25e6a628bf3e0800000000000000
+      internalID: -2018876614316466197
       vertices: []
       indices: 
       edges: []
@@ -238,7 +316,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 60
-        y: 60
+        y: 80
         width: 20
         height: 20
       alignment: 0
@@ -248,8 +326,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 192923cbf026af810800000000000000
-      internalID: 1799858820809396881
+      spriteID: 8b4032a97e6a9fa60800000000000000
+      internalID: 7708375750874956984
       vertices: []
       indices: 
       edges: []
@@ -259,7 +337,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 80
-        y: 60
+        y: 80
         width: 20
         height: 20
       alignment: 0
@@ -269,8 +347,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 89dc0141da037fcc0800000000000000
-      internalID: -3677417050800599656
+      spriteID: 4abb12a321f6671d0800000000000000
+      internalID: -3353370748455371868
       vertices: []
       indices: 
       edges: []
@@ -280,6 +358,27 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 100
+        y: 80
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78b9094281a6c6680800000000000000
+      internalID: -8760510523217241209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconsSoulTree_6
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 60
         width: 20
         height: 20
@@ -290,29 +389,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a4cda4e084bb3aa80800000000000000
-      internalID: -8456709757119833014
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IconsSoulTree_6
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 40
-        width: 20
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: eaabbb1d6a3a594c0800000000000000
-      internalID: -4281335933867148626
+      spriteID: 5b1e5d8cc30d8bea0800000000000000
+      internalID: -5856702355909254731
       vertices: []
       indices: 
       edges: []
@@ -322,7 +400,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 20
-        y: 40
+        y: 60
         width: 20
         height: 20
       alignment: 0
@@ -332,8 +410,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5ec3a28560e257710800000000000000
-      internalID: 1690307839931333861
+      spriteID: 0f053cf9eeb566a70800000000000000
+      internalID: 8819838000692416752
       vertices: []
       indices: 
       edges: []
@@ -343,7 +421,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 40
-        y: 40
+        y: 60
         width: 20
         height: 20
       alignment: 0
@@ -353,8 +431,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: df4da6b769b729b30800000000000000
-      internalID: 4292629281083413757
+      spriteID: 624ecabcf1fa7f210800000000000000
+      internalID: 1366753563026187302
       vertices: []
       indices: 
       edges: []
@@ -364,7 +442,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 60
-        y: 40
+        y: 60
         width: 20
         height: 20
       alignment: 0
@@ -374,8 +452,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c76bcf570b1d86370800000000000000
-      internalID: 8316127267763566204
+      spriteID: 59b29f45c0d3f7440800000000000000
+      internalID: 4935730839795870613
       vertices: []
       indices: 
       edges: []
@@ -385,7 +463,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 80
-        y: 40
+        y: 60
         width: 20
         height: 20
       alignment: 0
@@ -395,8 +473,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d62fd5348db8e2e60800000000000000
-      internalID: 7939436954060190317
+      spriteID: ebbb3cf23d27d2970800000000000000
+      internalID: 8731761503906282430
       vertices: []
       indices: 
       edges: []
@@ -406,6 +484,27 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 100
+        y: 60
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4a57434ecffd01c0800000000000000
+      internalID: -4535687988335125941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconsSoulTree_12
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 40
         width: 20
         height: 20
@@ -416,29 +515,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 74a7c8be8350c1a30800000000000000
-      internalID: 4187227495575878215
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IconsSoulTree_12
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 20
-        width: 20
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0f9310219c2fccaf0800000000000000
-      internalID: -374657723574175248
+      spriteID: e016c491526fb7210800000000000000
+      internalID: 1331928754016772366
       vertices: []
       indices: 
       edges: []
@@ -448,6 +526,111 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 20
+        y: 40
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7fb87e0ae8fe8850800000000000000
+      internalID: 6381311406179401596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconsSoulTree_14
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 40
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3dea4c09699da3950800000000000000
+      internalID: 6429690658721935059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconsSoulTree_15
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 40
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd17eb6cff7938a00800000000000000
+      internalID: 757616287135199708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconsSoulTree_16
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 40
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8b9d11999f7c7ec0800000000000000
+      internalID: -3567836507242914932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconsSoulTree_17
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 40
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec6f9c45806c07870800000000000000
+      internalID: 8678654221027505870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconsSoulTree_18
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 20
         width: 20
         height: 20
@@ -458,14 +641,35 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bca51aa9165226260800000000000000
-      internalID: 7089269864570903243
+      spriteID: 56dba047af9dfb850800000000000000
+      internalID: 6395069665601305957
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IconsSoulTree_14
+      name: IconsSoulTree_19
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 20
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d249654b7af42840800000000000000
+      internalID: 5198555277244842705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconsSoulTree_20
       rect:
         serializedVersion: 2
         x: 40
@@ -479,14 +683,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fd761f1fa4d8cb3d0800000000000000
-      internalID: -3189519083058927649
+      spriteID: 5613b152d0bd96290800000000000000
+      internalID: -7896539622113857179
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IconsSoulTree_15
+      name: IconsSoulTree_21
       rect:
         serializedVersion: 2
         x: 60
@@ -500,14 +704,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aee3d494558203f10800000000000000
-      internalID: 2247340560825007850
+      spriteID: d810cbc0918cbbd50800000000000000
+      internalID: 6754212076085576077
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IconsSoulTree_16
+      name: IconsSoulTree_22
       rect:
         serializedVersion: 2
         x: 80
@@ -521,14 +725,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0f46afad9451b3540800000000000000
-      internalID: 4988604419193595120
+      spriteID: d5a1c84022caec340800000000000000
+      internalID: 4886031907848723037
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IconsSoulTree_17
+      name: IconsSoulTree_23
       rect:
         serializedVersion: 2
         x: 100
@@ -542,14 +746,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4572059ddd9ef5050800000000000000
-      internalID: 5791604784864700244
+      spriteID: 807632e9d02812590800000000000000
+      internalID: -7700730892827531512
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IconsSoulTree_18
+      name: IconsSoulTree_24
       rect:
         serializedVersion: 2
         x: 0
@@ -563,14 +767,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cceb5def008184350800000000000000
-      internalID: 6001072896025673420
+      spriteID: af771da6be05888d0800000000000000
+      internalID: -2843934192644818950
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IconsSoulTree_19
+      name: IconsSoulTree_25
       rect:
         serializedVersion: 2
         x: 20
@@ -584,92 +788,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a4b7ef26b3e2a47c0800000000000000
-      internalID: -4086402879286510774
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IconsSoulTree_20
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 0
-        width: 20
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0bca7e1d95f255f00800000000000000
-      internalID: 1104841346409540784
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IconsSoulTree_21
-      rect:
-        serializedVersion: 2
-        x: 60
-        y: 0
-        width: 20
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c11c059aa82ca4e40800000000000000
-      internalID: 5641535384036884764
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IconsSoulTree_22
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 0
-        width: 20
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8c647dd9c8d601810800000000000000
-      internalID: 1734006307248621256
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IconsSoulTree_23
-      rect:
-        serializedVersion: 2
-        x: 100
-        y: 0
-        width: 20
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4ed10310de40a1fc0800000000000000
-      internalID: -3523498342490300956
+      spriteID: 60c89eac8c065b860800000000000000
+      internalID: 7545043166243163142
       vertices: []
       indices: 
       edges: []

@@ -2,7 +2,9 @@
 {
     public int XpKept = 0;
     public static string[] SoulStats = { "RunAwayPercent", "LootPercent", "CritChance", "InvPlace", "InvWeight", "Gold", "XpKeptPercent",
-                                         "StartingLevel", "MerchantDeal", "Health", "Pm", "Pa"};
+                                         "StartingLevel", "MerchantDeal", "Health", "Pm", "Pa", "NbCharChoice"};
+    public static string[] SoulStatsNames = { "Cowardice", "Luckiness", "Precision", "Large Pockets", "Strong Back", "Birthright", "Heredity",
+                                              "Nature Strength", "Haggler", "Constitution", "Agility", "Attunement", "Diffusion"};
 
     // FIGHT
     public int RunAwayPercent = 25, RunAwayPercent_Add = 5, RunAwayPercent_Level = 0,   RunAwayPercent_Max = 10,    RunAwayPercent_Price = 80,  RunAwayPercent_Id = 0;
@@ -19,4 +21,5 @@
     public int Health = 0,          Health_Add = 20,        Health_Level = 0,           Health_Max = 5,             Health_Price = 300,         Health_Id = 9;
     public int Pm = 0,              Pm_Add = 1,             Pm_Level = 0,               Pm_Max = 1,                 Pm_Price = 20000,           Pm_Id = 10;
     public int Pa = 0,              Pa_Add = 1,             Pa_Level = 0,               Pa_Max = 2,                 Pa_Price = 15000,           Pa_Id = 11;
+    public int NbCharChoice = 1,    NbCharChoice_Add = 1,   NbCharChoice_Level = 0,     NbCharChoice_Max = 5,       NbCharChoice_Price = 500,   NbCharChoice_Id = 12;
 }

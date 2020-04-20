@@ -9,6 +9,7 @@ public class ButtonBhv : InputBhv
     public ActionDelegate DoActionDelegate;
     public ActionDelegate EndActionDelegate;
     public bool Disabled;
+    public bool StretchDisabled;
 
     private SpriteRenderer _spriteRenderer;
     private SoundControlerBhv _soundControler;
@@ -42,9 +43,12 @@ public class ButtonBhv : InputBhv
     public override void BeginAction(Vector2 initialTouchPosition)
     {
         _soundControler.PlaySound(_soundControler.ClickIn);
-        _isStretching = true;
+        if (!StretchDisabled)
+        {
+            _isStretching = true;
+            transform.localScale = _pressedScale;
+        }
         _isResetingColor = false;
-        transform.localScale = _pressedScale;
         if (_spriteRenderer != null)
             _spriteRenderer.color = _pressedColor;
         BeginActionDelegate?.Invoke();
