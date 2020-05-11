@@ -7,7 +7,6 @@ public class SoulTreeSceneBhv : SceneBhv
 {
     void Start()
     {
-        //PlayerPrefs.DeleteAll();
         SetPrivates();
         SetButtons();
     }
