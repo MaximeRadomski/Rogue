@@ -5,6 +5,13 @@
                                          "StartingLevel", "MerchantDeal", "Health", "Pm", "Pa", "NbCharChoice"};
     public static string[] SoulStatsNames = { "Cowardice", "Luckiness", "Precision", "Large Pockets", "Strong Back", "Birthright", "Heredity",
                                               "Nature Strength", "Haggler", "Constitution", "Agility", "Attunement", "Diffusion"};
+    public static string[] SoulStatsDescriptions = { "Add chance to run away.", "Increase your chance to loot after a fight.", "Increase your chance to deal critical hits.",
+                                                     "Add slots to your inventory.", "Increase the weight you can carry.", "Start your journey with some gold.",
+                                                     "Keep some of your experience after being killed.", "Find hosts with better starting levels.",
+                                                     "Bargain better deals with merchants.", "Find hosts with more health points.", "Grant you a mouvement points.",
+                                                     "Grant you action points.", "Increase the number of potential hosts."};
+    public static string[] SoulStatsUnit = { "%", "%", "%", "Slot", Constants.UnitWeight, Constants.UnitGold, Constants.UnitXp,
+                                             "Level", "%", "HP", "MP", "AP", "Choice"};
 
     // FIGHT
     public int RunAwayPercent = 25, RunAwayPercent_Add = 5, RunAwayPercent_Level = 0,   RunAwayPercent_Max = 10,    RunAwayPercent_Price = 80,  RunAwayPercent_Id = 0;

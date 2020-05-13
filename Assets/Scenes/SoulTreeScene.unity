@@ -15736,6 +15736,8 @@ MonoBehaviour:
   PauseMenu: {fileID: 0}
   Instantiator: {fileID: 0}
   OnRootPreviousScene: 
+  SoulTreeOnLevel: {fileID: -52015671536918616, guid: c2fffd914b2eaa942844fb2c70a2bdf5,
+    type: 3}
 --- !u!1 &1575830418
 GameObject:
   m_ObjectHideFlags: 0
