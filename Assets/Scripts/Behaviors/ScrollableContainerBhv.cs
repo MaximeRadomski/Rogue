@@ -52,6 +52,7 @@ public class ScrollableContainerBhv : InputBhv
 
     public override void CancelAction()
     {
-        
+        _initialTouchPosition = new Vector2();
+        _initialPosition = transform.position;
     }
 }

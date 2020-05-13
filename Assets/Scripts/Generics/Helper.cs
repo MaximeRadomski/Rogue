@@ -10,7 +10,8 @@ public static class Helper
 {
     public static object GetPropertyValue(this object tmpObject, string propertyName)
     {
-        return tmpObject.GetType().GetProperty(propertyName).GetValue(tmpObject, null);
+        var tmp = tmpObject.GetType().GetField(propertyName);
+        return tmp.GetValue(tmpObject);
     }
 
     public static float GetAngleFromTwoPositions(Vector3 start, Vector3 end)

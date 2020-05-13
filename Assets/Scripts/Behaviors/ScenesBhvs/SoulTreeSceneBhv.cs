@@ -20,6 +20,14 @@ public class SoulTreeSceneBhv : SceneBhv
     {
         base.SetPrivates();
         _soul = PlayerPrefsHelper.GetSoul();
+        // DEBUG //
+        _soul.RunAwayPercent_Level = 5;
+        _soul.LootPercent_Level = 4;
+        _soul.CritChance_Level = 3;
+        _soul.InvPlace_Level = 2;
+        _soul.InvWeight_Level = 1;
+        _soul.Xp = 894; // membres, parfois ça varie
+        // DEBUG //
     }
 
     private void SetButtons()
@@ -35,39 +43,34 @@ public class SoulTreeSceneBhv : SceneBhv
             var stat = Soul.SoulStats[i];
             HandleTreeBranchDisplay(stat);
         }
+        GameObject.Find("XpGained").GetComponent<TMPro.TextMeshPro>().text = _soul.Xp.ToString();
     }
 
     private void HandleTreeBranchDisplay(string stat)
     {
-        
-        var test = _soul.GetPropertyValue(stat + "_Level");
-        int statLevel = (int)test;
-        int statId = (int)_soul.GetType().GetProperty(stat + "_Id").GetValue(_soul, null);
-        int statPrice = (int)_soul.GetType().GetProperty(stat + "_Price").GetValue(_soul, null);
-        GameObject treeBranch = null;
+        int statLevel = (int)_soul.GetPropertyValue(stat + "_Level");
+        int statId = (int)_soul.GetPropertyValue(stat + "_Id");
+        int statPrice = (int)_soul.GetPropertyValue(stat + "_Price");
+        GameObject treeBranch = GameObject.Find(stat);
         for (int i = 1; i <= statLevel; ++i)
         {
             if (i == 1)
-            {
-                treeBranch = GameObject.Find(stat);
                 treeBranch.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsSoulTree_" + (statId * 2));
-            }
             treeBranch.transform.Find("Level" + i.ToString("D2")).GetComponent<SpriteRenderer>().sprite = SoulTreeOnLevel;
         }
         treeBranch.transform.Find("Level").GetComponent<TMPro.TextMeshPro>().text = statLevel.ToString();
-        if (_soul.XpKept > statPrice * (statLevel + 1))
+        var currentPrice = statPrice * (statLevel + 1);
+        if (_soul.Xp > currentPrice)
         {
             treeBranch.transform.Find("Price").GetComponent<TMPro.TextMeshPro>().enabled = false;
-            treeBranch.transform.Find("Price").GetComponent<BoxCollider2D>().enabled = false;
             treeBranch.transform.Find("Add").GetComponent<SpriteRenderer>().enabled = true;
-            treeBranch.transform.Find("Add").GetComponent<BoxCollider2D>().enabled = true;
         }
         else
         {
-            treeBranch.transform.Find("Price").GetComponent<TMPro.TextMeshPro>().enabled = true;
-            treeBranch.transform.Find("Price").GetComponent<BoxCollider2D>().enabled = true;
+            var priceObject = treeBranch.transform.Find("Price").GetComponent<TMPro.TextMeshPro>();
+            priceObject.enabled = true;
+            priceObject.text = currentPrice.ToString();
             treeBranch.transform.Find("Add").GetComponent<SpriteRenderer>().enabled = false;
-            treeBranch.transform.Find("Add").GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 

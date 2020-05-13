@@ -1,5 +1,6 @@
 ﻿public class Soul
 {
+    public int Xp = 0;
     public int XpKept = 0;
     public static string[] SoulStats = { "RunAwayPercent", "LootPercent", "CritChance", "InvPlace", "InvWeight", "Gold", "XpKeptPercent",
                                          "StartingLevel", "MerchantDeal", "Health", "Pm", "Pa", "NbCharChoice"};
