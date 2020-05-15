@@ -8,7 +8,7 @@ using UnityEngine;
 
 public static class Helper
 {
-    public static object GetPropertyValue(this object tmpObject, string propertyName)
+    public static object GetFieldValue(this object tmpObject, string propertyName)
     {
         var tmp = tmpObject.GetType().GetField(propertyName);
         return tmp.GetValue(tmpObject);

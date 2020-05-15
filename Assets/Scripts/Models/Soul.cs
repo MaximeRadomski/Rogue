@@ -11,8 +11,9 @@
                                                      "Keep some of your experience after being killed.", "Find hosts with better starting levels.",
                                                      "Bargain better deals with merchants.", "Find hosts with more health points.", "Grant you a mouvement points.",
                                                      "Grant you action points.", "Increase the number of potential hosts."};
-    public static string[] SoulStatsUnit = { "%", "%", "%", "Slot", Constants.UnitWeight, Constants.UnitGold, Constants.UnitXp,
-                                             "Level", "%", "HP", "MP", "AP", "Choice"};
+    public static string[] SoulStatsUnit = { "%", "%", "%", "Slot", Constants.UnitWeight, "<material=\"LongGold\">" + Constants.UnitGold + "</material>",
+                                             "<material=\"LongOrange\">" + Constants.UnitXp + "</material>", "Level", "%", "<material=\"LongRed\">HP</material>",
+                                             "<material=\"LongGreen\">MP</material>", "<material=\"LongBlue\">AP</material>", "Choice"};
 
     // FIGHT
     public int RunAwayPercent = 25, RunAwayPercent_Add = 5, RunAwayPercent_Level = 0,   RunAwayPercent_Max = 10,    RunAwayPercent_Price = 80,  RunAwayPercent_Id = 0;
