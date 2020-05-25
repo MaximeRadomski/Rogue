@@ -7,8 +7,6 @@ public class SoulTreeSceneBhv : SceneBhv
 {
     public Sprite SoulTreeOnLevel;
 
-    private Soul _soul;
-
     void Start()
     {
         SetPrivates();
@@ -19,15 +17,15 @@ public class SoulTreeSceneBhv : SceneBhv
     protected override void SetPrivates()
     {
         base.SetPrivates();
-        _soul = PlayerPrefsHelper.GetSoul();
+        Soul = PlayerPrefsHelper.GetSoul();
         // DEBUG //
-        _soul.RunAwayPercent_Level = 5;
-        _soul.LootPercent_Level = 4;
-        _soul.CritChance_Level = 3;
-        _soul.InvPlace_Level = 2;
-        _soul.InvWeight_Level = 1;
-        _soul.StartingLevel_Level = 1;
-        _soul.Xp = 894; // membres, parfois ça varie
+        Soul.RunAwayPercent_Level = 5;
+        Soul.LootPercent_Level = 4;
+        Soul.CritChance_Level = 3;
+        Soul.InvPlace_Level = 2;
+        Soul.InvWeight_Level = 1;
+        Soul.StartingLevel_Level = 1;
+        Soul.Xp = 894; // membres, parfois ça varie
         // DEBUG //
     }
 
@@ -53,15 +51,15 @@ public class SoulTreeSceneBhv : SceneBhv
             var stat = Soul.SoulStats[i];
             HandleTreeBranchDisplay(stat);
         }
-        GameObject.Find("XpGained").GetComponent<TMPro.TextMeshPro>().text = _soul.Xp.ToString();
+        GameObject.Find("XpGained").GetComponent<TMPro.TextMeshPro>().text = Soul.Xp.ToString();
     }
 
     private void HandleTreeBranchDisplay(string stat)
     {
-        int statLevel = (int)_soul.GetFieldValue(stat + "_Level");
-        int statMax = (int)_soul.GetFieldValue(stat + "_Max");
-        int statId = (int)_soul.GetFieldValue(stat + "_Id");
-        int statPrice = (int)_soul.GetFieldValue(stat + "_Price");
+        int statLevel = (int)Soul.GetFieldValue(stat + "_Level");
+        int statMax = (int)Soul.GetFieldValue(stat + "_Max");
+        int statId = (int)Soul.GetFieldValue(stat + "_Id");
+        int statPrice = (int)Soul.GetFieldValue(stat + "_Price");
         GameObject treeBranch = GameObject.Find(stat);
         for (int i = 1; i <= statLevel; ++i)
         {
@@ -79,7 +77,7 @@ public class SoulTreeSceneBhv : SceneBhv
             priceTextObject.text = "Max";
             addSpriteObject.enabled = false;
         }
-        else if (_soul.Xp > currentPrice)
+        else if (Soul.Xp > currentPrice)
         {
             priceTextObject.enabled = false;
             addSpriteObject.enabled = true;
@@ -95,11 +93,11 @@ public class SoulTreeSceneBhv : SceneBhv
     private void AddAction()
     {
         var stat = Constants.LastEndActionClickedName.Substring(Helper.CharacterAfterString(Constants.LastEndActionClickedName, "Add"));
-        int statId = (int)_soul.GetFieldValue(stat + "_Id");
-        int statLevel = (int)_soul.GetFieldValue(stat + "_Level");
-        int statMax = (int)_soul.GetFieldValue(stat + "_Max");
-        int statAdd = (int)_soul.GetFieldValue(stat + "_Add");
-        int statPrice = (int)_soul.GetFieldValue(stat + "_Price");
+        int statId = (int)Soul.GetFieldValue(stat + "_Id");
+        int statLevel = (int)Soul.GetFieldValue(stat + "_Level");
+        int statMax = (int)Soul.GetFieldValue(stat + "_Max");
+        int statAdd = (int)Soul.GetFieldValue(stat + "_Add");
+        int statPrice = (int)Soul.GetFieldValue(stat + "_Price");
         string statName = Soul.SoulStatsNames[statId];
         string statDescription = Soul.SoulStatsDescriptions[statId];
         string statUnit = Soul.SoulStatsUnit[statId];
@@ -108,7 +106,7 @@ public class SoulTreeSceneBhv : SceneBhv
         var currentPrice = statPrice * (statLevel + 1);
         var negative = "Cancel";
         var positive = "<material=\"LongOrange\">" + currentPrice.ToString() + "</material>";
-        if (statLevel == statMax || _soul.Xp < currentPrice)
+        if (statLevel == statMax || Soul.Xp < currentPrice)
         {
             negative = null;
             positive = "Back";
@@ -128,11 +126,11 @@ public class SoulTreeSceneBhv : SceneBhv
 
         object AfterAddAction(bool result)
         {
-            if (result == false || statLevel == statMax || _soul.Xp < currentPrice)
+            if (result == false || statLevel == statMax || Soul.Xp < currentPrice)
                 return result;
-            _soul.Xp -= currentPrice;
-            var levelFieldInfo = _soul.GetType().GetField(stat + "_Level");
-            levelFieldInfo.SetValue(_soul, statLevel + 1);
+            Soul.Xp -= currentPrice;
+            var levelFieldInfo = Soul.GetType().GetField(stat + "_Level");
+            levelFieldInfo.SetValue(Soul, statLevel + 1);
             UpdateTreeDisplay();
             return result;
         }
@@ -141,7 +139,7 @@ public class SoulTreeSceneBhv : SceneBhv
     public void GoToNextScene()
     {
         //_soul = PlayerPrefsHelper.GetSoul();
-        PlayerPrefsHelper.SaveSoul(_soul);
+        PlayerPrefsHelper.SaveSoul(Soul);
         //DEBUG CREATION
         //Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "YOUR NEW BODY AWAITS", 2.0f, OnToRaceChoiceScene);
         //DEBUG SELECTION

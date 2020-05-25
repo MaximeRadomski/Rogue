@@ -8,12 +8,6 @@ using UnityEngine;
 
 public static class Helper
 {
-    public static object GetFieldValue(this object tmpObject, string propertyName)
-    {
-        var tmp = tmpObject.GetType().GetField(propertyName);
-        return tmp.GetValue(tmpObject);
-    }
-
     public static float GetAngleFromTwoPositions(Vector3 start, Vector3 end)
     {
         float x = Mathf.Abs(start.x - end.x);

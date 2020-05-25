@@ -1,4 +1,6 @@
-﻿public class Soul
+﻿using System.Reflection;
+
+public class Soul
 {
     public int Xp = 0;
     public int XpKept = 0;
@@ -31,4 +33,18 @@
     public int Pm = 0,              Pm_Add = 1,             Pm_Level = 0,               Pm_Max = 1,                 Pm_Price = 20000,           Pm_Id = 10;
     public int Pa = 0,              Pa_Add = 1,             Pa_Level = 0,               Pa_Max = 2,                 Pa_Price = 15000,           Pa_Id = 11;
     public int NbCharChoice = 1,    NbCharChoice_Add = 1,   NbCharChoice_Level = 0,     NbCharChoice_Max = 5,       NbCharChoice_Price = 500,   NbCharChoice_Id = 12;
+
+    public int GetStatCurrentValue(string name)
+    {
+        int stat = (int)GetFieldValue(name);
+        int statLevel = (int)GetFieldValue(name + "_Level");
+        int statAdd = (int)GetFieldValue(name + "_Add");
+        return stat + (statLevel * statAdd);
+    }
+
+    public object GetFieldValue(string propertyName)
+    {
+        var tmp = GetType().GetField(propertyName);
+        return tmp.GetValue(this);
+    }
 }
