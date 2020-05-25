@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/RaceChoiceScene.unity
+    path: Assets/Scenes/CharacterSelectionScene.unity
     guid: 5c217d86f8a33d14bab0a24132a4bd4f
   - enabled: 1
     path: Assets/Scenes/SwipeScene.unity

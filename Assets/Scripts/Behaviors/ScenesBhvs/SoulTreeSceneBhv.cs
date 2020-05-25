@@ -34,7 +34,7 @@ public class SoulTreeSceneBhv : SceneBhv
     private void SetButtons()
     {
         int nbSoulStats = Soul.SoulStats.Length;
-        GameObject.Find("ButtonStart").GetComponent<ButtonBhv>().EndActionDelegate = GoToRaceChoiceScene;
+        GameObject.Find("ButtonStart").GetComponent<ButtonBhv>().EndActionDelegate = GoToNextScene;
         for (int i = 0; i < nbSoulStats; ++i)
         {
             var stat = Soul.SoulStats[i];
@@ -103,7 +103,7 @@ public class SoulTreeSceneBhv : SceneBhv
         string statName = Soul.SoulStatsNames[statId];
         string statDescription = Soul.SoulStatsDescriptions[statId];
         string statUnit = Soul.SoulStatsUnit[statId];
-        var fullTitle = statName + (statLevel > 0 ? " (" + statLevel.ToString() + ")" : string.Empty);
+        var fullTitle = statName + (statLevel > 0 ? "  " + statLevel.ToString() : string.Empty);
         var currentDescription = statDescription + MakeContent("Current:", " +" + (statAdd * statLevel) + " " + statUnit);
         var currentPrice = statPrice * (statLevel + 1);
         var negative = "Cancel";
@@ -138,9 +138,14 @@ public class SoulTreeSceneBhv : SceneBhv
         }
     }
 
-    public void GoToRaceChoiceScene()
+    public void GoToNextScene()
     {
-        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "YOUR NEW BODY AWAITS", 2.0f, OnToRaceChoiceScene);
+        //_soul = PlayerPrefsHelper.GetSoul();
+        PlayerPrefsHelper.SaveSoul(_soul);
+        //DEBUG CREATION
+        //Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "YOUR NEW BODY AWAITS", 2.0f, OnToRaceChoiceScene);
+        //DEBUG SELECTION
+        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "YOUR NEW BODY AWAITS", 2.0f, OnToCharacterSelectionScene);
     }
 
     protected string MakeContent(string libelle, string content)
@@ -151,6 +156,12 @@ public class SoulTreeSceneBhv : SceneBhv
     public object OnToRaceChoiceScene(bool result)
     {
         NavigationService.LoadNextScene(Constants.RaceChoiceScene);
+        return result;
+    }
+
+    public object OnToCharacterSelectionScene(bool result)
+    {
+        NavigationService.LoadNextScene(Constants.CharacterSelectionScene);
         return result;
     }
 }
