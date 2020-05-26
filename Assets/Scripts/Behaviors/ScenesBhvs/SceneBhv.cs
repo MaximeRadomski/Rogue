@@ -9,6 +9,7 @@ public abstract class SceneBhv : MonoBehaviour
     public PauseMenuBhv PauseMenu;
     public Instantiator Instantiator;
     public string OnRootPreviousScene = null;
+    public bool CanGoPreviousScene = true;
 
     protected virtual void SetPrivates()
     {
@@ -49,7 +50,7 @@ public abstract class SceneBhv : MonoBehaviour
                 Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "GAME OVER", 10.0f, TransitionGiveUp, reverse: true);
                 object TransitionGiveUp(bool transResult)
                 {
-                    NavigationService.NewRootScene(Constants.RaceChoiceScene);
+                    NavigationService.NewRootScene(Constants.SoulTreeScene);
                     return transResult;
                 }
             }

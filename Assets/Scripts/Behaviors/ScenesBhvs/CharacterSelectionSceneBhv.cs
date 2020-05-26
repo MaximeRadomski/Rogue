@@ -6,6 +6,7 @@ public class CharacterSelectionSceneBhv : SceneBhv
 {
     private int _nbCharChoice;
     private List<Character> _choices;
+    private Character _playerChoice;
 
     void Start()
     {
@@ -17,6 +18,7 @@ public class CharacterSelectionSceneBhv : SceneBhv
     protected override void SetPrivates()
     {
         base.SetPrivates();
+        CanGoPreviousScene = false;
         Soul = PlayerPrefsHelper.GetSoul();
         _nbCharChoice = Soul.GetStatCurrentValue(Soul.SoulStats[Soul.NbCharChoice_Id]);
         _choices = new List<Character>();
@@ -51,6 +53,15 @@ public class CharacterSelectionSceneBhv : SceneBhv
 
     private void GoToSwipeScene()
     {
+        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "YOUR JOURNEY BEGINS", 2.0f, OnToSwipeScene);
+    }
 
+    public object OnToSwipeScene(bool result)
+    {
+        Journey = new Journey(_playerChoice);
+        PlayerPrefsHelper.SaveJourney(Journey);
+        PlayerPrefsHelper.SaveCharacter(Constants.PpPlayer, _playerChoice);
+        NavigationService.LoadNextScene(Constants.SwipeScene);
+        return result;
     }
 }

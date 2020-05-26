@@ -50,7 +50,7 @@ public class InputControlerBhv : MonoBehaviour
                     else
                         _currentScene.Resume();
                 }
-                else
+                else if (_currentScene.CanGoPreviousScene)
                 {
                     NavigationService.LoadPreviousScene(_currentScene.OnRootPreviousScene);
                 }

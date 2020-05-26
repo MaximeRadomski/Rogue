@@ -9,7 +9,6 @@ public class RaceChoiceSceneBhv : SceneBhv
     private Character _playerCharacter;
     private GameObject _skinContainer;
     private TMPro.TextMeshPro _raceTextMesh;
-    private int _skinColor;
     private CharacterGender _gender;
     private CharacterRace _race;
     private List<ButtonBhv> _rightButtons;
@@ -25,6 +24,7 @@ public class RaceChoiceSceneBhv : SceneBhv
     protected override void SetPrivates()
     {
         base.SetPrivates();
+        OnRootPreviousScene = Constants.SoulTreeScene;
         _characterName = GameObject.Find("CharacterName").GetComponent<TMPro.TextMeshPro>();
         _skinContainer = GameObject.Find("SkinContainer");
         _raceTextMesh = GameObject.Find("RaceText").GetComponent<TMPro.TextMeshPro>();
@@ -45,6 +45,7 @@ public class RaceChoiceSceneBhv : SceneBhv
     private void SetButtons()
     {
         _characterName.gameObject.GetComponent<ButtonBhv>().EndActionDelegate = Instantiator.EditViaKeyboard;
+        GameObject.Find("ButtonBack").GetComponent<ButtonBhv>().EndActionDelegate = GoToPreviousScene;
         GameObject.Find("ButtonStart").GetComponent<ButtonBhv>().EndActionDelegate = GoToSwipeScene;
         GameObject.Find("ButtonRandomAll").GetComponent<ButtonBhv>().EndActionDelegate = RandomizeAll;
         GameObject.Find("ButtonRandomSkin").GetComponent<ButtonBhv>().EndActionDelegate = RandomizeSkin;
@@ -207,6 +208,11 @@ public class RaceChoiceSceneBhv : SceneBhv
             customPart = "Back";
             _skinContainer.transform.Find(customPart + bodyPart).GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/" + tmpRace + "/" + tmpRace + customGender + customPart + bodyPart + "_" + id);
         }
+    }
+
+    private void GoToPreviousScene()
+    {
+        NavigationService.OverBlendPreviousScene(OnRootPreviousScene);
     }
 
     public void GoToSwipeScene()

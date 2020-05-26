@@ -26,6 +26,21 @@ public static class NavigationService
         SceneManager.LoadScene(name);
     }
 
+    public static void OverBlendPreviousScene(string onRootPreviousScene = null)
+    {
+        var instantiator = GameObject.Find(Constants.GoSceneBhvName).GetComponent<Instantiator>();
+        if (instantiator != null)
+            instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, string.Empty, 10.0f, OnToPreviousScene, true);
+        else
+            LoadPreviousScene(onRootPreviousScene);
+
+        object OnToPreviousScene(bool result)
+        {
+            LoadPreviousScene(onRootPreviousScene);
+            return result;
+        }
+    }
+
     public static void LoadPreviousScene(string onRootPreviousScene = null)
     {
         var lastSeparator = _path.LastIndexOf('/');
