@@ -25,6 +25,7 @@ public class SoulTreeSceneBhv : SceneBhv
         Soul.InvPlace_Level = 2;
         Soul.InvWeight_Level = 1;
         Soul.StartingLevel_Level = 1;
+        Soul.NbCharChoice_Level = 3;
         Soul.Xp = 894; // membres, parfois ça varie
         // DEBUG //
     }

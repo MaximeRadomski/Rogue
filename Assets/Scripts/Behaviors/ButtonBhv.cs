@@ -33,8 +33,8 @@ public class ButtonBhv : InputBhv
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
 
         _isStretching = false;
-        _resetedScale = new Vector3(1.0f, 1.0f, 1.0f);
-        _pressedScale = new Vector3(1.2f, 1.1f, 1.0f);
+        _resetedScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        _pressedScale = new Vector3(transform.localScale.x * 1.2f, transform.localScale.y * 1.1f, transform.localScale.z * 1.0f);
         _isResetingColor = false;
         _resetedColor = Constants.ColorPlain;
         _pressedColor = new Color(0.7f, 0.7f, 0.7f, 1.0f);
