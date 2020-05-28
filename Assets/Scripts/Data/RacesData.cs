@@ -132,10 +132,13 @@ public static class RacesData
             Inventory = new List<InventoryItem> { ItemsData.GetRandomItem(),
                                                   WeaponsData.GetWeaponFromType(WeaponType.GreatSword),
                                                   SkillsData.GetSkillFromName(SkillsData.RareSkillsNames[0]) },
-            InventoryPlace = 4,
+            InventoryPlace = 3,
             WeightLimit = 40,
             SleepHoursNeeded = 8,
-            SleepRestorationPercent = 50
+            SleepRestorationPercent = 50,
+            RunAwayPercent = 25,
+            LootPercent = 25,
+            CritChancePercent = 0
         };
     }
 
@@ -169,7 +172,10 @@ public static class RacesData
             InventoryPlace = 6,
             WeightLimit = 20,
             SleepHoursNeeded = 2,
-            SleepRestorationPercent = 25
+            SleepRestorationPercent = 25,
+            RunAwayPercent = 35,
+            LootPercent = 40,
+            CritChancePercent = 0
         };
     }
 
@@ -198,7 +204,10 @@ public static class RacesData
             InventoryPlace = 2,
             WeightLimit = 20,
             SleepHoursNeeded = 10,
-            SleepRestorationPercent = 25
+            SleepRestorationPercent = 25,
+            RunAwayPercent = 30,
+            LootPercent = 10,
+            CritChancePercent = 0
         };
     }
 
@@ -226,10 +235,13 @@ public static class RacesData
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
             Inventory = new List<InventoryItem> { ItemsData.GetRandomItem(),
                                                   ItemsData.GetRandomItemFromRarity(Rarity.Magical) },
-            InventoryPlace = 3,
+            InventoryPlace = 4,
             WeightLimit = 60,
             SleepHoursNeeded = 7,
-            SleepRestorationPercent = 75
+            SleepRestorationPercent = 75,
+            RunAwayPercent = 10,
+            LootPercent = 50,
+            CritChancePercent = 0
         };
     }
 
@@ -259,7 +271,10 @@ public static class RacesData
             InventoryPlace = 3,
             WeightLimit = 80,
             SleepHoursNeeded = 12,
-            SleepRestorationPercent = 100
+            SleepRestorationPercent = 100,
+            RunAwayPercent = 15,
+            LootPercent = 15,
+            CritChancePercent = 0
         };
     }
 

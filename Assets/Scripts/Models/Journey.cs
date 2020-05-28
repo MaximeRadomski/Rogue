@@ -8,8 +8,6 @@ public class Journey
     public Biome Biome;
     public int Step;
 
-    public int RunAwayPercent = 0;
-
     public Journey(Character character)
     {
         Day = 1;

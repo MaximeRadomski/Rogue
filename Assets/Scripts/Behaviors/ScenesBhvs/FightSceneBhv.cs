@@ -559,7 +559,7 @@ public class FightSceneBhv : SceneBhv
     public virtual void RunAway()
     {
         Instantiator.NewPopupYesNo(Constants.YesNoTitle,
-            "You have " + (Soul.RunAwayPercent + Journey.RunAwayPercent) + "% chance of running away.\nDo you risk it?"
+            "You have " + PlayerBhv.Character.RunAwayPercent + "% chance of running away.\nDo you risk it?"
             , Constants.Cancel, "Risk it!", OnRiskRunningAway);
 
         object OnRiskRunningAway(bool result)
@@ -567,7 +567,7 @@ public class FightSceneBhv : SceneBhv
             if (result)
             {
                 var rand = Random.Range(0, 100);
-                if (rand < Soul.RunAwayPercent + Journey.RunAwayPercent)
+                if (rand < PlayerBhv.Character.RunAwayPercent)
                 {
                     PlayerPrefsHelper.SaveCharacter(Constants.PpPlayer, PlayerBhv.Character);
                     Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "RUNNING AWAY", 2.0f, TransitionRunAway, reverse: true);
@@ -592,7 +592,7 @@ public class FightSceneBhv : SceneBhv
         if (_loot == null)
             _loot = new List<InventoryItem>();
         var drop = Random.Range(0, 100);
-        if (drop > Soul.LootPercent)
+        if (drop > PlayerBhv.Character.LootPercent)
             return;
         var type = Random.Range(0, Helper.EnumCount<InventoryItemType>());
         InventoryItem item = null;

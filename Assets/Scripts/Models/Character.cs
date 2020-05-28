@@ -31,6 +31,9 @@ public class Character
     public int WeightLimit;
     public int SleepHoursNeeded;
     public int SleepRestorationPercent;
+    public int RunAwayPercent;
+    public int LootPercent;
+    public int CritChancePercent;
 
     public List<string> BodyParts;
 

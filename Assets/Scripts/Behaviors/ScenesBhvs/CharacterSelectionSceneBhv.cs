@@ -26,11 +26,26 @@ public class CharacterSelectionSceneBhv : SceneBhv
         _nbCharChoice = Soul.GetStatCurrentValue(Soul.SoulStats[Soul.NbCharChoice_Id]);
         _choices = new List<Character>();
         var maxStartingLevel = Soul.GetStatCurrentValue(Soul.SoulStats[Soul.StartingLevel_Id]);
+        var minStartingLevel = maxStartingLevel - 2 > 1 ? maxStartingLevel - 2 : 1;
         for (int i = 0; i < _nbCharChoice; ++i)
         {
-            _choices.Add(RacesData.GetCharacterFromRaceAndLevel((CharacterRace)Random.Range(0, Helper.EnumCount<CharacterRace>()),
-                                                                Random.Range(1, maxStartingLevel + 1)));
+            var tmpChoice = RacesData.GetCharacterFromRaceAndLevel((CharacterRace)Random.Range(0, Helper.EnumCount<CharacterRace>()),
+                                                                Random.Range(minStartingLevel, maxStartingLevel + 1), isPlayer: true);
+            tmpChoice.RunAwayPercent += Soul.GetStatCurrentValue(Soul.SoulStats[Soul.RunAwayPercent_Id]);
+            tmpChoice.LootPercent += Soul.GetStatCurrentValue(Soul.SoulStats[Soul.LootPercent_Id]);
+            tmpChoice.CritChancePercent += Soul.GetStatCurrentValue(Soul.SoulStats[Soul.CritChance_Id]);
+            tmpChoice.InventoryPlace += Soul.GetStatCurrentValue(Soul.SoulStats[Soul.InvPlace_Id]);
+            tmpChoice.InventoryPlace = tmpChoice.InventoryPlace > 6 ? 6 : tmpChoice.InventoryPlace;
+            tmpChoice.WeightLimit += Soul.GetStatCurrentValue(Soul.SoulStats[Soul.InvWeight_Id]);
+            tmpChoice.Gold += Soul.GetStatCurrentValue(Soul.SoulStats[Soul.Gold_Id]);
+            tmpChoice.HpMax += Soul.GetStatCurrentValue(Soul.SoulStats[Soul.Health_Id]);
+            tmpChoice.Hp = Helper.RandomIntMultipleOf(tmpChoice.HpMax / 2, tmpChoice.HpMax, 10);
+            tmpChoice.PmMax += Soul.GetStatCurrentValue(Soul.SoulStats[Soul.Pm_Id]);
+            tmpChoice.PaMax += Soul.GetStatCurrentValue(Soul.SoulStats[Soul.Pa_Id]);
+            _choices.Add(tmpChoice);
         }
+        Soul.XpKept = (int)(Soul.Xp * Helper.MultiplierFromPercent(0, Soul.GetStatCurrentValue(Soul.SoulStats[Soul.XpKeptPercent_Id])));
+        Soul.Xp = 0;
         _skinContainerBhv = GameObject.Find("SkinContainer").GetComponent<SkinContainerBhv>();
         _choiceSelector = GameObject.Find("ChoiceSelector");
         _characterFrame = GameObject.Find("CharacterFrame");

@@ -150,6 +150,11 @@ public static class Constants
         --InputLayer;
         if (InputTopLayerNames == null)
             return;
+        if (InputTopLayerNames.Count <= 0)
+        {
+            InputLayer = 0;
+            return;
+        }
         InputTopLayerNames.RemoveAt(InputTopLayerNames.Count - 1);
     }
 }

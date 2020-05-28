@@ -98,12 +98,15 @@ public class PopupCharacterStatsBhv : StatsDisplayerBhv
         statsList += MakeContent("Leveling Health: ", "+" + _character.LevelingHealthPercent + "%");
         statsList += MakeContent("Leveling Damages: ", "+" + _character.LevelingDamagePercent + "%");
         statsList += MakeContent("Diet: ", _character.Diet.ToString());
+        statsList += MakeContent("Chance of running away: ", _character.RunAwayPercent + "%");
+        statsList += MakeContent("Chance of looting: ", _character.LootPercent + "%");
 
         statsList += MakeTitle("Gender Characteristics");
         statsList += MakeContent("Weapons Damages: ", _character.Gender == CharacterGender.Female ? "-" + RacesData.GenderDamage + "%" : "+" + RacesData.GenderDamage + "%");
         statsList += MakeContent("Critical Damages: ", _character.Gender == CharacterGender.Male ? "-" + RacesData.GenderCritical + "%" : "+" + RacesData.GenderCritical + "%");
 
         statsList += MakeTitle("Weapons Handling");
+        statsList += MakeContent("Critical Chance: ", _character.CritChancePercent + "%");
         statsList += MakeContent("Fav Weapons Damages: ", "+0%");
         statsList += MakeContent("Other Weapons Damages: ", "-" + RacesData.NotRaceWeaponDamagePercent + "%");
 
