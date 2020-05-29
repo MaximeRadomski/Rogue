@@ -979,6 +979,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
+  ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
 --- !u!61 &73973375
@@ -4340,6 +4341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
+  ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
 --- !u!61 &424970458
@@ -4465,6 +4467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
+  ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
 --- !u!61 &425162048
@@ -6735,6 +6738,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
+  ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
 --- !u!61 &567626597
@@ -7710,6 +7714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
+  ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
 --- !u!61 &641148126
@@ -9290,6 +9295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
+  ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
 --- !u!61 &767181627
@@ -10117,6 +10123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
+  ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
 --- !u!61 &915228798
@@ -11184,6 +11191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
+  ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
 --- !u!61 &966085519
@@ -12682,6 +12690,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
+  ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
 --- !u!61 &1101979026
@@ -12990,6 +12999,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
+  ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
 --- !u!61 &1134613830
@@ -13143,6 +13153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
+  ForcedLayer: 0
   MinX: 0
   MinY: 0
   MaxX: 0
@@ -14150,6 +14161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
+  ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
 --- !u!61 &1351252913
@@ -14509,6 +14521,7 @@ GameObject:
   - component: {fileID: 1400937532}
   - component: {fileID: 1400937531}
   - component: {fileID: 1400937533}
+  - component: {fileID: 1400937534}
   m_Layer: 0
   m_Name: TitleBackground
   m_TagString: Untagged
@@ -14598,6 +14611,32 @@ MonoBehaviour:
   XOffset: 0
   YOffset: -0.444
   DontActivateOnStart: 0
+--- !u!61 &1400937534
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400937530}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.057}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 6.388889, y: 0.8888889}
+    newSize: {x: 2.3, y: 0.32}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 6.388, y: 0.7742219}
+  m_EdgeRadius: 0
 --- !u!1 &1408251007
 GameObject:
   m_ObjectHideFlags: 0
@@ -16113,7 +16152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be28743872a9e44f9ac47db0ba7a714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Layer: 0
+  Layer: 1
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
 --- !u!61 &1630266440
@@ -16239,6 +16279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
+  ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
 --- !u!61 &1638957504
@@ -17154,7 +17195,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be28743872a9e44f9ac47db0ba7a714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Layer: 0
+  Layer: 1
+  ForcedLayer: 1
   Disabled: 0
   StretchDisabled: 0
 --- !u!61 &1719921887
@@ -18524,6 +18566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Layer: 0
+  ForcedLayer: 0
   Disabled: 0
   StretchDisabled: 0
 --- !u!61 &1909210648
@@ -18614,8 +18657,9 @@ GameObject:
   - component: {fileID: 1919635972}
   - component: {fileID: 1919635971}
   - component: {fileID: 1919635970}
+  - component: {fileID: 1919635973}
   m_Layer: 0
-  m_Name: ButtonsBackground
+  m_Name: BotButtonsBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18697,12 +18741,38 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1919635969}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0029997826, y: -3.75, z: 0}
+  m_LocalPosition: {x: 0, y: -3.75, z: 0}
   m_LocalScale: {x: 8, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1919635973
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919635969}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.041}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.916}
+  m_EdgeRadius: 0
 --- !u!1 &1921125620
 GameObject:
   m_ObjectHideFlags: 0

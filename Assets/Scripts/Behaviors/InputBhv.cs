@@ -5,10 +5,12 @@ using UnityEngine;
 public abstract class InputBhv : MonoBehaviour
 {
     public int Layer = 0;
+    public bool ForcedLayer = false;
 
     public virtual void SetPrivates()
     {
-        Layer = Constants.InputLayer;
+        if (!ForcedLayer)
+            Layer = Constants.InputLayer;
     }
 
     public abstract void BeginAction(Vector2 initialTouchPosition);

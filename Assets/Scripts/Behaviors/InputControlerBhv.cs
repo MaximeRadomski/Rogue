@@ -72,7 +72,10 @@ public class InputControlerBhv : MonoBehaviour
                     {
                         CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
                         _currentInput = hitInformation.transform.gameObject.GetComponent<InputBhv>();
-                        if (_currentInput?.Layer < currentFrameInputLayer)
+                        if (_currentInput == null
+                            || _currentInput.Layer < currentFrameInputLayer
+                            || IsTheLowestInput(_currentInput, hitsInformation)
+                            || IsUnderSprite(_currentInput, hitsInformation))
                             continue;
                         if (Input.GetTouch(i).phase == TouchPhase.Began)
                         {
@@ -111,7 +114,10 @@ public class InputControlerBhv : MonoBehaviour
                     {
                         CancelCurrentObjectIfNewBeforeEnd(hitInformation.transform.gameObject);
                         _currentInput = hitInformation.transform.gameObject.GetComponent<InputBhv>();
-                        if (_currentInput?.Layer < currentFrameInputLayer)
+                        if (_currentInput == null
+                            || _currentInput.Layer < currentFrameInputLayer
+                            || IsTheLowestInput(_currentInput, hitsInformation)
+                            || IsUnderSprite(_currentInput, hitsInformation))
                             continue;
                         if (_beginPhase)
                         {
@@ -145,5 +151,32 @@ public class InputControlerBhv : MonoBehaviour
         _currentInput.CancelAction();
         _currentInput = null;
         //_lastDownInput = null; Not Sure
+    }
+
+    private bool IsTheLowestInput(InputBhv currentInput, RaycastHit2D[] hitsInformation)
+    {
+        int highest = -1;
+        foreach (var hitInformation in hitsInformation)
+        {
+            var tmpInput = hitInformation.transform.gameObject.GetComponent<InputBhv>();
+            if (tmpInput != null && tmpInput.Layer > highest)
+                highest = tmpInput.Layer;
+        }
+        return currentInput.Layer < highest;
+    }
+
+    private bool IsUnderSprite(InputBhv currentInput, RaycastHit2D[] hitsInformation)
+    {
+        var currentSprite = currentInput.GetComponent<SpriteRenderer>();
+        if (currentSprite == null)
+            return false;
+        foreach (var hitInformation in hitsInformation)
+        {
+            var tmpSprite = hitInformation.transform.gameObject.GetComponent<SpriteRenderer>();
+            if (tmpSprite != null &&
+                SortingLayer.GetLayerValueFromName(tmpSprite.sortingLayerName) > SortingLayer.GetLayerValueFromName(currentSprite.sortingLayerName))
+                return true;
+        }
+        return false;
     }
 }
