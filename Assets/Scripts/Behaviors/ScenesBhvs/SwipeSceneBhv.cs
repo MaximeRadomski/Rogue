@@ -81,10 +81,11 @@ public class SwipeSceneBhv : SceneBhv
         PauseMenu.Buttons[1].EndActionDelegate = GiveUp;
         PauseMenu.TextMeshes[1].text = "Give Up";
         PauseMenu.Buttons[2].EndActionDelegate = Settings;
-        PauseMenu.TextMeshes[2].text = "Settings";
-        PauseMenu.Buttons[3].EndActionDelegate = Exit;
-        PauseMenu.TextMeshes[3].text = "Exit";
-        PauseMenu.Buttons[4].gameObject.SetActive(false);
+        PauseMenu.TextMeshes[2].text = "Soul Tree";
+        PauseMenu.Buttons[3].EndActionDelegate = SoulTree;
+        PauseMenu.TextMeshes[3].text = "Settings";
+        PauseMenu.Buttons[4].EndActionDelegate = Exit;
+        PauseMenu.TextMeshes[4].text = "Exit";
     }
 
     public void NewCard(int minutesPassed, bool regenerate = true)

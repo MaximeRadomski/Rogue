@@ -63,6 +63,11 @@ public abstract class SceneBhv : MonoBehaviour
         
     }
 
+    protected virtual void SoulTree()
+    {
+
+    }
+
     protected virtual void Exit()
     {
         Instantiator.NewPopupYesNo(Constants.YesNoTitle,

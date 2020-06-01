@@ -61,7 +61,7 @@ public class CardInnBhv : CardBhv
 
     private object AfterVenturePositive(bool result)
     {
-        _instantiator.NewOverBlend(OverBlendType.StartLoadingEndAction, "DEEP SLEEP", 0.75f, AfterSleep);
+        _instantiator.NewOverBlend(OverBlendType.StartLoadingEndAction, "DEEP SLEEP", 1f, AfterSleep);
         return result;
     }
 
@@ -69,7 +69,7 @@ public class CardInnBhv : CardBhv
     {
         _character.GainHp(_hpRecovered);
         _character.LooseGold(_innFee);
-        _swipeSceneBhv.NewCard(_minutesNeededVenturePositive);
+        _swipeSceneBhv.NewCard(_minutesNeededVenturePositive, false);
         return result;
     }
 
