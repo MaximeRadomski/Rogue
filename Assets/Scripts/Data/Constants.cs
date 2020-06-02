@@ -59,6 +59,7 @@ public static class Constants
 
     //  SCENES  //
     public const string SoulTreeScene = "SoulTreeScene";
+    public const string SoulScene = "SoulScene";
     public const string RaceChoiceScene = "RaceChoiceScene";
     public const string CharacterSelectionScene = "CharacterSelectionScene";
     public const string SwipeScene = "SwipeScene";

@@ -47,4 +47,17 @@ public class Soul
         var tmp = GetType().GetField(propertyName);
         return tmp.GetValue(this);
     }
+
+    public bool HasAtLeastOneLeveledStat()
+    {
+        int nbSoulStats = SoulStats.Length;
+        for (int i = 0; i < nbSoulStats; ++i)
+        {
+            var stat = Soul.SoulStats[i];
+            int statLevel = (int)this.GetFieldValue(stat + "_Level");
+            if (statLevel > 0)
+                return true;
+        }
+        return false;
+    }
 }

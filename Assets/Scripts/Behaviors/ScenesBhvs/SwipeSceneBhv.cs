@@ -80,12 +80,15 @@ public class SwipeSceneBhv : SceneBhv
         PauseMenu.TextMeshes[0].text = "Resume";
         PauseMenu.Buttons[1].EndActionDelegate = GiveUp;
         PauseMenu.TextMeshes[1].text = "Give Up";
-        PauseMenu.Buttons[2].EndActionDelegate = Settings;
-        PauseMenu.TextMeshes[2].text = "Soul Tree";
-        PauseMenu.Buttons[3].EndActionDelegate = SoulTree;
+        PauseMenu.Buttons[2].EndActionDelegate = GoToSoul;
+        PauseMenu.TextMeshes[2].text = "Soul";
+        PauseMenu.Buttons[3].EndActionDelegate = Settings;
         PauseMenu.TextMeshes[3].text = "Settings";
         PauseMenu.Buttons[4].EndActionDelegate = Exit;
         PauseMenu.TextMeshes[4].text = "Exit";
+
+        if (!Soul.HasAtLeastOneLeveledStat())
+            PauseMenu.Buttons[2].DisableButton();
     }
 
     public void NewCard(int minutesPassed, bool regenerate = true)
@@ -239,5 +242,17 @@ public class SwipeSceneBhv : SceneBhv
     {
         UpdateDisplayJourneyAndCharacterStats();
         return true;
+    }
+
+    private void GoToSoul()
+    {
+        Resume();
+        Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "SOUL", 5.0f, OnSoul);
+    }
+
+    public object OnSoul(bool result)
+    {
+        NavigationService.LoadNextScene(Constants.SoulScene);
+        return result;
     }
 }

@@ -329,4 +329,14 @@ public class Instantiator : MonoBehaviour
         cellBhv.SetPrivates();
         return cellInstance;
     }
+
+    public GameObject NewSoulStat(Vector3 position, int level, int id, string effect)
+    {
+        var soulStat = Resources.Load<GameObject>("Prefabs/SoulStat");
+        var cellInstance = Instantiate(soulStat, position, soulStat.transform.rotation);
+        cellInstance.transform.Find("Level").GetComponent<TMPro.TextMeshPro>().text = level.ToString();
+        cellInstance.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = Helper.GetSpriteFromSpriteSheet("Sprites/IconsSoulTree_" + (id * 2));
+        cellInstance.transform.Find("Effect").GetComponent<TMPro.TextMeshPro>().text = effect;
+        return cellInstance;
+    }
 }

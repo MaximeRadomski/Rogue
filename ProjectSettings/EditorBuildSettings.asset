@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SoulTreeScene.unity
     guid: 93950e5267b2c734c8215b17f2b3cfcd
   - enabled: 1
+    path: Assets/Scenes/SoulScene.unity
+    guid: 4d893e48608dffb439d4237dbb45952b
+  - enabled: 1
     path: Assets/Scenes/CharacterSelectionScene.unity
     guid: 5c217d86f8a33d14bab0a24132a4bd4f
   - enabled: 1
