@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class PlayerPrefsHelper : MonoBehaviour
@@ -92,5 +94,22 @@ public class PlayerPrefsHelper : MonoBehaviour
         if (soul == null)
             soul = new Soul();
         return soul;
+    }
+
+    public static void SaveToXML<T>(object tmpObject, string name)
+    {
+        XmlSerializer serializer = new XmlSerializer(typeof(T));
+        FileStream stream = new FileStream(Application.dataPath + "/XML/" + name + ".xml", FileMode.Create);
+        serializer.Serialize(stream, tmpObject);
+        stream.Close();
+    }
+
+    public static T GetFromXML<T>(string name)
+    {
+        XmlSerializer serializer = new XmlSerializer(typeof(T));
+        FileStream stream = new FileStream(Application.dataPath + "/XML/" + name + ".xml", FileMode.Open);
+        var tmpObject = (T)serializer.Deserialize(stream);
+        stream.Close();
+        return tmpObject;
     }
 }

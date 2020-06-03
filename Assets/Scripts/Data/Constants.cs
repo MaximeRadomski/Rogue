@@ -122,6 +122,7 @@ public static class Constants
     public static string LastEndActionClickedName = null;
     public static string ClickHistory = null;
     public static List<string> InputTopLayerNames = null;
+    public static bool CardsInCache = false;
 
     public static void SetLastEndActionClickedName(string name)
     {

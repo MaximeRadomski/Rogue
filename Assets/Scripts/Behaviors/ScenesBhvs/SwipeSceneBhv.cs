@@ -54,24 +54,36 @@ public class SwipeSceneBhv : SceneBhv
         GameObject.Find("ButtonPause").GetComponent<ButtonBhv>().EndActionDelegate = Pause;
         GameObject.Find("CharacterButton").GetComponent<ButtonBhv>().EndActionDelegate = ShowCharacterStats;
         GameObject.Find("ButtonInventory").GetComponent<ButtonBhv>().EndActionDelegate = ShowInventory;
-        if (Journey.Step > Journey.Biome.Steps) //Just '<' because it instantiates one in advance
+        if (Constants.CardsInCache == true)
         {
-            ++_currentBiomeChoice;
-            Instantiator.NewCardBiome(1, Journey.Day, Journey.Biome, _currentBiomeChoice, Journey.Biome.Destinations, _playerCharacter);
-            if (Journey.Biome.Destinations > 1)
-            {
-                ++_currentBiomeChoice;
-                Instantiator.NewCardBiome(0, Journey.Day, Journey.Biome, _currentBiomeChoice, Journey.Biome.Destinations, _playerCharacter);
-            }
-            else
-            {
-                _avoidBhv.DisableButton();
-            }
+            var tmp = GameObject.Find("Card1");
+            tmp.transform.position -= new Vector3(-10.0f, 10.0f, 0.0f);
+            tmp = GameObject.Find("Card0");
+            if (tmp != null)
+                tmp.transform.position -= new Vector3(-10.0f, 10.0f, 0.0f);
+            Constants.CardsInCache = false;
         }
         else
         {
-            Instantiator.NewRandomCard(1, Journey.Day, Journey.Biome, _playerCharacter);
-            Instantiator.NewRandomCard(0, Journey.Day, Journey.Biome, _playerCharacter);
+            if (Journey.Step > Journey.Biome.Steps) //Just '<' because it instantiates one in advance
+            {
+                ++_currentBiomeChoice;
+                Instantiator.NewCardBiome(1, Journey.Day, Journey.Biome, _currentBiomeChoice, Journey.Biome.Destinations, _playerCharacter);
+                if (Journey.Biome.Destinations > 1)
+                {
+                    ++_currentBiomeChoice;
+                    Instantiator.NewCardBiome(0, Journey.Day, Journey.Biome, _currentBiomeChoice, Journey.Biome.Destinations, _playerCharacter);
+                }
+                else
+                {
+                    _avoidBhv.DisableButton();
+                }
+            }
+            else
+            {
+                Instantiator.NewRandomCard(1, Journey.Day, Journey.Biome, _playerCharacter);
+                Instantiator.NewRandomCard(0, Journey.Day, Journey.Biome, _playerCharacter);
+            }
         }
         _currentCard = GameObject.Find("Card1");
         _avoidBhv.EndActionDelegate = _currentCard.GetComponent<CardBhv>().Avoid;
@@ -252,6 +264,16 @@ public class SwipeSceneBhv : SceneBhv
 
     public object OnSoul(bool result)
     {
+        var tmp = GameObject.Find("Card1");
+        tmp.transform.position += new Vector3(-10.0f, 10.0f, 0.0f);
+        DontDestroyOnLoad(tmp);
+        tmp = GameObject.Find("Card0");
+        if (tmp != null)
+        {
+            tmp.transform.position += new Vector3(-10.0f, 10.0f, 0.0f);
+            DontDestroyOnLoad(tmp);
+        }
+        Constants.CardsInCache = true;
         NavigationService.LoadNextScene(Constants.SoulScene);
         return result;
     }

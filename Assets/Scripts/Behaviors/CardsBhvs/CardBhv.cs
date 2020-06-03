@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public abstract class CardBhv : InputBhv
 {
@@ -35,6 +36,7 @@ public abstract class CardBhv : InputBhv
     public virtual void SetPrivates(int id, int day, Biome biome, Character character, Instantiator instantiator)
     {
         SetPrivates();
+        SceneManager.sceneLoaded += OnSceneLoad;
         _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _cacheSpriteRenderer = transform.Find("Cache")?.GetComponent<SpriteRenderer>();
@@ -66,6 +68,12 @@ public abstract class CardBhv : InputBhv
         }
         else
             _isStretching = true;
+    }
+
+    private void OnSceneLoad(Scene arg0, LoadSceneMode arg1)
+    {
+        _soundControler = GameObject.Find(Constants.TagSoundControler).GetComponent<SoundControlerBhv>();
+        _swipeSceneBhv = GameObject.Find(Constants.GoSceneBhvName).GetComponent<SwipeSceneBhv>();
     }
 
     protected virtual void HandleSortingLayerAndOrder(int id)
