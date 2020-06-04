@@ -42,6 +42,8 @@ public class ButtonBhv : InputBhv
 
     public override void BeginAction(Vector2 initialTouchPosition)
     {
+        if (_soundControler == null)
+            SetPrivates();
         _soundControler.PlaySound(_soundControler.ClickIn);
         if (!StretchDisabled)
         {

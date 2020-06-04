@@ -22,7 +22,7 @@ public static class NavigationService
     public static void LoadNextScene(string name)
     {
         _path += "/" + name;
-        Debug.Log("    [DEBUG]    Path = " + _path);
+        //Debug.Log("    [DEBUG]    Path = " + _path);
         SceneManager.LoadScene(name);
     }
 
@@ -55,7 +55,7 @@ public static class NavigationService
         _path = _path.Substring(0, lastSeparator);
         lastSeparator = _path.LastIndexOf('/');
         var previousScene = _path.Substring(lastSeparator + 1);
-        Debug.Log("    [DEBUG]    Path = " + _path);
+        //Debug.Log("    [DEBUG]    Path = " + _path);
         SceneManager.LoadScene(previousScene);
     }
 

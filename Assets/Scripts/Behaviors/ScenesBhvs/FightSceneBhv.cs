@@ -649,7 +649,6 @@ public class FightSceneBhv : SceneBhv
             RemoveOpponentFromExistence(opponentBhv);
             AddToLoot(opponentBhv);
             Destroy(opponentBhv.gameObject);
-            --_currentOrderId;
             if (_orderList.Count == 1)
             {
                 Invoke(nameof(EndFightVictory), 1.0f);
@@ -664,6 +663,8 @@ public class FightSceneBhv : SceneBhv
         {
             if (_orderList[i].Id == opponentBhv.OrderId)
             {
+                if (i < _currentOrderId)
+                    --_currentOrderId;
                 _orderList.RemoveAt(i);
                 break;
             }

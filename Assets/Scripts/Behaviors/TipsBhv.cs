@@ -37,6 +37,6 @@ public class TipsBhv : MonoBehaviour
         int id = Random.Range(0, _remainingTips.Count);
         _textMesh.text = Constants.TipsAndTricks[_remainingTips[id]];
         _remainingTips.RemoveAt(id);
-        Debug.Log(_remainingTips);
+        //Debug.Log(_remainingTips);
     }
 }

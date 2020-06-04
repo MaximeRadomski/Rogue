@@ -49,11 +49,11 @@ public class PlayerPrefsHelper : MonoBehaviour
                 PlayerPrefs.SetString(characterName + Constants.PpInventoryItem + i, JsonUtility.ToJson(character.Inventory[i]));
             PlayerPrefs.SetInt(characterName + Constants.PpInventoryItem + i + "Type", character.Inventory[i].InventoryItemType.GetHashCode());
         }
-        Debug.Log("Pp" + characterName + " :\n" + PlayerPrefs.GetString(characterName) + "\n\n" +
-            "Pp" + characterName + Constants.PpWeapon1 + " :\n" + PlayerPrefs.GetString(characterName + Constants.PpWeapon1) + "\n\n" +
-            "Pp" + characterName + Constants.PpWeapon2 + " :\n" + PlayerPrefs.GetString(characterName + Constants.PpWeapon2) + "\n\n" +
-            "Pp" + characterName + Constants.PpSkill1 + " :\n" + PlayerPrefs.GetString(characterName + Constants.PpSkill1) + "\n\n" +
-            "Pp" + characterName + Constants.PpSkill2 + " :\n" + PlayerPrefs.GetString(characterName + Constants.PpSkill2) + "\n\n");
+        //Debug.Log("Pp" + characterName + " :\n" + PlayerPrefs.GetString(characterName) + "\n\n" +
+        //    "Pp" + characterName + Constants.PpWeapon1 + " :\n" + PlayerPrefs.GetString(characterName + Constants.PpWeapon1) + "\n\n" +
+        //    "Pp" + characterName + Constants.PpWeapon2 + " :\n" + PlayerPrefs.GetString(characterName + Constants.PpWeapon2) + "\n\n" +
+        //    "Pp" + characterName + Constants.PpSkill1 + " :\n" + PlayerPrefs.GetString(characterName + Constants.PpSkill1) + "\n\n" +
+        //    "Pp" + characterName + Constants.PpSkill2 + " :\n" + PlayerPrefs.GetString(characterName + Constants.PpSkill2) + "\n\n");
     }
 
     public static Character GetCharacter(string characterName)

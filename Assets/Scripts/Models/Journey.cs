@@ -7,6 +7,7 @@ public class Journey
     public int Minutes;
     public Biome Biome;
     public int Step;
+    public int CurrentBiomeChoice;
 
     public Journey(Character character)
     {
