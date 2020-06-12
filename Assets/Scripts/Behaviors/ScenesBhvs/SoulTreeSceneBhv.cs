@@ -16,17 +16,20 @@ public class SoulTreeSceneBhv : SceneBhv
 
     protected override void SetPrivates()
     {
+        // DEBUG // RESET
+        //PlayerPrefsHelper.ResetSoul();
+        // DEBUG  //
         base.SetPrivates();
         Soul = PlayerPrefsHelper.GetSoul();
-        // DEBUG //
-        Soul.RunAwayPercent_Level = 5;
-        Soul.LootPercent_Level = 4;
-        Soul.CritChance_Level = 3;
-        Soul.InvPlace_Level = 2;
-        Soul.InvWeight_Level = 1;
-        Soul.StartingLevel_Level = 1;
-        Soul.NbCharChoice_Level = 3;
-        Soul.Xp = 894; // membres, parfois ça varie
+        // DEBUG // MOCK VARIABLES
+        //Soul.RunAwayPercent_Level = 5;
+        //Soul.LootPercent_Level = 4;
+        //Soul.CritChance_Level = 3;
+        //Soul.InvPlace_Level = 2;
+        //Soul.InvWeight_Level = 1;
+        //Soul.StartingLevel_Level = 1;
+        //Soul.NbCharChoice_Level = 3;
+        //Soul.Xp = 894; // membres, parfois ça varie
         // DEBUG //
     }
 

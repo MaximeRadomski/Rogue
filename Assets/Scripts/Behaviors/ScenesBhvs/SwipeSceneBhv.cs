@@ -285,6 +285,8 @@ public class SwipeSceneBhv : SceneBhv
         tmp = GameObject.Find("Card0");
         if (tmp != null)
             tmp.transform.position -= new Vector3(-10.0f, 10.0f, 0.0f);
+        else
+            _avoidBhv.DisableButton();
         Constants.CardsInCache = false;
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class Character
 {
     public bool IsPlayer = false;
+    public bool IsDead = false;
     public CharacterGender Gender;
     public string Name;
     public CharacterRace Race;
@@ -15,6 +16,7 @@ public class Character
     public int Level;
     public int LevelingHealthPercent;
     public int LevelingDamagePercent;
+    public int TotalExperience;
     public int Experience;
     public int Gold;
     public int HpMax;
@@ -179,6 +181,7 @@ public class Character
 
     public int GainXp(int amount)
     {
+        TotalExperience += amount;
         int amountToAdd = amount;
         if (_instantiator == null) GetPrivates();
         _instantiator.PopText("+" + amountToAdd + " " + Constants.UnitXp, _xp?.transform.position ?? _ressourcePopPosition, TextType.Xp, TextThickness.Long);

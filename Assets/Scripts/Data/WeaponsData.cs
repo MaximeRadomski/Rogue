@@ -30,13 +30,13 @@ public static class WeaponsData
         return GetWeaponFromType((WeaponType)Random.Range(0, Helper.EnumCount<WeaponType>()));
     }
 
-    public static Weapon GetWeaponFromType(WeaponType type, bool isBase = false)
+    public static Weapon GetWeaponFromType(WeaponType type, bool isBase = false, bool canBeAnythingAndGreatSword = true)
     {
         int notAskedType = Random.Range(0, 100);
         if (!isBase && notAskedType < ChanceNotRaceWeaponPercent)
         {
             var tmpType = (WeaponType)Random.Range(0, System.Enum.GetNames(typeof(WeaponType)).Length);
-            if (tmpType != WeaponType.GreatSword) //Because GreatSwords can only be equipped with small weapons.
+            if (canBeAnythingAndGreatSword || tmpType != WeaponType.GreatSword)
                 type = tmpType;
         }
         Rarity rarity = Rarity.Normal;
@@ -139,6 +139,17 @@ public static class WeaponsData
     public static bool IsSmallWeapon(WeaponType type)
     {
         return (type == WeaponType.Knife || type == WeaponType.Daggers || type == WeaponType.Gauntlets);
+    }
+
+    public static WeaponType GetRandomSmallWeaponType()
+    {
+        var rand = Random.Range(0, 3);
+        if (rand == 0)
+            return WeaponType.Knife;
+        else if (rand == 1)
+            return WeaponType.Daggers;
+        else
+            return WeaponType.Gauntlets;
     }
 
     //  SWORD  //

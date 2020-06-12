@@ -92,9 +92,10 @@ public static class RacesData
         tmpCharacter.Level = level;
         tmpCharacter.HpMax = Helper.MaxHpFromLevelOne(tmpCharacter.HpMax, level, tmpCharacter.LevelingHealthPercent);
         tmpCharacter.Gold = Random.Range(0,25*tmpCharacter.Level);
-        //DEBUG
-        if (race == CharacterRace.Dwarf || race == CharacterRace.Orc)
-            tmpCharacter.Gold = 7777;
+        // DEBUG //
+        //if (race == CharacterRace.Dwarf || race == CharacterRace.Orc)
+        //    tmpCharacter.Gold = 7777;
+        // DEBUG //
         tmpCharacter.Experience = 0;
         tmpCharacter.Hp = tmpCharacter.HpMax;
         return tmpCharacter;
@@ -111,7 +112,7 @@ public static class RacesData
     //  HUMAN  //
     public static Character GetBaseHuman(CharacterGender gender, bool isPlayer = false)
     {
-        return new Character()
+        var tmpChar = new Character()
         {
             Race = CharacterRace.Human,
             StrongAgainst = CharacterRace.Gobelin,
@@ -129,9 +130,7 @@ public static class RacesData
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.HumanSkillsNames[0]) :
                                                                  SkillsData.GetSkillFromName(SkillsData.HumanSkillsNames[1])},
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
-            Inventory = new List<InventoryItem> { ItemsData.GetRandomItem(),
-                                                  WeaponsData.GetWeaponFromType(WeaponType.GreatSword),
-                                                  SkillsData.GetSkillFromName(SkillsData.RareSkillsNames[0]) },
+            Inventory = new List<InventoryItem> { ItemsData.GetRandomItem(isPlayer) },
             InventoryPlace = 3,
             WeightLimit = 40,
             SleepHoursNeeded = 8,
@@ -140,12 +139,14 @@ public static class RacesData
             LootPercent = 25,
             CritChancePercent = 0
         };
+        HandleGreatSword(tmpChar);
+        return tmpChar;
     }
 
     //  GOBELIN  //
     public static Character GetBaseGobelin(CharacterGender gender, bool isPlayer = false)
     {
-        return new Character()
+        var tmpChar = new Character()
         {
             Race = CharacterRace.Gobelin,
             StrongAgainst = CharacterRace.Elf,
@@ -163,12 +164,7 @@ public static class RacesData
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.GoblinSkillsNames[0]) :
                                                                  SkillsData.GetSkillFromName(SkillsData.GoblinSkillsNames[1])},
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
-            Inventory = new List<InventoryItem> { ItemsData.GetRandomItem(),
-                                                  WeaponsData.GetWeaponFromType(WeaponType.Daggers),
-                                                  WeaponsData.GetRandomWeapon(),
-                                                  WeaponsData.GetRandomWeapon(),
-                                                  SkillsData.GetSkillFromName(SkillsData.HumanSkillsNames[0]),
-                                                  SkillsData.GetSkillFromName(SkillsData.MagicalSkillsNames[Random.Range(0, SkillsData.MagicalSkillsNames.Length)])},
+            Inventory = new List<InventoryItem> { ItemsData.GetRandomItem(isPlayer), ItemsData.GetRandomItem(isPlayer) },
             InventoryPlace = 6,
             WeightLimit = 20,
             SleepHoursNeeded = 2,
@@ -177,12 +173,14 @@ public static class RacesData
             LootPercent = 40,
             CritChancePercent = 0
         };
+        HandleGreatSword(tmpChar);
+        return tmpChar;
     }
 
     //  ELF  //
     public static Character GetBaseElf(CharacterGender gender, bool isPlayer = false)
     {
-        return new Character()
+        var tmpChar = new Character()
         {
             Race = CharacterRace.Elf,
             StrongAgainst = CharacterRace.Dwarf,
@@ -200,7 +198,7 @@ public static class RacesData
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.ElfSkillsNames[0]) :
                                                                  SkillsData.GetSkillFromName(SkillsData.ElfSkillsNames[1])},
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
-            Inventory = new List<InventoryItem> { ItemsData.GetRandomItem() },
+            Inventory = new List<InventoryItem> { ItemsData.GetRandomItem(isPlayer) },
             InventoryPlace = 2,
             WeightLimit = 20,
             SleepHoursNeeded = 10,
@@ -209,13 +207,15 @@ public static class RacesData
             LootPercent = 10,
             CritChancePercent = 0
         };
+        HandleGreatSword(tmpChar);
+        return tmpChar;
     }
 
 
     //  DWARF  //
     public static Character GetBaseDwarf(CharacterGender gender, bool isPlayer = false)
     {
-        return new Character()
+        var tmpChar = new Character()
         {
             Race = CharacterRace.Dwarf,
             StrongAgainst = CharacterRace.Orc,
@@ -233,8 +233,7 @@ public static class RacesData
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.DwarfSkillsNames[0]) :
                                                                  SkillsData.GetSkillFromName(SkillsData.DwarfSkillsNames[1])},
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
-            Inventory = new List<InventoryItem> { ItemsData.GetRandomItem(),
-                                                  ItemsData.GetRandomItemFromRarity(Rarity.Magical) },
+            Inventory = new List<InventoryItem> { ItemsData.GetRandomItem(isPlayer) },
             InventoryPlace = 4,
             WeightLimit = 60,
             SleepHoursNeeded = 7,
@@ -243,13 +242,15 @@ public static class RacesData
             LootPercent = 50,
             CritChancePercent = 0
         };
+        HandleGreatSword(tmpChar);
+        return tmpChar;
     }
 
 
     //  ORC  //
     public static Character GetBaseOrc(CharacterGender gender, bool isPlayer = false)
     {
-        return new Character()
+        var tmpChar = new Character()
         {
             Race = CharacterRace.Orc,
             StrongAgainst = CharacterRace.Human,
@@ -258,8 +259,8 @@ public static class RacesData
             HpMax = 500,
             PaMax = 6,
             PmMax = 1,
-            LevelingHealthPercent = 20,
-            LevelingDamagePercent = 10,
+            LevelingHealthPercent = 25,
+            LevelingDamagePercent = 5,
             FavWeapons = new List<WeaponType> { WeaponType.GreatSword, WeaponType.Gauntlets },
             Weapons = new List<Weapon> { WeaponsData.GetWeaponFromType(WeaponType.GreatSword, isPlayer),
                                          WeaponsData.GetWeaponFromType(WeaponType.Gauntlets, isPlayer) },
@@ -267,7 +268,7 @@ public static class RacesData
             Skills = new List<Skill> { Random.Range(0, 2) == 0 ? SkillsData.GetSkillFromName(SkillsData.OrcSkillsNames[0]) :
                                                                  SkillsData.GetSkillFromName(SkillsData.OrcSkillsNames[1])},
             BodyParts = CreateBodyPartsFromRace(CharacterRace.Human, gender),
-            Inventory = new List<InventoryItem> { ItemsData.GetRandomItemFromRarity(Rarity.Magical) },
+            Inventory = new List<InventoryItem> { ItemsData.GetRandomItem(isPlayer) },
             InventoryPlace = 3,
             WeightLimit = 80,
             SleepHoursNeeded = 12,
@@ -276,6 +277,8 @@ public static class RacesData
             LootPercent = 15,
             CritChancePercent = 0
         };
+        HandleGreatSword(tmpChar);
+        return tmpChar;
     }
 
     public static List<string> CreateBodyPartsFromRace(CharacterRace race, CharacterGender gender)
@@ -298,6 +301,28 @@ public static class RacesData
                 bodyParts.Add("Sprites/" + race + "/" + race + BodyParts[i] + "_" + Random.Range(0, NbBodyTemplates));
         }
         return bodyParts;
+    }
+
+    private static void HandleGreatSword(Character tmpChar)
+    {
+        if (tmpChar.Weapons[0].Type == WeaponType.GreatSword && !WeaponsData.IsSmallWeapon(tmpChar.Weapons[1].Type))
+        {
+            if (tmpChar.Race == CharacterRace.Human || tmpChar.Race == CharacterRace.Dwarf)
+            {
+                tmpChar.Weapons[1] = null;
+                tmpChar.Weapons[1] = WeaponsData.GetWeaponFromType(WeaponsData.GetRandomSmallWeaponType(), isBase: true);
+            }
+            else
+            {
+                tmpChar.Weapons[1] = null;
+                tmpChar.Weapons[1] = WeaponsData.GetWeaponFromType(tmpChar.FavWeapons[1], isBase: true);
+            }
+        }
+        else if (tmpChar.Weapons[1].Type == WeaponType.GreatSword)
+        {
+            tmpChar.Weapons[1] = null;
+            tmpChar.Weapons[1] = WeaponsData.GetWeaponFromType(WeaponsData.GetRandomSmallWeaponType(), canBeAnythingAndGreatSword: false);
+        }
     }
 }
 

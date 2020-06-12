@@ -17,6 +17,9 @@ public class AiBhv : MonoBehaviour
     private int[] _skillsWeight = { 0, 0 };
     private int _getCloseWeight;
     private int _getFarWeight;
+    private int _getFarAttemptCount;
+    private int _getFarTurnCount = 0;
+    private bool _cannotGetFarAnymore = false;
     private RangePos[] _rangeClicked = { new RangePos(-1, -1), new RangePos(-1, -1) };
 
     #region Init
@@ -46,11 +49,14 @@ public class AiBhv : MonoBehaviour
 
     public void StartThinking()
     {
+        _getFarAttemptCount = 0;
         Think();
     }
 
     private void Think() //What do I do
     {
+        if (_opponentBhv.Character.IsDead)
+            return;
         ResetWeight();
         SetAttackWeight();
         SetDefenseWeight();
@@ -79,6 +85,10 @@ public class AiBhv : MonoBehaviour
             moveResult = GetFar();
         if (moveResult)
             return;
+        if (_getFarAttemptCount >= _characterBhv.Character.PmMax)
+            ++_getFarTurnCount;
+        if (_getFarTurnCount >= Constants.MaxGetFarTurnCount)
+            _cannotGetFarAnymore = true;
         _fightSceneBhv.PassTurn();
     }
 
@@ -675,13 +685,15 @@ public class AiBhv : MonoBehaviour
         //Too powerfull
         //if (nbSkillMovement == 0 && _gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs))
         //    canI -= 1000;
+        if (_cannotGetFarAnymore)
+            canI -= 1000;
         return canI;
     }
 
     private int ShouldIGetFar()
     {
         int shouldI = 0;
-        if (_characterBhv.Character.Hp <= _characterBhv.Character.HpMax * 0.2f)
+        if (_characterBhv.Character.Hp <= _characterBhv.Character.HpMax * 0.1f)
             shouldI += 30;
         else if (_characterBhv.Character.Hp == _characterBhv.Character.HpMax)
             shouldI -= 30;
@@ -697,7 +709,10 @@ public class AiBhv : MonoBehaviour
         foreach (var weapon in _opponentBhv.Character.Weapons)
         {
             if (weapon.BaseDamage > _characterBhv.Character.Hp)
+            {
                 shouldI += 50;
+                break;
+            }
         }
         return shouldI;
     }
@@ -712,6 +727,7 @@ public class AiBhv : MonoBehaviour
             return false;
         if (SetPathToOpponent(posToReach) == false)
             return false;
+        ++_getFarAttemptCount;
         if (_gridBhv.IsAdjacentOpponent(_characterBhv.X, _characterBhv.Y, _characterBhv.OpponentBhvs) || _characterBhv.Pm == 0
             || _gridBhv.Cells[posToReach.X, posToReach.Y].GetComponent<CellBhv>().Visited > _characterBhv.Pm)
         {

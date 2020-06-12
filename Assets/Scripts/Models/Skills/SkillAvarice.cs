@@ -22,12 +22,15 @@ public class SkillAvarice : Skill
         EffectId = 3;
         BasePrice = 100;
 
-        Description = "Steal <material=\"LongGold\">Gold</material> on each hit";
+        Description = "Steal <material=\"LongGold\">" + _percentToSteal + "%</material> of your current <material=\"LongGold\">Gold</material> amount on each hit";
     }
+
+    private int _percentToSteal = 5;
 
     public override void OnEndAttack(int damages, CharacterBhv opponentBhv)
     {
-        base.OnEndAttack(damages, opponentBhv);
         CharacterBhv.Instantiator.NewEffect(InventoryItemType.Skill, CharacterBhv.transform.position, null, EffectId, Constants.GridMax - CharacterBhv.Y);
+        float goldToSteal = CharacterBhv.Character.Gold * Helper.MultiplierFromPercent(0, _percentToSteal);
+        CharacterBhv.Character.GainGold((int)goldToSteal);
     }
 }

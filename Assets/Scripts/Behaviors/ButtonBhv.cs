@@ -112,6 +112,8 @@ public class ButtonBhv : InputBhv
     public void DisableButton()
     {
         Disabled = true;
+        if (_spriteRenderer == null)
+            SetPrivates();
         _spriteRenderer.color = Constants.ColorPlainSemiTransparent;
         GetComponent<BoxCollider2D>().enabled = false;
         for (int i = 0; i < transform.childCount; ++i)

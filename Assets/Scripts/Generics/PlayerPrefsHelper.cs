@@ -96,6 +96,12 @@ public class PlayerPrefsHelper : MonoBehaviour
         return soul;
     }
 
+    public static void ResetSoul()
+    {
+        PlayerPrefs.SetString(Constants.PpSoul, Constants.PpSerializeDefault);
+        Debug.Log("\t[DEBUG]\tSoul Reseted");
+    }
+
     public static void SaveToXML<T>(object tmpObject, string name)
     {
         XmlSerializer serializer = new XmlSerializer(typeof(T));

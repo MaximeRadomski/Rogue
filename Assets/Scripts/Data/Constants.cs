@@ -76,6 +76,7 @@ public static class Constants
     public const int UnlimitedPm = GridMax * GridMax;
     public const int VisitedPmValue = -1;
     public const int VisitedSkillValue = -2;
+    public const int MaxGetFarTurnCount = 3;
     public static Vector2 CardInitialPosition = new Vector2(0.0f, 0.083f);
     public const float KeyboardHeight = 3.1f;
 

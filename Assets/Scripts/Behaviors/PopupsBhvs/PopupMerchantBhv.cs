@@ -6,6 +6,7 @@ class PopupMerchantBhv : StatsDisplayerBhv
 {
     public Sprite[] BuySellSprites;
 
+    private Soul _soul;
     private Character _character;
     private List<GameObject> _tabs;
     private GameObject _buttonPositive;
@@ -32,6 +33,7 @@ class PopupMerchantBhv : StatsDisplayerBhv
     {
         _isBuying = isBuying;
         _alignment = alignment;
+        _soul = PlayerPrefsHelper.GetSoul();
         _character = character;
         _merchantType = type;
         _afterManageAction = afterManageAction;
@@ -149,7 +151,7 @@ class PopupMerchantBhv : StatsDisplayerBhv
             }
             _priceText.transform.position = _buttonPriceNPositivePosition[0];
             _buttonPositive.transform.position = _buttonPriceNPositivePosition[1];
-            _currentPrice = item.GetPrice(_character, _isBuying, _alignment);
+            _currentPrice = item.GetPrice(_character, _isBuying, _alignment, _soul.GetStatCurrentValue(Soul.SoulStats[_soul.MerchantDeal_Id]));
             _priceText.text = _currentPrice + " " + Constants.UnitGold;
             _buttonPositiveText.text = _isBuying ? "Purchase" : "Sell";
         }

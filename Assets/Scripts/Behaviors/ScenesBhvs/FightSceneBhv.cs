@@ -273,6 +273,8 @@ public class FightSceneBhv : SceneBhv
 
     private void NextTurn()
     {
+        if (PlayerBhv.Character.IsDead)
+            return;
         bool? lastCharacterIsPlayer = _currentPlayingCharacterBhv?.Character.IsPlayer ?? null;
         if (++_currentOrderId >= _orderList.Count)
             _currentOrderId = 0;
@@ -655,6 +657,13 @@ public class FightSceneBhv : SceneBhv
             }
             return true;
         }));
+    }
+
+    public override void OnPlayerDeath(CharacterBhv playerBhv)
+    {
+        playerBhv.SkinContainer.OnDeath();
+        Instantiator.PopIcon(Helper.GetSpriteFromSpriteSheet("Sprites/IconsStatus_0"), playerBhv.transform.position);
+        base.OnPlayerDeath(playerBhv);
     }
 
     private void RemoveOpponentFromExistence(CharacterBhv opponentBhv)

@@ -80,8 +80,37 @@ public abstract class SceneBhv : MonoBehaviour
         }
     }
 
-    public void OnPlayerDeath(CharacterBhv playerBhv)
+    public virtual void OnPlayerDeath(CharacterBhv playerBhv)
     {
+        playerBhv.Character.IsDead = true;
+        StartCoroutine(Helper.ExecuteAfterDelay(1.0f, () =>
+        {
+            Defeat(playerBhv.Character);
+            return true;
+        }));
+    }
 
+    private void Defeat(Character character)
+    {
+        Constants.InputLocked = true;
+        Instantiator.NewOverTitle(string.Empty, "Sprites/MapTitle_3", AfterDefeat, Direction.Down);
+        object AfterDefeat(bool result)
+        {
+            StartCoroutine(Helper.ExecuteAfterDelay(PlayerPrefsHelper.GetSpeed(), () =>
+            {
+                Soul.Xp = character.TotalExperience + Soul.XpKept;
+                Soul.XpKept = 0;
+                PlayerPrefsHelper.SaveSoul(Soul);
+                Instantiator.NewOverBlend(OverBlendType.StartLoadMidActionEnd, "SOUL TREE", 4.0f, TransitionDefeat, reverse: true);
+                object TransitionDefeat(bool transResult)
+                {
+                    NavigationService.NewRootScene(Constants.SoulTreeScene);
+                    Constants.InputLocked = false;
+                    return transResult;
+                }
+                return true;
+            }));
+            return result;
+        }
     }
 }

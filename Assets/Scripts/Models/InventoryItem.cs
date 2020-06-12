@@ -27,7 +27,7 @@ public abstract class InventoryItem
         return nameTag + Name + "</material>";
     }
 
-    public int GetPrice(Character character, bool isBuying, AlignmentMerchant alignment)
+    public int GetPrice(Character character, bool isBuying, AlignmentMerchant alignment, int merchantDeal)
     {
         int levelAdd = (BasePrice / 3) * (character.Level - 1);
         int rarityAdd = 0;
@@ -41,12 +41,13 @@ public abstract class InventoryItem
         finalPrice += _weaponRandomPriceAdd == -1 ? (_weaponRandomPriceAdd = Random.Range(1, BasePrice / 5)) : _weaponRandomPriceAdd;
         if (isBuying)
         {
-            float multiplier = 1.0f;
+            float alignmentPercent = 1.0f;
             if (alignment == AlignmentMerchant.Fraudulent)
-                multiplier = Helper.MultiplierFromPercent(1, BiomesData.MerchentPriceBonusPercent);
+                alignmentPercent = Helper.MultiplierFromPercent(1, BiomesData.MerchentPriceBonusPercent);
             else if (alignment == AlignmentMerchant.OnSale)
-                multiplier = Helper.MultiplierFromPercent(1, -BiomesData.MerchentPriceBonusPercent);
-            return (int)(finalPrice * multiplier);
+                alignmentPercent = Helper.MultiplierFromPercent(1, -BiomesData.MerchentPriceBonusPercent);
+            float merchantDealBuyPercent = Helper.MultiplierFromPercent(1, -merchantDeal);
+            return (int)(finalPrice * alignmentPercent * merchantDealBuyPercent);
         }
         else
         {
@@ -55,7 +56,8 @@ public abstract class InventoryItem
                 multiplier = Helper.MultiplierFromPercent(1, -BiomesData.MerchentPriceBonusPercent);
             else if (alignment == AlignmentMerchant.OnSale)
                 multiplier = Helper.MultiplierFromPercent(1, BiomesData.MerchentPriceBonusPercent);
-            return (int)((finalPrice / 5) * multiplier);
+            float merchantDealSellPercent = Helper.MultiplierFromPercent(1, merchantDeal);
+            return (int)((finalPrice / 5) * multiplier * merchantDealSellPercent);
         }
     }
 }

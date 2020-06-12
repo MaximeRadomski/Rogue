@@ -26,7 +26,7 @@ public class Soul
     // JOURNEY
     public int InvPlace = 0,        InvPlace_Add = 1,       InvPlace_Level = 0,         InvPlace_Max = 2,           InvPlace_Price = 1000,      InvPlace_Id = 3;
     public int InvWeight = 0,       InvWeight_Add = 5,      InvWeight_Level = 0,        InvWeight_Max = 4,          InvWeight_Price = 500,      InvWeight_Id = 4;
-    public int Gold = 0,            Gold_Add = 20,          Gold_Level = 0,             Gold_Max = 6,               Gold_Price = 100,           Gold_Id = 5;
+    public int Gold = 0,            Gold_Add = 50,          Gold_Level = 0,             Gold_Max = 6,               Gold_Price = 100,           Gold_Id = 5;
     public int XpKeptPercent = 0,   XpKeptPercent_Add = 10, XpKeptPercent_Level = 0,    XpKeptPercent_Max = 5,      XpKeptPercent_Price = 250,  XpKeptPercent_Id = 6;
     // CHARACTER
     public int StartingLevel = 1,   StartingLevel_Add = 1,  StartingLevel_Level = 0,    StartingLevel_Max = 8,      StartingLevel_Price = 300,  StartingLevel_Id = 7;
